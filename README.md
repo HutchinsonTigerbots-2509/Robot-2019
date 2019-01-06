@@ -8,18 +8,14 @@ The code is divided into several packages, each responsible for a different aspe
 
 ### General
 - Clone this repo
-- Clone the WPILib repository. If the toolchains are not installed, install them, and make sure they are available or the system PATH.
-- Enjoy!
-<!--
 - Run `./gradlew` to download gradle and needed FRC libraries
 - Run `./gradlew tasks` to see available build options
--->
+- Enjoy!
 
-<!--
 ### Building/Deploying to the Robot
 - Run `./gradlew build` to build the code. Use the `--info` flag for more details
+- Run `./gradlew deploy -PteamNumber=2509`
 - Run `./gradlew deploy` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
--->
 
 ## Code Highlights
 <!--
