@@ -7,11 +7,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.*;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  Vision sVision = Robot.sVision;
+  public NetworkTable limeTable;
   //#region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -41,6 +47,14 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   //#endregion
+ 
 
-  
+  public OI(){
+
+    /* Vision & NetworkTables */
+    limeTable = sVision.getTable();
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+  }
 }
