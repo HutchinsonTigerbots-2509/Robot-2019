@@ -23,7 +23,11 @@ public class Vision extends Subsystem {
   private double targetX = 0;
   private double targetY = 0;
   private double targetArea = 0;
-  
+
+  /** 
+   * Returns the NetworkTable for the Limelight Camera
+   * @return table
+   */
   public NetworkTable getTable(){
     return table;
   }
@@ -63,12 +67,14 @@ public class Vision extends Subsystem {
   @Override
   public void initDefaultCommand() {
   }
+
   @Deprecated
   private void PullFromTable(){
     tableX = table.getEntry(Constants.kLimelightTargetXID);
     tableY = table.getEntry(Constants.kLimelightTargetYID);
     tableArea = table.getEntry(Constants.kLimelightTargetAreaID);
   }
+
   @Deprecated
   private void UpdateValuesFromTable(){
     PullFromTable();

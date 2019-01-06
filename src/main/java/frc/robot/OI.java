@@ -16,8 +16,8 @@ import frc.robot.subsystems.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  Vision sVision = Robot.sVision;
-  public NetworkTable limeTable;
+  private Vision sVision = Robot.sVision;
+  private NetworkTable limeTable;
   //#region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -47,7 +47,6 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   //#endregion
- 
 
   public OI(){
 
