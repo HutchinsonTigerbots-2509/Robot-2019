@@ -16,20 +16,20 @@ import frc.robot.Constants;
  * @author Nate C
  */
 public class Vision extends Subsystem {
-  private NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.kLimelightNetworkID);
-  private NetworkTableEntry tableX = table.getEntry(Constants.kLimelightTargetXID);
-  private NetworkTableEntry tableY = table.getEntry(Constants.kLimelightTargetYID);
-  private NetworkTableEntry tableArea = table.getEntry(Constants.kLimelightTargetAreaID);
-  private double targetX = 0;
-  private double targetY = 0;
-  private double targetArea = 0;
+  private NetworkTable mTable = NetworkTableInstance.getDefault().getTable(Constants.kLimelightNetworkID);
+  private NetworkTableEntry mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
+  private NetworkTableEntry mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
+  private NetworkTableEntry mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
+  private double mTargetX = 0;
+  private double mTargetY = 0;
+  private double mTargetArea = 0;
 
   /** 
    * Returns the NetworkTable for the Limelight Camera
-   * @return table
+   * @return mTable
    */
   public NetworkTable getTable(){
-    return table;
+    return mTable;
   }
 
   /**
@@ -38,9 +38,9 @@ public class Vision extends Subsystem {
    * @return targetX
    */
   public double getTargetX(){
-    tableX = table.getEntry(Constants.kLimelightTargetXID);
-    targetX = tableX.getDouble(0.0);
-    return targetX;
+    mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
+    mTargetX = mTableX.getDouble(0.0);
+    return mTargetX;
   }
   /**
    * Returns the 'Y' value from the Limelight.
@@ -48,9 +48,9 @@ public class Vision extends Subsystem {
    * @return targetY
    */
   public double getTargetY(){
-    tableY = table.getEntry(Constants.kLimelightTargetYID);
-    targetY = tableX.getDouble(0.0);
-    return targetY;
+    mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
+    mTargetY = mTableX.getDouble(0.0);
+    return mTargetY;
   }
   /**
    * Returns the 'Area' value from the Limelight.
@@ -58,9 +58,9 @@ public class Vision extends Subsystem {
    * @return targetArea
    */
   public double getTargetArea(){
-    tableArea = table.getEntry(Constants.kLimelightTargetAreaID);
-    targetArea = tableX.getDouble(0.0);
-    return targetArea;
+    mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
+    mTargetArea = mTableX.getDouble(0.0);
+    return mTargetArea;
   }
 
 
@@ -70,16 +70,16 @@ public class Vision extends Subsystem {
 
   @Deprecated
   private void PullFromTable(){
-    tableX = table.getEntry(Constants.kLimelightTargetXID);
-    tableY = table.getEntry(Constants.kLimelightTargetYID);
-    tableArea = table.getEntry(Constants.kLimelightTargetAreaID);
+    mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
+    mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
+    mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
   }
 
   @Deprecated
   private void UpdateValuesFromTable(){
     PullFromTable();
-    targetX = tableX.getDouble(0.0);
-    targetY = tableY.getDouble(0.0);
-    targetArea = tableArea.getDouble(0.0);
+    mTargetX = mTableX.getDouble(0.0);
+    mTargetY = mTableY.getDouble(0.0);
+    mTargetArea = mTableArea.getDouble(0.0);
   }
 }

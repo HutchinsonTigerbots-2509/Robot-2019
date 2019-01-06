@@ -8,12 +8,12 @@ The code is divided into several packages, each responsible for a different aspe
 
 ### General
 - Clone this repo
-- Clone the WPILib repository. If the toolchains are not installed, install them, and make sure they are available on the system PATH.
+- Clone the WPILib repository. If the toolchains are not installed, install them, and make sure they are available or the system PATH.
+- Enjoy!
 <!--
 - Run `./gradlew` to download gradle and needed FRC libraries
 - Run `./gradlew tasks` to see available build options
 -->
-- Enjoy!
 
 <!--
 ### Building/Deploying to the Robot
@@ -147,5 +147,7 @@ The code is divided into several packages, each responsible for a different aspe
 -->
 
 ## Variable Naming Conventions
+- c*** (i.e. `cAutonomous`): Command instance variables
 - k*** (i.e. `kDriveWheelTrackWidthInches`): Final constants, especially those found in the Constants.java file
 - m*** (i.e. `mIsHighGear`): Private instance variables
+- s*** (i.e. `sDrivetrain`): Subsystems variables, especially those found in Robot.java file
