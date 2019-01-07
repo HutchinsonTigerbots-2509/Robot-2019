@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Constants;
+import frc.robot.*;
 
 /**
  * @author Nate C
@@ -61,6 +61,15 @@ public class Vision extends Subsystem {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableX.getDouble(0.0);
     return mTargetArea;
+  }
+
+  /**
+   * Updateds the Limelight camera settings via the NetworkTable.
+   */
+  public void UpdateLimelightSettings(){
+    mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
+    mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+    mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
   }
 
 

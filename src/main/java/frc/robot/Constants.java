@@ -5,10 +5,9 @@ package frc.robot;
 
 
 public final class Constants{
-    public Constants(){
-        
-    }
-    public static double kMaxDriveSpeed = 0.95;
+    public Constants(){}
+    /*Motors*/
+    public static double kMaxSpeed = 0.95;
 
     /*Limelight*/
     //Network

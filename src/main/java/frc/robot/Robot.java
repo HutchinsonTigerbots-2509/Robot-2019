@@ -20,6 +20,7 @@ import frc.robot.subsystems.Vision;
  */
 public class Robot extends TimedRobot {
   public static Vision sVision = new Vision();
+
   public static OI oi;
 
 
