@@ -17,11 +17,19 @@ The code is divided into several packages, each responsible for a different aspe
 - Run `./gradlew deploy -PteamNumber=2509`
 - Run `./gradlew deploy` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
 
+### Motor Wiring Diagram
+
+Subsystem | Controller | Name | ID | PDP |
+--------- | ---------- | ---- | -- | ---|
+Drive     | VictorSP   | Left Front | 0  | - |
+
+
 ## Code Highlights
-<!--
+
 - Building with Gradle
 
 	Instead of working with Ant, we used GradleRIO, which is a powerful Gradle plugin that allows us to build and deploy our code for FRC. It automatically fetches WPILib, CTRE Toolsuite, and other libraries, and is easier to use across different IDEs. 
+<!--
 
 - Path following with a nonlinear feedback controller and splines
 
