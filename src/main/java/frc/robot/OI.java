@@ -8,8 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Vision;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,7 +50,13 @@ public class OI {
   // button.whenReleased(new ExampleCommand());
   //#endregion
 
+  // The Driving Stick
+  public Joystick opstick; 
+
+
+
   public OI(){
+    opstick = new Joystick(0);
 
     /* Vision & NetworkTables */
     mLimeTable = sVision.getTable();

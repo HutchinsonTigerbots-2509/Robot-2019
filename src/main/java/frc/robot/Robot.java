@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.OPDrive;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,9 +21,15 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
+  //Subsystem Declaration
   public static Vision sVision = new Vision();
+  public static Drivetrain DT = new Drivetrain();
 
+  //OI Declaration
   public static OI oi;
+
+  //OPDrive Declaration
+  public static OPDrive opdrive;
 
 
   /**
@@ -94,6 +102,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
+    opdrive.start();
   }
 
   /**

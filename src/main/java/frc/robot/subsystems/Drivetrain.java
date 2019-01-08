@@ -7,18 +7,29 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class Drivetrain extends Subsystem {
+  // Varible Declarations
   private final double kMaxSpeed;
+  DifferentialDrive Drive = RobotMap.Drive;
+  
+  
   public Drivetrain(){
     kMaxSpeed = Constants.kMaxSpeed;
-
     //addChild("LeftDriveEncoder",leftDriveEncoder);
+  }
+
+  public void OPDRIVE(Joystick stick)
+  {
+  	Drive.arcadeDrive(stick.getY(), stick.getZ());
   }
 
   // Put methods for controlling this subsystem
