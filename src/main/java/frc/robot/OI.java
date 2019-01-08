@@ -1,12 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot; // package declaraition
 
-package frc.robot;
-
+// imports
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,7 +14,22 @@ public class OI {
   private Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
   
-  //#region Joystic Button Creation
+  // The Driving Stick
+  public Joystick opstick; 
+
+  public OI(){
+    // Joystick Declarations
+    opstick = new Joystick(0);
+
+    /* Vision & NetworkTables */
+    mLimeTable = sVision.getTable();
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+  }
+}
+
+//#region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.
@@ -49,19 +58,3 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   //#endregion
-
-  // The Driving Stick
-  public Joystick opstick; 
-
-
-
-  public OI(){
-    opstick = new Joystick(0);
-
-    /* Vision & NetworkTables */
-    mLimeTable = sVision.getTable();
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
-  }
-}

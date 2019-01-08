@@ -1,12 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot.subsystems; // package declaration
 
-package frc.robot.subsystems;
-
+// imports
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -14,9 +8,21 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * The DriveTrain Subsystem is where the drivetrain is bound to the code
+ * through the motors created in RobotMap, which are stored in a Differential
+ * Drive Varible
+ * 
+ *                               Front
+ *<h4>   DriveTrainLeft   |----------------| DriveTrain Right </h4>
+ *<h4>    DTLeft1         |----------------| DTRight1 </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>    DTLeft2         |----------------| DTRight2 </h4>
+ *                               Back
  */
 public class Drivetrain extends Subsystem {
+ 
   // Varible Declarations
   private final double kMaxSpeed;
   DifferentialDrive Drive = RobotMap.Drive;
@@ -27,6 +33,15 @@ public class Drivetrain extends Subsystem {
     //addChild("LeftDriveEncoder",leftDriveEncoder);
   }
 
+  /**
+   * OPDrive is the Method for driving. It is called in OPDrive.java in the
+   * commands folder. It uses the differential drive varible that was created
+   * in RobotMap.java. It will grab the Y-Axis and Z-Axis of the OPStick
+   * in OI.java, then drive the robot.
+   * 
+   * @param Joystick stick
+   * @author CRahne
+   */
   public void OPDRIVE(Joystick stick)
   {
   	Drive.arcadeDrive(stick.getY(), stick.getZ());
