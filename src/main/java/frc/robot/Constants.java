@@ -1,9 +1,12 @@
-package frc.robot;
+package frc.robot;// package
 /**
+ * Constants is the class where the varibles that we use accross 
+ * code are stored. An example of this would be a max speed.
+ * You would store the max speed double here, and then use it
+ * in the subsystem/command that it needs to be called.
+ * 
  * @author Nate C
  */
-
-
 public final class Constants{
     public Constants(){}
     /*Motors*/
