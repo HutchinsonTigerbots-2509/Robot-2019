@@ -10,7 +10,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
- * Add your docs here.
+ * @author Tony
+ * @author Wayne
  */
 public class Intake extends PIDSubsystem {
   /**
