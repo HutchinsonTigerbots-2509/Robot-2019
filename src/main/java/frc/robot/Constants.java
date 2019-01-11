@@ -33,4 +33,15 @@ public final class Constants{
     // update the spreadsheet!
     // Port assignments should match up with the spreadsheet here:
     // https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing
+
+    //Motor Contoller ID
+    public static int kDrivetrainLeftMasterID = 0;
+    public static int kDrivetrainLeftSlaveID = 1;
+    public static int kDrivetrainRightMasterID = 2;
+    public static int kDrivetrainRightSlave = 3;
+    //Encoder ID
+    public static int kDrivetrainEncoderLeftAID = 0;
+    public static int kDrivetrainEncoderLeftBID = 1;
+    public static int kDrivetrainEncoderRightAID = 2;
+    public static int kDrivetrianEncoderRightBID = 3;
 }
