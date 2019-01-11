@@ -4,7 +4,7 @@ package frc.robot; // Package Declaration
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.OPDrive;
+import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -16,15 +16,13 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
   
-  //Subsystem Declaration
-  public static Vision sVision = new Vision();
-  public static Drivetrain DT = new Drivetrain();
-
   //OI Declaration
   public static OI oi;
-
-  //OPDrive Declaration
-  public static OPDrive opdrive;
+  //Subsystem Declaration
+  public static Vision sVision;
+  public static Drivetrain sDrivetrain;
+  //Command Declaration
+  public static OperatorDrive cOpDrive;
 
 
   /**
@@ -33,7 +31,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    RobotMap.init();
+    sVision = new Vision();
+    sDrivetrain = new Drivetrain();
+    // OI must be inialized after Subsystems because OI 
+    // refrences subsystem objects.
     oi = new OI();
+    //Commands must be defined after OI
+    cOpDrive = new OperatorDrive();
   }
 
   /**
@@ -97,7 +102,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
-    opdrive.start();
+    cOpDrive.start();
   }
 
   /**

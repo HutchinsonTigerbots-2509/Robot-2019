@@ -3,9 +3,12 @@ package frc.robot; // package declartion
 
 // importsS
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -27,29 +30,41 @@ public class RobotMap
      *                           Back
      */
     
-    public static SpeedController DriveTrainLeft1;
-    public static SpeedController DriveTrainLeft2;
-    public static SpeedController DriveTrainRight1;
-    public static WPI_TalonSRX DriveTrainRight2;
-
-    public static SpeedControllerGroup RightDriveTrain;
+    public static WPI_TalonSRX DrivetrainLeftMaster;
+    public static WPI_TalonSRX DrivetrainLeftSlave;
+    public static WPI_TalonSRX DrivetrainRightMaster;
+    public static WPI_TalonSRX DrivetrainRightSlave;
+    public static SpeedControllerGroup RightDrivetrain;
     public static SpeedControllerGroup LeftDriveTrain;
-    
-    public static DifferentialDrive Drive;
+    public static DifferentialDrive RobotDrive;
+    public static Encoder DrivetrainLeftEncoder;
+    public static Encoder DrivetrainRightEncoder;
 
     public static void init()
     {
         //#region DriveTrain
+        DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID);
 
-        // DriveTrainLeft1 = new SpeedController();
-        // DriveTrainLeft2 = new SpeedController(1);
-        // DriveTrainRight1 = new SpeedController(2);
-        // DriveTrainRight2 = new SpeedController(3);
+        DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID);
+        //DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
 
-        RightDriveTrain = new SpeedControllerGroup(DriveTrainRight1, DriveTrainRight2);
-        LeftDriveTrain = new SpeedControllerGroup(DriveTrainLeft1, DriveTrainLeft2);
+        DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID);
 
-        Drive = new DifferentialDrive(LeftDriveTrain, RightDriveTrain);
+        DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlave);
+        //DrivetrainRightSlave.follow(DrivetrainRightMaster);
+
+        RightDrivetrain = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainRightSlave);
+
+        LeftDriveTrain = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave);
+
+        RobotDrive = new DifferentialDrive(LeftDriveTrain, RightDrivetrain);
+
+        DrivetrainLeftEncoder = new Encoder(
+            Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID);
+
+        DrivetrainRightEncoder = new Encoder(
+            Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID);
+        
         //#endregion
     }
 

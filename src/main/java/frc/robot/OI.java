@@ -4,6 +4,7 @@ package frc.robot; // package declaraition
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -12,13 +13,14 @@ import frc.robot.subsystems.Vision;
  */
 public class OI {
   private Vision sVision = Robot.sVision;
+  private Drivetrain sDrivetrain = Robot.sDrivetrain;
   private NetworkTable mLimeTable;
   
   // The Driving Stick
   public Joystick opstick; 
 
   public OI(){
-    // Joystick Declarations
+    /* Joysticks & Buttons */
     opstick = new Joystick(0);
 
     /* Vision & NetworkTables */
@@ -26,6 +28,9 @@ public class OI {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
+    /* Drivetrain */
+    SmartDashboard.putData(sDrivetrain);
   }
 }
 
