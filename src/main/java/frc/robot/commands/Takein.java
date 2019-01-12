@@ -20,7 +20,7 @@ public class Takein extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    intake.intakein();
+    intake.intakeIn();
   
   }
 
@@ -38,7 +38,7 @@ public class Takein extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    intake.stopMotors();
+    intake.motorsStop();
 
   }
   // Called when another command which requires one or more of the same

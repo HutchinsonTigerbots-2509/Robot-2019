@@ -22,7 +22,7 @@ public class CloseIntake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    intake.closeintake();
+    intake.intakeClose();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,7 +39,7 @@ public class CloseIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    intake.stopOpen();
+    intake.intakeStop();
   }
 
   // Called when another command which requires one or more of the same

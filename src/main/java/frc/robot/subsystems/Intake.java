@@ -46,32 +46,34 @@ public class Intake extends PIDSubsystem {
   
 
   }
-  public void intakein(){
+  public void intakeIn(){
     intakeMotors.set(1.0);      
   }
-  public void wristup(){
-    wrist.set(Value.kForward);
-  }                                                    
-  public void intakeout(){
-    intakeMotors.set(-1.0);
-  }
-  public void wristdown(){
-    wrist.set(Value.kReverse);
-  }
-  public void stopWrist(){
-    wrist.set(Value.kOff);
-  }
-  public void stopMotors(){
-    intakeMotors.stopMotor();
-  }
-  public void openintake(){
-    open.set(Value.kForward);
-  }
-  public void closeintake(){
+  public void intakeClose(){
     open.set(Value.kReverse);
   }
-  public void stopOpen(){
+  public void intakeStop(){
     open.set(Value.kOff);
+  }
+
+  public void wristUp(){
+    wrist.set(Value.kForward);
+  }           
+  public void wristDown(){
+    wrist.set(Value.kReverse);
+  }
+  public void wristStop(){
+    wrist.set(Value.kOff);
+  }
+
+  public void intakeOpen(){
+    open.set(Value.kForward);
+  }
+  public void intakeOut(){
+    intakeMotors.set(-1.0);
+  }
+  public void motorsStop(){
+    intakeMotors.stopMotor();
   }
   protected double returnPIDInput() {
     // Return your input value for the PID loop
