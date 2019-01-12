@@ -26,7 +26,7 @@ public class Drivetrain extends Subsystem {
  
   // Varible Declarations
   private final double kMaxSpeed;
-  DifferentialDrive Drive = RobotMap.kDrive;
+  DifferentialDrive mDrive = RobotMap.kDrive;
   
   
   public Drivetrain(){
@@ -41,10 +41,22 @@ public class Drivetrain extends Subsystem {
    * in OI.java, then drive the robot.
    * 
    * @param Joystick stick
+   * @author CRahne
    */
   public void teleOpDrive(Joystick stick)
   {
-  	Drive.arcadeDrive(stick.getY(), stick.getZ());
+  	mDrive.arcadeDrive(stick.getY(), stick.getZ());
+  }
+
+  /**
+   * Will return the Drive Varible from RobotMap.java
+   * 
+   * @author CRahne
+   * @return mDrive
+   */
+  public DifferentialDrive getDrive()
+  {
+    return mDrive;
   }
 
   // Put methods for controlling this subsystem
