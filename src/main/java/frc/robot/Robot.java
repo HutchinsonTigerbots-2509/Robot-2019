@@ -17,8 +17,8 @@ import frc.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
   
   //Subsystem Declaration
-  public static Vision sVision = new Vision();
-  public static Drivetrain sDT = new Drivetrain();
+  public static Vision sVision;
+  public static Drivetrain sDT;
 
   //OI Declaration
   public static OI oi;
@@ -33,8 +33,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    RobotMap.init();
+    sDT = new Drivetrain();
+    sVision = new Vision();
     oi = new OI();
-  }
+   }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
