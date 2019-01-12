@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -22,6 +23,7 @@ public class Robot extends TimedRobot {
   public static Vision sVision = new Vision();
 
   public static OI oi;
+  public static Intake intake = new Intake();
 
 
   /**
