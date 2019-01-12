@@ -1,11 +1,15 @@
 package frc.robot.subsystems; // package declaration
 
 // imports
+
+
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  * @author Wayne
@@ -26,7 +30,12 @@ public class Drivetrain extends Subsystem {
  
   // Varible Declarations
   private final double kMaxSpeed;
-  DifferentialDrive mDrive = RobotMap.kDrive;
+  private DifferentialDrive mDrive = RobotMap.kDrive;
+
+  private WPI_TalonSRX mDT_RightFront = RobotMap.kDT_RFront;
+  private WPI_TalonSRX mDT_RightRear = RobotMap.kDT_RRear;
+  private WPI_TalonSRX mDT_LeftFront = RobotMap.kDT_LFront;
+  private WPI_TalonSRX mDT_LeftRear = RobotMap.kDT_LRear;
   
   
   public Drivetrain(){
@@ -57,6 +66,16 @@ public class Drivetrain extends Subsystem {
   public DifferentialDrive getDrive()
   {
     return mDrive;
+  }
+
+  public WPI_TalonSRX getDT_LFront()
+  {
+    return mDT_LeftFront;
+  }
+
+  public WPI_TalonSRX GetDT_LRear()
+  {
+    return mDT_LeftRear;
   }
 
   // Put methods for controlling this subsystem
