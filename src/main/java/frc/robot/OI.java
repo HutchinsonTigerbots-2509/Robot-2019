@@ -8,7 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AlignWithTarget;
+import frc.robot.commands.FollowTarget;
 import frc.robot.subsystems.*;
 
 /**
@@ -16,6 +20,9 @@ import frc.robot.subsystems.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  public Joystick stick;
+  private JoystickButton AlignButton;
+  private JoystickButton FollowButton;
   private Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
   
@@ -50,6 +57,11 @@ public class OI {
   //#endregion
 
   public OI(){
+    stick = new Joystick(0);
+    AlignButton = new JoystickButton(stick, 12);
+    FollowButton = new JoystickButton(stick, 11);
+    AlignButton.toggleWhenPressed(new AlignWithTarget());
+    FollowButton.toggleWhenPressed(new FollowTarget());
 
     /* Vision & NetworkTables */
     mLimeTable = sVision.getTable();

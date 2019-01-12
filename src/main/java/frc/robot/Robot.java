@@ -7,8 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.OperatorControl;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -19,9 +23,10 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static Vision sVision = new Vision();
-
+  public static Vision sVision;
+  public static DriveTrain sDriveTrain;
   public static OI oi;
+  public static OperatorControl cOpControl;
 
 
   /**
@@ -30,7 +35,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    RobotMap.Init();
+    sVision = new Vision();
+    sVision.UpdateLimelightSettings();
+    sDriveTrain = new DriveTrain();
     oi = new OI();
+    cOpControl = new OperatorControl();
   }
 
   /**
@@ -43,6 +53,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+  
   }
 
   /**
@@ -94,6 +108,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
+    cOpControl.start();
   }
 
   /**
@@ -101,6 +116,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.updateValues();
     Scheduler.getInstance().run();
   }
 
