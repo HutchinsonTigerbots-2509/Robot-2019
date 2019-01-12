@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.hal.sim.mockdata.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
 
@@ -48,10 +49,30 @@ public class Intake extends PIDSubsystem {
   public void intakein(){
     intakeMotors.set(1.0);      
   }
-  public void stop(){
+  public void wristup(){
+    wrist.set(Value.kForward);
+  }                                                    
+  public void intakeout(){
+    intakeMotors.set(-1.0);
+  }
+  public void wristdown(){
+    wrist.set(Value.kReverse);
+  }
+  public void stopWrist(){
+    wrist.set(Value.kOff);
+  }
+  public void stopMotors(){
     intakeMotors.stopMotor();
   }
-  @Override
+  public void openintake(){
+    open.set(Value.kForward);
+  }
+  public void closeintake(){
+    open.set(Value.kReverse);
+  }
+  public void stopOpen(){
+    open.set(Value.kOff);
+  }
   protected double returnPIDInput() {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
