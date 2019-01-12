@@ -10,8 +10,8 @@ import frc.robot.subsystems.Drivetrain;
  * OPDrive is the command where the controller is physically bound to the drivetrain. This allows whatever
  * Joystick you want to be able to drive.
  * 
- * 
- * @author He He I Cole Rahne
+ *  
+ * @author CRahne
  */
 public class OPDrive extends Command {
   

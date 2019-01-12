@@ -11,6 +11,7 @@ public final class Constants{
     public Constants(){}
     /*Motors*/
     public static double kMaxSpeed = 0.95;
+    public static double kSlowSpeed = 0.65; // IDK but sure
 
     /*Limelight*/
     //Network

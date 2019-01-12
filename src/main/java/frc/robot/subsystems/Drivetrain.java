@@ -1,9 +1,5 @@
 package frc.robot.subsystems; // package declaration
 
-// imports
-
-
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -12,7 +8,6 @@ import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
- * @author Wayne
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
  * Drive Varible
@@ -25,11 +20,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  *<h4>                    |----------------| </h4>
  *<h4>    DTLeft2         |----------------| DTRight2 </h4>
  *                               Back
+ * @author CRahne and Wayne
  */
 public class Drivetrain extends Subsystem {
  
   // Varible Declarations
   private final double kMaxSpeed;
+  private final double kSlowSpeed;
   private DifferentialDrive mDrive = RobotMap.kDrive;
 
   private WPI_TalonSRX mDT_RightFront = RobotMap.kDT_RFront;
@@ -40,7 +37,40 @@ public class Drivetrain extends Subsystem {
   
   public Drivetrain(){
     kMaxSpeed = Constants.kMaxSpeed;
+    kSlowSpeed = Constants.kSlowSpeed;
     //addChild("LeftDriveEncoder",leftDriveEncoder);
+  }
+
+  /**
+   * Will drive forward at 0.95 volts
+   */
+  public void driveForward()
+  {
+    mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
+  }
+
+  /**
+   * Will drive forward at 0.65 volts
+   */
+  public void driveForwardSlow()
+  {
+    mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
+  }
+
+  /**
+   * Will drive in reverse at 0.95 volts. Highly not reccommened
+   */
+  public void driveReverse()
+  {
+    mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
+  }
+
+  /**
+   * Will drive in reverse at 0.65 volts. More recomeended than driveReverse()
+   */
+  public void driveReverseSlow()
+  {
+    mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
   }
 
   /**
@@ -68,21 +98,51 @@ public class Drivetrain extends Subsystem {
     return mDrive;
   }
 
+  /**
+   * Will return the DriveTrain's Front Left Motor
+   * 
+   * @return mDT_LeftFront
+   * @author CRahne
+   */
   public WPI_TalonSRX getDT_LFront()
   {
     return mDT_LeftFront;
   }
 
-  public WPI_TalonSRX GetDT_LRear()
+  /**
+   * Will return the DriveTrain's Front Rear Motor
+   * 
+   * @return mDT_LeftRear
+   * @author CRahne
+   */
+  public WPI_TalonSRX getDT_LRear()
   {
     return mDT_LeftRear;
   }
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  @Override
+  /**
+   * Will return the DriveTrain's Right Front Motor
+   * 
+   * @return mDT_RightFront
+   * @author CRahne
+   */
+  public WPI_TalonSRX getDT_RFront()
+  {
+    return mDT_RightFront;
+  }
+
+  
+  /**
+   * Will return the DriveTrain's Right Rear Motor
+   * 
+   * @return mDT_RightRear
+   * @author CRahne
+   */
+  public WPI_TalonSRX getDTRRear()
+  {
+    return mDT_RightRear;
+  }
+
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }
