@@ -18,13 +18,13 @@ public class Robot extends TimedRobot {
   
   //Subsystem Declaration
   public static Vision sVision = new Vision();
-  public static Drivetrain DT = new Drivetrain();
+  public static Drivetrain sDT = new Drivetrain();
 
   //OI Declaration
   public static OI oi;
 
   //OPDrive Declaration
-  public static OPDrive opdrive;
+  public static OPDrive cOpDrive;
 
 
   /**
@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
-    opdrive.start();
+    cOpDrive.start();
   }
 
   /**

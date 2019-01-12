@@ -1,9 +1,9 @@
 package frc.robot; // package declartion
 
 
-// importsS
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.SpeedController;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -19,37 +19,49 @@ public class RobotMap
      * DriveTrain Varibles
      *                           Front 
      *   DriveTrainLeft   |----------------| DriveTrain Right
-     *    DTLeft1         |----------------| DTRight1
+     *    kDT_LFront      |----------------| kDT_RFront
      *                    |----------------|
      *                    |----------------|
      *                    |----------------|
-     *    DTLeft2         |----------------| DTRight2
+     *    kDT_LRear       |----------------| kDT_RRear
      *                           Back
      */
     
-    public static SpeedController DriveTrainLeft1;
-    public static SpeedController DriveTrainLeft2;
-    public static SpeedController DriveTrainRight1;
-    public static WPI_TalonSRX DriveTrainRight2;
+    public static WPI_TalonSRX kDT_LFront;
+    public static WPI_TalonSRX kDT_LRear;
+    public static WPI_TalonSRX kDT_RFront;
+    public static WPI_TalonSRX kDT_RRear;
 
-    public static SpeedControllerGroup RightDriveTrain;
-    public static SpeedControllerGroup LeftDriveTrain;
+    public static SpeedControllerGroup kRightDrivetrain;
+    public static SpeedControllerGroup kLeftDrivetrain;
     
-    public static DifferentialDrive Drive;
+    public static DifferentialDrive  kDrive;
 
     public static void init()
     {
         //#region DriveTrain
 
-        // DriveTrainLeft1 = new SpeedController();
-        // DriveTrainLeft2 = new SpeedController(1);
-        // DriveTrainRight1 = new SpeedController(2);
-        // DriveTrainRight2 = new SpeedController(3);
+        // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/DifferentialDrive/src/main/java/frc/robot/Robot.java
+        
+        /**
+         * According to the link above, the VictorSPXs can be controlled by using this method.
+         * It works like this: You make a Main Motor and a Follower Motor in place of a Speed Controller
+         * Group.
+         */
+        
+        kDT_LFront = new WPI_TalonSRX(0); // Both Fronts
+        kDT_LRear = new WPI_TalonSRX(1);
+        kDT_RFront = new WPI_TalonSRX(2); // Both Fronts
+        kDT_RRear = new WPI_TalonSRX(3);
 
-        RightDriveTrain = new SpeedControllerGroup(DriveTrainRight1, DriveTrainRight2);
-        LeftDriveTrain = new SpeedControllerGroup(DriveTrainLeft1, DriveTrainLeft2);
+        kRightDrivetrain = new SpeedControllerGroup(kDT_RFront,kDT_RRear);
+        kLeftDrivetrain = new SpeedControllerGroup(kDT_LFront,kDT_LRear);
 
-        Drive = new DifferentialDrive(LeftDriveTrain, RightDriveTrain);
+
+
+
+
+        kDrive = new DifferentialDrive(kLeftDrivetrain, kRightDrivetrain);
         //#endregion
     }
 

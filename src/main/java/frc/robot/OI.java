@@ -15,11 +15,11 @@ public class OI {
   private NetworkTable mLimeTable;
   
   // The Driving Stick
-  public Joystick opstick; 
+  private Joystick mOperatorStick; 
 
   public OI(){
     // Joystick Declarations
-    opstick = new Joystick(0);
+    mOperatorStick = new Joystick(0);
 
     /* Vision & NetworkTables */
     mLimeTable = sVision.getTable();
@@ -27,6 +27,7 @@ public class OI {
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
   }
+  public Joystick getOpeatorStick(){return mOperatorStick;}
 }
 
 //#region Joystic Button Creation

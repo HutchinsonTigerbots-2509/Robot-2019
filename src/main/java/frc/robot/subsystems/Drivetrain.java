@@ -26,7 +26,7 @@ public class Drivetrain extends Subsystem {
  
   // Varible Declarations
   private final double kMaxSpeed;
-  DifferentialDrive Drive = RobotMap.Drive;
+  DifferentialDrive Drive = RobotMap.kDrive;
   
   
   public Drivetrain(){
@@ -42,7 +42,7 @@ public class Drivetrain extends Subsystem {
    * 
    * @param Joystick stick
    */
-  public void OPDRIVE(Joystick stick)
+  public void teleOpDrive(Joystick stick)
   {
   	Drive.arcadeDrive(stick.getY(), stick.getZ());
   }

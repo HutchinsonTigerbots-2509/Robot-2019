@@ -11,24 +11,24 @@ import frc.robot.subsystems.Drivetrain;
  * Joystick you want to be able to drive.
  * 
  * 
- * @author CRahne
+ * @author He He I Cole Rahne
  */
 public class OPDrive extends Command {
   
   // Imported Object Declaration  
-  private Joystick stick = Robot.oi.opstick; // The Operator Stick (the one that is used for driving)
-  private Drivetrain DT = Robot.DT; // The DriveTrain subsystem
+  private Joystick stick = Robot.oi.getOpeatorStick(); // The Operator Stick (the one that is used for driving)
+  private Drivetrain DT = Robot.sDT; // The DriveTrain subsystem
   
   public OPDrive() {
     requires(DT); // Tells the code to use the drivetrain subsystem in this command
   }
 
   protected void initialize() {
-    DT.OPDRIVE(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
+    DT.teleOpDrive(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
   }
 
   protected void execute() {
-    DT.OPDRIVE(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
+    DT.teleOpDrive(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
   }
 
   protected boolean isFinished() {
