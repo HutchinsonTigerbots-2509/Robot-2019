@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
@@ -14,14 +15,14 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author 2018 code
  */
 public class DriveBackwards extends Command {
-	private Drivetrain drive = Robot.sDT;
-	public double target = 0;
-	private double wheelDiameter = 6;
+	private Drivetrain sDrivetrain = Robot.sDrivetrain;
+    public double mTarget = 0;
+    
     public DriveBackwards(double targetDistance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(drive);
-    	target = (targetDistance/(wheelDiameter*Math.PI))*3*360;
+    	requires(sDrivetrain);
+    	mTarget = (targetDistance/(Constants.kWheelDiameter*Math.PI))*3*360;
     	
     }
     public DriveBackwards() {
@@ -50,7 +51,7 @@ public class DriveBackwards extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	drive.getDrive().tankDrive(0, 0);
+    	sDrivetrain.getDrive().tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

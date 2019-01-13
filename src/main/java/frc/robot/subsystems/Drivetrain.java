@@ -1,6 +1,7 @@
 package frc.robot.subsystems; // package declaration
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
@@ -25,19 +26,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Drivetrain extends Subsystem {
  
   // Varible Declarations
-  private final double kMaxSpeed;
-  private final double kSlowSpeed;
-  private DifferentialDrive mDrive = RobotMap.kDrive;
+  private DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  private SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
+  private SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
+  private WPI_TalonSRX mLeftFront = RobotMap.DrivetrainLeftFront;
+  private WPI_TalonSRX mLeftRear = RobotMap.DrivetrainLeftRear;
+  private WPI_TalonSRX mRightFront = RobotMap.DrivetrainRightFront;
+  private WPI_TalonSRX mRightRear = RobotMap.DrivetrainRightRear;
 
-  private WPI_TalonSRX mDT_RightFront = RobotMap.kDT_RFront;
-  private WPI_TalonSRX mDT_RightRear = RobotMap.kDT_RRear;
-  private WPI_TalonSRX mDT_LeftFront = RobotMap.kDT_LFront;
-  private WPI_TalonSRX mDT_LeftRear = RobotMap.kDT_LRear;
   
   
   public Drivetrain(){
-    kMaxSpeed = Constants.kMaxSpeed;
-    kSlowSpeed = Constants.kSlowSpeed;
     //addChild("LeftDriveEncoder",leftDriveEncoder);
   }
 
@@ -46,7 +45,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveForward()
   {
-    mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
+    mDrive.tankDrive(Constants.kMaxSpeed, Constants.kMaxSpeed);
   }
 
   /**
@@ -54,7 +53,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveForwardSlow()
   {
-    mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
+    mDrive.tankDrive(Constants.kSlowSpeed, Constants.kSlowSpeed);
   }
 
   /**
@@ -62,7 +61,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverse()
   {
-    mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
+    mDrive.tankDrive(-Constants.kMaxSpeed, -Constants.kMaxSpeed);
   }
 
   /**
@@ -70,7 +69,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverseSlow()
   {
-    mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
+    mDrive.tankDrive(-Constants.kSlowSpeed, -Constants.kSlowSpeed);
   }
 
   /**
@@ -82,7 +81,7 @@ public class Drivetrain extends Subsystem {
    * @param Joystick stick
    * @author CRahne
    */
-  public void teleOpDrive(Joystick stick)
+  public void OperatorDrive(Joystick stick)
   {
   	mDrive.arcadeDrive(stick.getY(), stick.getZ());
   }
@@ -104,9 +103,9 @@ public class Drivetrain extends Subsystem {
    * @return mDT_LeftFront
    * @author CRahne
    */
-  public WPI_TalonSRX getDT_LFront()
+  public WPI_TalonSRX getLeftFront()
   {
-    return mDT_LeftFront;
+    return mLeftFront;
   }
 
   /**
@@ -115,9 +114,9 @@ public class Drivetrain extends Subsystem {
    * @return mDT_LeftRear
    * @author CRahne
    */
-  public WPI_TalonSRX getDT_LRear()
+  public WPI_TalonSRX getLeftRear()
   {
-    return mDT_LeftRear;
+    return mLeftRear;
   }
 
   /**
@@ -126,9 +125,9 @@ public class Drivetrain extends Subsystem {
    * @return mDT_RightFront
    * @author CRahne
    */
-  public WPI_TalonSRX getDT_RFront()
+  public WPI_TalonSRX getRightFront()
   {
-    return mDT_RightFront;
+    return mRightFront;
   }
 
   
@@ -138,9 +137,9 @@ public class Drivetrain extends Subsystem {
    * @return mDT_RightRear
    * @author CRahne
    */
-  public WPI_TalonSRX getDTRRear()
+  public WPI_TalonSRX getRightRear()
   {
-    return mDT_RightRear;
+    return mRightRear;
   }
 
   public void initDefaultCommand() {
