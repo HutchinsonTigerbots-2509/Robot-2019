@@ -47,6 +47,7 @@ public class Vision extends Subsystem {
     mTargetY = mTableX.getDouble(0.0);
     return mTargetY;
   }
+
   /**
    * Returns the 'Area' value from the Limelight.
    * If no value is detected will return 0.0
@@ -65,6 +66,7 @@ public class Vision extends Subsystem {
     mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
     mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
     mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
+    mTable.getEntry("pipeline").setNumber(3);
   }
 
 

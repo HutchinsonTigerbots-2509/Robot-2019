@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,15 +20,15 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class Drivetrain extends Subsystem {
+public class DriveTrain extends Subsystem {
   public boolean TargetAligned;
-  private final WPI_TalonSRX RightOne = RobotMap.DrivetrainRightMaster;
-  private final WPI_TalonSRX RightTwo = RobotMap.DrivetrainRightSlave;
-  private final WPI_TalonSRX LeftOne = RobotMap.DrivetrainLeftMaster;
-  private final WPI_TalonSRX LeftTwo = RobotMap.DrivetrainLeftSlave;
-  private final SpeedControllerGroup LeftDrive = RobotMap.LeftDriveTrain;
-  private final SpeedControllerGroup RightDrive = RobotMap.RightDrivetrain;
-  private final DifferentialDrive Drive = RobotMap.RobotDrive;
+  private final WPI_TalonSRX RightOne = RobotMap.DriveTrainRightOne;
+  private final WPI_TalonSRX RightTwo = RobotMap.DriveTrainRightTwo;
+  private final WPI_TalonSRX LeftOne = RobotMap.DriveTrainLeftOne;
+  private final WPI_TalonSRX LeftTwo = RobotMap.DriveTrainLeftTwo;
+  private final SpeedControllerGroup LeftDrive = RobotMap.DriveTrainLeft;
+  private final SpeedControllerGroup RightDrive = RobotMap.DriveTrainRight;
+  private final DifferentialDrive Drive = RobotMap.Drive;
 
   public void OperatorControl(Joystick stick){
     Drive.arcadeDrive(stick.getY()*0.5, stick.getZ()*-0.5);
