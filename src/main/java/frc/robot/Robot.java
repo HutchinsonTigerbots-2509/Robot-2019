@@ -20,10 +20,10 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static Vision sVision = new Vision();
+  public static Intake sIntake;
+  public static Vision sVision;
 
   public static OI oi;
-  public static Intake intake = new Intake();
 
 
   /**
@@ -32,6 +32,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    sIntake = new Intake();
+    sVision = new Vision();
     oi = new OI();
   }
 

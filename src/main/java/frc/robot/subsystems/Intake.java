@@ -18,8 +18,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
 
 /**
- * @author Tony
- * @author Cole
+ * @author Tony & Cole
  */
 public class Intake extends PIDSubsystem {
   private static DoubleSolenoid leftPush = RobotMap.leftPush;
@@ -33,7 +32,7 @@ public class Intake extends PIDSubsystem {
    
   public Intake() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 2, 3);
+    super("Intake", 0, 0, 0);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
@@ -46,30 +45,30 @@ public class Intake extends PIDSubsystem {
   
 
   }
-  public void intakeIn(){
+  public void In(){
     intakeMotors.set(1.0);      
   }
-  public void intakeClose(){
+  public void Close(){
     open.set(Value.kReverse);
   }
-  public void intakeStop(){
+  public void StopOpen(){
     open.set(Value.kOff);
   }
 
-  public void wristUp(){
+  public void Up(){
     wrist.set(Value.kForward);
   }           
-  public void wristDown(){
+  public void Down(){
     wrist.set(Value.kReverse);
   }
-  public void wristStop(){
+  public void StopWrist(){
     wrist.set(Value.kOff);
   }
 
-  public void intakeOpen(){
+  public void Open(){
     open.set(Value.kForward);
   }
-  public void intakeOut(){
+  public void Out(){
     intakeMotors.set(-1.0);
   }
   public void motorsStop(){

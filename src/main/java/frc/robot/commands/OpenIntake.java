@@ -12,9 +12,10 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
 public class OpenIntake extends Command {
-  public Intake intake = Robot.intake;
+  public Intake sIntake = Robot.sIntake;
+  
   public OpenIntake() {
-    requires (intake);
+    requires (sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -22,7 +23,7 @@ public class OpenIntake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    intake.intakeOpen();
+    sIntake.Open();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,7 +40,7 @@ public class OpenIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    intake.intakeStop();
+    sIntake.StopOpen();
   }
 
   // Called when another command which requires one or more of the same

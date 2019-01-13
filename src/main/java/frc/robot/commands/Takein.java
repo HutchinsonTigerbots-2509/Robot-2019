@@ -10,9 +10,10 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
 public class Takein extends Command {
-  private Intake intake = Robot.intake;
+  private Intake sIntake = Robot.sIntake;
+  
   public Takein(){
-    requires(intake);
+    requires(sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -20,7 +21,7 @@ public class Takein extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    intake.intakeIn();
+    sIntake.In();
   
   }
 
@@ -38,7 +39,7 @@ public class Takein extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    intake.motorsStop();
+    sIntake.motorsStop();
 
   }
   // Called when another command which requires one or more of the same
