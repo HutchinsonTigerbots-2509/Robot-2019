@@ -27,15 +27,15 @@ public class RobotMap
      *                           Back
      */
     
-    public static WPI_TalonSRX kDT_LFront;
-    public static WPI_TalonSRX kDT_LRear;
-    public static WPI_TalonSRX kDT_RFront;
-    public static WPI_TalonSRX kDT_RRear;
+    public static WPI_TalonSRX DrivetrainLeftFront;
+    public static WPI_TalonSRX DrivetrainLeftRear;
+    public static WPI_TalonSRX DrivetrainRightFront;
+    public static WPI_TalonSRX DrivetrainRightRear;
 
-    public static SpeedControllerGroup kRightDrivetrain;
-    public static SpeedControllerGroup kLeftDrivetrain;
+    public static SpeedControllerGroup DrivetrainLeft;
+    public static SpeedControllerGroup DrivetrainRight;
     
-    public static DifferentialDrive  kDrive;
+    public static DifferentialDrive  DrivetrainDifferential;
 
     public static void init()
     {
@@ -49,19 +49,17 @@ public class RobotMap
          * Group.
          */
         
-        kDT_LFront = new WPI_TalonSRX(0); // Both Fronts
-        kDT_LRear = new WPI_TalonSRX(1);
-        kDT_RFront = new WPI_TalonSRX(2); // Both Fronts
-        kDT_RRear = new WPI_TalonSRX(3);
+        DrivetrainLeftFront = new WPI_TalonSRX(Constants.kDrivetrainLeftFrontID); // Both Fronts
+        DrivetrainLeftRear = new WPI_TalonSRX(Constants.kDrivetrainLeftRearID);
+        //DrivetrainLeftRear.follow(DrivetrainLeftFront);
+        DrivetrainRightFront = new WPI_TalonSRX(Constants.kDrivetrainRightFrontID); // Both Fronts
+        DrivetrainRightRear = new WPI_TalonSRX(Constants.kDrivetrainRightRearID);
+        //DrivetrainRightRear.follow(DrivetrainRightFront);
 
-        kRightDrivetrain = new SpeedControllerGroup(kDT_RFront,kDT_RRear);
-        kLeftDrivetrain = new SpeedControllerGroup(kDT_LFront,kDT_LRear);
+        DrivetrainLeft = new SpeedControllerGroup(DrivetrainLeftFront,DrivetrainLeftRear);
+        DrivetrainRight = new SpeedControllerGroup(DrivetrainRightFront,DrivetrainRightRear);
 
-
-
-
-
-        kDrive = new DifferentialDrive(kLeftDrivetrain, kRightDrivetrain);
+        DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight);
         //#endregion
     }
 
