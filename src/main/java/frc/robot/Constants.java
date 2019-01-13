@@ -11,6 +11,9 @@ public final class Constants{
     public Constants(){}
     /*Motors*/
     public static double kMaxSpeed = 0.95;
+    public static double kSlowSpeed = 0.65; // IDK but sure
+    public static double kTurnSpeed = 0.57575;
+    public static double kWheelDiameter = 6;
 
     /*Limelight*/
     //Network
@@ -33,4 +36,8 @@ public final class Constants{
     // update the spreadsheet!
     // Port assignments should match up with the spreadsheet here:
     // https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing
+    public static int kDrivetrainLeftFrontID = 0;
+    public static int kDrivetrainLeftRearID = 1;
+    public static int kDrivetrainRightFrontID = 2;
+    public static int kDrivetrainRightRearID = 3;
 }
