@@ -52,6 +52,7 @@ public class Vision extends Subsystem {
     mTargetY = mTableX.getDouble(0.0);
     return mTargetY;
   }
+
   /**
    * Returns the 'Area' value from the Limelight.
    * If no value is detected will return 0.0

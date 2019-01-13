@@ -17,9 +17,11 @@ public class FollowTarget extends Command {
   private DriveTrain sDriveTrain = Robot.sDriveTrain;
   private Vision sVision = Robot.sVision;
   private double TargetX; 
+  private double TargetY;
   private boolean TargetDistanceCheck = false;
   public FollowTarget() {
     TargetX = sVision.getTargetX();
+    TargetY = sVision.getTargetY();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -33,25 +35,28 @@ public class FollowTarget extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    TargetX=sVision.getTargetX();
+    TargetY = sVision.getTargetY();
     if (sDriveTrain.TargetAligned == false){
-      if(TargetX < 0){
+      if(TargetX < -3){
         sDriveTrain.TurnLeft();
-      } else if(TargetX > 0){
+      } else if(TargetX > 3){
         sDriveTrain.TurnRight();
       } else{
         sDriveTrain.StopMotors();
+        sDriveTrain.TargetAligned = true;
       }
-    } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false){
-      sDriveTrain.MoveForward();
-    }
     if(TargetX < -3 || TargetX > 3){
       sDriveTrain.TargetAligned = false;
     }
-    if((Constants.kCameraHeight+Constants.kTargetHeight) / Math.tan(Constants.kCameraAngle + 4) < 24){
+    if((Constants.kTargetHeight-Constants.kCameraHeight) / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24){
       sDriveTrain.StopMotors();
       TargetDistanceCheck = true;
-    } else if(Constants.kCameraHeight / Math.tan(Constants.kCameraAngle + 4) > 24){
+    } else if((Constants.kTargetHeight-Constants.kCameraHeight) / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24){
       TargetDistanceCheck = false;
+    }
+    } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false){
+      sDriveTrain.MoveForward();
     }
   }
 
