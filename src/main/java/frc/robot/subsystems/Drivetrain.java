@@ -8,6 +8,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
+ * @author Wayne
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
  * Drive Varible
@@ -40,7 +41,6 @@ public class Drivetrain extends Subsystem {
    * in OI.java, then drive the robot.
    * 
    * @param Joystick stick
-   * @author CRahne
    */
   public void OPDRIVE(Joystick stick)
   {
