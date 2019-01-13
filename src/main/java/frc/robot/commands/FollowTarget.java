@@ -10,15 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
 public class FollowTarget extends Command {
-  private DriveTrain sDriveTrain = Robot.sDriveTrain;
+  private Drivetrain sDriveTrain = Robot.sDrivetrain;
   private Vision sVision = Robot.sVision;
-  private double TargetX; 
+  private double TargetX;
   private double TargetY;
   private boolean TargetDistanceCheck = false;
+
   public FollowTarget() {
     TargetX = sVision.getTargetX();
     TargetY = sVision.getTargetY();
@@ -35,27 +36,29 @@ public class FollowTarget extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TargetX=sVision.getTargetX();
+    TargetX = sVision.getTargetX();
     TargetY = sVision.getTargetY();
-    if (sDriveTrain.TargetAligned == false){
-      if(TargetX < -3){
+    if (sDriveTrain.TargetAligned == false) {
+      if (TargetX < -3) {
         sDriveTrain.TurnLeft();
-      } else if(TargetX > 3){
+      } else if (TargetX > 3) {
         sDriveTrain.TurnRight();
-      } else{
+      } else {
         sDriveTrain.StopMotors();
         sDriveTrain.TargetAligned = true;
       }
-    if(TargetX < -3 || TargetX > 3){
-      sDriveTrain.TargetAligned = false;
-    }
-    if((Constants.kTargetHeight-Constants.kCameraHeight) / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24){
-      sDriveTrain.StopMotors();
-      TargetDistanceCheck = true;
-    } else if((Constants.kTargetHeight-Constants.kCameraHeight) / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24){
-      TargetDistanceCheck = false;
-    }
-    } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false){
+      if (TargetX < -3 || TargetX > 3) {
+        sDriveTrain.TargetAligned = false;
+      }
+      if ((Constants.kTargetHeight - Constants.kCameraHeight)
+          / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24) {
+        sDriveTrain.StopMotors();
+        TargetDistanceCheck = true;
+      } else if ((Constants.kTargetHeight - Constants.kCameraHeight)
+          / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24) {
+        TargetDistanceCheck = false;
+      }
+    } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false) {
       sDriveTrain.MoveForward();
     }
   }

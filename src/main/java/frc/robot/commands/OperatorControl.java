@@ -10,11 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drivetrain;
 
 public class OperatorControl extends Command {
-  private DriveTrain sDriveTrain = Robot.sDriveTrain;
+  private Drivetrain sDriveTrain = Robot.sDrivetrain;
   private Joystick stick = Robot.oi.stick;
+
   public OperatorControl() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
