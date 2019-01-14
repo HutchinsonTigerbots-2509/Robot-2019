@@ -7,6 +7,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Encoder;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,5 +18,11 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+
+    //Elevator
+    public static WPI_TalonSRX Right_Lift;
+    public static WPI_TalonSRX Left_Lift;
+    public static Encoder  RightLiftEncoder;
+    public static Encoder LeftLiftEncoder;
   
 }
