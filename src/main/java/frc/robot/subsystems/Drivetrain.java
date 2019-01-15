@@ -51,7 +51,17 @@ public class Drivetrain extends Subsystem {
     LeftDrive.set(Constants.kTargetFollowSpeed);
     RightDrive.set(Constants.kTargetFollowSpeed);
   }
-
+  public void PIDSteering(double tx){
+    double kF = -0.1;
+    double speed=0;
+    // if(tx<1){
+    //   speed += kF*tx;
+    // }else if(tx>1){
+    //   speed += kF*tx;
+    // }
+    speed = kF*tx;
+    Drive.arcadeDrive(0,speed);
+  }
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
