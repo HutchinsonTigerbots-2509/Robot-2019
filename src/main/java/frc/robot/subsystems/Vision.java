@@ -1,18 +1,13 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot.subsystems; // package declaration
 
-package frc.robot.subsystems;
-
-
+// imports
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
 
 /**
+ * The Vision Subsystem is the limelight camera thing -- Nate you finish pls
+ * 
  * @author Nate C
  */
 public class Vision extends Subsystem {
@@ -52,6 +47,7 @@ public class Vision extends Subsystem {
     mTargetY = mTableX.getDouble(0.0);
     return mTargetY;
   }
+
   /**
    * Returns the 'Area' value from the Limelight.
    * If no value is detected will return 0.0
@@ -70,6 +66,7 @@ public class Vision extends Subsystem {
     mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
     mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
     mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
+    mTable.getEntry("pipeline").setNumber(3);
   }
 
 
