@@ -17,7 +17,7 @@ public final class Constants {
     public static double kTurnSpeed = 0.15;
     public static double kTargetFollowSpeed = 0.2;
     public static double kCameraHeight = 24;
-    public static double kCameraAngle = -1.7;
+    public static double kCameraAngle = 1.7;
     public static double kTargetHeight = 31.5;
     /* Limelight */
     // Network

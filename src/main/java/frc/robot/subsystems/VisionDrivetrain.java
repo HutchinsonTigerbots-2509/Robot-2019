@@ -5,20 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * Add your docs here.
  */
-public class AlignWithTargetPID extends PIDSubsystem {
+public class VisionDrivetrain extends PIDSubsystem {
+  DifferentialDrive drive = RobotMap.RobotDrive;
   /**
    * Add your docs here.
    */
-  public AlignWithTargetPID() {
+  public VisionDrivetrain() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 2, 3);
+    super("VisionDrivetrain", 1, 2, 3);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
@@ -43,5 +47,6 @@ public class AlignWithTargetPID extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
+    drive.arcadeDrive(0, output);
   }
 }
