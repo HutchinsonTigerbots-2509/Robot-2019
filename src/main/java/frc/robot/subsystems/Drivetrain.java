@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -29,29 +28,64 @@ public class Drivetrain extends Subsystem {
   private final SpeedControllerGroup LeftDrive = RobotMap.LeftDriveTrain;
   private final SpeedControllerGroup RightDrive = RobotMap.RightDrivetrain;
   private final DifferentialDrive Drive = RobotMap.RobotDrive;
-
-  public void OperatorControl(Joystick stick){
-    Drive.arcadeDrive(stick.getY()*0.5, stick.getZ()*-0.5);
+  private final double kP = Constants.kDrivetrainP;
+  private final double kI = Constants.kDrivetrainI;
+  private final double kD = Constants.kDrivetrainD;
+  private double mSetpoint = 0;
+  private double error = 0;
+  private double previousError = 0;
+  public Drivetrain(){
+    setName("Drivetrain");
+    addChild(RightMaster);
+    addChild(RightSlave);
+    addChild(LeftMaster);
+    addChild(LeftSlave);
   }
-  public void StopMotors(){
+
+  public void OperatorControl(Joystick stick) {
+    Drive.arcadeDrive(stick.getY() * 0.5, stick.getZ() * -0.5);
+  }
+
+  public void StopMotors() {
     RightMaster.stopMotor();
     RightSlave.stopMotor();
     LeftMaster.stopMotor();
     LeftSlave.stopMotor();
   }
-  public void TurnLeft(){
+
+  public void TurnLeft() {
     LeftDrive.set(Constants.kTurnSpeed);
     RightDrive.set(Constants.kTurnSpeed);
   }
-  public void TurnRight(){
+
+  public void TurnRight() {
     LeftDrive.set(-Constants.kTurnSpeed);
     RightDrive.set(-Constants.kTurnSpeed);
   }
-  public void MoveForward(){
+
+  public void MoveForward() {
     LeftDrive.set(Constants.kTargetFollowSpeed);
     RightDrive.set(Constants.kTargetFollowSpeed);
   }
 
+  public void setSetpoint(int setpoint) {
+    this.mSetpoint = setpoint;
+  }
+
+  public void AimToTargetPID(double tx) {
+    double mIntegral = 0;
+    double mDerivative = 0;
+    double mOutput = 0;
+    double mActual = tx;
+
+    error = mSetpoint - mActual;// Error = Target - Actual
+    mIntegral += (error * .02);// Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+    mDerivative = (error - previousError) / .02;
+    mOutput = kP * error + kI * mIntegral + kD * mDerivative;
+    previousError = error;// Sets pr
+
+    Drive.arcadeDrive(0, mOutput);
+  }
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

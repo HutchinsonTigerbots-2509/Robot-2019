@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
+import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.FollowTarget;
 import frc.robot.subsystems.*;
 
@@ -16,6 +17,7 @@ import frc.robot.subsystems.*;
 public class OI {
   public Joystick stick;
   private JoystickButton AlignButton;
+  private JoystickButton AlignButtonPID;
   private JoystickButton FollowButton;
   private Vision sVision = Robot.sVision;
   private Drivetrain sDrivetrain = Robot.sDrivetrain;
@@ -59,9 +61,16 @@ public class OI {
     opstick = new Joystick(0);
 
     AlignButton = new JoystickButton(stick, 12);
-    FollowButton = new JoystickButton(stick, 11);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
+    SmartDashboard.putData(AlignButton);
+
+    AlignButtonPID = new JoystickButton(stick, 10);
+    AlignButtonPID.whileHeld(new AlignWithTargetPID());
+    SmartDashboard.putData(AlignButtonPID);
+
+    FollowButton = new JoystickButton(stick, 11);
     FollowButton.toggleWhenPressed(new FollowTarget());
+    SmartDashboard.putData(FollowButton);
 
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);

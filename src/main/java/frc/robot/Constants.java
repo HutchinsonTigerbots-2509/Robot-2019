@@ -19,6 +19,9 @@ public final class Constants {
     public static double kCameraHeight = 24;
     public static double kCameraAngle = -1.7;
     public static double kTargetHeight = 31.5;
+    public static double kDrivetrainP = 1;
+    public static double kDrivetrainI = 0;
+    public static double kDrivetrainD = 0;
     /* Limelight */
     // Network
     public static String kLimelightIP = "10.25.9.11";
