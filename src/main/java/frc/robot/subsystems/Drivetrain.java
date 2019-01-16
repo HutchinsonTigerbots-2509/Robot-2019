@@ -34,7 +34,8 @@ public class Drivetrain extends Subsystem {
   private double mSetpoint = 0;
   private double error = 0;
   private double previousError = 0;
-  public Drivetrain(){
+
+  public Drivetrain() {
     setName("Drivetrain");
     addChild(RightMaster);
     addChild(RightSlave);
@@ -85,6 +86,19 @@ public class Drivetrain extends Subsystem {
     previousError = error;// Sets pr
 
     Drive.arcadeDrive(0, mOutput);
+
+  }
+
+  public void PIDSteering(double tx) {
+    double kF = -0.1;
+    double speed = 0;
+    // if(tx<1){
+    // speed += kF*tx;
+    // }else if(tx>1){
+    // speed += kF*tx;
+    // }
+    speed = kF * tx;
+    Drive.arcadeDrive(0, speed);
   }
 
   // Put methods for controlling this subsystem
