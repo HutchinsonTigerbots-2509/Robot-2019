@@ -1,4 +1,4 @@
-# FRC 2019
+# :sparkles: :rocket: FRC 2019 :rocket: :sparkles:
 
 Team 2509's 2019 FRC robot code for *RobotName*. *RobotName*'s code is written in Java and is based off of WPILib's Java control system.
 
@@ -155,3 +155,12 @@ Drive     | VictorSP   | Left Front | 0  | - |
 - k*** (i.e. `kDriveWheelTrackWidthInches`): Final constants, especially those found in the Constants.java file
 - m*** (i.e. `mIsHighGear`): Private instance variables
 - s*** (i.e. `sDrivetrain`): Subsystems variables, especially those found in Robot.java file
+
+## Programmers
+* [GoldenGollem](https://github.com/GoldenGollem) :space_invader:
+* [CRahne](https://github.com/CRahne) :golf:
+* [DScheele1](https://github.com/DScheele1) :tea:
+* [ceciliaschmitz1](https://github.com/ceciliaschmitz1)
+* [FerisJumbo](https://github.com/FerisJumbo) :ferris_wheel:
+* [danevenson13](https://github.com/danevenson13) :muscle:
+* [Tjwiseguy](https://github.com/Tjwiseguy) :tiger:

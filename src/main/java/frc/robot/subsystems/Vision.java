@@ -1,18 +1,13 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot.subsystems; // package declaration
 
-package frc.robot.subsystems;
-
-
+// imports
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
 
 /**
+ * The Vision Subsystem is the limelight camera thing -- Nate you finish pls
+ * 
  * @author Nate C
  */
 public class Vision extends Subsystem {

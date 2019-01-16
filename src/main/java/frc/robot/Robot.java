@@ -1,15 +1,11 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot; // Package Declaration
 
-package frc.robot;
-
+// imports
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.OPDrive;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,9 +15,16 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
+  
+  //Subsystem Declaration
   public static Vision sVision = new Vision();
+  public static Drivetrain DT = new Drivetrain();
 
+  //OI Declaration
   public static OI oi;
+
+  //OPDrive Declaration
+  public static OPDrive opdrive;
 
 
   /**
@@ -94,6 +97,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
+    opdrive.start();
   }
 
   /**

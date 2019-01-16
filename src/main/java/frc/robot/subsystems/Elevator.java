@@ -8,17 +8,22 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import frc.robot.Constants;
 
 /**
  * Add your docs here.
  */
 public class Elevator extends PIDSubsystem {
+  private  double kP = Constants.kElevatorP;
+  private  double kI = Constants.kElevatorI;
+  private  double kD = Constants.kElevatorD;
+
   /**
    * Add your docs here.
    */
   public Elevator() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 1, 1);
+    super("Elevator", Constants.kElevatorP, Constants.kElevatorI, Constants.kElevatorD);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
