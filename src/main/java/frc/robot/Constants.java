@@ -12,6 +12,10 @@ public final class Constants{
     /*Motors*/
     public static double kMaxSpeed = 0.95;
 
+    /*Elevator*/
+    public static double kElevatorP = 1;
+    public static double kElevatorI = 0;
+    public static double kElevatorD = 0;
     /*Limelight*/
     //Network
    public static String kLimelightIP = "10.25.9.11";
