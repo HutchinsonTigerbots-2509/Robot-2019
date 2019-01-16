@@ -4,7 +4,7 @@ package frc.robot; // Package Declaration
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.OPDrive;
+import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -17,14 +17,14 @@ import frc.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
   
   //Subsystem Declaration
-  public static Vision sVision = new Vision();
-  public static Drivetrain DT = new Drivetrain();
+  public static Drivetrain sDrivetrain;
+  public static Vision sVision;
 
   //OI Declaration
   public static OI oi;
 
   //OPDrive Declaration
-  public static OPDrive opdrive;
+  public static OperatorDrive cOpDrive;
 
 
   /**
@@ -33,8 +33,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    RobotMap.init();
+    sDrivetrain = new Drivetrain();
+    sVision = new Vision();
     oi = new OI();
-  }
+   }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -97,7 +100,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     //   cAutoCommand.cancel();
     // }
-    opdrive.start();
+    cOpDrive.start();
   }
 
   /**

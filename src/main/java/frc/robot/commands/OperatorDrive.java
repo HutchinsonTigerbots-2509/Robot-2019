@@ -10,25 +10,25 @@ import frc.robot.subsystems.Drivetrain;
  * OPDrive is the command where the controller is physically bound to the drivetrain. This allows whatever
  * Joystick you want to be able to drive.
  * 
- * 
+ *  
  * @author CRahne
  */
-public class OPDrive extends Command {
+public class OperatorDrive extends Command {
   
   // Imported Object Declaration  
-  private Joystick stick = Robot.oi.opstick; // The Operator Stick (the one that is used for driving)
-  private Drivetrain DT = Robot.DT; // The DriveTrain subsystem
+  private Joystick mStick = Robot.oi.getOpeatorStick(); // The Operator Stick (the one that is used for driving)
+  private Drivetrain sDrivetrain = Robot.sDrivetrain; // The DriveTrain subsystem
   
-  public OPDrive() {
-    requires(DT); // Tells the code to use the drivetrain subsystem in this command
+  public OperatorDrive() {
+    requires(sDrivetrain); // Tells the code to use the drivetrain subsystem in this command
   }
 
   protected void initialize() {
-    DT.OPDRIVE(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
+    sDrivetrain.OperatorDrive(mStick); // Uses the OPDRIVE() method that is created in Drivetrain.java
   }
 
   protected void execute() {
-    DT.OPDRIVE(stick); // Uses the OPDRIVE() method that is created in Drivetrain.java
+    sDrivetrain.OperatorDrive(mStick); // Uses the OPDRIVE() method that is created in Drivetrain.java
   }
 
   protected boolean isFinished() {
