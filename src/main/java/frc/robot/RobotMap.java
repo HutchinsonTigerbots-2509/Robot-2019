@@ -1,5 +1,6 @@
 package frc.robot; // package declartion
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup; 
@@ -41,11 +42,13 @@ public static void init() {
      */
 
     DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Both Fronts
+    DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID); 
-    // DrivetrainLeftRear.follow(DrivetrainLeftFront);
+    DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
+    DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
-    // DrivetrainRightRear.follow(DrivetrainRightFront);
+    DrivetrainRightSlave.follow(DrivetrainRightMaster);
 
     DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
 
