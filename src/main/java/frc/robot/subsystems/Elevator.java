@@ -1,11 +1,19 @@
-package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+package frc.robot.subsystems; 
+
 import frc.robot.RobotMap;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj.command.PIDSubsystem; 
+import frc.robot.Constants; 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class Elevator extends PIDSubsystem {
 
@@ -13,11 +21,13 @@ public class Elevator extends PIDSubsystem {
   private double kI = Constants.kElevatorI; 
   private double kD = Constants.kElevatorD; 
 
-  public static WPI_TalonSRX RightSpoolMaster = RobotMap.Right_Lift;
-  public static VictorSP LeftSpoolSlave = RobotMap.LeftSpoolSlave;
+  public static TalonSRX RightSpoolMaster = RobotMap.RightSpoolMaster;
+  public static VictorSPX LeftSpoolSlave = RobotMap.LeftSpoolSlave;
   public static Encoder ElevatorEncoder = RobotMap.RightLiftEncoder;
 
   public Elevator(){
+
+    super("Elevator", Constants.kElevatorP, Constants.kElevatorI, Constants.kElevatorD);
 
     setName("LiftTrain");
     addChild(RightSpoolMaster);
