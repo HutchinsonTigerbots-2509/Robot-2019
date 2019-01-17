@@ -1,10 +1,12 @@
 package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup; 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -30,6 +32,13 @@ public static Encoder DrivetrainRightEncoder;
 public static SpeedControllerGroup DrivetrainLeft; 
 public static SpeedControllerGroup DrivetrainRight; 
 public static DifferentialDrive DrivetrainDifferential; 
+//Elevator
+public static WPI_TalonSRX Right_Lift;
+public static WPI_TalonSRX Left_Lift;
+public static Encoder  RightLiftEncoder;
+public static Encoder LeftLiftEncoder;
+public static WPI_TalonSRX RightSpoolMaster; 
+public static VictorSPX LeftSpoolSlave; 
 
 public static void init() {
     //#region DriveTrain
@@ -59,5 +68,12 @@ public static void init() {
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
+    
+    RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
+    RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
+    LeftSpoolSlave.follow(RightSpoolMaster);
     }
+
+  
 }

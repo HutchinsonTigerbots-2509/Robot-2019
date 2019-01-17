@@ -27,6 +27,9 @@ public final class Constants {
     public static double kElevatorI = 0;
     public static double kElevatorD = 0;
 
+    public static int kRightSpoolMasterMasterID = 4;
+    public static int kLeftSpoolSlaveID = 5;
+
     /*V ision */
     // Physical
     public static double kCameraHeight = 24;
