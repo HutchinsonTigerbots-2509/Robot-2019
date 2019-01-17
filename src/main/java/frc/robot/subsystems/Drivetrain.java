@@ -1,16 +1,12 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
@@ -21,14 +17,6 @@ import frc.robot.RobotMap;
  * through the motors created in RobotMap, which are stored in a Differential
  * Drive Varible
  * 
- *                               Front
- *<h4>   DriveTrainLeft   |----------------| DriveTrain Right </h4>
- *<h4>    DTLeft1         |----------------| DTRight1 </h4>
- *<h4>                    |----------------| </h4>
- *<h4>                    |----------------| </h4>
- *<h4>                    |----------------| </h4>
- *<h4>    DTLeft2         |----------------| DTRight2 </h4>
- *                               Back
  * @author CRahne and Wayne
  */
 public class Drivetrain extends Subsystem {
@@ -41,8 +29,12 @@ public class Drivetrain extends Subsystem {
   private final WPI_TalonSRX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final WPI_TalonSRX mRightSlave = RobotMap.DrivetrainRightSlave;
+  private final Encoder mRightEncoder = RobotMap.DrivetrainRightEncoder;
+  private final Encoder mLeftEncoder = RobotMap.DrivetrainLeftEncoder;
+  private final AHRS mGyro = RobotMap.Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
+  
 
   public boolean TargetAligned;
   private final double kP = Constants.kDrivetrainP;
@@ -107,6 +99,22 @@ public class Drivetrain extends Subsystem {
     mDrive.arcadeDrive(stick.getY(), stick.getZ());
   }
 
+  public void driveForward(double targetDistance) {
+    sensorReset();
+    double wheelDiameter = 6;
+    double target = (targetDistance/(wheelDiameter*Math.PI))*3*360;
+    Timer.delay(0.1);
+    while(getEncoderAverageValue() / 2 <= target) {
+      mDrive.arcadeDrive(0.7, 0.7);
+    }
+    mDrive.tankDrive(0, 0);
+  }
+
+  public double getEncoderAverageValue()
+  {
+    return mRightEncoder.get() + mLeftEncoder.get() / 2;
+  }
+
   public void StopMotors() {
     mRightMaster.stopMotor();
     mRightSlave.stopMotor();
@@ -149,6 +157,12 @@ public class Drivetrain extends Subsystem {
 
   }
 
+  public void sensorReset() {
+    mGyro.reset();
+    mRightEncoder.reset();
+    mLeftEncoder.reset();
+  }
+
   public void PIDSteering(double tx) {
     double kF = -0.1;
     double speed = 0;
@@ -161,7 +175,27 @@ public class Drivetrain extends Subsystem {
     mDrive.arcadeDrive(0, speed);
   }
 
+  public void rotate(double target)
+  {
+    mGyro.reset();
+    double gyro_input = mGyro.getAngle();
 
+    if(target > gyro_input)
+    {
+      while(target > gyro_input)
+      {
+        TurnRight();
+      }
+    }
+    else if(target < gyro_input)
+    {
+      while(target < gyro_input)
+      {
+        TurnLeft();
+      }
+    }
+    StopMotors();
+  }
 
   /**
    * Will return the Drive Varible from RobotMap.java

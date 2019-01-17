@@ -21,8 +21,10 @@ public class Robot extends TimedRobot {
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
+
   /*OI Declaration*/
   public static OI oi;
+
   /*Command Declarations*/
   public static OperatorDrive cOpDrive;
 
@@ -32,13 +34,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // RobotMap must be initialized first
+    // because everything else uses that as
+    // a reference
     RobotMap.init();
+
+    // Subsystems must be initialized
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+    
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
+    
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
 
