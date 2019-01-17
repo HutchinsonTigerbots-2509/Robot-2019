@@ -1,18 +1,33 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot; // package declaraition
 
-package frc.robot;
+// imports
+import edu.wpi.first.networktables.NetworkTable; 
+import edu.wpi.first.wpilibj.Joystick; 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import frc.robot.subsystems.Vision; 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AlignWithTarget;
+import frc.robot.commands.AlignWithTargetPID;
+import frc.robot.commands.FollowTarget;
+import frc.robot.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  //#region Joystic Button Creation
+  private Joystick mOpStick;
+  private JoystickButton AlignButton;
+  private JoystickButton AlignButtonPID;
+  private JoystickButton FollowButton;
+  private final Drivetrain sDrivetrain = Robot.sDrivetrain;
+  private final Vision sVision = Robot.sVision;
+  private NetworkTable mLimeTable;
+
+  // #region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   //// joystick.
@@ -40,7 +55,34 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
-  //#endregion
+  // #endregion
 
-  
+  public OI() {
+    /* Joysticks & Buttons */
+    mOpStick = new Joystick(0);
+
+    AlignButton = new JoystickButton(mOpStick, 12);
+    AlignButton.toggleWhenPressed(new AlignWithTarget());
+    SmartDashboard.putData(AlignButton);
+
+    AlignButtonPID = new JoystickButton(mOpStick, 10);
+    AlignButtonPID.whileHeld(new AlignWithTargetPID());
+    SmartDashboard.putData(AlignButtonPID);
+
+    FollowButton = new JoystickButton(mOpStick, 11);
+    FollowButton.toggleWhenPressed(new FollowTarget());
+    SmartDashboard.putData(FollowButton);
+
+    /* Drivetrain */
+    SmartDashboard.putData(sDrivetrain);
+
+    /* Vision & NetworkTables */
+    mLimeTable = sVision.getTable();
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+  }
+  public Joystick getOperatorStick(){
+    return mOpStick;
+  }
 }
