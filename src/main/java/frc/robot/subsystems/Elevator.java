@@ -50,4 +50,16 @@ public class Elevator extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     
   }
+
+  public void LiftMax(){
+    
+  }
+
+public double getCurrentHight(){
+  
+}
+
+public Encoder getLeftEncoder() {
+    return ElevatorEncoder;
+  }
 }
