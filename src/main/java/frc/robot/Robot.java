@@ -1,12 +1,12 @@
-package frc.robot; // Package Declaration
+package frc.robot;
 
-// imports
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,15 +17,13 @@ import frc.robot.subsystems.Elevator;
  */
 public class Robot extends TimedRobot {
 
-  // Subsystem Declaration
+  /*Subsystem Declarations*/
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
-
-  // OI Declaration
+  /*OI Declaration*/
   public static OI oi;
-
-  // OPDrive Declaration
+  /*Command Declarations*/
   public static OperatorDrive cOpDrive;
 
   /**
@@ -38,8 +36,13 @@ public class Robot extends TimedRobot {
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+    // OI must be inialized after Subsystems because OI
+    // refrences subsystem objects.
     oi = new OI();
+    // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
+
+    sVision.UpdateLimelightSettings();
   }
 
   /**
@@ -53,6 +56,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
   }
 
   /**
@@ -113,6 +119,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.updateValues();
     Scheduler.getInstance().run();
   }
 

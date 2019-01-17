@@ -16,8 +16,8 @@ import frc.robot.subsystems.Drivetrain;
 public class OperatorDrive extends Command {
   
   // Imported Object Declaration  
-  private Joystick mStick = Robot.oi.getOpeatorStick(); // The Operator Stick (the one that is used for driving)
-  private Drivetrain sDrivetrain = Robot.sDrivetrain; // The DriveTrain subsystem
+  private final Joystick mStick = Robot.oi.getOperatorStick(); // The Operator Stick (the one that is used for driving)
+  private final Drivetrain sDrivetrain = Robot.sDrivetrain; // The DriveTrain subsystem
   
   public OperatorDrive() {
     requires(sDrivetrain); // Tells the code to use the drivetrain subsystem in this command
