@@ -1,36 +1,36 @@
 package frc.robot; // package declaraition
 
 // imports
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Vision;
+import edu.wpi.first.networktables.NetworkTable; 
+import edu.wpi.first.wpilibj.Joystick; 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import frc.robot.subsystems.Vision; 
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  private Vision sVision = Robot.sVision;
-  private NetworkTable mLimeTable;
+private Vision sVision = Robot.sVision; 
+private NetworkTable mLimeTable; 
 
-  // The Driving Stick
-  private Joystick mOperatorStick;
+// The Driving Stick
+private Joystick mOperatorStick; 
 
-  public OI() {
-    // Joystick Declarations
-    mOperatorStick = new Joystick(0);
+public OI() {
+// Joystick Declarations
+mOperatorStick = new Joystick(0); 
 
-    /* Vision & NetworkTables */
-    mLimeTable = sVision.getTable();
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
-  }
+/* Vision & NetworkTables */
+mLimeTable = sVision.getTable(); 
+SmartDashboard.putNumber("limeLightX", sVision.getTargetX()); 
+SmartDashboard.putNumber("limeLightY", sVision.getTargetY()); 
+SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea()); 
+}
 
-  public Joystick getOpeatorStick() {
-    return mOperatorStick;
-  }
+public Joystick getOpeatorStick() {
+return mOperatorStick; 
+}
 }
 
 // #region Joystic Button Creation
