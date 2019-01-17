@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.VictorSP;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -24,5 +25,12 @@ public class RobotMap {
     public static WPI_TalonSRX Left_Lift;
     public static Encoder  RightLiftEncoder;
     public static Encoder LeftLiftEncoder;
+    public static WPI_TalonSRX RightSpoolMaster; 
+    public static VictorSP LeftSpoolSlave; 
+
+    RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
+    RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    LeftSpoolSlave = new WPI_TalonSRX(Constants.kLeftSpoolSlaveID); 
+    LeftSpoolLeftSlave.follow(RightSpoolMaster);
   
 }
