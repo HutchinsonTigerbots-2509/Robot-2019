@@ -1,6 +1,6 @@
 # :sparkles: :rocket: FRC 2019 :rocket: :sparkles:
 
-Team 2509's 2019 FRC robot code for *RobotName*. *RobotName*'s code is written in Java and is based off of WPILib's Java control system.
+Team 2509's 2019 FRC robot code for *Resurgence*. *Resurgence*'s code is written in Java and is based off of WPILib's Java control system.
 
 The code is divided into several packages, each responsible for a different aspect of the robot function. This README explains setup instructions, the function of each package, and some of the variable naming conventions used. Additional information about each specific class can be found in that class' Java file.
 
@@ -158,8 +158,6 @@ Drive     | TalonSRX   | Right Rear | 3  | - |
 - m*** (i.e. `mIsHighGear`): Private instance variables
 - s*** (i.e. `sDrivetrain`): Subsystems variables, especially those found in Robot.java file
 
-<<<<<<< HEAD
-=======
 ## PID Tuning Method
 1. Start by setting `I` and `D` to 0.
 2. Increase `P` until the system starts oscillating for a period of `Tu`. You want the oscillation to be large enough that you can time it. This maximum `P` will be referred to as `Ku`.
@@ -171,7 +169,7 @@ P | .5*`Ku` | 0 | 0 |
 PI | .45*`Ku` | .54*`Ku`/`Tu` | 0 |
 PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 
->>>>>>> Vision
+
 ## Programmers
 * [GoldenGollem](https://github.com/GoldenGollem) :space_invader:
 * [CRahne](https://github.com/CRahne) :golf:
