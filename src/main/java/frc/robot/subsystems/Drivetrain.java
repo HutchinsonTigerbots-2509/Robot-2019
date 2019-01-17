@@ -17,17 +17,34 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * The DriveTrain Subsystem is where the drivetrain is bound to the code
+ * through the motors created in RobotMap, which are stored in a Differential
+ * Drive Varible
+ * 
+ *                               Front
+ *<h4>   DriveTrainLeft   |----------------| DriveTrain Right </h4>
+ *<h4>    DTLeft1         |----------------| DTRight1 </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>                    |----------------| </h4>
+ *<h4>    DTLeft2         |----------------| DTRight2 </h4>
+ *                               Back
+ * @author CRahne and Wayne
  */
 public class Drivetrain extends Subsystem {
+
+  // Varible Declarations
+  private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
+  private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
+  private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
+  private final WPI_TalonSRX mLeftSlave = RobotMap.DrivetrainLeftSlave;
+  private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
+  private final WPI_TalonSRX mRightSlave = RobotMap.DrivetrainRightSlave;
+  private double kMaxSpeed = Constants.kMaxSpeed;
+  private double kSlowSpeed = Constants.kSlowSpeed;
+
   public boolean TargetAligned;
-  private final WPI_TalonSRX RightMaster = RobotMap.DrivetrainRightMaster;
-  private final WPI_TalonSRX RightSlave = RobotMap.DrivetrainRightSlave;
-  private final WPI_TalonSRX LeftMaster = RobotMap.DrivetrainLeftMaster;
-  private final WPI_TalonSRX LeftSlave = RobotMap.DrivetrainLeftSlave;
-  private final SpeedControllerGroup LeftDrive = RobotMap.LeftDriveTrain;
-  private final SpeedControllerGroup RightDrive = RobotMap.RightDrivetrain;
-  private final DifferentialDrive Drive = RobotMap.RobotDrive;
   private final double kP = Constants.kDrivetrainP;
   private final double kI = Constants.kDrivetrainI;
   private final double kD = Constants.kDrivetrainD;
@@ -37,36 +54,79 @@ public class Drivetrain extends Subsystem {
 
   public Drivetrain() {
     setName("Drivetrain");
-    addChild(RightMaster);
-    addChild(RightSlave);
-    addChild(LeftMaster);
-    addChild(LeftSlave);
+    addChild(mLeftMaster);
+    addChild(mLeftSlave);
+    addChild(mRightMaster);
+    addChild(mRightSlave);
+  }
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+  @Override
+  public void initDefaultCommand() {
   }
 
-  public void OperatorControl(Joystick stick) {
-    Drive.arcadeDrive(stick.getY() * 0.5, stick.getZ() * -0.5);
+  /**
+   * Will drive forward at 95%.
+   */
+  public void driveForward() {
+    mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
+  }
+
+  /**
+   * Will drive forward at 65%.
+   */
+  public void driveForwardSlow() {
+    mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
+  }
+
+  /**
+   * Will drive in reverse at 95%.
+   * @warning Highly not reccommened!
+   */
+  public void driveReverse() {
+    mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
+  }
+
+  /**
+   * Will drive in reverse at 65%. 
+   * More recomeended than driveReverse()
+   */
+  public void driveReverseSlow() {
+    mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
+  }
+
+  /**
+   * OperatorDrive is the Method for driving. It uses the differential 
+   * drive varible that was created in RobotMap.java. It will grab the 
+   * Y-Axis and Z-Axis of the OPStick in OI.java, then drive the robot.
+   * 
+   * @param Joystick stick
+   * @author CRahne
+   */
+  public void OperatorDrive(Joystick stick) {
+    mDrive.arcadeDrive(stick.getY(), stick.getZ());
   }
 
   public void StopMotors() {
-    RightMaster.stopMotor();
-    RightSlave.stopMotor();
-    LeftMaster.stopMotor();
-    LeftSlave.stopMotor();
+    mRightMaster.stopMotor();
+    mRightSlave.stopMotor();
+    mLeftMaster.stopMotor();
+    mLeftSlave.stopMotor();
   }
 
   public void TurnLeft() {
-    LeftDrive.set(Constants.kTurnSpeed);
-    RightDrive.set(Constants.kTurnSpeed);
+    mLeft.set(Constants.kTurnSpeed);
+    mRight.set(Constants.kTurnSpeed);
   }
 
   public void TurnRight() {
-    LeftDrive.set(-Constants.kTurnSpeed);
-    RightDrive.set(-Constants.kTurnSpeed);
+    mLeft.set(-Constants.kTurnSpeed);
+    mRight.set(-Constants.kTurnSpeed);
   }
 
   public void MoveForward() {
-    LeftDrive.set(Constants.kTargetFollowSpeed);
-    RightDrive.set(Constants.kTargetFollowSpeed);
+    mLeft.set(Constants.kTargetFollowSpeed);
+    mRight.set(Constants.kTargetFollowSpeed);
   }
 
   public void setSetpoint(int setpoint) {
@@ -85,7 +145,7 @@ public class Drivetrain extends Subsystem {
     mOutput = kP * error + kI * mIntegral + kD * mDerivative;
     previousError = error;// Sets pr
 
-    Drive.arcadeDrive(0, mOutput);
+    mDrive.arcadeDrive(0, mOutput);
 
   }
 
@@ -98,15 +158,58 @@ public class Drivetrain extends Subsystem {
     // speed += kF*tx;
     // }
     speed = kF * tx;
-    Drive.arcadeDrive(0, speed);
+    mDrive.arcadeDrive(0, speed);
   }
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+
+  /**
+   * Will return the Drive Varible from RobotMap.java
+   * 
+   * @author CRahne
+   * @return mDrive
+   */
+  public DifferentialDrive getDrive() {
+    return mDrive;
+  }
+
+  /**
+   * Will return the DriveTrain's Front Left Motor
+   * 
+   * @return mDT_LeftFront
+   * @author CRahne
+   */
+  public WPI_TalonSRX getLeftFront() {
+    return mLeftMaster;
+  }
+
+  /**
+   * Will return the DriveTrain's Front Rear Motor
+   * 
+   * @return mDT_LeftRear
+   * @author CRahne
+   */
+  public WPI_TalonSRX getLeftRear() {
+    return mLeftSlave;
+  }
+
+  /**
+   * Will return the DriveTrain's Right Front Motor
+   * 
+   * @return mDT_RightFront
+   * @author CRahne
+   */
+  public WPI_TalonSRX getRightFront() {
+    return mRightMaster;
+  }
+
+  /**
+   * Will return the DriveTrain's Right Rear Motor
+   * 
+   * @return mDT_RightRear
+   * @author CRahne
+   */
+  public WPI_TalonSRX getRightRear() {
+    return mRightSlave;
   }
 }

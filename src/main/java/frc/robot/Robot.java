@@ -3,8 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.OperatorControl;
+import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -15,10 +16,15 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static Vision sVision;
+
+  /*Subsystem Declarations*/
   public static Drivetrain sDrivetrain;
+  public static Elevator sElevator;
+  public static Vision sVision;
+  /*OI Declaration*/
   public static OI oi;
-  public static OperatorControl cOpControl;
+  /*Command Declarations*/
+  public static OperatorDrive cOpDrive;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -28,13 +34,15 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     RobotMap.init();
     sDrivetrain = new Drivetrain();
+    sElevator = new Elevator();
     sVision = new Vision();
-    sVision.UpdateLimelightSettings();
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
     // Commands must be defined after OI
-    cOpControl = new OperatorControl();
+    cOpDrive = new OperatorDrive();
+
+    sVision.UpdateLimelightSettings();
   }
 
   /**
@@ -103,7 +111,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    cOpControl.start();
+    cOpDrive.start();
   }
 
   /**

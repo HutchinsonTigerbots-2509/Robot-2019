@@ -1,10 +1,9 @@
 package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup; 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -13,43 +12,49 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * floating around.
  */
 public class RobotMap {
-    /**
-     * DriveTrain Varibles Front DriveTrainLeft |----------------| DriveTrain Right
-     * DTLeft1 |----------------| DTRight1 |----------------| |----------------|
-     * |----------------| DTLeft2 |----------------| DTRight2 Back
+/**
+     * DriveTrain Varibles 
+     * Front DriveTrainLeft |----------------| DriveTrain Right
+     * kDT_LFront |----------------| kDT_RFront |----------------|
+     * |----------------| |----------------| kDT_LRear |----------------| kDT_RRear
+     * Back
      */
 
-    public static WPI_TalonSRX DrivetrainLeftMaster;
-    public static WPI_TalonSRX DrivetrainLeftSlave;
-    public static WPI_TalonSRX DrivetrainRightMaster;
-    public static WPI_TalonSRX DrivetrainRightSlave;
-    public static SpeedControllerGroup RightDrivetrain;
-    public static SpeedControllerGroup LeftDriveTrain;
-    public static DifferentialDrive RobotDrive;
-    public static Encoder DrivetrainLeftEncoder;
-    public static Encoder DrivetrainRightEncoder;
+public static WPI_TalonSRX DrivetrainLeftMaster; 
+public static WPI_TalonSRX DrivetrainLeftSlave; 
+public static WPI_TalonSRX DrivetrainRightMaster; 
+public static WPI_TalonSRX DrivetrainRightSlave; 
+public static Encoder DrivetrainLeftEncoder; 
+public static Encoder DrivetrainRightEncoder; 
+public static SpeedControllerGroup DrivetrainLeft; 
+public static SpeedControllerGroup DrivetrainRight; 
+public static DifferentialDrive DrivetrainDifferential; 
 
-    public static void init() {
-        DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID);
+public static void init() {
+    //#region DriveTrain
+    
+    // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/DifferentialDrive/src/main/java/frc/robot/Robot.java
+    /**
+     * According to the link above, the VictorSPXs can be controlled by using this
+     * method. It works like this: You make a Main Motor and a Follower Motor in
+     * place of a Speed Controller Group.
+     */
 
-        DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID);
-        // DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
+    DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Both Fronts
+    DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID); 
+    // DrivetrainLeftRear.follow(DrivetrainLeftFront);
+    DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
+    DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
+    // DrivetrainRightRear.follow(DrivetrainRightFront);
 
-        DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID);
+    DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
 
-        DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlave);
-        // DrivetrainRightSlave.follow(DrivetrainRightMaster);
+    DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
 
-        RightDrivetrain = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainRightSlave);
+    DrivetrainLeft = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave); 
+    DrivetrainRight = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave); 
 
-        LeftDriveTrain = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave);
-
-        RobotDrive = new DifferentialDrive(LeftDriveTrain, RightDrivetrain);
-
-        DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID);
-
-        DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID,
-                Constants.kDrivetrianEncoderRightBID);
+    DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
+    // #endregion
     }
-
 }

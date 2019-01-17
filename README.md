@@ -1,4 +1,4 @@
-# FRC 2019
+# :sparkles: :rocket: FRC 2019 :rocket: :sparkles:
 
 Team 2509's 2019 FRC robot code for *RobotName*. *RobotName*'s code is written in Java and is based off of WPILib's Java control system.
 
@@ -14,14 +14,16 @@ The code is divided into several packages, each responsible for a different aspe
 
 ### Building/Deploying to the Robot
 - Run `./gradlew build` to build the code. Use the `--info` flag for more details
-- Run `./gradlew deploy -PteamNumber=2509`
-- Run `./gradlew deploy` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
+- Run `./gradlew deploy -PteamNumber=2509` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
 
 ### Motor Wiring Diagram
 
 Subsystem | Controller | Name | ID | PDP |
 --------- | ---------- | ---- | -- | ---|
-Drive     | VictorSP   | Left Front | 0  | - |
+Drive     | TalonSRX   | Left Front | 0  | - |
+Drive     | TalonSRX   | Left Rear | 1  | - |
+Drive     | TalonSRX   | Right Front | 2  | - |
+Drive     | TalonSRX   | Right Rear | 3  | - |
 
 
 ## Code Highlights
@@ -156,6 +158,8 @@ Drive     | VictorSP   | Left Front | 0  | - |
 - m*** (i.e. `mIsHighGear`): Private instance variables
 - s*** (i.e. `sDrivetrain`): Subsystems variables, especially those found in Robot.java file
 
+<<<<<<< HEAD
+=======
 ## PID Tuning Method
 1. Start by setting `I` and `D` to 0.
 2. Increase `P` until the system starts oscillating for a period of `Tu`. You want the oscillation to be large enough that you can time it. This maximum `P` will be referred to as `Ku`.
@@ -167,6 +171,7 @@ P | .5*`Ku` | 0 | 0 |
 PI | .45*`Ku` | .54*`Ku`/`Tu` | 0 |
 PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 
+>>>>>>> Vision
 ## Programmers
 * [GoldenGollem](https://github.com/GoldenGollem) :space_invader:
 * [CRahne](https://github.com/CRahne) :golf:

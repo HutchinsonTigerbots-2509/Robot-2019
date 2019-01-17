@@ -19,41 +19,46 @@ public class Vision extends Subsystem {
   private double mTargetY = 0;
   private double mTargetArea = 0;
 
-  /** 
+  /**
    * Returns the NetworkTable for the Limelight Camera
+   * 
    * @return mTable
    */
-  public NetworkTable getTable(){
+  public NetworkTable getTable() {
     return mTable;
   }
 
   /**
-   * Returns the 'X' value from the Limelight.
-   * If no value is detected will return 0.0
+   * Returns the 'X' value from the Limelight. If no value is detected will return
+   * 0.0
+   * 
    * @return targetX
    */
-  public double getTargetX(){
+  public double getTargetX() {
     mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
     mTargetX = mTableX.getDouble(0.0);
     return mTargetX;
   }
+
   /**
-   * Returns the 'Y' value from the Limelight.
-   * If no value is detected will return 0.0
+   * Returns the 'Y' value from the Limelight. If no value is detected will return
+   * 0.0
+   * 
    * @return targetY
    */
-  public double getTargetY(){
+  public double getTargetY() {
     mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
     mTargetY = mTableX.getDouble(0.0);
     return mTargetY;
   }
 
   /**
-   * Returns the 'Area' value from the Limelight.
-   * If no value is detected will return 0.0
+   * Returns the 'Area' value from the Limelight. If no value is detected will
+   * return 0.0
+   * 
    * @return targetArea
    */
-  public double getTargetArea(){
+  public double getTargetArea() {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableX.getDouble(0.0);
     return mTargetArea;
@@ -62,27 +67,26 @@ public class Vision extends Subsystem {
   /**
    * Updateds the Limelight camera settings via the NetworkTable.
    */
-  public void UpdateLimelightSettings(){
+  public void UpdateLimelightSettings() {
     mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
     mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
     mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
     mTable.getEntry("pipeline").setNumber(3);
   }
 
-
   @Override
   public void initDefaultCommand() {
   }
 
   @Deprecated
-  private void PullFromTable(){
+  private void PullFromTable() {
     mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
     mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
   }
 
   @Deprecated
-  private void UpdateValuesFromTable(){
+  private void UpdateValuesFromTable() {
     PullFromTable();
     mTargetX = mTableX.getDouble(0.0);
     mTargetY = mTableY.getDouble(0.0);

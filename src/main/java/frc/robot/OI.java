@@ -1,6 +1,10 @@
 package frc.robot; // package declaraition
 
 // imports
+import edu.wpi.first.networktables.NetworkTable; 
+import edu.wpi.first.wpilibj.Joystick; 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import frc.robot.subsystems.Vision; 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -15,16 +19,13 @@ import frc.robot.subsystems.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  public Joystick stick;
+  private Joystick mOpStick;
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
   private JoystickButton FollowButton;
-  private Vision sVision = Robot.sVision;
-  private Drivetrain sDrivetrain = Robot.sDrivetrain;
+  private final Drivetrain sDrivetrain = Robot.sDrivetrain;
+  private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
-
-  // The Driving Stick
-  public Joystick opstick;
 
   // #region Joystic Button Creation
   //// CREATING BUTTONS
@@ -58,17 +59,17 @@ public class OI {
 
   public OI() {
     /* Joysticks & Buttons */
-    opstick = new Joystick(0);
+    mOpStick = new Joystick(0);
 
-    AlignButton = new JoystickButton(stick, 12);
+    AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
     SmartDashboard.putData(AlignButton);
 
-    AlignButtonPID = new JoystickButton(stick, 10);
+    AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
     SmartDashboard.putData(AlignButtonPID);
 
-    FollowButton = new JoystickButton(stick, 11);
+    FollowButton = new JoystickButton(mOpStick, 11);
     FollowButton.toggleWhenPressed(new FollowTarget());
     SmartDashboard.putData(FollowButton);
 
@@ -80,5 +81,8 @@ public class OI {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+  }
+  public Joystick getOperatorStick(){
+    return mOpStick;
   }
 }
