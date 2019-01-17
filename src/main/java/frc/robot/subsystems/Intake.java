@@ -1,4 +1,4 @@
-  /*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -7,83 +7,109 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.hal.sim.mockdata.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * @author Tony & Cole
+ * Add your docs here.
  */
-public class Intake extends PIDSubsystem {
-  private static DoubleSolenoid leftPush = RobotMap.leftPush;
-  private static DoubleSolenoid rightPush = RobotMap.rightPush;
-  private static DoubleSolenoid wrist = RobotMap.wrist;
-  private static DoubleSolenoid open = RobotMap.open;
-  private static SpeedController intakeMotors = RobotMap.intakeMotors;
-  /**
-   * Add your docs here.
-   */
-   
-  public Intake() {
-    // Intert a subsystem name and PID values here
-    super("Intake", 0, 0, 0);
-    // Use these to get going:
-    // setSetpoint() - Sets where the PID controller should move the system
-    // to
-    // enable() - Enables the PID controller.
-  }
+public class Intake extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+  private final DoubleSolenoid leftPush = RobotMap.leftPush;
+  private final DoubleSolenoid rightPush = RobotMap.rightPush;
+  private final DoubleSolenoid wrist = RobotMap.wrist;
+  private final DoubleSolenoid open = RobotMap.open;
+  private final SpeedController intakeMotors = RobotMap.intakeMotors;
+  private final double kMaxSpeed =  Constants.kMaxSpeed;
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-  
-
   }
+
+
+  // Controls the intake motors and allows you to take in and reverse the motors.
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
   public void In(){
-    intakeMotors.set(1.0);      
+    intakeMotors.set(kMaxSpeed);      
   }
-  public void Close(){
-    open.set(Value.kReverse);
-  }
-  public void StopOpen(){
-    open.set(Value.kOff);
-  }
-
-  public void Up(){
-    wrist.set(Value.kForward);
-  }           
-  public void Down(){
-    wrist.set(Value.kReverse);
-  }
-  public void StopWrist(){
-    wrist.set(Value.kOff);
-  }
-
-  public void Open(){
-    open.set(Value.kForward);
-  }
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
   public void Out(){
-    intakeMotors.set(-1.0);
+    intakeMotors.set(kMaxSpeed);
   }
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
   public void motorsStop(){
     intakeMotors.stopMotor();
   }
-  protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
+// Moves the intake arms up or down
+/**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
+  public void Up(){
+    wrist.set(Value.kForward);
   }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    // Use output to drive your system, like a motor
-    // e.g. yourMotor.set(output);
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */  
+  public void Down(){
+    wrist.set(Value.kReverse);
+  }
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
+  public void StopWrist(){
+    wrist.set(Value.kOff);
+  }
+// Controls the intake arms and allows you to open them up 
+/**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
+  public void Open(){
+    open.set(Value.kForward);
+  }
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
+  public void Close(){
+    open.set(Value.kReverse);
+  }
+  /**
+   * 
+   * @author Cole 
+   * @author Tony
+   */
+  public void StopOpen(){
+    open.set(Value.kOff);
   }
 }
