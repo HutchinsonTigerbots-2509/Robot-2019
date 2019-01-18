@@ -55,9 +55,9 @@ public class Elevator extends PIDSubsystem {
     
   }
 
-public double getCurrentHight(){
+  public void getCurrentHeight(){
   
-}
+  }
 
 public Encoder getLeftEncoder() {
     return ElevatorEncoder;
