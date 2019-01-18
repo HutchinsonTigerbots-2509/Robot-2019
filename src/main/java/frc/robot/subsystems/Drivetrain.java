@@ -96,7 +96,8 @@ public class Drivetrain extends Subsystem {
    * @author CRahne
    */
   public void OperatorDrive(Joystick stick) {
-    mDrive.arcadeDrive(stick.getY(), stick.getZ());
+    mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
+    // mDrive.arcadeDrive(-stick.getY(), 0);
   }
 
   public void driveForward(double targetDistance) {
