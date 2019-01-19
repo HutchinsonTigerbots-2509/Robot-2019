@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -65,7 +66,6 @@ public class RobotMap {
         //#endregion
     };
     public static DoubleSolenoid leftPush = new DoubleSolenoid(6,7);
-    public static DoubleSolenoid rightPush = new DoubleSolenoid(8,9);
     public static DoubleSolenoid wrist = new DoubleSolenoid(10,11);
     public static DoubleSolenoid open = new DoubleSolenoid(12,13);
 }

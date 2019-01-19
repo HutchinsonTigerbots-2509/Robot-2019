@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.hal.sim.mockdata.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
@@ -24,7 +25,6 @@ public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private final DoubleSolenoid leftPush = RobotMap.leftPush;
-  private final DoubleSolenoid rightPush = RobotMap.rightPush;
   private final DoubleSolenoid wrist = RobotMap.wrist;
   private final DoubleSolenoid open = RobotMap.open;
   private final SpeedController intakeMotors = RobotMap.intakeMotors;
@@ -37,9 +37,9 @@ public class Intake extends Subsystem {
   }
 
 
-  // Controls the intake motors and allows you to take in and reverse the motors.
+  
   /**
-   * 
+   * Controls the intake motors and allows you to take in
    * @author Cole 
    * @author Tony
    */
@@ -47,7 +47,7 @@ public class Intake extends Subsystem {
     intakeMotors.set(kMaxSpeed);      
   }
   /**
-   * 
+   * Controls the intake motors and allows you to reverse intake motors
    * @author Cole 
    * @author Tony
    */
@@ -55,16 +55,15 @@ public class Intake extends Subsystem {
     intakeMotors.set(kMaxSpeed);
   }
   /**
-   * 
+   * Controls the intake motors and stops them
    * @author Cole 
    * @author Tony
    */
   public void motorsStop(){
     intakeMotors.stopMotor();
   }
-// Moves the intake arms up or down
 /**
-   * 
+   * Moves the intake arm up
    * @author Cole 
    * @author Tony
    */
@@ -72,7 +71,7 @@ public class Intake extends Subsystem {
     wrist.set(Value.kForward);
   }
   /**
-   * 
+   * Moves the intake arm down
    * @author Cole 
    * @author Tony
    */  
@@ -80,16 +79,15 @@ public class Intake extends Subsystem {
     wrist.set(Value.kReverse);
   }
   /**
-   * 
+   * Stops the wrist movement
    * @author Cole 
    * @author Tony
    */
   public void StopWrist(){
     wrist.set(Value.kOff);
-  }
-// Controls the intake arms and allows you to open them up 
+  } 
 /**
-   * 
+   * Controls the intake arms and allows you to open them up
    * @author Cole 
    * @author Tony
    */
@@ -97,7 +95,7 @@ public class Intake extends Subsystem {
     open.set(Value.kForward);
   }
   /**
-   * 
+   * Controls the intake arms and allows you to close them
    * @author Cole 
    * @author Tony
    */
@@ -105,7 +103,7 @@ public class Intake extends Subsystem {
     open.set(Value.kReverse);
   }
   /**
-   * 
+   * Controls the intake arms and stops the open or close
    * @author Cole 
    * @author Tony
    */
