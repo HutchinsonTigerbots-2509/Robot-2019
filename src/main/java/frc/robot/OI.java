@@ -8,7 +8,16 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.CloseIntake;
+import frc.robot.commands.OpenIntake;
+import frc.robot.commands.Takein;
+import frc.robot.commands.Takeout;
+import frc.robot.commands.WristDown;
+import frc.robot.commands.WristUp;
 import frc.robot.subsystems.*;
 
 /**
@@ -18,7 +27,15 @@ import frc.robot.subsystems.*;
 public class OI {
   private Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
-  
+
+  private Joystick mrSticky = new Joystick(0);
+
+  private JoystickButton mrButly = new JoystickButton(mrSticky, 1); // Close intake
+  private JoystickButton mrButler = new JoystickButton(mrSticky, 2); // Open intake
+  private JoystickButton mrInly = new JoystickButton(mrSticky, 3); // Take in
+  private JoystickButton mrOutly = new JoystickButton(mrSticky, 4); // Take out
+  private JoystickButton mrWristly = new JoystickButton(mrSticky, 5); // Wrist down
+  private JoystickButton mrWrestler = new JoystickButton(mrSticky, 6); // Wrist up
   //#region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -56,5 +73,12 @@ public class OI {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
+    mrButly.whileHeld(new CloseIntake());
+    mrButler.whileHeld(new OpenIntake());
+    mrInly.whileHeld(new Takein());
+    mrOutly.whileHeld(new Takeout());
+    mrWristly.whileHeld(new WristDown());
+    mrWrestler.whileHeld(new WristUp());
   }
 }
