@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Elevator;
+//import frc.robot.subsystems.PIDSubsystemElevator;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 
   /*Subsystem Declarations*/
   public static Drivetrain sDrivetrain;
-  public static Elevator sElevator;
+  //public static PIDSubsystemElevator sElevator;
   public static Vision sVision;
   /*OI Declaration*/
   public static OI oi;
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     RobotMap.init();
     sDrivetrain = new Drivetrain();
-    sElevator = new Elevator();
+    //sElevator = new PIDSubsystemElevator();
     sVision = new Vision();
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.

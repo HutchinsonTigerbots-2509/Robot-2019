@@ -23,9 +23,17 @@ public final class Constants {
     public static double kDrivetrainD = 0;
 
     /* Elevator */
-    public static double kElevatorP = 1;
-    public static double kElevatorI = 0;
-    public static double kElevatorD = 0;
+    public static double kElevatorPGain = 1;
+    public static double kElevatorIGain = 0;
+    public static double kElevatorDGain = 0;
+
+    // public static final int kPIDLoopIndx = 0;
+    // public static final int kTimeoutMs = 30;
+
+    public static double kSpoolDiam = 4;//inches
+    public static double kPulsesPerRotation = 256;
+    public static double kMaxElevatorHeight = 72;
+    public static double kElevatorMaxSpeed = 0.5;
 
     public static int kRightSpoolMasterMasterID = 4;
     public static int kLeftSpoolSlaveID = 5;
