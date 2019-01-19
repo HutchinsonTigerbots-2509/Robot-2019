@@ -12,6 +12,7 @@ public final class Constants {
     public Constants() {
     }
 
+    //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.65; // IDK but sure
@@ -27,7 +28,7 @@ public final class Constants {
     public static double kElevatorI = 0;
     public static double kElevatorD = 0;
 
-    /*V ision */
+    /* Vision */
     // Physical
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;
@@ -48,20 +49,40 @@ public final class Constants {
     public static String kLimelightTargetYID = "ty";
     public static String kLimelightTargetAreaID = "ta";
     public static String kLimelightTargetSkewID = "ts";
+    //#endregion
+
+
+    //#region RobotMap Constants
 
     // Do not change anything after this line unless you rewire the robot and
     // update the spreadsheet!
     // Port assignments should match up with the spreadsheet here:
     // https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing
 
-    // Motor Contoller ID
+    /* Motor Contoller ID */
+    // Drivetrain
     public static int kDrivetrainLeftMasterID = 0;
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
-    // Encoder ID
+
+    // Intake
+    public static int kIntakeRightMotorID = 4;
+    public static int kIntakeLeftMotorID = 5;
+
+    /* Encoder ID */
     public static int kDrivetrainEncoderLeftAID = 0;
     public static int kDrivetrainEncoderLeftBID = 1;
     public static int kDrivetrainEncoderRightAID = 2;
     public static int kDrivetrianEncoderRightBID = 3;
+
+    /* Pneumatics ID */
+    // Intake
+    public static int kIntakeLeftPistonForwardID = 0;
+    public static int kIntakeLeftPistonReverseID = 1;
+    public static int kIntakeWristPistonForwardID = 2;
+    public static int kIntakeWristPistonReverseID = 3;
+    public static int kOpenIntakePistonForwardID = 4;
+    public static int kOpenIntakePistonReverseID = 5;
+    //#endregion
 }

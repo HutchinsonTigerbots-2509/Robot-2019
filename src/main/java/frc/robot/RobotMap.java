@@ -1,52 +1,60 @@
 package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup; 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * @see Constants.java region RobotMap Constants
  */
 public class RobotMap {
-/**
-     * DriveTrain Varibles 
-     * Front DriveTrainLeft |----------------| DriveTrain Right
-     * kDT_LFront |----------------| kDT_RFront |----------------|
-     * |----------------| |----------------| kDT_LRear |----------------| kDT_RRear
-     * Back
-     */
+    /* Varible Declarations */
+    // Drivetrain
+    public static WPI_TalonSRX DrivetrainLeftMaster; 
+    public static WPI_TalonSRX DrivetrainLeftSlave; 
+    public static WPI_TalonSRX DrivetrainRightMaster; 
+    public static WPI_TalonSRX DrivetrainRightSlave; 
+    
+    public static Encoder DrivetrainLeftEncoder; 
+    public static Encoder DrivetrainRightEncoder; 
+    
+    public static SpeedControllerGroup DrivetrainLeft; 
+    public static SpeedControllerGroup DrivetrainRight; 
+   
+    public static DifferentialDrive DrivetrainDifferential;
 
-public static WPI_TalonSRX DrivetrainLeftMaster; 
-public static WPI_TalonSRX DrivetrainLeftSlave; 
-public static WPI_TalonSRX DrivetrainRightMaster; 
-public static WPI_TalonSRX DrivetrainRightSlave; 
-public static Encoder DrivetrainLeftEncoder; 
-public static Encoder DrivetrainRightEncoder; 
-public static SpeedControllerGroup DrivetrainLeft; 
-public static SpeedControllerGroup DrivetrainRight; 
-public static DifferentialDrive DrivetrainDifferential; 
+    // Intake
+    public static VictorSP IntakeRightMotor = new VictorSP(4);
+    public static VictorSP IntakeLeftMotor = new VictorSP(5);
+
+    public static SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
+    
+    public static DoubleSolenoid IntakeLeftPiston = new DoubleSolenoid(0, 1);
+    public static DoubleSolenoid IntakeWristPiston = new DoubleSolenoid(2, 3);
+    public static DoubleSolenoid OpenIntakePiston = new DoubleSolenoid(4, 5); 
 
 public static void init() {
     //#region DriveTrain
-    
-    // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/DifferentialDrive/src/main/java/frc/robot/Robot.java
-    /**
-     * According to the link above, the VictorSPXs can be controlled by using this
-     * method. It works like this: You make a Main Motor and a Follower Motor in
-     * place of a Speed Controller Group.
-     */
-
     DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Both Fronts
     DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
     DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID); 
     DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
+
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
     DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
     DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
     DrivetrainRightSlave.follow(DrivetrainRightMaster);
 
@@ -59,5 +67,19 @@ public static void init() {
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
+
+    // #region Intake
+    IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
+    IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
+
+    IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
+    
+    IntakeLeftPiston = new DoubleSolenoid(Constants.kIntakeLeftPistonForwardID , Constants.kIntakeLeftPistonReverseID);
+    
+    IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristPistonForwardID , Constants.kIntakeWristPistonReverseID);
+    
+    OpenIntakePiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID , Constants.kOpenIntakePistonReverseID);
+    //#endregion
+    
     }
 }
