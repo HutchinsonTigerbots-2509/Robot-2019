@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
-public class Takeout extends Command {
+public class TakeOut extends Command {
   public Intake sIntake = Robot.sIntake;
   
-  public Takeout() {
+  public TakeOut() {
     requires(sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

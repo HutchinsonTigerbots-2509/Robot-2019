@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
-public class Takein extends Command {
+public class TakeIn extends Command {
   private Intake sIntake = Robot.sIntake;
   
-  public Takein(){
+  public TakeIn(){
     requires(sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
