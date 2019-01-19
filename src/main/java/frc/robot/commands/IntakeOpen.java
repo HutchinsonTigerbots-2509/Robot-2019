@@ -1,19 +1,14 @@
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
-public class TakeIn extends Command {
-  private Intake sIntake = Robot.sIntake;
+public class IntakeOpen extends Command {
+  public Intake sIntake = Robot.sIntake;
   
-  public TakeIn(){
-    requires(sIntake);
+  public IntakeOpen() {
+    requires (sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -21,8 +16,7 @@ public class TakeIn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.In();
-  
+    sIntake.Open();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,9 +33,9 @@ public class TakeIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.motorsStop();
-
+    sIntake.Stop();
   }
+
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
