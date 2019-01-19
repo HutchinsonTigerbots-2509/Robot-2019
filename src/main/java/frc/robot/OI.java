@@ -30,12 +30,12 @@ public class OI {
 
   private Joystick mrSticky = new Joystick(0);
 
-  private JoystickButton mrButly = new JoystickButton(mrSticky, 1); // Close intake
-  private JoystickButton mrButler = new JoystickButton(mrSticky, 2); // Open intake
-  private JoystickButton mrInly = new JoystickButton(mrSticky, 3); // Take in
-  private JoystickButton mrOutly = new JoystickButton(mrSticky, 4); // Take out
-  private JoystickButton mrWristly = new JoystickButton(mrSticky, 5); // Wrist down
-  private JoystickButton mrWrestler = new JoystickButton(mrSticky, 6); // Wrist up
+  private JoystickButton mCloseintake = new JoystickButton(mrSticky, 1); // Close intake
+  private JoystickButton mOpenintake = new JoystickButton(mrSticky, 2); // Open intake
+  private JoystickButton mIntakein = new JoystickButton(mrSticky, 3); // Take in
+  private JoystickButton mIntakeout = new JoystickButton(mrSticky, 4); // Take out
+  private JoystickButton mWristdown = new JoystickButton(mrSticky, 5); // Wrist down
+  private JoystickButton mWristup = new JoystickButton(mrSticky, 6); // Wrist up
   //#region Joystic Button Creation
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -74,11 +74,11 @@ public class OI {
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
 
-    mrButly.whileHeld(new CloseIntake());
-    mrButler.whileHeld(new OpenIntake());
-    mrInly.whileHeld(new Takein());
-    mrOutly.whileHeld(new Takeout());
-    mrWristly.whileHeld(new WristDown());
-    mrWrestler.whileHeld(new WristUp());
+    mCloseintake.whileHeld(new CloseIntake());
+    mOpenintake.whileHeld(new OpenIntake());
+    mIntakein.whileHeld(new Takein());
+    mIntakeout.whileHeld(new Takeout());
+    mWristdown.whileHeld(new WristDown());
+    mWristup.whileHeld(new WristUp());
   }
 }
