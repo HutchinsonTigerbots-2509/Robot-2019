@@ -75,10 +75,16 @@ public class OI {
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
 
     mCloseintake.whileHeld(new CloseIntake());
+    SmartDashboard.putData(new CloseIntake());
     mOpenintake.whileHeld(new OpenIntake());
+    SmartDashboard.putData(new OpenIntake());
     mIntakein.whileHeld(new Takein());
+    SmartDashboard.putData(new Takein());
     mIntakeout.whileHeld(new Takeout());
+    SmartDashboard.putData(new Takeout());
     mWristdown.whileHeld(new WristDown());
+    SmartDashboard.putData(new WristDown());
     mWristup.whileHeld(new WristUp());
+    SmartDashboard.putData(new WristUp());
   }
 }
