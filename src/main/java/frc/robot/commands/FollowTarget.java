@@ -18,11 +18,13 @@ public class FollowTarget extends Command {
   private Vision sVision = Robot.sVision;
   private double TargetX;
   private double TargetY;
-  private boolean TargetDistanceCheck = false;
+  public boolean TargetDistanceCheck = false;
+  private Command AlignWithTarget;
 
   public FollowTarget() {
     TargetX = sVision.getTargetX();
     TargetY = sVision.getTargetY();
+    //Requires(Drivetrain);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -30,7 +32,8 @@ public class FollowTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sDriveTrain.TargetAligned = false;
+    //sDriveTrain.TargetAligned = false;
+    sDriveTrain.TargetDistanceCheck = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,41 +41,55 @@ public class FollowTarget extends Command {
   protected void execute() {
     TargetX = sVision.getTargetX();
     TargetY = sVision.getTargetY();
-    if (sDriveTrain.TargetAligned == false) {
-      if (TargetX < -3) {
-        sDriveTrain.TurnLeft();
-      } else if (TargetX > 3) {
-        sDriveTrain.TurnRight();
-      } else {
+    
+    
+    
+    
+    if (TargetX < 1 && TargetX > -1) {
+      // if (TargetX < -3) {
+      //   sDriveTrain.TurnLeft();
+      // } else if (TargetX > 3) {
+      //   sDriveTrain.TurnRight();
+      // } else {
+      //   sDriveTrain.StopMotors();
+      //   sDriveTrain.TargetAligned = true;
+      // }
+      // if (TargetX < -3 || TargetX > 3) {
+      //   sDriveTrain.TargetAligned = false;
+      // }
+      //AlignWithTarget.execute();
+      if (TargetY > 0){
+        sDriveTrain.driveForwardSlow();
+        //TargetDistanceCheck = false;
+      } else if ((TargetY < 0)) {
+        //sDriveTrain.StopMotors();
+        //TargetDistanceCheck = true;
         sDriveTrain.StopMotors();
-        sDriveTrain.TargetAligned = true;
-      }
-      if (TargetX < -3 || TargetX > 3) {
-        sDriveTrain.TargetAligned = false;
-      }
-      if ((Constants.kTargetHeight - Constants.kCameraHeight)
-          / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24) {
-        sDriveTrain.StopMotors();
-        TargetDistanceCheck = true;
-      } else if ((Constants.kTargetHeight - Constants.kCameraHeight)
-          / Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(TargetY)) < 24) {
-        TargetDistanceCheck = false;
-      }
-    } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false) {
-      sDriveTrain.MoveForward();
+        end();
+      
+        
+    }
+    // } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false) {
+    //    sDriveTrain.MoveForward();
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (TargetY < 0) {
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     sDriveTrain.StopMotors();
+    //sDriveTrain.TargetAligned = false;
   }
 
   // Called when another command which requires one or more of the same

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *We call this during autonomous so we can drive backward a set distance.
  *
- * @deprecated
  * @author 2018 code
  */
 public class DriveBackwards extends Command {

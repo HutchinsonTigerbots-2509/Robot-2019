@@ -45,6 +45,7 @@ public class Drivetrain extends Subsystem {
   private double kSlowSpeed = Constants.kSlowSpeed;
 
   public boolean TargetAligned;
+  public boolean TargetDistanceCheck;
   private final double kP = Constants.kDrivetrainP;
   private final double kI = Constants.kDrivetrainI;
   private final double kD = Constants.kDrivetrainD;
@@ -117,9 +118,11 @@ public class Drivetrain extends Subsystem {
   public void TurnLeft() {
     mLeft.set(Constants.kTurnSpeed);
     mRight.set(Constants.kTurnSpeed);
+    //mDrive.tankDrive(-Constants.kTurnSpeed, Constants.kTurnSpeed);
   }
 
   public void TurnRight() {
+    //mDrive.tankDrive(Constants.kTurnSpeed, -Constants.kTurnSpeed);
     mLeft.set(-Constants.kTurnSpeed);
     mRight.set(-Constants.kTurnSpeed);
   }

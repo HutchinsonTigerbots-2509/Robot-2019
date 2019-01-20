@@ -48,7 +48,7 @@ public class Vision extends Subsystem {
    */
   public double getTargetY() {
     mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
-    mTargetY = mTableX.getDouble(0.0);
+    mTargetY = mTableY.getDouble(0.0);
     return mTargetY;
   }
 

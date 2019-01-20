@@ -11,9 +11,9 @@ import frc.robot.Robot;
  * We use this command in autonomous to drive forward a certain distance. Enter
  * the distance you want the robot to go in () when we call this command.
  * 
- * @deprecated
  * @author 2018 Code
  */
+
 public class DriveForward extends Command {
   private Drivetrain sDrivetrain = Robot.sDrivetrain;
   public double mTarget = 0;

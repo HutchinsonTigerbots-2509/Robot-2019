@@ -14,8 +14,8 @@ public final class Constants {
 
     /* Motors */
     public static double kMaxSpeed = 0.95;
-    public static double kSlowSpeed = 0.65; // IDK but sure
-    public static double kTurnSpeed = 0.57575;
+    public static double kSlowSpeed = 0.45; // IDK but sure
+    public static double kTurnSpeed = 0.20;
     public static double kWheelDiameter = 6;
     public static double kTargetFollowSpeed = 0.2;
     public static double kDrivetrainP = 1;
@@ -55,10 +55,10 @@ public final class Constants {
     // https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing
 
     // Motor Contoller ID
-    public static int kDrivetrainLeftMasterID = 0;
-    public static int kDrivetrainLeftSlaveID = 1;
+    public static int kDrivetrainLeftMasterID = 4;
+    public static int kDrivetrainLeftSlaveID = 5;
     public static int kDrivetrainRightMasterID = 2;
-    public static int kDrivetrainRightSlaveID = 3;
+    public static int kDrivetrainRightSlaveID = 1;
     // Encoder ID
     public static int kDrivetrainEncoderLeftAID = 0;
     public static int kDrivetrainEncoderLeftBID = 1;
