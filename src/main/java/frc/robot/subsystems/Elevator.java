@@ -26,28 +26,29 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
 
-  public static TalonSRX RightSpoolMaster = RobotMap.RightSpoolMaster;
-  public static VictorSPX LeftSpoolSlave = RobotMap.LeftSpoolSlave;
-  public static Encoder ElevatorEncoder = RobotMap.ElevatorEncoder;
+  public final TalonSRX RightSpoolMaster = RobotMap.RightSpoolMaster;
+  public final VictorSPX LeftSpoolSlave = RobotMap.LeftSpoolSlave;
+  public final Encoder ElevatorEncoder = RobotMap.ElevatorEncoder; 
+  
+  private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
-  private double kPulseNumber = Constants.kPulsesPerRotation;
-  private double kMaxHeight = Constants.kMaxHieght;
-  private double kMidHeight = Constants.kMidHieght;
-  private double kMinHeight = Constants.kMinHieght;
-  private double kSpoolDiam = Constants.kSpoolDiam;
-  private double PGain = Constants.kElevatorPGain;
-  private double IGain = Constants.kElevatorPGain;
-  private double DGain = Constants.kElevatorPGain;
-  private double kMaxSpeed = Constants.kElevatorMaxSpeed;
-  private double ElevatorSensitivity = Constants.kElevatorSensitivity;
-  private Joystick CoOpStick = Robot.oi.getCoOperatorStick();
+  private final double kPulseNumber = Constants.kPulsesPerRotation;
+  private final double kMaxHeight = Constants.kMaxHieght;
+  private final double kMidHeight = Constants.kMidHieght;
+  private final double kMinHeight = Constants.kMinHieght;
+  private final double kSpoolDiam = Constants.kSpoolDiam;
+  private final double PGain = Constants.kElevatorPGain;
+  private final double IGain = Constants.kElevatorPGain;
+  private final double DGain = Constants.kElevatorPGain;
+  private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
+  private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
 
-  double Error;
-  double Perpotional;
-  double Derivative;
-  double Integral;
-  double PError;
-  double EncoderTargetHieght;
+  private double Error;
+  private double Perpotional;
+  private double Derivative;
+  private double Integral;
+  private double PError;
+  private double EncoderTargetHieght;
 
   @Override
   public void initDefaultCommand() {
