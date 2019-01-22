@@ -3,6 +3,7 @@ package frc.robot; // package declaraition
 // imports
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
@@ -80,8 +81,13 @@ public class OI {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
   }
   public Joystick getOperatorStick(){
     return mOpStick;
+  }
+  public Joystick getCoOperatorStick()
+  {
+    return mCoOpStick;
   }
 }
