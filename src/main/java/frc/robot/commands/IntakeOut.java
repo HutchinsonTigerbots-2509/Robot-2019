@@ -2,16 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Intake;
 
-public class AlignWithTarget extends Command {
-  private Drivetrain sDriveTrain = Robot.sDrivetrain;
-  private Vision sVision = Robot.sVision;
-  private double TargetX;
-
-  public AlignWithTarget() {
-    TargetX = sVision.getTargetX();
+public class IntakeOut extends Command {
+  public Intake sIntake = Robot.sIntake;
+  
+  public IntakeOut() {
+    requires(sIntake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -19,44 +16,30 @@ public class AlignWithTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sDriveTrain.TargetAligned = false;
+    sIntake.Out();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TargetX = sVision.getTargetX();
-    if (TargetX < 0) {
-      sDriveTrain.TurnLeft();
-    } else if (TargetX > 0) {
-      sDriveTrain.TurnRight();
-    } else {
-      end();
-    }
+    sIntake.Out();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (TargetX < 0.25 && TargetX > -0.25) {
-      return TargetX < 0.25 && TargetX > -0.25;
-    } else {
-      return false;
-    }
-
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sDriveTrain.StopMotors();
-    sDriveTrain.TargetAligned = true;
+    sIntake.motorsStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

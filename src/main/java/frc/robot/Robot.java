@@ -2,10 +2,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -16,13 +19,18 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-
+  /* Shuffleboard Declarations */
+  ShuffleboardTab tab = Shuffleboard.getTab("Commands");
+  
   /*Subsystem Declarations*/
+  public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
+
   /*OI Declaration*/
   public static OI oi;
+
   /*Command Declarations*/
   public static OperatorDrive cOpDrive;
 
@@ -33,12 +41,17 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     RobotMap.init();
+
+    sIntake = new Intake();
+    sVision = new Vision();
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
+    
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
 
