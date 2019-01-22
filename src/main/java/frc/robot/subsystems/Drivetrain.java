@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -176,32 +177,66 @@ public class Drivetrain extends Subsystem {
     mDrive.arcadeDrive(0, speed);
   }
 
-  public void rotate(double target)
+  /**
+   * PID Distance algorthm still doesn't work that well. Came from AcclProgram Project
+   * 
+   * @param targ_distance
+   */
+  public void PID_Distance(double targ_distance)
   {
-    mGyro.reset();
-    double gyro_input = mGyro.getAngle();
+    /* Varible Declarations */
+    double output; // PID Ouput
 
-    if(target > gyro_input)
+    double error = targ_distance - (mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2; // Init Error
+    double pre_error = error; // Pre_Error (For Derivative)
+    
+    // Math Varibles
+    double kP = 0.3; // Proportional
+    double kI = 0.0; // Integrel
+    double kD = 0.0; // Derivative
+    
+    double Integrel = 0.0; // Integral Adding Varible
+
+    // Reset Encoders
+    mLeftEncoder.reset();
+    mRightEncoder.reset();
+
+    // While loop conditional
+    while(!(((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2) > (targ_distance + 1) && ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2 )< (targ_distance - 1)))
     {
-      while(target > gyro_input)
-      {
-        TurnRight();
+      // Maths
+      error = targ_distance - ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2);
+      Integrel += error*0.02;
+      output = (kP * error) + (kI * Integrel) + (kD * ((error - pre_error)/0.02));
+      pre_error = error;
+
+      // Checks if bigger than maxSpeed
+      if (output >= 1.0) { output = 0.99; }
+
+      // Tells Robot to drive
+      if (output > 0){
+        output= Math.max(output, 0.3);
+        mDrive.tankDrive(output, output);
+      }else if (output < 0 ) {
+        output= Math.min(output, -0.3);
+        mDrive.tankDrive(output, output);
       }
     }
-    else if(target < gyro_input)
-    {
-      while(target < gyro_input)
-      {
-        TurnLeft();
-      }
-    }
-    StopMotors();
+  }
+
+  /**
+   * Will return the drivetrain gyro
+   * 
+   * @return AHRS Gyro for the drivetrain
+   */
+  public AHRS getGyro()
+  {
+    return mGyro;
   }
 
   /**
    * Will return the Drive Varible from RobotMap.java
    * 
-   * @author CRahne
    * @return mDrive
    */
   public DifferentialDrive getDrive() {
@@ -212,7 +247,6 @@ public class Drivetrain extends Subsystem {
    * Will return the DriveTrain's Front Left Motor
    * 
    * @return mDT_LeftFront
-   * @author CRahne
    */
   public WPI_TalonSRX getLeftFront() {
     return mLeftMaster;
@@ -222,7 +256,6 @@ public class Drivetrain extends Subsystem {
    * Will return the DriveTrain's Front Rear Motor
    * 
    * @return mDT_LeftRear
-   * @author CRahne
    */
   public WPI_TalonSRX getLeftRear() {
     return mLeftSlave;
@@ -232,7 +265,6 @@ public class Drivetrain extends Subsystem {
    * Will return the DriveTrain's Right Front Motor
    * 
    * @return mDT_RightFront
-   * @author CRahne
    */
   public WPI_TalonSRX getRightFront() {
     return mRightMaster;
@@ -242,7 +274,6 @@ public class Drivetrain extends Subsystem {
    * Will return the DriveTrain's Right Rear Motor
    * 
    * @return mDT_RightRear
-   * @author CRahne
    */
   public WPI_TalonSRX getRightRear() {
     return mRightSlave;

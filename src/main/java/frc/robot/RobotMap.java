@@ -23,8 +23,10 @@ public class RobotMap {
     public static WPI_TalonSRX DrivetrainLeftSlave; 
     public static WPI_TalonSRX DrivetrainRightMaster; 
     public static WPI_TalonSRX DrivetrainRightSlave; 
+
     public static SpeedControllerGroup DrivetrainLeft; 
     public static SpeedControllerGroup DrivetrainRight; 
+    
     public static DifferentialDrive DrivetrainDifferential;
     
     // Sensors
