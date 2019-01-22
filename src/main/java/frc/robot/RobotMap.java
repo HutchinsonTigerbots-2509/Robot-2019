@@ -39,10 +39,10 @@ public static SpeedControllerGroup DrivetrainLeft;
 public static SpeedControllerGroup DrivetrainRight; 
 public static DifferentialDrive DrivetrainDifferential; 
 //Elevator
+public static SpeedControllerGroup LiftTrain;
 public static WPI_TalonSRX Right_Lift;
 public static WPI_TalonSRX Left_Lift;
-public static Encoder  RightLiftEncoder;
-public static Encoder LeftLiftEncoder;
+public static Encoder  ElevatorEncoder;
 public static WPI_TalonSRX RightSpoolMaster; 
 public static VictorSPX LeftSpoolSlave; 
 
@@ -79,7 +79,7 @@ public static void init() {
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
-    
+
     RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
     RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 

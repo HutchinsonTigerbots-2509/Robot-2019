@@ -24,14 +24,23 @@ public final class Constants {
     public static double kDrivetrainD = 0;
 
     /* Elevator */
-    public static double kElevatorP = 1;
-    public static double kElevatorI = 0;
-    public static double kElevatorD = 0;
+    public static double kElevatorPGain = 0.15;
+    public static double kElevatorIGain = 0.0;
+    public static double kElevatorDGain = 4.0;
+
+    public static double kSpoolDiam = 4;//inches
+    public static double kPulsesPerRotation = 256;
+    public static double kElevatorMaxSpeed = 0.5;
+    public static double kElevatorSensitivity = 0.5;
+
+    public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
+    public static double kMidHieght = 36;
+    public static double kMinHieght = 10;
 
     public static int kRightSpoolMasterMasterID = 4;
     public static int kLeftSpoolSlaveID = 5;
 
-    /*V ision */
+    /* Vision */
     // Physical
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;

@@ -3,6 +3,7 @@ package frc.robot; // package declaraition
 // imports
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.Vision;
  */
 public class OI {
   private Joystick mOpStick;
+  private Joystick mCoOpStick;
 
   private JoystickButton mCloseintake;
   private JoystickButton mOpenintake;
@@ -73,6 +75,7 @@ public class OI {
     /* Joysticks & Buttons */
     // Joysticks
     mOpStick = new Joystick(0);
+    mCoOpStick = new Joystick(1);
 
     // Intake Subsystem
     mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
@@ -120,8 +123,13 @@ public class OI {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
   }
   public Joystick getOperatorStick(){
     return mOpStick;
+  }
+  public Joystick getCoOperatorStick()
+  {
+    return mCoOpStick;
   }
 }
