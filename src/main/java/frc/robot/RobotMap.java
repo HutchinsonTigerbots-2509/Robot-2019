@@ -2,6 +2,8 @@ package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup; 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
@@ -29,7 +31,10 @@ public static Encoder DrivetrainLeftEncoder;
 public static Encoder DrivetrainRightEncoder; 
 public static SpeedControllerGroup DrivetrainLeft; 
 public static SpeedControllerGroup DrivetrainRight; 
-public static DifferentialDrive DrivetrainDifferential; 
+public static DifferentialDrive DrivetrainDifferential;
+
+public static DoubleSolenoid ClimbFirstStage;
+public static DoubleSolenoid ClimbSecondStage;
 
 public static void init() {
     //#region DriveTrain
@@ -59,5 +64,10 @@ public static void init() {
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
+
+    //#region Climb
+    ClimbFirstStage = new DoubleSolenoid(0, 1);
+    ClimbSecondStage = new DoubleSolenoid(2, 3);
+    //#endregion
     }
 }
