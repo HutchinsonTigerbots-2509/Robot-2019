@@ -38,7 +38,7 @@ public final class Constants {
     public static int kRightSpoolMasterMasterID = 4;
     public static int kLeftSpoolSlaveID = 5;
 
-    /*V ision */
+    /* Vision */
     // Physical
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;

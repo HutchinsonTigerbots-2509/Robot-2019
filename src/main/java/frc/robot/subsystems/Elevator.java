@@ -92,5 +92,9 @@ public class Elevator extends Subsystem {
 
   public double CurrentHeight(){
   return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
+}
+
+  public Encoder getLeftEncoder() {
+      return ElevatorEncoder;
   }
 }
