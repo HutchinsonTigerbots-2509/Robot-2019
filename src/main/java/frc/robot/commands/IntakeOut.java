@@ -16,13 +16,13 @@ public class IntakeOut extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.Out();
+    sIntake.MotorsOut();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.Out();
+    sIntake.MotorsOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +34,7 @@ public class IntakeOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.motorsStop();
+    sIntake.MotorsStop();
   }
 
   // Called when another command which requires one or more of the same

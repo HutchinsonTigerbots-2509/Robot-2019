@@ -13,9 +13,9 @@ import frc.robot.RobotMap;
  */
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
-  private final DoubleSolenoid mLeftPush = RobotMap.IntakeLeftPiston;
+  private final DoubleSolenoid mPush = RobotMap.IntakeLeftPiston;
   private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
-  private final DoubleSolenoid mOpen = RobotMap.OpenIntakePiston;
+  private final DoubleSolenoid mGrip = RobotMap.OpenIntakePiston;
   private final SpeedController mIntakeMotors = RobotMap.IntakeMotors;
   private final double kMaxSpeed =  Constants.kMaxSpeed;
   
@@ -24,7 +24,7 @@ public class Intake extends Subsystem {
    * 
    * @author Cole and Tony
    */
-  public void In(){
+  public void MotorsIn(){
     mIntakeMotors.set(kMaxSpeed);      
   }
   /**
@@ -32,7 +32,7 @@ public class Intake extends Subsystem {
    * 
    * @author Cole and Tony
    */
-  public void Out(){
+  public void MotorsOut(){
     mIntakeMotors.set(kMaxSpeed);
   }
   /**
@@ -40,7 +40,7 @@ public class Intake extends Subsystem {
    * 
    * @author Cole and Tony
    */
-  public void motorsStop(){
+  public void MotorsStop(){
     mIntakeMotors.stopMotor();
   }
 /**
@@ -73,7 +73,7 @@ public class Intake extends Subsystem {
    * @author Cole and Tony
    */
   public void Open(){
-    mOpen.set(Value.kForward);
+    mGrip.set(Value.kForward);
   }
   /**
    * Controls the intake arms and allows you to close them
@@ -81,7 +81,7 @@ public class Intake extends Subsystem {
    * @author Cole and Tony
    */
   public void Close(){
-    mOpen.set(Value.kReverse);
+    mGrip.set(Value.kReverse);
   }
   /**
    * Controls the intake arms and stops the open or close
@@ -89,7 +89,7 @@ public class Intake extends Subsystem {
    * @author Cole and Tony
    */
   public void Stop(){
-    mOpen.set(Value.kOff);
+    mGrip.set(Value.kOff);
   }
 
   @Override
