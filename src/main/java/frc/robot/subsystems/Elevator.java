@@ -20,15 +20,14 @@ import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-
 /**
  * Add your docs here.
  */
 public class Elevator extends Subsystem {
 
-  public final TalonSRX RightSpoolMaster = RobotMap.ElevatorMotorMaster;
-  public final VictorSPX LeftSpoolSlave = RobotMap.ElevatorMotorSlave;
-  
+  private final TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
+  private final VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
   private final double kPulseNumber = Constants.kPulsesPerRotation;
@@ -45,7 +44,7 @@ public class Elevator extends Subsystem {
   private double mError;
   private double mPerpotional;
   private double mDerivative;
-  private double mIntegral;
+  private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
 
@@ -53,46 +52,46 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  public double TargetHeight(){
-    if(CoOpStick.getRawAxis(1) != 0){
-      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity)*(CoOpStick.getRawAxis(1)*-1));
-    }else if(CoOpStick.getRawButton(4)){
-      mEncoderTargetHieght = (kMaxHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Max
-    }else if(CoOpStick.getRawButton(2)){
-      mEncoderTargetHieght = (kMidHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Mid
-    }else if(CoOpStick.getRawButton(1)){
-      mEncoderTargetHieght = (kMinHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Min
+  private double TargetHeight() {
+    if (CoOpStick.getRawAxis(1) != 0) {
+      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
+    } else if (CoOpStick.getRawButton(4)) {
+      mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
+    } else if (CoOpStick.getRawButton(2)) {
+      mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
+    } else if (CoOpStick.getRawButton(1)) {
+      mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
     }
     return mEncoderTargetHieght;
   }
 
-  public double PIDFinal(){
+  private double PIDFinal() {
 
-    mError = TargetHeight() - ElevatorEncoder.get();
-    mPerpotional = mError *PGain;
-    mDerivative = (mError - mPerviousError) *DGain;
-    mIntegral = 0;
+    mError = TargetHeight() - CurrentHeight();
+    mPerpotional = mError * PGain;
+    mDerivative = (mError - mPerviousError) * DGain;
     mIntegral += (mError * .02);
     mPerviousError = mError;
 
-    SmartDashboard.putNumber("ElevatorEncoder", ElevatorEncoder.getDistance());
+    SmartDashboard.putNumber("ElevatorEncoder", SpoolMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("Perpotional", mPerpotional);
     SmartDashboard.putNumber("Derivative", mDerivative);
     SmartDashboard.putNumber("Integral", mIntegral);
 
-    return (mPerpotional + mDerivative + (mIntegral*IGain));
+    return (mPerpotional + mDerivative + (mIntegral * IGain));
 
   }
 
   public void ChaseTarget() {
-    RightSpoolMaster.set(ControlMode.PercentOutput, (1*PIDFinal()));
+    SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
   }
 
-  public double CurrentHeight(){
-  return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
-}
-
-  public Encoder getLeftEncoder() {
-      return ElevatorEncoder;
+  public double CurrentHeight() {
+    return SpoolMaster.getSelectedSensorPosition() * ((kSpoolDiam * Math.PI) / kPulseNumber);
+    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
+
+  // public Encoder getEncoder() {
+  // return ElevatorEncoder;
+  // }
 }
