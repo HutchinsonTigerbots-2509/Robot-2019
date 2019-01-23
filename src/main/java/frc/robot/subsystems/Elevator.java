@@ -43,12 +43,12 @@ public class Elevator extends Subsystem {
   private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
   private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
 
-  private double Error;
-  private double Perpotional;
-  private double Derivative;
-  private double Integral;
-  private double PError;
-  private double EncoderTargetHieght;
+  private double mError;
+  private double mPerpotional;
+  private double mDerivative;
+  private double mIntegral;
+  private double mPerviousError;
+  private double mEncoderTargetHieght;
 
   @Override
   public void initDefaultCommand() {
@@ -56,32 +56,32 @@ public class Elevator extends Subsystem {
 
   public double TargetHeight(){
     if(CoOpStick.getRawAxis(1) != 0){
-      EncoderTargetHieght = EncoderTargetHieght + ((ElevatorSensitivity)*(CoOpStick.getRawAxis(1)*-1));
+      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity)*(CoOpStick.getRawAxis(1)*-1));
     }else if(CoOpStick.getRawButton(4)){
-      EncoderTargetHieght = (kMaxHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Max
+      mEncoderTargetHieght = (kMaxHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Max
     }else if(CoOpStick.getRawButton(2)){
-      EncoderTargetHieght = (kMidHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Mid
+      mEncoderTargetHieght = (kMidHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Mid
     }else if(CoOpStick.getRawButton(1)){
-      EncoderTargetHieght = (kMinHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Min
+      mEncoderTargetHieght = (kMinHeight*((kSpoolDiam*Math.PI)/kPulseNumber));//Min
     }
-    return EncoderTargetHieght;
+    return mEncoderTargetHieght;
   }
 
   public double PIDFinal(){
 
-    Error = TargetHeight() - ElevatorEncoder.get();
-    Perpotional = Error *PGain;
-    Derivative = (Error - PError) *DGain;
-    Integral = 0;
-    Integral += (Error * .02);
-    PError = Error;
+    mError = TargetHeight() - ElevatorEncoder.get();
+    mPerpotional = mError *PGain;
+    mDerivative = (mError - mPerviousError) *DGain;
+    mIntegral = 0;
+    mIntegral += (mError * .02);
+    mPerviousError = mError;
 
     SmartDashboard.putNumber("ElevatorEncoder", ElevatorEncoder.getDistance());
-    SmartDashboard.putNumber("Perpotional", Perpotional);
-    SmartDashboard.putNumber("Derivative", Derivative);
-    SmartDashboard.putNumber("Integral", Integral);
+    SmartDashboard.putNumber("Perpotional", mPerpotional);
+    SmartDashboard.putNumber("Derivative", mDerivative);
+    SmartDashboard.putNumber("Integral", mIntegral);
 
-    return (Perpotional + Derivative + (Integral*IGain));
+    return (mPerpotional + mDerivative + (mIntegral*IGain));
 
   }
 

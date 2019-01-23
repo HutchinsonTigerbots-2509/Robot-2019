@@ -46,15 +46,15 @@ public static Encoder  ElevatorEncoder;
 public static WPI_TalonSRX RightSpoolMaster; 
 public static VictorSPX LeftSpoolSlave; 
 
-    // Intake
-    public static VictorSP IntakeRightMotor = new VictorSP(4);
-    public static VictorSP IntakeLeftMotor = new VictorSP(5);
+// Intake
+public static VictorSP IntakeRightMotor = new VictorSP(4);
+public static VictorSP IntakeLeftMotor = new VictorSP(5);
 
-    public static SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
-    
-    public static DoubleSolenoid IntakeLeftPiston = new DoubleSolenoid(0, 1);
-    public static DoubleSolenoid IntakeWristPiston = new DoubleSolenoid(2, 3);
-    public static DoubleSolenoid OpenIntakePiston = new DoubleSolenoid(4, 5); 
+public static SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
+
+public static DoubleSolenoid IntakeLeftPiston = new DoubleSolenoid(0, 1);
+public static DoubleSolenoid IntakeWristPiston = new DoubleSolenoid(2, 3);
+public static DoubleSolenoid OpenIntakePiston = new DoubleSolenoid(4, 5); 
 
 public static void init() {
     //#region DriveTrain
@@ -80,10 +80,12 @@ public static void init() {
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
 
+    //#region Elevator
     RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
     RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
     LeftSpoolSlave.follow(RightSpoolMaster);
+    //#endregion
 
     // #region Intake
     IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
