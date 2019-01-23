@@ -24,7 +24,8 @@ Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
-
+Elevator  | TalonSRX   | Master | 4 | - |
+Elevator  | VictorSPX  | Slave | 5 | - |
 
 ## Code Highlights
 
