@@ -1,6 +1,7 @@
 package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -20,9 +21,9 @@ public class RobotMap {
 
     // DriveTrain
     public static WPI_TalonSRX DrivetrainLeftMaster; 
-    public static WPI_TalonSRX DrivetrainLeftSlave; 
+    public static VictorSPX DrivetrainLeftSlave; 
     public static WPI_TalonSRX DrivetrainRightMaster; 
-    public static WPI_TalonSRX DrivetrainRightSlave; 
+    public static VictorSPX DrivetrainRightSlave; 
 
     public static SpeedControllerGroup DrivetrainLeft; 
     public static SpeedControllerGroup DrivetrainRight; 
@@ -30,8 +31,8 @@ public class RobotMap {
     public static DifferentialDrive DrivetrainDifferential;
     
     // Sensors
-    public static Encoder DrivetrainLeftEncoder; 
-    public static Encoder DrivetrainRightEncoder;
+    // public static Encoder DrivetrainLeftEncoder; 
+    // public static Encoder DrivetrainRightEncoder;
     public static AHRS Gyro;
 
 public static void init() {
@@ -40,20 +41,16 @@ public static void init() {
     DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
     DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID);  // Rear Left Motor
+    DrivetrainLeftSlave = new VictorSPX(Constants.kDrivetrainLeftSlaveID);  // Rear Left Motor
     DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
 
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
     DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
+    DrivetrainRightSlave = new VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
     DrivetrainRightSlave.follow(DrivetrainRightMaster);
 
-    DrivetrainLeft = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave); // Left DT
-
-    DrivetrainRight = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave); // Right DT
-
-    DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); // Drive Varible
+    DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
     
     // #endregion Drivetrain
 
@@ -61,11 +58,9 @@ public static void init() {
 
     Gyro = new AHRS(SPI.Port.kMXP);
     
-    DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, 
-                                        Constants.kDrivetrainEncoderLeftBID); 
+    // DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
 
-    DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID,
-                                         Constants.kDrivetrianEncoderRightBID); 
+    // DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
     
     //#endregion Sensors
     }

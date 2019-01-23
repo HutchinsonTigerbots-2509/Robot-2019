@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -27,11 +28,11 @@ public class Drivetrain extends Subsystem {
   private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
   private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
-  private final WPI_TalonSRX mLeftSlave = RobotMap.DrivetrainLeftSlave;
+  private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
-  private final WPI_TalonSRX mRightSlave = RobotMap.DrivetrainRightSlave;
-  private final Encoder mRightEncoder = RobotMap.DrivetrainRightEncoder;
-  private final Encoder mLeftEncoder = RobotMap.DrivetrainLeftEncoder;
+  private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
+  // private final Encoder mRightEncoder = RobotMap.DrivetrainRightEncoder;
+  // private final Encoder mLeftEncoder = RobotMap.DrivetrainLeftEncoder;
   private final AHRS mGyro = RobotMap.Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
@@ -114,14 +115,12 @@ public class Drivetrain extends Subsystem {
 
   public double getEncoderAverageValue()
   {
-    return mRightEncoder.get() + mLeftEncoder.get() / 2;
+    return (mRightMaster.getSelectedSensorPosition() + mLeftMaster.getSelectedSensorPosition()) / 2;
   }
 
   public void StopMotors() {
     mRightMaster.stopMotor();
-    mRightSlave.stopMotor();
     mLeftMaster.stopMotor();
-    mLeftSlave.stopMotor();
   }
 
   public void TurnLeft() {
@@ -161,8 +160,10 @@ public class Drivetrain extends Subsystem {
 
   public void sensorReset() {
     mGyro.reset();
-    mRightEncoder.reset();
-    mLeftEncoder.reset();
+    // mRightEncoder.reset();
+    // mLeftEncoder.reset();
+    mLeftMaster.setSelectedSensorPosition(0);
+    mRightMaster.setSelectedSensorPosition(0);
   }
 
   public void PIDSteering(double tx) {
@@ -187,7 +188,8 @@ public class Drivetrain extends Subsystem {
     /* Varible Declarations */
     double output; // PID Ouput
 
-    double error = targ_distance - (mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2; // Init Error
+    double error = targ_distance -((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2);//Init Error
+    //double error = targ_distance - (mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2; // Init Error
     double pre_error = error; // Pre_Error (For Derivative)
     
     // Math Varibles
@@ -198,14 +200,18 @@ public class Drivetrain extends Subsystem {
     double Integrel = 0.0; // Integral Adding Varible
 
     // Reset Encoders
-    mLeftEncoder.reset();
-    mRightEncoder.reset();
+    mLeftMaster.setSelectedSensorPosition(0);
+    mRightMaster.setSelectedSensorPosition(0);
+    // mLeftEncoder.reset();
+    // mRightEncoder.reset();
 
     // While loop conditional
-    while(!(((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2) > (targ_distance + 1) && ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2 )< (targ_distance - 1)))
+    // while(!(((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2) > (targ_distance + 1) && ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2 )< (targ_distance - 1)))
+    while(!(((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2) > (targ_distance + 1) && ((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2 )< (targ_distance - 1)))
     {
       // Maths
-      error = targ_distance - ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2);
+      error = targ_distance - ((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2);
+      //error = targ_distance - ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2);
       Integrel += error*0.02;
       output = (kP * error) + (kI * Integrel) + (kD * ((error - pre_error)/0.02));
       pre_error = error;
@@ -257,7 +263,7 @@ public class Drivetrain extends Subsystem {
    * 
    * @return mDT_LeftRear
    */
-  public WPI_TalonSRX getLeftRear() {
+  public VictorSPX getLeftSlave() {
     return mLeftSlave;
   }
 
@@ -275,7 +281,7 @@ public class Drivetrain extends Subsystem {
    * 
    * @return mDT_RightRear
    */
-  public WPI_TalonSRX getRightRear() {
+  public VictorSPX getRightSlave() {
     return mRightSlave;
   }
 }
