@@ -21,9 +21,9 @@ The code is divided into several packages, each responsible for a different aspe
 Subsystem | Controller | Name | ID | PDP |
 --------- | ---------- | ---- | -- | ---|
 Drive     | TalonSRX   | Left Front | 0  | - |
-Drive     | TalonSRX   | Left Rear | 1  | - |
+Drive     | VictorSPX  | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
-Drive     | TalonSRX   | Right Rear | 3  | - |
+Drive     | VictorSPX  | Right Rear | 3  | - |
 
 
 ## Code Highlights
