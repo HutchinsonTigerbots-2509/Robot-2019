@@ -39,12 +39,8 @@ public static SpeedControllerGroup DrivetrainLeft;
 public static SpeedControllerGroup DrivetrainRight; 
 public static DifferentialDrive DrivetrainDifferential; 
 //Elevator
-public static SpeedControllerGroup LiftTrain;
-public static WPI_TalonSRX Right_Lift;
-public static WPI_TalonSRX Left_Lift;
-public static Encoder  ElevatorEncoder;
-public static WPI_TalonSRX RightSpoolMaster; 
-public static VictorSPX LeftSpoolSlave; 
+public static WPI_TalonSRX ElevatorMotorMaster; 
+public static VictorSPX ElevatorMotorSlave; 
 
 // Intake
 public static VictorSP IntakeRightMotor = new VictorSP(4);
@@ -81,10 +77,12 @@ public static void init() {
     // #endregion
 
     //#region Elevator
-    RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
-    RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
-    LeftSpoolSlave.follow(RightSpoolMaster);
+    ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
+    ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
+    ElevatorMotorSlave = new VictorSPX(Constants.kElevatorSlaveID); 
+    ElevatorMotorSlave.follow(ElevatorMotorMaster);
+
     //#endregion
 
     // #region Intake

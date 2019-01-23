@@ -37,8 +37,8 @@ public final class Constants {
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
 
-    public static int kRightSpoolMasterMasterID = 4;
-    public static int kLeftSpoolSlaveID = 5;
+    public static int kElevatorMasterID = 4;
+    public static int kElevatorSlaveID = 5;
 
     /* Vision */
     // Physical

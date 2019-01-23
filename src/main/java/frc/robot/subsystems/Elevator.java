@@ -26,9 +26,8 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
 
-  public final TalonSRX RightSpoolMaster = RobotMap.RightSpoolMaster;
-  public final VictorSPX LeftSpoolSlave = RobotMap.LeftSpoolSlave;
-  public final Encoder ElevatorEncoder = RobotMap.ElevatorEncoder; 
+  public final TalonSRX RightSpoolMaster = RobotMap.ElevatorMotorMaster;
+  public final VictorSPX LeftSpoolSlave = RobotMap.ElevatorMotorSlave;
   
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
