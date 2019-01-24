@@ -30,7 +30,7 @@ public class Follow_target extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addParallel(new AlignWithTargetPID());
+    //addParallel(new AlignWithTargetPID());
     addParallel(new FollowTarget());
   }
 }

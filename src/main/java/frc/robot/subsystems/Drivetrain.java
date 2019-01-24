@@ -35,6 +35,7 @@ public class Drivetrain extends Subsystem {
 
   // Varible Declarations
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  
   private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
   private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
@@ -69,7 +70,7 @@ public class Drivetrain extends Subsystem {
   /**
    * Will drive forward at 95%.
    */
-  public void driveForward() {
+  public void driveForwar() {
     mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
   }
 
@@ -94,6 +95,11 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverseSlow() {
     mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
+  }
+
+  public void track_taget(double left, double right){
+    mDrive.tankDrive(left, -right);
+
   }
 
   /**

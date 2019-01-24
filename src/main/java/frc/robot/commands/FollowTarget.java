@@ -12,18 +12,30 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Drivetrain;
 
 public class FollowTarget extends Command {
   private Drivetrain sDriveTrain = Robot.sDrivetrain;
   private Vision sVision = Robot.sVision;
-  private double TargetX;
-  private double TargetY;
+  private double ErrorX;
+  private double ErrorY;
   public boolean TargetDistanceCheck = false;
   private Command AlignWithTarget;
+  public double steering_adjust;
+  public double X;
+  public double Y;
+  public double distance_adjust;
+  public double right_speed;
+  public double left_speed;
+  private Drivetrain sDrivetrain = Robot.sDrivetrain;
 
   public FollowTarget() {
-    TargetX = sVision.getTargetX();
-    TargetY = sVision.getTargetY();
+    ErrorX = -sVision.getTargetX();
+    ErrorY = -sVision.getTargetY();
+    X = sVision.getTargetX();
+    Y = sVision.getTargetY();
+    right_speed = 0;
+    left_speed = 0;
     //Requires(Drivetrain);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -32,20 +44,25 @@ public class FollowTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    steering_adjust = 0;
+    distance_adjust = 0;
     //sDriveTrain.TargetAligned = false;
     sDriveTrain.TargetDistanceCheck = false;
+    requires(sDrivetrain);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TargetX = sVision.getTargetX();
-    TargetY = sVision.getTargetY();
+    ErrorX = -sVision.getTargetX();
+    ErrorY = -sVision.getTargetY();
+    X = sVision.getTargetX();
+    Y = sVision.getTargetY();
+
     
     
     
-    
-    if (TargetX < 1 && TargetX > -1) {
+    //if (TargetX < 1 && TargetX > -1) {
       // if (TargetX < -3) {
       //   sDriveTrain.TurnLeft();
       // } else if (TargetX > 3) {
@@ -57,27 +74,37 @@ public class FollowTarget extends Command {
       // if (TargetX < -3 || TargetX > 3) {
       //   sDriveTrain.TargetAligned = false;
       // }
-      //AlignWithTarget.execute();
-      if (TargetY > 0){
-        sDriveTrain.driveForwardSlow();
+  if (Y > 0){
+    if (X > 1){
+        steering_adjust = (Constants.KpAim*ErrorX - Constants.min_aim_command);
+        distance_adjust = (Constants.KpDistance + ErrorX);
+        left_speed = steering_adjust + distance_adjust;
+        right_speed = -1 * steering_adjust + distance_adjust;
+        sDriveTrain.track_taget(left_speed, right_speed);
         //TargetDistanceCheck = false;
-      } else if ((TargetY < 0)) {
-        //sDriveTrain.StopMotors();
-        //TargetDistanceCheck = true;
-        sDriveTrain.StopMotors();
-        end();
+      } else if (X < 1) {
+          steering_adjust = (Constants.KpAim*ErrorX + Constants.min_aim_command);
+          //sDriveTrain.StopMotors();
+          //TargetDistanceCheck = true;
+          distance_adjust = (Constants.KpDistance + ErrorX);
+          left_speed = steering_adjust + distance_adjust;
+          right_speed = -1 * steering_adjust + distance_adjust;
+          sDriveTrain.track_taget(left_speed, right_speed);
+          
       
         
+      }
+    }else{
+
     }
-    // } else if (sDriveTrain.TargetAligned == true && TargetDistanceCheck == false) {
-    //    sDriveTrain.MoveForward();
-    }
+    
   }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (TargetY < 0) {
+    if (Y < 0) {
       return true;
     } else {
       return false;
