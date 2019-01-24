@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -19,20 +21,30 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * @see Constants.java region RobotMap Constants
  */
 public class RobotMap {
-    /* Varible Declarations */
-    // Drivetrain
-    public static WPI_TalonSRX DrivetrainLeftMaster; 
-    public static WPI_TalonSRX DrivetrainLeftSlave; 
-    public static WPI_TalonSRX DrivetrainRightMaster; 
-    public static WPI_TalonSRX DrivetrainRightSlave; 
-    
-    public static Encoder DrivetrainLeftEncoder; 
-    public static Encoder DrivetrainRightEncoder; 
-    
-    public static SpeedControllerGroup DrivetrainLeft; 
-    public static SpeedControllerGroup DrivetrainRight; 
-   
-    public static DifferentialDrive DrivetrainDifferential;
+/**
+     * DriveTrain Varibles 
+     * Front DriveTrainLeft |----------------| DriveTrain Right
+     * kDT_LFront |----------------| kDT_RFront |----------------|
+     * |----------------| |----------------| kDT_LRear |----------------| kDT_RRear
+     * Back
+     */
+
+public static WPI_TalonSRX DrivetrainLeftMaster; 
+public static WPI_TalonSRX DrivetrainLeftSlave; 
+public static WPI_TalonSRX DrivetrainRightMaster; 
+public static WPI_TalonSRX DrivetrainRightSlave; 
+public static Encoder DrivetrainLeftEncoder; 
+public static Encoder DrivetrainRightEncoder; 
+public static SpeedControllerGroup DrivetrainLeft; 
+public static SpeedControllerGroup DrivetrainRight; 
+public static DifferentialDrive DrivetrainDifferential; 
+//Elevator
+public static SpeedControllerGroup LiftTrain;
+public static WPI_TalonSRX Right_Lift;
+public static WPI_TalonSRX Left_Lift;
+public static Encoder  ElevatorEncoder;
+public static WPI_TalonSRX RightSpoolMaster; 
+public static VictorSPX LeftSpoolSlave; 
 
     // Intake
     public static VictorSP IntakeRightMotor;
@@ -68,6 +80,11 @@ public static void init() {
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
     // #endregion
 
+    RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
+    RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
+    LeftSpoolSlave.follow(RightSpoolMaster);
+
     // #region Intake
     IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
     IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
@@ -82,4 +99,6 @@ public static void init() {
     //#endregion
     
     }
+
+  
 }
