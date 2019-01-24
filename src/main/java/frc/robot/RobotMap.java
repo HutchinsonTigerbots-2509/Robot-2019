@@ -35,14 +35,14 @@ public class RobotMap {
     public static DifferentialDrive DrivetrainDifferential;
 
     // Intake
-    public static VictorSP IntakeRightMotor = new VictorSP(4);
-    public static VictorSP IntakeLeftMotor = new VictorSP(5);
+    public static VictorSP IntakeRightMotor;
+    public static VictorSP IntakeLeftMotor;
 
-    public static SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
+    public static SpeedControllerGroup IntakeMotors;
     
-    public static DoubleSolenoid IntakeLeftPiston = new DoubleSolenoid(0, 1);
-    public static DoubleSolenoid IntakeWristPiston = new DoubleSolenoid(2, 3);
-    public static DoubleSolenoid OpenIntakePiston = new DoubleSolenoid(4, 5); 
+    public static DoubleSolenoid IntakeLeftPiston;
+    public static DoubleSolenoid IntakeWristPiston;
+    public static DoubleSolenoid OpenIntakePiston;
 
 public static void init() {
     //#region DriveTrain
