@@ -28,9 +28,9 @@ public class OI {
   private NetworkTable mLimeTable;
 
   // #region Joystic Button Creation
-  //// CREATING BUTTONS
+  // CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
-  //// joystick.
+  // joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
   // Joystick stick = new Joystick(port);
@@ -40,7 +40,7 @@ public class OI {
   // by subclassing Button you can create custom triggers and bind those to
   // commands the same as any other Button.
 
-  //// TRIGGERING COMMANDS WITH BUTTONS
+  // TRIGGERING COMMANDS WITH BUTTONS
   // Once you have a button, it's trivial to bind it to a button in one of
   // three ways:
 

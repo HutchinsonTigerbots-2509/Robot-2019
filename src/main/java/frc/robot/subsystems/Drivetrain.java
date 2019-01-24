@@ -22,40 +22,48 @@ import frc.robot.RobotMap;
  */
 public class Drivetrain extends Subsystem {
 
-  // Varible Declarations
-  private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
-  private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
-  private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
+  /* IMPORTED VARIBLE FROM ROBOTMAP DELCARATIONS */
+  // Motors
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
   private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
-  // private final Encoder mRightEncoder = RobotMap.DrivetrainRightEncoder;
-  // private final Encoder mLeftEncoder = RobotMap.DrivetrainLeftEncoder;
+  
+  // Speed Controller Groups
+  private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
+  private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
+  
+  // The drivetrain object (for mDrive.tankDrive)
+  private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  
+  // Gyro
   private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
   
-
+  /* IMPORTED VARIBLES FROM CONSTANTS DECLARATION */
+  // Vision
   public boolean TargetAligned;
+  
+  // PID Constants
   private final double kP = Constants.kDrivetrainP;
   private final double kI = Constants.kDrivetrainI;
   private final double kD = Constants.kDrivetrainD;
-  private double mSetpoint = 0;
+  
+  /* PRIVATE MATH VARIBLES FOR PID */
+  private double mSetpoint = 0; // math (example in AlignWithTargetPID.java)
   private double error = 0;
   private double previousError = 0;
 
+  /**
+   * Add children to the drivetrain class
+   */
   public Drivetrain() {
     setName("Drivetrain");
     addChild(mLeftMaster);
     addChild(mLeftSlave);
     addChild(mRightMaster);
     addChild(mRightSlave);
-  }
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  @Override
-  public void initDefaultCommand() {
   }
 
   /**
@@ -73,8 +81,7 @@ public class Drivetrain extends Subsystem {
   }
 
   /**
-   * Will drive in reverse at 95%.
-   * @warning Highly not reccommened!
+   * Will drive in reverse at 95%. (probably not a good idea though)
    */
   public void driveReverse() {
     mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
@@ -94,69 +101,110 @@ public class Drivetrain extends Subsystem {
    * Y-Axis and Z-Axis of the OPStick in OI.java, then drive the robot.
    * 
    * @param Joystick stick
-   * @author CRahne
    */
   public void OperatorDrive(Joystick stick) {
     mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
     // mDrive.arcadeDrive(-stick.getY(), 0);
   }
 
+  /**
+   * The driveForward method from the 2018 code
+   * 
+   * @param targetDistance
+   */
   public void driveForward(double targetDistance) {
+    // Will Re-Zero all sensors
     sensorReset();
+    // Math for the Target
     double wheelDiameter = 6;
     double target = (targetDistance/(wheelDiameter*Math.PI))*3*360;
+    
     Timer.delay(0.1);
+    // continue if the average encoder counts is less than or equal to the modified target distance
     while(getEncoderAverageValue() / 2 <= target) {
-      mDrive.arcadeDrive(0.7, 0.7);
+      mDrive.arcadeDrive(0.7, 0.7); // Drive at 70 percent power
     }
-    mDrive.tankDrive(0, 0);
+    mDrive.tankDrive(0, 0); // Stop at the end
   }
 
+  /**
+   * Uses input from the encoders on the motors to get
+   * the distance the robot has driven
+   * 
+   * @return average encoder counts in raw encoder counts
+   */
   public double getEncoderAverageValue()
   {
     return (mRightMaster.getSelectedSensorPosition() + mLeftMaster.getSelectedSensorPosition()) / 2;
   }
 
+  /**
+   * Will stop all motors
+   */
   public void StopMotors() {
     mRightMaster.stopMotor();
     mLeftMaster.stopMotor();
   }
 
+  /**
+   * Turn left method for continous turning
+   */
   public void TurnLeft() {
     mLeft.set(Constants.kTurnSpeed);
     mRight.set(Constants.kTurnSpeed);
   }
 
+  /**
+   * The turn right method for continuosly turning right
+   */
   public void TurnRight() {
     mLeft.set(-Constants.kTurnSpeed);
     mRight.set(-Constants.kTurnSpeed);
   }
 
+  /**
+   * Drives forward at the constant kTargetFollowSpeed (0.2)
+   */
   public void MoveForward() {
     mLeft.set(Constants.kTargetFollowSpeed);
     mRight.set(Constants.kTargetFollowSpeed);
   }
 
+  /**
+   * Will change the setpoint varible from whatever it is
+   * when this is called to the whatever is the parameter
+   * 
+   * @param setpoint
+   */
   public void setSetpoint(int setpoint) {
     this.mSetpoint = setpoint;
   }
 
+  /**
+   * Will aim to the target from a x coordinate off
+   * an image from the limelight camera 
+   */
   public void AimToTargetPID(double tx) {
+    /* PID CONSTANTS */
     double mIntegral = 0;
     double mDerivative = 0;
     double mOutput = 0;
     double mActual = tx;
 
+    /* MATH */
     error = mSetpoint - mActual;// Error = Target - Actual
     mIntegral += (error * .02);// Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
     mDerivative = (error - previousError) / .02;
     mOutput = kP * error + kI * mIntegral + kD * mDerivative;
     previousError = error;// Sets pr
 
+    // Will tell the robot to turn at a rate around the z-axis
     mDrive.arcadeDrive(0, mOutput);
-
   }
 
+  /**
+   * Reset all sensors - the gyro and two WPI_TalonSRX encoders
+   */
   public void sensorReset() {
     mGyro.reset();
     // mRightEncoder.reset();
@@ -165,6 +213,10 @@ public class Drivetrain extends Subsystem {
     mRightMaster.setSelectedSensorPosition(0);
   }
 
+  /**
+   * The PID Steering method with an input from
+   * the camera
+   */
   public void PIDSteering(double tx) {
     double kF = -0.1;
     double speed = 0;
@@ -282,5 +334,9 @@ public class Drivetrain extends Subsystem {
    */
   public VictorSPX getRightSlave() {
     return mRightSlave;
+  }
+
+  @Override
+  public void initDefaultCommand() {
   }
 }

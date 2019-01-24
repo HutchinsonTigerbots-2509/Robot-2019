@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup; 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
 
@@ -17,9 +16,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class RobotMap {
 
-    // varible declarations \/
-
-    /* DriveTrain Subsystem */
+    /* DRIVETRAIN SUBSYSTEM */
     // Motors - The encoder is included with in these (look below in init())
     public static WPI_TalonSRX DrivetrainLeftMaster; 
     public static VictorSPX DrivetrainLeftSlave; 
@@ -40,16 +37,16 @@ public static void init() {
     //#region DriveTrain
 
     DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
-    DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
 
     DrivetrainLeftSlave = new VictorSPX(Constants.kDrivetrainLeftSlaveID);  // Rear Left Motor
-    DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
+    DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
 
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
-    DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
 
     DrivetrainRightSlave = new VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
-    DrivetrainRightSlave.follow(DrivetrainRightMaster);
+    DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
     
@@ -58,10 +55,6 @@ public static void init() {
     //#region Sensors
 
     Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
-    
-    // DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
-
-    // DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
     
     //#endregion Sensors
     }

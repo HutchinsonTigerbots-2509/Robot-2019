@@ -16,14 +16,14 @@ The code is divided into several packages, each responsible for a different aspe
 - Run `./gradlew build` to build the code. Use the `--info` flag for more details
 - Run `./gradlew deploy -PteamNumber=2509` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
 
-### Motor Wiring Diagram
+### Wiring Compontents Diagram
 
 Subsystem | Controller | Name | ID | PDP |
---------- | ---------- | ---- | -- | ---|
-Drive     | TalonSRX   | Left Front | 0  | - |
-Drive     | VictorSPX  | Left Rear | 1  | - |
-Drive     | TalonSRX   | Right Front | 2  | - |
-Drive     | VictorSPX  | Right Rear | 3  | - |
+----------- | ---------- | ---- | -- | ---|
+Drivetrain     | TalonSRX   | Left Master | 0  | - |
+Drivetrain     | VictorSPX  | Left Slave | 1  | - |
+Drivetrain     | TalonSRX   | Right Master | 2  | - |
+Drivetrain     | VictorSPX  | Right Slave | 3  | - |
 
 
 ## Code Highlights
