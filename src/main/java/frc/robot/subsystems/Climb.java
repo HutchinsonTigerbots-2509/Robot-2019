@@ -20,17 +20,35 @@ public class Climb extends Subsystem {
   private final DoubleSolenoid mFirstStage = RobotMap.ClimbFirstStage;
   private final DoubleSolenoid mSecondStage = RobotMap.ClimbSecondStage;
 
-  public void Extend(){
+  /**
+   * Extends the climb pistons
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void Extend() {
     mFirstStage.set(Value.kForward);
     mSecondStage.set(Value.kForward);
   }
 
-  public void Stop(){
+  /**
+   * Stops the climb pistons
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void Stop() {
     mFirstStage.set(Value.kOff);
     mSecondStage.set(Value.kOff);
   }
 
-  public void Retract(){
+  /**
+   * Retracts the climb pistons
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void Retract() {
     mFirstStage.set(Value.kReverse);
     mSecondStage.set(Value.kReverse);
   }
