@@ -24,6 +24,8 @@ Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
+Intake    | VictorSP   | Left | 1 | - |
+Intake    | VictorSP   | Right | 2 | - |
 
 
 ## Code Highlights
@@ -178,3 +180,7 @@ PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 * [FerisJumbo](https://github.com/FerisJumbo) :ferris_wheel:
 * [danevenson13](https://github.com/danevenson13) :muscle:
 * [Tjwiseguy](https://github.com/Tjwiseguy) :tiger:
+
+## Dependencies Documents
+* [Phoenix](https://phoenix-documentation.readthedocs.io/en/latest/index.html#) :chicken:
+* [FRC Programming Done Right](https://frc-pdr.readthedocs.io/en/latest/index.html)

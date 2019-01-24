@@ -12,9 +12,9 @@ import frc.robot.RobotMap;
  */
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
-  private final DoubleSolenoid mLeftPush = RobotMap.IntakeLeftPiston;
+  private final DoubleSolenoid mPush = RobotMap.IntakeLeftPiston;
   private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
-  private final DoubleSolenoid mOpen = RobotMap.OpenIntakePiston;
+  private final DoubleSolenoid mGrip = RobotMap.OpenIntakePiston;
   private final SpeedController mIntakeMotors = RobotMap.IntakeMotors;
   private final double kMaxSpeed = Constants.kMaxSpeed;
 
@@ -23,8 +23,8 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void In() {
-    mIntakeMotors.set(kMaxSpeed);
+  public void MotorsIn(){
+    mIntakeMotors.set(kMaxSpeed);      
   }
 
   /**
@@ -32,7 +32,7 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void Out() {
+  public void MotorsOut(){
     mIntakeMotors.set(kMaxSpeed);
   }
 
@@ -41,7 +41,7 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void motorsStop() {
+  public void MotorsStop(){
     mIntakeMotors.stopMotor();
   }
 
@@ -77,8 +77,8 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void Open() {
-    mOpen.set(Value.kForward);
+  public void Open(){
+    mGrip.set(Value.kForward);
   }
 
   /**
@@ -86,8 +86,8 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void Close() {
-    mOpen.set(Value.kReverse);
+  public void Close(){
+    mGrip.set(Value.kReverse);
   }
 
   /**
@@ -95,8 +95,8 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void Stop() {
-    mOpen.set(Value.kOff);
+  public void Stop(){
+    mGrip.set(Value.kOff);
   }
 
   @Override
