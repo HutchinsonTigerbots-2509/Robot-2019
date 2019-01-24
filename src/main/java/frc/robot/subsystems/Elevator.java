@@ -52,7 +52,7 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  private double TargetHeight() {
+  private double TargetHeight() { // Gets Goal height
     if (CoOpStick.getRawAxis(1) != 0) {
       mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
     } else if (CoOpStick.getRawButton(4)) {
@@ -65,7 +65,7 @@ public class Elevator extends Subsystem {
     return mEncoderTargetHieght;
   }
 
-  private double PIDFinal() {
+  private double PIDFinal() { // Calculates PID Speed
 
     mError = TargetHeight() - CurrentHeight();
     mPerpotional = mError * PGain;
@@ -82,11 +82,11 @@ public class Elevator extends Subsystem {
 
   }
 
-  public void ChaseTarget() {
+  public void ChaseTarget() { // Trys to follow goal height, by sending PID speeds to motors
     SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
   }
 
-  public double CurrentHeight() {
+  public double CurrentHeight() { // Gets Current Height
     return SpoolMaster.getSelectedSensorPosition() * ((kSpoolDiam * Math.PI) / kPulseNumber);
     // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
