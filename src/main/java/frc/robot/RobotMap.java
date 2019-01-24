@@ -19,21 +19,22 @@ public class RobotMap {
 
     // varible declarations \/
 
-    // DriveTrain
+    /* DriveTrain Subsystem */
+    // Motors - The encoder is included with in these (look below in init())
     public static WPI_TalonSRX DrivetrainLeftMaster; 
     public static VictorSPX DrivetrainLeftSlave; 
     public static WPI_TalonSRX DrivetrainRightMaster; 
     public static VictorSPX DrivetrainRightSlave; 
 
+    // Speed Controller Groups
     public static SpeedControllerGroup DrivetrainLeft; 
     public static SpeedControllerGroup DrivetrainRight; 
     
+    // Drive Varible - Call this with .tankDrive or .arcadeDrive
     public static DifferentialDrive DrivetrainDifferential;
     
     // Sensors
-    // public static Encoder DrivetrainLeftEncoder; 
-    // public static Encoder DrivetrainRightEncoder;
-    public static AHRS Gyro;
+    public static AHRS Drivetrain_Gyro;
 
 public static void init() {
     //#region DriveTrain
@@ -56,7 +57,7 @@ public static void init() {
 
     //#region Sensors
 
-    Gyro = new AHRS(SPI.Port.kMXP);
+    Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
     
     // DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
 

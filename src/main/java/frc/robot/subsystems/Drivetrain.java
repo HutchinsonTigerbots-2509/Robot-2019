@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,7 +32,7 @@ public class Drivetrain extends Subsystem {
   private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
   // private final Encoder mRightEncoder = RobotMap.DrivetrainRightEncoder;
   // private final Encoder mLeftEncoder = RobotMap.DrivetrainLeftEncoder;
-  private final AHRS mGyro = RobotMap.Gyro;
+  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
   

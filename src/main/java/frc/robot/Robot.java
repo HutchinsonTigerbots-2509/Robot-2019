@@ -64,8 +64,9 @@ public class Robot extends TimedRobot {
    * and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {
-    SmartDashboard.putNumber("Gyro", RobotMap.Gyro.getAngle());
+  public void robotPeriodic()
+  {
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
