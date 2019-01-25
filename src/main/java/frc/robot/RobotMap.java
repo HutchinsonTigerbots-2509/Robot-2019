@@ -1,11 +1,11 @@
 package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -40,7 +40,7 @@ public static SpeedControllerGroup DrivetrainRight;
 public static DifferentialDrive DrivetrainDifferential; 
 //Elevator
 public static WPI_TalonSRX ElevatorMotorMaster; 
-public static VictorSPX ElevatorMotorSlave; 
+public static WPI_VictorSPX ElevatorMotorSlave; 
 
 // Intake
 public static VictorSP IntakeRightMotor = new VictorSP(4);
@@ -79,9 +79,14 @@ public static void init() {
     //#region Elevator
     ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
     ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    // ElevatorMotorMaster.setInverted(false);
+    ElevatorMotorMaster.setSubsystem("Elevator");
 
-    ElevatorMotorSlave = new VictorSPX(Constants.kElevatorSlaveID); 
+
+    ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID); 
     ElevatorMotorSlave.follow(ElevatorMotorMaster);
+    ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
+    ElevatorMotorSlave.setSubsystem("Elevator");
 
     //#endregion
 

@@ -11,12 +11,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -47,6 +45,12 @@ public class Elevator extends Subsystem {
   private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
+
+  public Elevator(){
+    setSubsystem("Elevator");
+    addChild(SpoolMaster);
+    addChild(SpoolSlave);
+  }
 
   @Override
   public void initDefaultCommand() {
