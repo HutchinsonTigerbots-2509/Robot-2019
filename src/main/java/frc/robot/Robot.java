@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
   /*Subsystem Declarations*/
   public static Intake sIntake;
   public static Drivetrain sDrivetrain;
-  //public static PIDSubsystemElevator sElevator;
+  public static Elevator sElevator;
   public static Vision sVision;
 
   /*OI Declaration*/
@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     sIntake = new Intake();
     sVision = new Vision();
     sDrivetrain = new Drivetrain();
-    //sElevator = new PIDSubsystemElevator();
+    sElevator = new Elevator();
     sVision = new Vision();
 
     // OI must be inialized after Subsystems because OI

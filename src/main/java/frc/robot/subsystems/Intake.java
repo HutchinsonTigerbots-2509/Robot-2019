@@ -20,33 +20,37 @@ public class Intake extends Subsystem {
 
   /**
    * Sets the Intake motors to take in.
+   * 
    * @author Cole
    * @author Tony
    */
-  public void MotorsIn(){
-    mIntakeMotors.set(kMaxSpeed);      
-  }
-
-  /**
-   * Sets the Intake motors to reverse and push out
-   * @author Cole
-   * @author Tony
-   */
-  public void MotorsOut(){
+  public void MotorsIn() {
     mIntakeMotors.set(kMaxSpeed);
   }
 
   /**
-   * Stops the intake motors 
+   * Sets the Intake motors to reverse and push out
+   * 
    * @author Cole
    * @author Tony
    */
-  public void MotorsStop(){
+  public void MotorsOut() {
+    mIntakeMotors.set(kMaxSpeed);
+  }
+
+  /**
+   * Stops the intake motors
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void MotorsStop() {
     mIntakeMotors.stopMotor();
   }
 
   /**
    * Moves the wrist of the intake arms up
+   * 
    * @author Cole
    * @author Tony
    */
@@ -56,6 +60,7 @@ public class Intake extends Subsystem {
 
   /**
    * Moves the Wrist down
+   * 
    * @author Cole
    * @author Tony
    */
@@ -65,8 +70,7 @@ public class Intake extends Subsystem {
 
   /**
    * @author Cole
-   * @author Tony
-   * Stops the up and down movement of the intake wrist
+   * @author Tony Stops the up and down movement of the intake wrist
    */
   public void StopWrist() {
     mWrist.set(Value.kOff);
@@ -74,28 +78,31 @@ public class Intake extends Subsystem {
 
   /**
    * Opens the Intake Arms
+   * 
    * @author Cole
    * @author Tony
    */
-  public void Open(){
+  public void Open() {
     mGrip.set(Value.kForward);
   }
 
   /**
    * Closes the Intake Arms
+   * 
    * @author Cole
    * @author Tony
    */
-  public void Close(){
+  public void Close() {
     mGrip.set(Value.kReverse);
   }
 
   /**
    * Stops the Intake Arms from opening or closing
+   * 
    * @author Cole
    * @author Tony
    */
-  public void Stop(){
+  public void Stop() {
     mGrip.set(Value.kOff);
   }
 
