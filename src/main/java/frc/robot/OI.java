@@ -1,10 +1,6 @@
 package frc.robot; // package declaraition
 
 // imports
-import edu.wpi.first.networktables.NetworkTable; 
-import edu.wpi.first.wpilibj.Joystick; 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-import frc.robot.subsystems.Vision; 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -12,7 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.FollowTarget;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Vision;
 
 /**
  * This class is the glue that binds the controls on the physical operator
