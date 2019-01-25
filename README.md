@@ -19,7 +19,6 @@ The code is divided into several packages, each responsible for a different aspe
 ### Wiring Compontents Diagram
 
 Subsystem | Controller | Name | ID | PDP |
-<<<<<<< HEAD
 --------- | ---------- | ---- | -- | ---|
 Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
@@ -27,13 +26,6 @@ Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
 Intake    | VictorSP   | Left | 1 | - |
 Intake    | VictorSP   | Right | 2 | - |
-=======
------------ | ---------- | ---- | -- | ---|
-Drivetrain     | TalonSRX   | Left Master | 0  | - |
-Drivetrain     | VictorSPX  | Left Slave | 1  | - |
-Drivetrain     | TalonSRX   | Right Master | 2  | - |
-Drivetrain     | VictorSPX  | Right Slave | 3  | - |
->>>>>>> Drivetrain
 
 
 ## Code Highlights
