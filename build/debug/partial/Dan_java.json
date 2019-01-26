@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Dan (in project Dan)",
+    "file": "D:\\Dan\\build\\libs\\Dan.jar",
+    "extensions": [],
+    "librarydir": "D:\\Dan\\build\\tmp\\jniExtractDir",
+    "mainclass": "frc.robot.Main"
+  }
+]

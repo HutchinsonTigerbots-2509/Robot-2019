@@ -87,6 +87,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverse() {
     mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
+    mDrive.arcadeDrive(-kMaxSpeed, -kMaxSpeed);
   }
 
   /**
@@ -97,8 +98,14 @@ public class Drivetrain extends Subsystem {
     mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
   }
 
-  public void track_taget(double left, double right){
-    mDrive.tankDrive(left, -right);
+  public void track_taget(double left, double right, double pipeline){
+    //mDrive.tankDrive(-left, -right);
+    if(pipeline == 0){
+      mDrive.arcadeDrive(left, -right);
+    } else if(pipeline == 2){
+        mDrive.arcadeDrive(-left, -right);
+    }
+    //mDrive.arcadeDrive(-0.5, -right);
 
   }
 

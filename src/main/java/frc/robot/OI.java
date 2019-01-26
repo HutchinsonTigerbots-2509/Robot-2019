@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
-import frc.robot.commands.Follow_target;
+import frc.robot.commands.FollowTarget;
 import frc.robot.subsystems.*;
 
 /**
@@ -67,7 +67,7 @@ public class OI {
     mOpStick = new Joystick(0);
 
     AlignButton = new JoystickButton(mOpStick, 12);
-    AlignButton.toggleWhenPressed(new Follow_target());
+    AlignButton.toggleWhenPressed(new FollowTarget(0));
     SmartDashboard.putData(AlignButton);
 
     AlignButtonPID = new JoystickButton(mOpStick, 10);
@@ -76,22 +76,22 @@ public class OI {
 
     Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
     //mLimeTable.putNumber("pipeline", 0);
-    Follow_low_targets_Button.toggleWhenPressed(new Follow_target());
+    Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
     //SmartDashboard.putData(FollowButton);
 
     Follow_hatch_Button = new JoystickButton(mOpStick, 13);
     //mLimeTable.putNumber("pipeline", 1);
-    Follow_hatch_Button.toggleWhenPressed(new Follow_target());
+    Follow_hatch_Button.toggleWhenPressed(new FollowTarget(3));
     //SmartDashboard.putData(FollowButton);
 
     Follow_high_targets_Button = new JoystickButton(mOpStick, 14);
     //mLimeTable.putNumber("pipeline", 2);
-    Follow_high_targets_Button.toggleWhenPressed(new Follow_target());
+    Follow_high_targets_Button.toggleWhenPressed(new FollowTarget(4));
     //SmartDashboard.putData(FollowButton);
     
     Follow_ball_Button = new JoystickButton(mOpStick, 15);
     //mLimeTable.("pipeline", 3);
-    Follow_ball_Button.toggleWhenPressed(new Follow_target());
+    Follow_ball_Button.toggleWhenPressed(new FollowTarget(1));
     //SmartDashboard.putData(FollowButton);
 
     

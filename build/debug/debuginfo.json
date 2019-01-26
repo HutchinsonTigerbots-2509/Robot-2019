@@ -5,5 +5,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "dan_vision",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project Dan)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Dan",
+    "language": "java"
   }
 ]
