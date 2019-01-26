@@ -44,14 +44,9 @@ public class RobotMap {
     public static VictorSPX LeftSpoolSlave; 
 
     // Intake
-    public static VictorSP IntakeRightMotor;
-    public static VictorSP IntakeLeftMotor;
-
-    public static SpeedControllerGroup IntakeMotors;
-    
-    public static DoubleSolenoid IntakeLeftPiston;
+    public static VictorSP IntakeMotor;
+    public static DoubleSolenoid IntakeGrip;
     public static DoubleSolenoid IntakeWristPiston;
-    public static DoubleSolenoid OpenIntakePiston;
 
     public static void init() {
         //#region DriveTrain
@@ -78,16 +73,9 @@ public class RobotMap {
         //#endregion
 
         // #region Intake
-        IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
-        IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
-
-        IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
-        
-        IntakeLeftPiston = new DoubleSolenoid(Constants.kIntakeLeftPistonForwardID , Constants.kIntakeLeftPistonReverseID);
-        
-        IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristPistonForwardID , Constants.kIntakeWristPistonReverseID);
-        
-        OpenIntakePiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID , Constants.kOpenIntakePistonReverseID);
+        IntakeMotor = new VictorSP(1);
+        IntakeGrip = new DoubleSolenoid(0, 1);
+        IntakeWristPiston = new DoubleSolenoid(2, 3);
         //#endregion  
     }
 }
