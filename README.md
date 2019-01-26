@@ -16,7 +16,7 @@ The code is divided into several packages, each responsible for a different aspe
 - Run `./gradlew build` to build the code. Use the `--info` flag for more details
 - Run `./gradlew deploy -PteamNumber=2509` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
 
-### Motor Wiring Diagram
+### Wiring Compontents Diagram
 
 Subsystem | Controller | Name | ID | PDP |
 --------- | ---------- | ---- | -- | ---|

@@ -40,19 +40,28 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // RobotMap must be initialized first
+    // because everything else uses that as
+    // a reference
     RobotMap.init();
 
     sIntake = new Intake();
     sVision = new Vision();
+    
+    // Subsystems must be initialized next because commands/OI use
+    // the subsystems
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
 
+    
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
     
     // Commands must be defined after OI
+    // This command must be defined after OI because they use
+    // the joystick object in the commands
     cOpDrive = new OperatorDrive();
 
     sVision.UpdateLimelightSettings();
@@ -68,7 +77,10 @@ public class Robot extends TimedRobot {
    * and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {
+  public void robotPeriodic()
+  {
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
@@ -124,7 +136,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    cOpDrive.start();
+    cOpDrive.start(); // Tells the TeleOp Command to start
   }
 
   /**

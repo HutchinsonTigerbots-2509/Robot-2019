@@ -14,7 +14,7 @@ import frc.robot.RobotMap;
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
   private final VictorSP mMotor = RobotMap.IntakeMotor;
-  private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
+  private final DoubleSolenoid mGrip = RobotMap.IntakeGrip;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
 
   /**

@@ -15,10 +15,12 @@ public final class Constants {
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
-    public static double kSlowSpeed = 0.65; // IDK but sure
+    public static double kSlowSpeed = 0.5; // IDK but sure
     public static double kTurnSpeed = 0.57575;
-    public static double kWheelDiameter = 6;
     public static double kTargetFollowSpeed = 0.2;
+
+    /* Drivetrain */
+    public static double kWheelDiameter = 6;
     public static double kDrivetrainP = 1;
     public static double kDrivetrainI = 0;
     public static double kDrivetrainD = 0;
