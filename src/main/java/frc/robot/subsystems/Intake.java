@@ -12,11 +12,9 @@ import frc.robot.RobotMap;
  */
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
-  private final DoubleSolenoid mPush = RobotMap.IntakeLeftPiston;
-  private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
-  private final DoubleSolenoid mGrip = RobotMap.OpenIntakePiston;
-  private final SpeedController mIntakeMotors = RobotMap.IntakeMotors;
-  private final double kMaxSpeed = Constants.kMaxSpeed;
+  private final VictorSP mMotor = RobotMap.IntakeMotor;
+  private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
+  private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
 
   /**
    * Sets the Intake motors to take in.
@@ -25,7 +23,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsIn() {
-    mIntakeMotors.set(kMaxSpeed);
+    mMotors.set(kMaxSpeed);
   }
 
   /**
@@ -35,7 +33,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsOut() {
-    mIntakeMotors.set(kMaxSpeed);
+    mMotors.set(kMaxSpeed);
   }
 
   /**
@@ -45,7 +43,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsStop() {
-    mIntakeMotors.stopMotor();
+    mMotors.stopMotor();
   }
 
   /**
@@ -55,7 +53,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void Up() {
-    mWrist.set(Value.kForward);
+    mWristPiston.set(Value.kForward);
   }
 
   /**
@@ -65,7 +63,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void Down() {
-    mWrist.set(Value.kReverse);
+    mWristPiston.set(Value.kReverse);
   }
 
   /**
@@ -73,7 +71,7 @@ public class Intake extends Subsystem {
    * @author Tony Stops the up and down movement of the intake wrist
    */
   public void StopWrist() {
-    mWrist.set(Value.kOff);
+    mWristPiston.set(Value.kOff);
   }
 
   /**
