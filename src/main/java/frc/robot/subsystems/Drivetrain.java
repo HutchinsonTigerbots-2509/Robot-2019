@@ -32,7 +32,7 @@ public class Drivetrain extends Subsystem {
   
   // The drivetrain object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
-  private final DoubleSolenoid mShifter = RobotMap.Shifter;
+  private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
   private final AHRS mGyro = RobotMap.Drivetrain_Gyro;

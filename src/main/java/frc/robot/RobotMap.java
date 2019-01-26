@@ -31,7 +31,7 @@ public class RobotMap {
     
     // Drive Varible
     public static DifferentialDrive DrivetrainDifferential;
-    public static DoubleSolenoid Shifter;
+    public static DoubleSolenoid DrivetrainShifter;
     
     // Sensors
     public static AHRS Drivetrain_Gyro;
@@ -81,7 +81,7 @@ public class RobotMap {
         // the VictorSPX datatype for motors. However, the masters must still be Talons.
         // NOTE: The Masters contain the encoders for the Drivetrain
         DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster);
-        Shifter = new DoubleSolenoid(0, 1);
+        DrivetrainShifter = new DoubleSolenoid(0, 1);
         
         Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
         // #endregion
