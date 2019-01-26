@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -25,6 +27,7 @@ public class Elevator extends Subsystem {
 
   private final TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   private final VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+  private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
 
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
@@ -94,6 +97,40 @@ public class Elevator extends Subsystem {
     return SpoolMaster.getSelectedSensorPosition() * ((kSpoolDiam * Math.PI) / kPulseNumber);
     // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
+
+  /**
+   * Shifts the Gear to High
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftHighGear() {
+    mShifter.set(Value.kForward);
+  }
+
+  /**
+   * Shifts the Gear to Low
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftLowGear() {
+    mShifter.set(Value.kReverse);
+  }
+
+  /**
+   * Returns a boolean and if True means that it is shifted
+   * @author Cole
+   * @author Tony
+   */
+  public boolean isShifted() {
+    if (mShifter.get() == Value.kReverse){
+      SmartDashboard.putString("isShifted", "fastGear");
+    	return true;
+    } else {
+      SmartDashboard.putString("isShifted", "slowGear");
+      return false;
+    }
+  }
+
 
   // public Encoder getEncoder() {
   // return ElevatorEncoder;

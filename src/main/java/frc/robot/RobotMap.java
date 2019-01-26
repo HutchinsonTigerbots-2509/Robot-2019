@@ -40,7 +40,8 @@ public static SpeedControllerGroup DrivetrainRight;
 public static DifferentialDrive DrivetrainDifferential; 
 //Elevator
 public static WPI_TalonSRX ElevatorMotorMaster; 
-public static WPI_VictorSPX ElevatorMotorSlave; 
+public static WPI_VictorSPX ElevatorMotorSlave;
+public static DoubleSolenoid ElevatorShifter;
 
 // Intake
 public static VictorSP IntakeRightMotor = new VictorSP(4);
@@ -79,6 +80,7 @@ public static void init() {
     //#region Elevator
     ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
     ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    ElevatorShifter = new DoubleSolenoid(0, 1);
     // ElevatorMotorMaster.setInverted(false);
     ElevatorMotorMaster.setSubsystem("Elevator");
 
