@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -23,7 +24,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsIn() {
-    mMotors.set(kMaxSpeed);
+    mMotor.set(Constants.kMaxSpeed);
   }
 
   /**
@@ -33,7 +34,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsOut() {
-    mMotors.set(kMaxSpeed);
+    mMotor.set(Constants.kSlowSpeed);
   }
 
   /**
@@ -43,7 +44,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsStop() {
-    mMotors.stopMotor();
+    mMotor.set(0);
   }
 
   /**
