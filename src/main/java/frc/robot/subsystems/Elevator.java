@@ -59,7 +59,7 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  private double TargetHeight() { // Gets Goal height
+  public double TargetHeight() { // Gets Goal height
     if (CoOpStick.getRawAxis(1) != 0) {
       mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
     } else if (CoOpStick.getRawButton(4)) {
@@ -72,7 +72,7 @@ public class Elevator extends Subsystem {
     return mEncoderTargetHieght;
   }
 
-  private double PIDFinal() { // Calculates PID Speed
+  public double PIDFinal() { // Calculates PID Speed
 
     mError = TargetHeight() - CurrentHeight();
     mPerpotional = mError * PGain;
