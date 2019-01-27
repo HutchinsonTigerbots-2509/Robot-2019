@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
@@ -14,7 +13,7 @@ import frc.robot.RobotMap;
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
   private final VictorSP mMotor = RobotMap.IntakeMotor;
-  private final DoubleSolenoid mGrip = RobotMap.IntakeGrip;
+  private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
 
   /**

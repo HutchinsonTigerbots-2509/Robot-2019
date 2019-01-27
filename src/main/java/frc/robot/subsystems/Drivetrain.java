@@ -4,11 +4,13 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -30,6 +32,7 @@ public class Drivetrain extends Subsystem {
   
   // The drivetrain object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
   private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
@@ -206,6 +209,39 @@ public class Drivetrain extends Subsystem {
     // mLeftEncoder.reset();
     mLeftMaster.setSelectedSensorPosition(0);
     mRightMaster.setSelectedSensorPosition(0);
+  }
+
+  /**
+   * Shifts the Gear to High
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftHighGear() {
+    mShifter.set(Value.kForward);
+  }
+
+  /**
+   * Shifts the Gear to Low
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftLowGear() {
+    mShifter.set(Value.kReverse);
+  }
+
+  /**
+   * Returns a boolean and if True means that it is shifted
+   * @author Cole
+   * @author Tony
+   */
+  public boolean isShifted() {
+    if (mShifter.get() == Value.kReverse){
+      SmartDashboard.putString("isShifted", "fastGear");
+    	return true;
+    } else {
+      SmartDashboard.putString("isShifted", "slowGear");
+      return false;
+    }
   }
 
   /**

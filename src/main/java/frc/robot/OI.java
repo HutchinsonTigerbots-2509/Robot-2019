@@ -13,6 +13,7 @@ import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
+import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
@@ -32,6 +33,8 @@ public class OI {
   private JoystickButton mIntakeout;
   private JoystickButton mWristdown;
   private JoystickButton mWristup;
+
+  private JoystickButton mShifter;
 
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
@@ -117,6 +120,9 @@ public class OI {
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
 
+    mShifter = new JoystickButton(mOpStick, 12);
+    mShifter.whenPressed(new Shift());
+
     /* Vision & NetworkTables */
     mLimeTable = sVision.getTable();
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
@@ -125,10 +131,20 @@ public class OI {
 
   }
 
+  /**
+   * Will return the operator stick varible
+   * 
+   * @return OpStick
+   */
   public Joystick getOperatorStick() {
     return mOpStick;
   }
 
+  /**
+   * Will return the Cooperator Stick varible
+   * 
+   * @return CoOpStick
+   */
   public Joystick getCoOperatorStick() {
     return mCoOpStick;
   }
