@@ -43,7 +43,7 @@ public class OI {
   private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
 
-  //#region Joystic Button Creation
+  // #region Joystic Button Creation
   // CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
   // joystick.
@@ -130,23 +130,22 @@ public class OI {
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
 
   }
+
   /**
    * Will return the operator stick varible
    * 
    * @return OpStick
    */
-  public Joystick getOperatorStick()
-  {
+  public Joystick getOperatorStick() {
     return mOpStick;
   }
-  
+
   /**
    * Will return the Cooperator Stick varible
    * 
    * @return CoOpStick
    */
-  public Joystick getCoOperatorStick()
-  {
+  public Joystick getCoOperatorStick() {
     return mCoOpStick;
   }
 }
