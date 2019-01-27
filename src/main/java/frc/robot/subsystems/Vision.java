@@ -4,6 +4,8 @@ package frc.robot.subsystems; // package declaration
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
+import frc.robot.Constants;
+
 
 /**
  * The Vision Subsystem is the limelight camera thing -- Nate you finish pls
@@ -14,10 +16,19 @@ public class Vision extends Subsystem {
   private NetworkTable mTable = NetworkTableInstance.getDefault().getTable(Constants.kLimelightNetworkID);
   private NetworkTableEntry mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
   private NetworkTableEntry mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
+  private NetworkTableEntry mTableS = mTable.getEntry(Constants.kLimelightTargetSkewID);
   private NetworkTableEntry mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
   private double mTargetX = 0;
   private double mTargetY = 0;
   private double mTargetArea = 0;
+  private double distance = 0;
+  private double mTargetSkew = 0;
+  public double DistanceOne;
+  public double DistanceTwo;
+  public double DistanceToDrive;
+  public double AngleOne;
+  public double Turn_angle = 0;
+
 
   /**
    * Returns the NetworkTable for the Limelight Camera
@@ -63,10 +74,31 @@ public class Vision extends Subsystem {
     mTargetArea = mTableX.getDouble(0.0);
     return mTargetArea;
   }
+  public double getTargetSkew() {
+    mTableS = mTable.getEntry(Constants.kLimelightTargetAreaID);
+    mTargetSkew = mTableS.getDouble(0.0);
+    return mTargetSkew;
+  }
   public void change_vision_pipeline(int pipeline){
     mTable.getEntry("pipeline").setNumber(pipeline);
-  }
 
+  }
+  public double cal_distance(double Y){
+    distance = ((Constants.kTargetHeight-Constants.kCameraHeight)/(Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(Y))));
+    return distance;
+  }
+  public double calculateDistanceVariables(double thetaAngle,  double distance){
+    DistanceOne = (Math.cos(Math.toRadians(thetaAngle)) * distance);
+    DistanceTwo = Math.sqrt(Math.pow(distance, 2) - Math.pow(DistanceOne, 2));
+    DistanceToDrive = Math.sqrt(Math.pow((DistanceOne - Constants.kTargetDistanceFromTarget), 2) + Math.pow(DistanceTwo, 2));
+    AngleOne = Math.atan((DistanceOne - Constants.kTargetDistanceFromTarget)/(DistanceTwo));
+    Turn_angle = (90 - thetaAngle + AngleOne);
+
+    return Math.toDegrees(Turn_angle);
+
+
+
+  }
   /**
    * Updateds the Limelight camera settings via the NetworkTable.
    */

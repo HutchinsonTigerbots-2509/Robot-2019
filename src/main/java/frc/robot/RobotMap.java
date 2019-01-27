@@ -4,7 +4,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup; 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
-
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -29,6 +30,9 @@ public static Encoder DrivetrainRightEncoder;
 public static SpeedControllerGroup DrivetrainLeft; 
 public static SpeedControllerGroup DrivetrainRight; 
 public static DifferentialDrive DrivetrainDifferential; 
+public static AHRS Drivetrain_Gyro;
+
+
 
 public static void init() {
     //#region DriveTrain
@@ -46,6 +50,7 @@ public static void init() {
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
     DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
     // DrivetrainRightRear.follow(DrivetrainRightFront);
+    Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
 
     DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
 

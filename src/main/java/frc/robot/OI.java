@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
+import frc.robot.commands.Angle_check;
 import frc.robot.commands.FollowTarget;
 import frc.robot.subsystems.*;
 
@@ -67,6 +68,7 @@ public class OI {
     mOpStick = new Joystick(0);
 
     AlignButton = new JoystickButton(mOpStick, 12);
+    //AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new FollowTarget(0));
     SmartDashboard.putData(AlignButton);
 

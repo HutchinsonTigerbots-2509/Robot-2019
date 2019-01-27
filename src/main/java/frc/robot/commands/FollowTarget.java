@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //import frc.robot.command.OperatorDrive;
 public class FollowTarget extends Command {
   private Drivetrain sDriveTrain = Robot.sDrivetrain;
@@ -110,8 +111,9 @@ public class FollowTarget extends Command {
   if(pipeline_id == 2){
     Y = -Y;
     min_distance = -min_distance;
+   
     distance_adjust = -distance_adjust;
-    distance_adjust = Constants.KpDistance * ErrorY + min_distance;
+   
     //ErrorY = -ErrorY;
   }
   if (Y < 0){
@@ -145,7 +147,7 @@ public class FollowTarget extends Command {
           //sDriveTrain.track_taget(left_speed , -right_speed);
           SmartDashboard.putNumber("distance_adjust", distance_adjust);
         
-          sDriveTrain.track_taget(distance_adjust  , steering_adjust, pipeline_id);
+          sDriveTrain.track_taget(distance_adjust, steering_adjust, pipeline_id);
          
       
         

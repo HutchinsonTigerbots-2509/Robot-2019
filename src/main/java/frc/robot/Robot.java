@@ -56,9 +56,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    RobotMap.Drivetrain_Gyro.setAngleAdjustment(90);
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+    SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getCompassHeading());
+
   }
 
   /**
