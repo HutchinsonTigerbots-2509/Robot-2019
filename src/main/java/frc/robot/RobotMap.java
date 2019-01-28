@@ -1,60 +1,98 @@
 package frc.robot; // package declartion
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup; 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * @see Constants.java region for Port #s
  */
 public class RobotMap {
-/**
-     * DriveTrain Varibles 
-     * Front DriveTrainLeft |----------------| DriveTrain Right
-     * kDT_LFront |----------------| kDT_RFront |----------------|
-     * |----------------| |----------------| kDT_LRear |----------------| kDT_RRear
-     * Back
-     */
 
-public static WPI_TalonSRX DrivetrainLeftMaster; 
-public static WPI_TalonSRX DrivetrainLeftSlave; 
-public static WPI_TalonSRX DrivetrainRightMaster; 
-public static WPI_TalonSRX DrivetrainRightSlave; 
-public static Encoder DrivetrainLeftEncoder; 
-public static Encoder DrivetrainRightEncoder; 
-public static SpeedControllerGroup DrivetrainLeft; 
-public static SpeedControllerGroup DrivetrainRight; 
-public static DifferentialDrive DrivetrainDifferential; 
-
-public static void init() {
-    //#region DriveTrain
+    /* DRIVETRAIN SUBSYSTEM */
+    // Motors
+    public static WPI_TalonSRX DrivetrainLeftMaster; 
+    public static VictorSPX DrivetrainLeftSlave; 
+    public static WPI_TalonSRX DrivetrainRightMaster; 
+    public static VictorSPX DrivetrainRightSlave; 
     
-    // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/DifferentialDrive/src/main/java/frc/robot/Robot.java
-    /**
-     * According to the link above, the VictorSPXs can be controlled by using this
-     * method. It works like this: You make a Main Motor and a Follower Motor in
-     * place of a Speed Controller Group.
-     */
+    // Drive Varible
+    public static DifferentialDrive DrivetrainDifferential;
+    public static DoubleSolenoid DrivetrainShifter;
+    
+    // Sensors
+    public static AHRS Drivetrain_Gyro;
+    
+    /* ELEVATOR SUBSYSTEM */
+    // Lift Motors
+    public static WPI_TalonSRX Right_Lift;
+    public static WPI_TalonSRX Left_Lift;
+    public static SpeedControllerGroup LiftTrain;
+    
+    // Spool Motors
+    public static WPI_TalonSRX RightSpoolMaster; 
+    public static VictorSPX LeftSpoolSlave;
 
-    DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Both Fronts
-    DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID); 
-    // DrivetrainLeftRear.follow(DrivetrainLeftFront);
-    DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
-    DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
-    // DrivetrainRightRear.follow(DrivetrainRightFront);
+    // Sensors
+    public static Encoder  ElevatorEncoder;
 
-    DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
+    /* INTAKE SUBSYSTEM */
+    // Motors
+    public static VictorSP IntakeMotor;
+    
+    // Pistons
+    public static DoubleSolenoid IntakeOpenPiston;
+    public static DoubleSolenoid IntakeWristPiston;
 
-    DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
+    public static void init() {
+        //#region DriveTrain
+        // LEFT
+        DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID);
+        DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    DrivetrainLeft = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave); 
-    DrivetrainRight = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave); 
+        DrivetrainLeftSlave = new VictorSPX(Constants.kDrivetrainLeftSlaveID); // Follows LeftMaster
+        DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
 
-    DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
-    // #endregion
+        // RIGHT
+        DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID);
+        DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
+        DrivetrainRightSlave = new VictorSPX(Constants.kDrivetrainRightSlaveID); // Follows RightMaster
+        DrivetrainRightSlave.follow(DrivetrainRightMaster);
+
+        // A Master is used as a SpeedControllerGroup in this case. This allows us to use
+        // the VictorSPX datatype for motors. However, the masters must still be Talons.
+        // NOTE: The Masters contain the encoders for the Drivetrain
+        DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster);
+        DrivetrainShifter = new DoubleSolenoid(0, 1);
+        
+        Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
+        // #endregion
+
+        //#region Elevator
+        RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
+        RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
+        LeftSpoolSlave.follow(RightSpoolMaster);
+        //#endregion
+
+        // #region Intake
+        IntakeMotor = new VictorSP(1);
+        IntakeOpenPiston = new DoubleSolenoid(0, 1);
+        IntakeWristPiston = new DoubleSolenoid(2, 3);
+        //#endregion  
     }
 }
