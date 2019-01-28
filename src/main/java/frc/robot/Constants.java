@@ -17,9 +17,13 @@ public final class Constants {
     public static double kSlowSpeed = 0.5; // IDK but sure
     public static double kTurnSpeed = 0.57575;
     public static double kTargetFollowSpeed = 0.2;
+    public static double kNeutralDeadband = 0.04;
+    /* Encoders */
+    public static double kPulsesPerRevoultuion = 256;
 
     /* Drivetrain */
     public static double kWheelDiameter = 6;
+    public static double kEncoderRatio = 3;
     public static double kDrivetrainP = 1;
     public static double kDrivetrainI = 0;
     public static double kDrivetrainD = 0;
@@ -66,4 +70,5 @@ public final class Constants {
     public static int kDrivetrainEncoderLeftBID = 1;
     public static int kDrivetrainEncoderRightAID = 2;
     public static int kDrivetrianEncoderRightBID = 3;
+    // Pnuematic ID
 }
