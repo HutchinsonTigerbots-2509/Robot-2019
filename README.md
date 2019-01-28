@@ -171,7 +171,6 @@ P | .5*`Ku` | 0 | 0 |
 PI | .45*`Ku` | .54*`Ku`/`Tu` | 0 |
 PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 
-
 ## Programmers
 * [GoldenGollem](https://github.com/GoldenGollem) :space_invader:
 * [CRahne](https://github.com/CRahne) :golf:

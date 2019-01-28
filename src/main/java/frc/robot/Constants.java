@@ -15,8 +15,8 @@ public final class Constants {
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
-    public static double kSlowSpeed = 0.5; // IDK but sure
-    public static double kTurnSpeed = 0.57575;
+    public static double kSlowSpeed = 0.45; // IDK but sure
+    public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
 
     /* Drivetrain */
@@ -47,7 +47,9 @@ public final class Constants {
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;
     public static double kTargetHeight = 31.5;
-
+    public static double KpAim = -0.1;
+    public static double KpDistance = -0.1;
+    public static double min_aim_command = 0.05;
     /* Limelight */
     // Network
     public static String kLimelightIP = "10.25.9.11";

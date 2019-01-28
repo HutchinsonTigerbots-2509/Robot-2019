@@ -18,6 +18,8 @@ import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.Follow_target;
+import frc.robot.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -39,6 +41,11 @@ public class OI {
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
   private JoystickButton FollowButton;
+  private JoystickButton Follow_low_targets_Button;
+  private JoystickButton Follow_hatch_Button;
+  private JoystickButton Follow_high_targets_Button;
+  private JoystickButton Follow_ball_Button;
+  
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
@@ -113,9 +120,27 @@ public class OI {
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
     Shuffleboard.getTab("Commands").add("AlignWithTargetPID()", new AlignWithTargetPID());
 
-    FollowButton = new JoystickButton(mOpStick, 11);
-    FollowButton.toggleWhenPressed(new FollowTarget());
-    Shuffleboard.getTab("Commands").add("FollowTarget()", new FollowTarget());
+    Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
+    //mLimeTable.putNumber("pipeline", 0);
+    Follow_low_targets_Button.toggleWhenPressed(new Follow_target());
+    //SmartDashboard.putData(FollowButton);
+
+    Follow_hatch_Button = new JoystickButton(mOpStick, 13);
+    //mLimeTable.putNumber("pipeline", 1);
+    Follow_hatch_Button.toggleWhenPressed(new Follow_target());
+    //SmartDashboard.putData(FollowButton);
+
+    Follow_high_targets_Button = new JoystickButton(mOpStick, 14);
+    //mLimeTable.putNumber("pipeline", 2);
+    Follow_high_targets_Button.toggleWhenPressed(new Follow_target());
+    //SmartDashboard.putData(FollowButton);
+    
+    Follow_ball_Button = new JoystickButton(mOpStick, 15);
+    //mLimeTable.("pipeline", 3);
+    Follow_ball_Button.toggleWhenPressed(new Follow_target());
+    //SmartDashboard.putData(FollowButton);
+
+    
 
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
