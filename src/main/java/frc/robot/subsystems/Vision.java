@@ -63,15 +63,18 @@ public class Vision extends Subsystem {
     mTargetArea = mTableX.getDouble(0.0); 
   return mTargetArea; 
   }
+  public void change_vision_pipeline(int pipeline){
+    mTable.getEntry("pipeline").setNumber(pipeline);
+  }
 
   /**
    * Updateds the Limelight camera settings via the NetworkTable.
    */
   public void UpdateLimelightSettings() {
-    mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED); 
-    mTable.getEntry("camMode").setNumber(Constants.kLimelightMode); 
-    mTable.getEntry("stream").setNumber(Constants.kLimelightStream); 
-    mTable.getEntry("pipeline").setNumber(3); 
+    mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
+    mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
+    mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
+    //mTable.getEntry("pipeline").setNumber(0);
   }
 
   @Override
