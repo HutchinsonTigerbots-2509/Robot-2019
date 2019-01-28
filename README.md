@@ -19,11 +19,13 @@ The code is divided into several packages, each responsible for a different aspe
 ### Wiring Compontents Diagram
 
 Subsystem | Controller | Name | ID | PDP |
------------ | ---------- | ---- | -- | ---|
-Drivetrain     | TalonSRX   | Left Master | 0  | - |
-Drivetrain     | VictorSPX  | Left Slave | 1  | - |
-Drivetrain     | TalonSRX   | Right Master | 2  | - |
-Drivetrain     | VictorSPX  | Right Slave | 3  | - |
+--------- | ---------- | ---- | -- | ---|
+Drive     | TalonSRX   | Left Front | 0  | - |
+Drive     | TalonSRX   | Left Rear | 1  | - |
+Drive     | TalonSRX   | Right Front | 2  | - |
+Drive     | TalonSRX   | Right Rear | 3  | - |
+Intake    | VictorSP   | Left | 1 | - |
+Intake    | VictorSP   | Right | 2 | - |
 
 
 ## Code Highlights
@@ -178,3 +180,7 @@ PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 * [FerisJumbo](https://github.com/FerisJumbo) :ferris_wheel:
 * [danevenson13](https://github.com/danevenson13) :muscle:
 * [Tjwiseguy](https://github.com/Tjwiseguy) :tiger:
+
+## Dependencies Documents
+* [Phoenix](https://phoenix-documentation.readthedocs.io/en/latest/index.html#) :chicken:
+* [FRC Programming Done Right](https://frc-pdr.readthedocs.io/en/latest/index.html)

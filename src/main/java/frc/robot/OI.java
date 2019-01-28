@@ -4,10 +4,18 @@ package frc.robot; // package declaraition
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.FollowTarget;
+import frc.robot.commands.IntakeClose;
+import frc.robot.commands.IntakeIn;
+import frc.robot.commands.IntakeOpen;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.Shift;
+import frc.robot.commands.WristDown;
+import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
@@ -17,6 +25,17 @@ import frc.robot.subsystems.Vision;
  */
 public class OI {
   private Joystick mOpStick;
+  private Joystick mCoOpStick;
+
+  private JoystickButton mCloseintake;
+  private JoystickButton mOpenintake;
+  private JoystickButton mIntakein;
+  private JoystickButton mIntakeout;
+  private JoystickButton mWristdown;
+  private JoystickButton mWristup;
+
+  private JoystickButton mShifter;
+
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
   private JoystickButton FollowButton;
@@ -56,30 +75,77 @@ public class OI {
 
   public OI() {
     /* Joysticks & Buttons */
+    // Joysticks
     mOpStick = new Joystick(0);
+    mCoOpStick = new Joystick(1);
 
+    // Intake Subsystem
+    mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
+    mCloseintake.whileHeld(new IntakeClose());
+    Shuffleboard.getTab("Commands").add("IntakeClose()", new IntakeClose());
+
+    mOpenintake = new JoystickButton(mOpStick, 1); // Open intake
+    mOpenintake.whileHeld(new IntakeOpen());
+    Shuffleboard.getTab("Commands").add("IntakeOpen()", new IntakeOpen());
+
+    mIntakein = new JoystickButton(mOpStick, 2); // Take in
+    mIntakein.whileHeld(new IntakeIn());
+    Shuffleboard.getTab("Commands").add("IntakeIn()", new IntakeIn());
+
+    mIntakeout = new JoystickButton(mOpStick, 3); // Take out
+    mIntakeout.whileHeld(new IntakeOut());
+    Shuffleboard.getTab("Commands").add("IntakeOut()", new IntakeOut());
+
+    mWristdown = new JoystickButton(mOpStick, 4); // Wrist down
+    mWristdown.whileHeld(new WristDown());
+    Shuffleboard.getTab("Commands").add("WristDown()", new WristDown());
+
+    mWristup = new JoystickButton(mOpStick, 5); // Wrist up
+    mWristup.whileHeld(new WristUp());
+    Shuffleboard.getTab("Commands").add("WristUp()", new WristUp());
+
+    // Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
-    SmartDashboard.putData(AlignButton);
+    Shuffleboard.getTab("Commands").add("AlignWithTarget()", new AlignWithTarget());
 
     AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
-    SmartDashboard.putData(AlignButtonPID);
+    Shuffleboard.getTab("Commands").add("AlignWithTargetPID()", new AlignWithTargetPID());
 
     FollowButton = new JoystickButton(mOpStick, 11);
     FollowButton.toggleWhenPressed(new FollowTarget());
-    SmartDashboard.putData(FollowButton);
+    Shuffleboard.getTab("Commands").add("FollowTarget()", new FollowTarget());
 
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
+
+    mShifter = new JoystickButton(mOpStick, 12);
+    mShifter.whenPressed(new Shift());
 
     /* Vision & NetworkTables */
     mLimeTable = sVision.getTable();
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
   }
-  public Joystick getOperatorStick(){
+
+  /**
+   * Will return the operator stick varible
+   * 
+   * @return OpStick
+   */
+  public Joystick getOperatorStick() {
     return mOpStick;
+  }
+
+  /**
+   * Will return the Cooperator Stick varible
+   * 
+   * @return CoOpStick
+   */
+  public Joystick getCoOperatorStick() {
+    return mCoOpStick;
   }
 }

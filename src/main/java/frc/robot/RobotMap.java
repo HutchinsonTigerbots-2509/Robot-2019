@@ -9,6 +9,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -16,6 +20,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * @see Constants.java region for Port #s
  */
 public class RobotMap {
 
@@ -34,10 +40,32 @@ public class RobotMap {
     public static DifferentialDrive DrivetrainDifferential;
 
     // Sensors
-    public static AHRS Drivetrain_Gyro;
+    public static AHRS DrivetrainGyro;
+    
+    /* ELEVATOR SUBSYSTEM */
+    // Lift Motors
+    public static WPI_TalonSRX Right_Lift;
+    public static WPI_TalonSRX Left_Lift;
+    public static SpeedControllerGroup LiftTrain;
+    
+    // Spool Motors
+    public static WPI_TalonSRX RightSpoolMaster; 
+    public static VictorSPX LeftSpoolSlave;
+
+    
+    // Sensors
+    public static Encoder  ElevatorEncoder;
+
+    /* INTAKE SUBSYSTEM */
+    // Motors
+    public static VictorSP IntakeMotor;
+    
+    // Pistons
+    public static DoubleSolenoid IntakeOpenPiston;
+    public static DoubleSolenoid IntakeWristPiston;
 
     public static void init() {
-        // #region DriveTrain
+        //#region DriveTrain
 
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
         DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
@@ -59,15 +87,31 @@ public class RobotMap {
         DrivetrainRightSlave.setInverted(InvertType.FollowMaster);
         DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0);
 
+        // A Master is used as a SpeedControllerGroup in this case. This allows us to use
+        // the VictorSPX datatype for motors. However, the masters must still be Talons.
+        // NOTE: The Masters contain the encoders for the Drivetrain
         DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
 
-        DrivetrainShifter = new DoubleSolenoid(forwardChannel, reverseChannel)
+        DrivetrainShifter = new DoubleSolenoid(Constants.kDrivetrainShifterForwardID, Constants.kDrivetrainShifterReverseID);
+        
+        // #endregion
 
-        // #endregion Drivetrain
+        //#region Elevator
+        RightSpoolMaster = new WPI_TalonSRX(Constants.kRightSpoolMasterMasterID);
+        RightSpoolMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        LeftSpoolSlave = new VictorSPX(Constants.kLeftSpoolSlaveID); 
+        LeftSpoolSlave.follow(RightSpoolMaster);
+        //#endregion
+
+        // #region Intake
+        IntakeMotor = new VictorSP(1);
+        IntakeOpenPiston = new DoubleSolenoid(0, 1);
+        IntakeWristPiston = new DoubleSolenoid(2, 3);
+        //#endregion 
 
         // #region Sensors
 
-        Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
+        DrivetrainGyro = new AHRS(SPI.Port.kMXP);
 
         // #endregion Sensors
     }

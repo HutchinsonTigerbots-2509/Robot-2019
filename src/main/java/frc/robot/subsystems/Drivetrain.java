@@ -4,11 +4,13 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -28,15 +30,12 @@ public class Drivetrain extends Subsystem {
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
   
-  // Speed Controller Groups
-  private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
-  private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
-  
   // The drivetrain object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
-  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
+  private final AHRS mGyro = RobotMap.DrivetrainGyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
   
@@ -149,24 +148,24 @@ public class Drivetrain extends Subsystem {
    * Turn left method for continous turning
    */
   public void TurnLeft() {
-    mLeft.set(Constants.kTurnSpeed);
-    mRight.set(Constants.kTurnSpeed);
+    mLeftMaster.set(Constants.kTurnSpeed);
+    mRightMaster.set(Constants.kTurnSpeed);
   }
 
   /**
    * The turn right method for continuosly turning right
    */
   public void TurnRight() {
-    mLeft.set(-Constants.kTurnSpeed);
-    mRight.set(-Constants.kTurnSpeed);
+    mLeftMaster.set(-Constants.kTurnSpeed);
+    mRightMaster.set(-Constants.kTurnSpeed);
   }
 
   /**
    * Drives forward at the constant kTargetFollowSpeed (0.2)
    */
   public void MoveForward() {
-    mLeft.set(Constants.kTargetFollowSpeed);
-    mRight.set(Constants.kTargetFollowSpeed);
+    mLeftMaster.set(Constants.kTargetFollowSpeed);
+    mRightMaster.set(Constants.kTargetFollowSpeed);
   }
 
   /**
@@ -213,6 +212,39 @@ public class Drivetrain extends Subsystem {
   }
 
   /**
+   * Shifts the Gear to High
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftHighGear() {
+    mShifter.set(Value.kForward);
+  }
+
+  /**
+   * Shifts the Gear to Low
+   * @author Cole
+   * @author Tony
+   */
+  public void ShiftLowGear() {
+    mShifter.set(Value.kReverse);
+  }
+
+  /**
+   * Returns a boolean and if True means that it is shifted
+   * @author Cole
+   * @author Tony
+   */
+  public boolean isShifted() {
+    if (mShifter.get() == Value.kReverse){
+      SmartDashboard.putString("isShifted", "fastGear");
+    	return true;
+    } else {
+      SmartDashboard.putString("isShifted", "slowGear");
+      return false;
+    }
+  }
+
+  /**
    * The PID Steering method with an input from
    * the camera
    */
@@ -235,25 +267,21 @@ public class Drivetrain extends Subsystem {
    */
   public void PID_Distance(double targ_distance)
   {
-    /* Varible Declarations */
-    double output; // PID Ouput
-
-    double error = targ_distance -((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2);//Init Error
-    //double error = targ_distance - (mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2; // Init Error
-    double pre_error = error; // Pre_Error (For Derivative)
-    
-    // Math Varibles
+    /* VARIBLE DECLARATIONS */    
+    // PID Math Varibles
     double kP = 0.3; // Proportional
     double kI = 0.0; // Integrel
     double kD = 0.0; // Derivative
     
+    double error = targ_distance -((mLeftMaster.getSelectedSensorPosition() + mRightMaster.getSelectedSensorPosition())/2);//Init Error
+    double pre_error = error; // Pre_Error (For Derivative)
+
     double Integrel = 0.0; // Integral Adding Varible
+    double output; // PID Ouput
 
     // Reset Encoders
     mLeftMaster.setSelectedSensorPosition(0);
     mRightMaster.setSelectedSensorPosition(0);
-    // mLeftEncoder.reset();
-    // mRightEncoder.reset();
 
     // While loop conditional
     // while(!(((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2) > (targ_distance + 1) && ((mLeftEncoder.getDistance() + mRightEncoder.getDistance())/2 )< (targ_distance - 1)))

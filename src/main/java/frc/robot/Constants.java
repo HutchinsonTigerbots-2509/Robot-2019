@@ -12,6 +12,7 @@ public final class Constants {
     public Constants() {
     }
 
+    //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.5; // IDK but sure
@@ -29,9 +30,21 @@ public final class Constants {
     public static double kDrivetrainD = 0;
 
     /* Elevator */
-    public static double kElevatorP = 1;
-    public static double kElevatorI = 0;
-    public static double kElevatorD = 0;
+    public static double kElevatorPGain = 0.15;
+    public static double kElevatorIGain = 0.0;
+    public static double kElevatorDGain = 4.0;
+
+    public static double kSpoolDiam = 4;//inches
+    public static double kPulsesPerRotation = 256;
+    public static double kElevatorMaxSpeed = 0.5;
+    public static double kElevatorSensitivity = 0.5;
+
+    public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
+    public static double kMidHieght = 36;
+    public static double kMinHieght = 10;
+
+    public static int kRightSpoolMasterMasterID = 4;
+    public static int kLeftSpoolSlaveID = 5;
 
     /* Vision */
     // Physical
@@ -54,21 +67,43 @@ public final class Constants {
     public static String kLimelightTargetYID = "ty";
     public static String kLimelightTargetAreaID = "ta";
     public static String kLimelightTargetSkewID = "ts";
+    //#endregion
+
+
+    //#region RobotMap Constants
 
     // Do not change anything after this line unless you rewire the robot and
     // update the spreadsheet!
     // Port assignments should match up with the spreadsheet here:
     // https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing
 
-    // Motor Contoller ID
+    /* Motor Contoller ID */
+    // Drivetrain
     public static int kDrivetrainLeftMasterID = 0;
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
-    // Encoder ID
+
+    // Intake
+    public static int kIntakeRightMotorID = 4;
+    public static int kIntakeLeftMotorID = 5;
+
+    /* Encoder ID */
     public static int kDrivetrainEncoderLeftAID = 0;
     public static int kDrivetrainEncoderLeftBID = 1;
     public static int kDrivetrainEncoderRightAID = 2;
     public static int kDrivetrianEncoderRightBID = 3;
-    // Pnuematic ID
+
+    /* Pneumatics ID */
+    // Drivetrain
+    public static int kDrivetrainShifterForwardID = 0;
+    public static int kDrivetrainShifterReverseID = 1;
+    // Intake
+    public static int kIntakeWristPistonForwardID = 2;
+    public static int kIntakeWristPistonReverseID = 3;
+    public static int kOpenIntakePistonForwardID = 4;
+    public static int kOpenIntakePistonReverseID = 5;
+    public static int kIntakeLeftPushForwardID = 6;
+    public static int kIntakeLeftPushReverseID = 7;
+    //#endregion
 }

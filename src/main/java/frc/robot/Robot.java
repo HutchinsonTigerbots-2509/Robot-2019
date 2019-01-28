@@ -2,10 +2,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -16,8 +19,11 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-
+  /* Shuffleboard Declarations */
+  ShuffleboardTab tab = Shuffleboard.getTab("Commands");
+  
   /*Subsystem Declarations*/
+  public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
@@ -39,16 +45,21 @@ public class Robot extends TimedRobot {
     // a reference
     RobotMap.init();
 
+    sIntake = new Intake();
+    sVision = new Vision();
+    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+
     
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
     
+    // Commands must be defined after OI
     // This command must be defined after OI because they use
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
@@ -69,7 +80,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic()
   {
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
+    SmartDashboard.putNumber("Gyro", RobotMap.DrivetrainGyro.getAngle());
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
