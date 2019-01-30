@@ -10,7 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -25,9 +28,11 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
 
-  private final TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+  private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
+  private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
+  private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
+  private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
 
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
@@ -35,12 +40,17 @@ public class Elevator extends Subsystem {
   private final double kMaxHeight = Constants.kMaxHieght;
   private final double kMidHeight = Constants.kMidHieght;
   private final double kMinHeight = Constants.kMinHieght;
+  private final double kHomePositionInches = Constants.kHomePositionInches;
   private final double kSpoolDiam = Constants.kSpoolDiam;
   private final double PGain = Constants.kElevatorPGain;
   private final double IGain = Constants.kElevatorPGain;
   private final double DGain = Constants.kElevatorPGain;
   private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
   private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
+  private final double kTicksPerInch = Constants.kElevatorTicksPerInch;
+
+  private final Value kReverse = Value.kReverse;
+  private final Value kForward = Value.kForward;
 
   private double mError;
   private double mPerpotional;
@@ -49,7 +59,7 @@ public class Elevator extends Subsystem {
   private double mPerviousError;
   private double mEncoderTargetHieght;
 
-  public Elevator(){
+  public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
     addChild(SpoolSlave);
@@ -57,6 +67,18 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+  }
+
+  public void StopMotors() {
+    SpoolMaster.stopMotor();
+    SpoolSlave.stopMotor();
+  }
+
+  /**
+   * Sets the SpoolMasters's enocder position to zero
+   */
+  public void ZeroSensor() {
+    SpoolMaster.setSelectedSensorPosition(0);
   }
 
   public double TargetHeight() { // Gets Goal height
@@ -99,40 +121,74 @@ public class Elevator extends Subsystem {
   }
 
   /**
+   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
+   * control loop.
+   * 
+   * @author Nate
+   */
+  public void setPosition(double targetInchesOffGround) {
+    double positionFromHome = targetInchesOffGround - kHomePositionInches;
+    double targetPositionRaw = positionFromHome * kTicksPerInch;
+    if (getLimitsValue() == false) {
+      SpoolMaster.set(ControlMode.Position, targetPositionRaw);
+    } else {
+      SpoolMaster.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
+  /**
+   * This will return `true` if either the left or right limit switches return
+   * true. Or simply are triggered.
+   * 
+   * @return
+   */
+  public boolean getLimitsValue() {
+    return (mLeftLimit.get() || mRightLimit.get());
+  }
+
+  /**
+   * @author Nate
+   * @return Current Height in Inches
+   */
+  public double InchesOffGround() {
+    double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
+    return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
+  }
+
+  /**
    * Shifts the Gear to High
+   * 
    * @author Cole
    * @author Tony
    */
   public void ShiftHighGear() {
-    mShifter.set(Value.kForward);
+    mShifter.set(kForward);
   }
 
   /**
    * Shifts the Gear to Low
+   * 
    * @author Cole
    * @author Tony
    */
   public void ShiftLowGear() {
-    mShifter.set(Value.kReverse);
+    mShifter.set(kReverse);
   }
 
   /**
    * Returns a boolean and if True means that it is shifted
+   * 
    * @author Cole
    * @author Tony
    */
-  public boolean isShifted() {
-    if (mShifter.get() == Value.kReverse){
-      SmartDashboard.putString("isShifted", "fastGear");
-    	return true;
+  public boolean isHighGear() {
+    if (mShifter.get() == kReverse) {
+      SmartDashboard.putString("Elevator Shifter", "High Gear");
+      return true;
     } else {
-      SmartDashboard.putString("isShifted", "slowGear");
+      SmartDashboard.putString("Elevator Shifter", "Low Gear");
       return false;
     }
   }
 
-
-  // public Encoder getEncoder() {
-  // return ElevatorEncoder;
-  // }
 }

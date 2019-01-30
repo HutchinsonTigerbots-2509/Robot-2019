@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -33,8 +34,8 @@ public static WPI_TalonSRX DrivetrainLeftMaster;
 public static WPI_TalonSRX DrivetrainLeftSlave; 
 public static WPI_TalonSRX DrivetrainRightMaster; 
 public static WPI_TalonSRX DrivetrainRightSlave; 
-public static Encoder DrivetrainLeftEncoder; 
-public static Encoder DrivetrainRightEncoder; 
+// public static Encoder DrivetrainLeftEncoder; 
+// public static Encoder DrivetrainRightEncoder; 
 public static SpeedControllerGroup DrivetrainLeft; 
 public static SpeedControllerGroup DrivetrainRight; 
 public static DifferentialDrive DrivetrainDifferential; 
@@ -42,6 +43,9 @@ public static DifferentialDrive DrivetrainDifferential;
 public static WPI_TalonSRX ElevatorMotorMaster; 
 public static WPI_VictorSPX ElevatorMotorSlave;
 public static DoubleSolenoid ElevatorShifter;
+public static DigitalInput ElevatorLeftLimit;
+public static DigitalInput ElevatorRightLimit;
+
 
 // Intake
 public static VictorSP IntakeRightMotor = new VictorSP(4);
@@ -67,9 +71,8 @@ public static void init() {
     DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
     DrivetrainRightSlave.follow(DrivetrainRightMaster);
 
-    DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
-
-    DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
+    //DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
+    //DrivetrainRightEncoder = new Encoder(Constants.kDrivetrainEncoderRightAID, Constants.kDrivetrianEncoderRightBID); 
 
     DrivetrainLeft = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave); 
     DrivetrainRight = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave); 
@@ -80,15 +83,19 @@ public static void init() {
     //#region Elevator
     ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
     ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    ElevatorShifter = new DoubleSolenoid(0, 1);
     // ElevatorMotorMaster.setInverted(false);
     ElevatorMotorMaster.setSubsystem("Elevator");
-
 
     ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID); 
     ElevatorMotorSlave.follow(ElevatorMotorMaster);
     ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
     ElevatorMotorSlave.setSubsystem("Elevator");
+
+    ElevatorShifter = new DoubleSolenoid(0, 1);
+
+    ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
+
+    ElevatorRightLimit = new DigitalInput(Constants.kElevatorRightLimitID);
 
     //#endregion
 

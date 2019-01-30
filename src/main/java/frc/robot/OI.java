@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
+import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.FollowTarget;
 import frc.robot.commands.IntakeClose;
@@ -36,6 +37,7 @@ public class OI {
   private JoystickButton mWristup;
 
   private JoystickButton mElevatorShift;
+  private JoystickButton mElevatorRiseMid;
 
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
@@ -130,6 +132,9 @@ public class OI {
     /* Elevator */
     mElevatorShift = new JoystickButton(mOpStick, 12);
     mElevatorShift.whenPressed(new ElevatorShift());
+
+    mElevatorRiseMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorRiseMid.whenPressed(new ElevatorRise(36));
 
   }
   public Joystick getOperatorStick(){

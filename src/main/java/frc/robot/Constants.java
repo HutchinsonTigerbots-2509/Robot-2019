@@ -30,12 +30,14 @@ public final class Constants {
 
     public static double kSpoolDiam = 4;//inches
     public static double kPulsesPerRotation = 256;
+    public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
+    public static double kHomePositionInches = 5;
 
     public static int kElevatorMasterID = 4;
     public static int kElevatorSlaveID = 5;
@@ -82,11 +84,14 @@ public final class Constants {
     public static int kIntakeRightMotorID = 4;
     public static int kIntakeLeftMotorID = 5;
 
-    /* Encoder ID */
-    public static int kDrivetrainEncoderLeftAID = 0;
-    public static int kDrivetrainEncoderLeftBID = 1;
-    public static int kDrivetrainEncoderRightAID = 2;
-    public static int kDrivetrianEncoderRightBID = 3;
+    /* DigitalInput ID */
+    // public static int kDrivetrainEncoderLeftAID = 0;
+    // public static int kDrivetrainEncoderLeftBID = 1;
+    // public static int kDrivetrainEncoderRightAID = 2;
+    // public static int kDrivetrianEncoderRightBID = 3;
+    public static int kElevatorLeftLimitID = 0;
+    public static int kElevatorRightLimitID = 1;
+
 
     /* Pneumatics ID */
     // Intake
