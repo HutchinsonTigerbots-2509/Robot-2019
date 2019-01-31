@@ -84,7 +84,7 @@ public class Elevator extends Subsystem {
     SpoolMaster.setSelectedSensorPosition(0);
   }
 
-  public double TargetHeight() { // Gets Goal height
+  public double TargetHeight() { // Gets height we want the arm to move to in encoder counts
     if (CoOpStick.getRawAxis(1) != 0) {
       mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
     } else if (CoOpStick.getRawButton(4)) {
@@ -97,7 +97,7 @@ public class Elevator extends Subsystem {
     return mEncoderTargetHieght;
   }
 
-  public double PIDFinal() { // Calculates PID Speed
+  public double PIDFinal() { // Calculates PID Speed to send to the master
 
     mError = TargetHeight() - CurrentHeight();
     mPerpotional = mError * PGain;
@@ -118,8 +118,20 @@ public class Elevator extends Subsystem {
     SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
   }
 
-  public double CurrentHeight() { // Gets Current Height
-    return SpoolMaster.getSelectedSensorPosition() * ((kSpoolDiam * Math.PI) / kPulseNumber);
+  public void ChaseTargetGearChanger(){//Changes gear when arm is going down Smith wanted but not currently used he he
+    if (PIDFinal() > 0){
+      mShifter.set(kForward);
+      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+    }else{
+      mShifter.set(kReverse);
+      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+    }
+  }
+
+  public double CurrentHeight() { // Gets Current Height in encoder counts
+    return SpoolMaster.getSelectedSensorPosition(); 
+    
+    //* ((kSpoolDiam * Math.PI) / kPulseNumber);
     // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
 

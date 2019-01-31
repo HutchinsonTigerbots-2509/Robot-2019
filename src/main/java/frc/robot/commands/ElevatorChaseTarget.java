@@ -7,46 +7,59 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Elevator;
-
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 
 public class ElevatorChaseTarget extends Command {
 
+  private Elevator sElevator = Robot.sElevator;
+
   private final Elevator mElevator = new Elevator();
 
+  double THieght = mElevator.TargetHeight();
+  double CHieght = mElevator.CurrentHeight();
+  int ErrorRange = Constants.kEncoderErrorRange;
+
   public ElevatorChaseTarget() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(sElevator);
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+  }
+  /*
+  Runs all the function
+  gets the current height,
+  gets the target height,
+  calculate the PID speed value,
+  and sends the speed to the motors
+  */
+  @Override
+  protected void execute() {
     mElevator.CurrentHeight();
     mElevator.TargetHeight();
     mElevator.PIDFinal();
     mElevator.ChaseTarget();
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
+  // Is finished if error is within 5 encoder counts
   @Override
   protected boolean isFinished() {
+    if ((CHieght - THieght) <= ErrorRange && (CHieght - THieght) >= -1*(ErrorRange)){
+      return true;
+    }else{
     return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    sElevator.StopMotors();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();
