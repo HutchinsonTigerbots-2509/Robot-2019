@@ -7,10 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
-/**
- * The intake subsystem is the subsystem where
- * all of the 
- */
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
   private final DoubleSolenoid mLeftPush = RobotMap.IntakeLeftPiston;
