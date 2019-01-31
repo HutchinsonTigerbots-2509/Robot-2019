@@ -2,13 +2,13 @@ package frc.robot; // package declartion
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  * 
- * @see Constants.java region RobotMap Constants
+ * @see Constants.java region for Port #s
  */
 public class RobotMap {
 /**
@@ -31,14 +31,16 @@ public class RobotMap {
      */
 
 public static WPI_TalonSRX DrivetrainLeftMaster; 
-public static WPI_TalonSRX DrivetrainLeftSlave; 
+public static WPI_VictorSPX DrivetrainLeftSlave; 
 public static WPI_TalonSRX DrivetrainRightMaster; 
-public static WPI_TalonSRX DrivetrainRightSlave; 
+public static WPI_VictorSPX DrivetrainRightSlave; 
 // public static Encoder DrivetrainLeftEncoder; 
 // public static Encoder DrivetrainRightEncoder; 
 public static SpeedControllerGroup DrivetrainLeft; 
 public static SpeedControllerGroup DrivetrainRight; 
-public static DifferentialDrive DrivetrainDifferential; 
+public static DifferentialDrive DrivetrainDifferential;
+public static DoubleSolenoid DrivetrainShifter;
+
 //Elevator
 public static WPI_TalonSRX ElevatorMotorMaster; 
 public static WPI_VictorSPX ElevatorMotorSlave;
@@ -53,22 +55,25 @@ public static VictorSP IntakeLeftMotor = new VictorSP(5);
 
 public static SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
 
-public static DoubleSolenoid IntakeLeftPiston = new DoubleSolenoid(0, 1);
-public static DoubleSolenoid IntakeWristPiston = new DoubleSolenoid(2, 3);
-public static DoubleSolenoid OpenIntakePiston = new DoubleSolenoid(4, 5); 
+public static DoubleSolenoid IntakeLeftPiston;
+public static DoubleSolenoid IntakeWristPiston;
+public static DoubleSolenoid IntakeOpenPiston; 
+
+// Sensors
+public static AHRS Drivetrain_Gyro;
 
 public static void init() {
     //#region DriveTrain
     DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Both Fronts
     DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    DrivetrainLeftSlave = new WPI_TalonSRX(Constants.kDrivetrainLeftSlaveID); 
+    DrivetrainLeftSlave = new WPI_VictorSPX(Constants.kDrivetrainLeftSlaveID); 
     DrivetrainLeftSlave.follow(DrivetrainLeftMaster);
 
     DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Both Fronts
     DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    DrivetrainRightSlave = new WPI_TalonSRX(Constants.kDrivetrainRightSlaveID); 
+    DrivetrainRightSlave = new WPI_VictorSPX(Constants.kDrivetrainRightSlaveID); 
     DrivetrainRightSlave.follow(DrivetrainRightMaster);
 
     //DrivetrainLeftEncoder = new Encoder(Constants.kDrivetrainEncoderLeftAID, Constants.kDrivetrainEncoderLeftBID); 
@@ -78,6 +83,8 @@ public static void init() {
     DrivetrainRight = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave); 
 
     DrivetrainDifferential = new DifferentialDrive(DrivetrainLeft, DrivetrainRight); 
+
+    Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
     // #endregion
 
     //#region Elevator
@@ -103,16 +110,13 @@ public static void init() {
     IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
     IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
 
-    IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
+    IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor); 
     
-    IntakeLeftPiston = new DoubleSolenoid(Constants.kIntakeLeftPistonForwardID , Constants.kIntakeLeftPistonReverseID);
-    
-    IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristPistonForwardID , Constants.kIntakeWristPistonReverseID);
-    
-    OpenIntakePiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID , Constants.kOpenIntakePistonReverseID);
-    //#endregion
-    
-    }
+    IntakeLeftPiston = new DoubleSolenoid(Constants.kIntakeLeftPistonForwardID,Constants.kIntakeLeftPistonReverseID);
+    IntakeOpenPiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID, Constants.kOpenIntakePistonReverseID);
+    IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristPistonForwardID, Constants.kIntakeWristPistonReverseID);   
+    // #endregion
 
-  
+
+    }
 }

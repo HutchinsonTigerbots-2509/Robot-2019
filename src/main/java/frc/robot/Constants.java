@@ -15,10 +15,12 @@ public final class Constants {
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
-    public static double kSlowSpeed = 0.65; // IDK but sure
-    public static double kTurnSpeed = 0.57575;
-    public static double kWheelDiameter = 6;
+    public static double kSlowSpeed = 0.45; // IDK but sure
+    public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
+
+    /* Drivetrain */
+    public static double kWheelDiameter = 6;
     public static double kDrivetrainP = 1;
     public static double kDrivetrainI = 0;
     public static double kDrivetrainD = 0;
@@ -47,7 +49,9 @@ public final class Constants {
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;
     public static double kTargetHeight = 31.5;
-
+    public static double KpAim = -0.1;
+    public static double KpDistance = -0.1;
+    public static double min_aim_command = 0.05;
     /* Limelight */
     // Network
     public static String kLimelightIP = "10.25.9.11";
@@ -79,7 +83,6 @@ public final class Constants {
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
-
     // Intake
     public static int kIntakeRightMotorID = 4;
     public static int kIntakeLeftMotorID = 5;
@@ -95,11 +98,10 @@ public final class Constants {
 
     /* Pneumatics ID */
     // Intake
-    public static int kIntakeLeftPistonForwardID = 0;
-    public static int kIntakeLeftPistonReverseID = 1;
     public static int kIntakeWristPistonForwardID = 2;
     public static int kIntakeWristPistonReverseID = 3;
     public static int kOpenIntakePistonForwardID = 4;
     public static int kOpenIntakePistonReverseID = 5;
-    //#endregion
+    public static int kIntakeLeftPistonForwardID = 6;
+    public static int kIntakeLeftPistonReverseID = 7;
 }

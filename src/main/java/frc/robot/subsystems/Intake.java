@@ -2,94 +2,107 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * The intake subsystem is the subsystem where
- * all of the 
+ * The intake subsystem is the subsystem where all of the
  */
 public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
-  private final DoubleSolenoid mLeftPush = RobotMap.IntakeLeftPiston;
-  private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
-  private final DoubleSolenoid mOpen = RobotMap.OpenIntakePiston;
-  private final SpeedController mIntakeMotors = RobotMap.IntakeMotors;
-  private final double kMaxSpeed =  Constants.kMaxSpeed;
-  
+  private final VictorSP mMotor = RobotMap.IntakeRightMotor;
+  private final VictorSP mLeftMotor = RobotMap.IntakeLeftMotor;
+  private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
+  private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
+
   /**
-   * Controls the intake motors and allows you to take in
+   * Sets the Intake motors to take in.
    * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony
    */
-  public void In(){
-    mIntakeMotors.set(kMaxSpeed);      
+  public void MotorsIn() {
+    mMotor.set(Constants.kMaxSpeed);
   }
+
   /**
-   * Controls the intake motors and allows you to reverse intake motors
+   * Sets the Intake motors to reverse and push out
    * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony
    */
-  public void Out(){
-    mIntakeMotors.set(kMaxSpeed);
+  public void MotorsOut() {
+    mMotor.set(Constants.kSlowSpeed);
   }
+
   /**
-   * Controls the intake motors and stops them
+   * Stops the intake motors
    * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony
    */
-  public void motorsStop(){
-    mIntakeMotors.stopMotor();
+  public void MotorsStop() {
+    mMotor.set(0);
   }
-/**
-   * Moves the intake arm up
-   * 
-   * @author Cole and Tony
-   */
-  public void Up(){
-    mWrist.set(Value.kForward);
-  }
+
   /**
-   * Moves the intake arm down
+   * Moves the wrist of the intake arms up
    * 
-   * @author Cole and Tony
-   */  
-  public void Down(){
-    mWrist.set(Value.kReverse);
+   * @author Cole
+   * @author Tony
+   */
+  public void Up() {
+    mWristPiston.set(Value.kForward);
   }
+
   /**
-   * Stops the wrist movement
+   * Moves the Wrist down
    * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony
    */
-  public void StopWrist(){
-    mWrist.set(Value.kOff);
-  } 
-/**
-   * Controls the intake arms and allows you to open them up
-   * 
-   * @author Cole and Tony
-   */
-  public void Open(){
-    mOpen.set(Value.kForward);
+  public void Down() {
+    mWristPiston.set(Value.kReverse);
   }
+
   /**
-   * Controls the intake arms and allows you to close them
-   * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony Stops the up and down movement of the intake wrist
    */
-  public void Close(){
-    mOpen.set(Value.kReverse);
+  public void StopWrist() {
+    mWristPiston.set(Value.kOff);
   }
+
   /**
-   * Controls the intake arms and stops the open or close
+   * Opens the Intake Arms
    * 
-   * @author Cole and Tony
+   * @author Cole
+   * @author Tony
    */
-  public void Stop(){
-    mOpen.set(Value.kOff);
+  public void Open() {
+    mGrip.set(Value.kForward);
+  }
+
+  /**
+   * Closes the Intake Arms
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void Close() {
+    mGrip.set(Value.kReverse);
+  }
+
+  /**
+   * Stops the Intake Arms from opening or closing
+   * 
+   * @author Cole
+   * @author Tony
+   */
+  public void Stop() {
+    mGrip.set(Value.kOff);
   }
 
   @Override

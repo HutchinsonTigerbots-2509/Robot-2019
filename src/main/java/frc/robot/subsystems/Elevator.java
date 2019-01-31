@@ -69,6 +69,9 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
   }
 
+  /**
+   * Stops both the Master and Slave motors
+   */
   public void StopMotors() {
     SpoolMaster.stopMotor();
     SpoolSlave.stopMotor();
