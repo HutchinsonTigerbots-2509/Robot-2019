@@ -24,9 +24,14 @@ Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
+<<<<<<< HEAD
+Elevator  | TalonSRX   | Master | 4 | - |
+Elevator  | VictorSPX  | Slave | 5 | - |
+=======
 Intake    | VictorSP   | Left | 1 | - |
 Intake    | VictorSP   | Right | 2 | - |
 
+>>>>>>> pseudoMaster
 
 ## Code Highlights
 
