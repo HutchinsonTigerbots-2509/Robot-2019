@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
     cOpDrive = new OperatorDrive();
 
     sVision.UpdateLimelightSettings();
+    sElevator.UpdateTelemetry();
   }
 
   /**
@@ -84,6 +86,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
+    sElevator.UpdateTelemetry();
   }
 
   /**
@@ -98,6 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    sElevator.UpdateTelemetry();
   }
 
   /**
