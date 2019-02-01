@@ -24,9 +24,14 @@ Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
+<<<<<<< HEAD
+Elevator  | TalonSRX   | Master | 4 | - |
+Elevator  | VictorSPX  | Slave | 5 | - |
+=======
 Intake    | VictorSP   | Left | 1 | - |
 Intake    | VictorSP   | Right | 2 | - |
 
+>>>>>>> pseudoMaster
 
 ## Code Highlights
 
@@ -170,7 +175,6 @@ Control Types | P | I | D |
 P | .5*`Ku` | 0 | 0 |
 PI | .45*`Ku` | .54*`Ku`/`Tu` | 0 |
 PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
-
 
 ## Programmers
 * [GoldenGollem](https://github.com/GoldenGollem) :space_invader:

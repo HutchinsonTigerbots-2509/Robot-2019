@@ -25,10 +25,13 @@ public class Drivetrain extends Subsystem {
 
   /* IMPORTED VARIBLE FROM ROBOTMAP DELCARATIONS */
   // Motors
+  // Varible Declarations
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
   private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
+  // private final SpeedControllerGroup mLeft = RobotMap.DrivetrainLeft;
+  // private final SpeedControllerGroup mRight = RobotMap.DrivetrainRight;
   
   // The drivetrain object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
@@ -42,6 +45,7 @@ public class Drivetrain extends Subsystem {
   /* IMPORTED VARIBLES FROM CONSTANTS DECLARATION */
   // Vision
   public boolean TargetAligned;
+  public boolean TargetDistanceCheck;
   
   // PID Constants
   private final double kP = Constants.kDrivetrainP;
@@ -67,7 +71,7 @@ public class Drivetrain extends Subsystem {
   /**
    * Will drive forward at 95%.
    */
-  public void driveForward() {
+  public void driveForwar() {
     mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
   }
 
@@ -91,6 +95,11 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverseSlow() {
     mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
+  }
+
+  public void track_taget(double left, double right){
+    mDrive.tankDrive(left, -right);
+
   }
 
   /**
