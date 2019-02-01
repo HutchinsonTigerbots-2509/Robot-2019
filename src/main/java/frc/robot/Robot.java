@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -16,13 +17,15 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-
   /*Subsystem Declarations*/
+  public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
+
   /*OI Declaration*/
   public static OI oi;
+
   /*Command Declarations*/
   public static OperatorDrive cOpDrive;
 
@@ -32,17 +35,32 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // RobotMap must be initialized first
+    // because everything else uses that as
+    // a reference
     RobotMap.init();
+
+    sIntake = new Intake();
+    sVision = new Vision();
+    
+    // Subsystems must be initialized next because commands/OI use
+    // the subsystems
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+
+    
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
+    
     // Commands must be defined after OI
+    // This command must be defined after OI because they use
+    // the joystick object in the commands
     cOpDrive = new OperatorDrive();
 
     sVision.UpdateLimelightSettings();
+    sElevator.UpdateTelemetry();
   }
 
   /**
@@ -55,10 +73,15 @@ public class Robot extends TimedRobot {
    * and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {
+  public void robotPeriodic()
+  {
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+
+    sElevator.UpdateTelemetry();
   }
 
   /**
@@ -73,6 +96,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    sElevator.UpdateTelemetry();
   }
 
   /**
@@ -111,7 +135,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    cOpDrive.start();
+    cOpDrive.start(); // Tells the TeleOp Command to start
   }
 
   /**

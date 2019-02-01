@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,6 +14,7 @@ public class AlignWithTargetPID extends Command {
   private int mSetpoint = 0;
   private double mTargetX =0;
   private double mDegreeOfTolerance = 1;
+  private double mTargetY =0;
   public AlignWithTargetPID() {
     requires(sDrive);
   }
@@ -30,12 +24,14 @@ public class AlignWithTargetPID extends Command {
   protected void initialize() {
     sDrive.setSetpoint(mSetpoint);
     mTargetX = sVision.getTargetX();
+    mTargetY = sVision.getTargetY();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     mTargetX = sVision.getTargetX();
+    mTargetY = sVision.getTargetY();
     sDrive.AimToTargetPID(mTargetX);
   }
 
@@ -43,8 +39,17 @@ public class AlignWithTargetPID extends Command {
   @Override
   protected boolean isFinished() {
     mTargetX = sVision.getTargetX();
-    return Math.abs(mTargetX) <= mDegreeOfTolerance;
-  }
+    if (Math.abs(mTargetX) <= mDegreeOfTolerance && mTargetY < 0){
+      return Math.abs(mTargetX) <= mDegreeOfTolerance;
+
+    }else{
+      return false;
+      
+    }   
+}
+   
+    
+  
 
   // Called once after isFinished returns true
   @Override
