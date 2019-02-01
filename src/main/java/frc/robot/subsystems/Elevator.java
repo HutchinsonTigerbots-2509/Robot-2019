@@ -8,17 +8,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -35,6 +34,7 @@ public class Elevator extends Subsystem {
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
 
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
+  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
 
   private final double kPulseNumber = Constants.kPulsesPerRotation;
   private final double kMaxHeight = Constants.kMaxHieght;
@@ -51,6 +51,8 @@ public class Elevator extends Subsystem {
 
   private final Value kReverse = Value.kReverse;
   private final Value kForward = Value.kForward;
+  private final Value kHighGear = Value.kReverse;
+  private final Value kLowGear = Value.kForward;
 
   private double mError;
   private double mPerpotional;
@@ -63,6 +65,9 @@ public class Elevator extends Subsystem {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
     addChild(SpoolSlave);
+    addChild(mShifter);
+    addChild(mLeftLimit);
+    addChild(mRightLimit);
   }
 
   @Override
@@ -84,7 +89,10 @@ public class Elevator extends Subsystem {
     SpoolMaster.setSelectedSensorPosition(0);
   }
 
-  public double TargetHeight() { // Gets height we want the arm to move to in encoder counts
+  /**
+   * Gets height we want the arm to move to in encoder counts
+   */
+  public double TargetHeight() {
     if (CoOpStick.getRawAxis(1) != 0) {
       mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
     } else if (CoOpStick.getRawButton(4)) {
@@ -97,41 +105,47 @@ public class Elevator extends Subsystem {
     return mEncoderTargetHieght;
   }
 
-  public double PIDFinal() { // Calculates PID Speed to send to the master
-
+  /**
+   * Calculates PID Speed to send to the master
+   */
+  public double PIDFinal() {
     mError = TargetHeight() - CurrentHeight();
     mPerpotional = mError * PGain;
     mDerivative = (mError - mPerviousError) * DGain;
     mIntegral += (mError * .02);
     mPerviousError = mError;
-
-    SmartDashboard.putNumber("ElevatorEncoder", SpoolMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Perpotional", mPerpotional);
-    SmartDashboard.putNumber("Derivative", mDerivative);
-    SmartDashboard.putNumber("Integral", mIntegral);
-
+    UpdateTelemetry();
     return (mPerpotional + mDerivative + (mIntegral * IGain));
 
   }
 
-  public void ChaseTarget() { // Trys to follow goal height, by sending PID speeds to motors
+  /**
+   * Trys to follow goal height, by sending PID speeds to motors
+   */
+  public void ChaseTarget() {
     SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
   }
 
-  public void ChaseTargetGearChanger(){//Changes gear when arm is going down Smith wanted but not currently used he he
-    if (PIDFinal() > 0){
+  /**
+   * Changes gear when arm is going down Smith wanted but not currently used he he
+   */
+  public void ChaseTargetGearChanger() {
+    if (PIDFinal() > 0) {
       mShifter.set(kForward);
       SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
-    }else{
+    } else {
       mShifter.set(kReverse);
       SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
     }
   }
 
-  public double CurrentHeight() { // Gets Current Height in encoder counts
-    return SpoolMaster.getSelectedSensorPosition(); 
-    
-    //* ((kSpoolDiam * Math.PI) / kPulseNumber);
+  /**
+   * Gets Current Height in encoder counts
+   */
+  public double CurrentHeight() {
+    return SpoolMaster.getSelectedSensorPosition();
+
+    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
     // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
 
@@ -177,7 +191,7 @@ public class Elevator extends Subsystem {
    * @author Tony
    */
   public void ShiftHighGear() {
-    mShifter.set(kForward);
+    mShifter.set(kHighGear);
   }
 
   /**
@@ -187,7 +201,7 @@ public class Elevator extends Subsystem {
    * @author Tony
    */
   public void ShiftLowGear() {
-    mShifter.set(kReverse);
+    mShifter.set(kLowGear);
   }
 
   /**
@@ -197,13 +211,49 @@ public class Elevator extends Subsystem {
    * @author Tony
    */
   public boolean isHighGear() {
-    if (mShifter.get() == kReverse) {
-      SmartDashboard.putString("Elevator Shifter", "High Gear");
+    if (mShifter.get() == kHighGear) {
+      mElevatorTab.add("Elevator Shifter", getGear());
+      // SmartDashboard.putString("Elevator Shifter", "High Gear");
       return true;
     } else {
-      SmartDashboard.putString("Elevator Shifter", "Low Gear");
+      mElevatorTab.add("Elevator Shifter", getGear());
+      // SmartDashboard.putString("Elevator Shifter", "Low Gear");
       return false;
     }
   }
 
+  /**
+   * Returns a string of which gear the Elevator is in
+   * 
+   * @return "High Gear" || "Low Gear"
+   */
+  public String getGear() {
+    if (mShifter.get() == kHighGear) {
+      return "High Gear";
+    } else {
+      return "Low Gear";
+    }
+  }
+
+  /**
+   * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
+   * for the smartdashboard has been removed.
+   */
+  public void UpdateTelemetry() {
+    // SmartDashboard.putNumber("ElevatorEncoder",
+    // SpoolMaster.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("Perpotional", mPerpotional);
+    // SmartDashboard.putNumber("Derivative", mDerivative);
+    // SmartDashboard.putNumber("Integral", mIntegral);
+    // SmartDashboard.updateValues();
+
+    mElevatorTab.add("ElevatorEncoder", SpoolMaster.getSelectedSensorPosition());
+    mElevatorTab.add("Left Limit", mLeftLimit.get());
+    mElevatorTab.add("Right Limit", mRightLimit.get());
+    mElevatorTab.add("Elevator Shifter", getGear());
+    mElevatorTab.add("Perpotional", mPerpotional);
+    mElevatorTab.add("Derivative", mDerivative);
+    mElevatorTab.add("Integral", mIntegral);
+    Shuffleboard.update();
+  }
 }
