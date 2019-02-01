@@ -32,6 +32,7 @@ public final class Constants {
     public static double kPulsesPerRotation = 256;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
+    public static int kEncoderErrorRange = 2;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
