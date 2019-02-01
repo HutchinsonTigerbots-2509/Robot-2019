@@ -18,9 +18,13 @@ public final class Constants {
     public static double kSlowSpeed = 0.45; // IDK but sure
     public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
+    public static double kNeutralDeadband = 0.04;
+    /* Encoders */
+    public static double kPulsesPerRevoultuion = 256;
 
     /* Drivetrain */
     public static double kWheelDiameter = 6;
+    public static double kEncoderRatio = 3;
     public static double kDrivetrainP = 1;
     public static double kDrivetrainI = 0;
     public static double kDrivetrainD = 0;
@@ -98,11 +102,14 @@ public final class Constants {
 
 
     /* Pneumatics ID */
+    // Drivetrain
+    public static int kDrivetrainShifterForwardID = 0;
+    public static int kDrivetrainShifterReverseID = 1;
     // Intake
-    public static int kIntakeWristPistonForwardID = 2;
-    public static int kIntakeWristPistonReverseID = 3;
+    public static int kIntakeWristForwardID = 2;
+    public static int kIntakeWristReverseID = 3;
     public static int kOpenIntakePistonForwardID = 4;
     public static int kOpenIntakePistonReverseID = 5;
-    public static int kIntakeLeftPistonForwardID = 6;
-    public static int kIntakeLeftPistonReverseID = 7;
+    public static int kIntakePushForwardID = 6;
+    public static int kIntakePushReverseID = 7;
 }
