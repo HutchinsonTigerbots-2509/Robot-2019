@@ -38,7 +38,7 @@ public class Drivetrain extends Subsystem {
   private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
-  private final AHRS mGyro = RobotMap.DrivetrainGyro;
+  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
   

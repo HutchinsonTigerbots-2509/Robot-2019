@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic()
   {
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
-    SmartDashboard.putNumber("Gyro", RobotMap.DrivetrainGyro.getAngle());
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
     SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
