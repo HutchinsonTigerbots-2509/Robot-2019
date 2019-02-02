@@ -1,5 +1,7 @@
 package frc.robot; // package declartion
 
+// imports
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,68 +24,82 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * @see Constants.java region for Port #s
  */
 public class RobotMap {
+    /* DRIVETRAIN */
+    // Motors
     public static WPI_TalonSRX DrivetrainLeftMaster;
     public static WPI_VictorSPX DrivetrainLeftSlave;
     public static WPI_TalonSRX DrivetrainRightMaster;
     public static WPI_VictorSPX DrivetrainRightSlave;
-    // public static Encoder DrivetrainLeftEncoder;
-    // public static Encoder DrivetrainRightEncoder;
+    
+    // Motor Groups
     public static SpeedControllerGroup DrivetrainLeft;
     public static SpeedControllerGroup DrivetrainRight;
     public static DifferentialDrive DrivetrainDifferential;
+    
+    // Shifter
     public static DoubleSolenoid DrivetrainShifter;
+    
+    // Sensors
+    public static AHRS Drivetrain_Gyro;
 
-    // Elevator
+    /* ELEVATOR */
+    // Motors
     public static WPI_TalonSRX ElevatorMotorMaster;
     public static WPI_VictorSPX ElevatorMotorSlave;
+    
+    // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
+    
+    // Digital Input Limits
     public static DigitalInput ElevatorLeftLimit;
     public static DigitalInput ElevatorRightLimit;
 
-    // Intake
+    /* INTAKE */
+    // Motors
     public static VictorSP IntakeRightMotor ;
     public static VictorSP IntakeLeftMotor;
     public static VictorSP IntakeMotor;
-
+    
+    // Motor Groups
     public static SpeedControllerGroup IntakeMotors;
-
+    
+    // Pneumatics
     public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
     public static DoubleSolenoid IntakeOpenPiston;
 
-    // Sensors
-    public static AHRS Drivetrain_Gyro;
-
     public static void init() {
         // #region DriveTrain
+        // Deadbands: https://en.wikipedia.org/wiki/Deadband
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
-        DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
-        DrivetrainLeftMaster.setInverted(false);
-        DrivetrainLeftMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0);
+        DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The DT Encoder
+        DrivetrainLeftMaster.setInverted(false); // Tell the motor that it isn't inverted (backwards)
+        DrivetrainLeftMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Will set the motor's deadband (above)
 
         DrivetrainLeftSlave = new WPI_VictorSPX(Constants.kDrivetrainLeftSlaveID); // Rear Left Motor
         DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
-        DrivetrainLeftSlave.setInverted(InvertType.FollowMaster);
-        DrivetrainLeftSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0);
+        DrivetrainLeftSlave.setInverted(InvertType.FollowMaster); // Follow Your Master (Above)
+        DrivetrainLeftSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Will set the motor's deadband (above)
 
         DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
         DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
-        DrivetrainRightMaster.setInverted(false);
-        DrivetrainRightMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0);
+        DrivetrainRightMaster.setInverted(false); // Inverted is false
+        DrivetrainRightMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
 
         DrivetrainRightSlave = new WPI_VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
         DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
-        DrivetrainRightSlave.setInverted(InvertType.FollowMaster);
-        DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0);
+        DrivetrainRightSlave.setInverted(InvertType.FollowMaster); // Follow Your Master
+        DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
 
         // A Master is used as a SpeedControllerGroup in this case. This allows us to
-        // use
-        // the VictorSPX datatype for motors. However, the masters must still be Talons.
-        // NOTE: The Masters contain the encoders for the Drivetrain
+        // use the VictorSPX datatype for motors. However, the masters must still be Talons.
+        // NOTE: The Master Motor objects have the encoder linked to them
         DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
 
+        // The shifter will be used to switch between high and low gear
         DrivetrainShifter = new DoubleSolenoid(Constants.kDrivetrainShifterForwardID, Constants.kDrivetrainShifterReverseID);
 
+        // The gyro keeps track of our turning movement along the z axis
         Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
         // #endregion
 

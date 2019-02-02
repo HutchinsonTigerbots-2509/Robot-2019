@@ -1,4 +1,6 @@
-package frc.robot;
+package frc.robot; // package declaration
+
+// imports
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,16 +19,16 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  /*Subsystem Declarations*/
+  /* SUBSYSTEM DECLARATIONS */
   public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
 
-  /*OI Declaration*/
+  /* OI DECLARATION */
   public static OI oi;
 
-  /*Command Declarations*/
+  /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
 
   /**
@@ -36,7 +38,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // RobotMap must be initialized first
-    // because everything else uses that as
+    // because everything else uses it as
     // a reference
     RobotMap.init();
 
@@ -59,6 +61,7 @@ public class Robot extends TimedRobot {
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
 
+    // Updates data
     sVision.UpdateLimelightSettings();
     sElevator.UpdateTelemetry();
   }
@@ -75,13 +78,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic()
   {
-    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOARD */
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle()); // Drivetrain Gyro's angle reading
+    SmartDashboard.putNumber("limeLightX", sVision.getTargetX()); // The target's X value from the camera
+    SmartDashboard.putNumber("limeLightY", sVision.getTargetY()); // The target's Y value from the camera
+    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea()); // The area of the target from the camera
 
-    sElevator.UpdateTelemetry();
+    sElevator.UpdateTelemetry(); // Update Data for Elevator (see Elevator Subsystem for method)
   }
 
   /**
@@ -95,8 +98,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
-    sElevator.UpdateTelemetry();
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.UpdateTelemetry(); // Updates Elevator Data
   }
 
   /**
@@ -123,7 +126,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
   @Override
@@ -143,8 +146,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.updateValues();
-    Scheduler.getInstance().run();
+    SmartDashboard.updateValues(); // Updates Data on the SmartDashboard
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
   /**
