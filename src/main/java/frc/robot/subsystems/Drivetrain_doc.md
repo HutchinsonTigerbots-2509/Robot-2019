@@ -1,0 +1,34 @@
+## Drivetrain Subsystem
+The Drivetrain subsystem includes the motors and other object pertaining to driving. These methods control driving of the robot. That includes TeleOperated Mode (where the driver is in control) and the Autonomous Mode of the Robot. However, the autonoumous methods aren't really used unless the method takes an input from the camera.
+
+<!-- @see Constants.java -->
+<!-- @see Drivetrain Category - PID Controller -->
+
+### PID Info
+> A PID equation is a control equation. There are three constants needed; a P, I, and D. For more information, read [this]( https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html)
+- PID Turn Info
+  - kP = 0.13
+  - kD = 0.275
+<p>The Turning Method will take an input from the Gyro to turn to a certain angle. It doesn't use an I varible because the I varible doesn't work well in this scenario. </p>
+- PID Aim to Target Info
+  - kP = 0.3
+  - kI = 0.0
+  - kD = 0.0
+<p>The Aim to Target Method will take an input from the camera network table (tx) and then turn to a target. Based off of the Case Study in the limelight docs <a href="http://docs.limelightvision.io/en/latest/cs_aiming.html">here</a> </p>
+- PID Distance Info
+  - kP = 1
+  - kI = 0
+  - kD = 0
+<p> The PID Distance Void will drive the robot to a certain distance and then fine tune adjust to a certain distance that is set with the parameter </p>
+
+### JavaDoc Categories
+- Basic Drive Methods
+    The Basic Drive Methods are the simplest forms of driving, like the OperatorDrive Method. These normally are autonomous.
+- Update Voids
+    These Voids will update values or sensors
+- Shifter
+    All voids pertaining to the Shifter object
+- PID Controller
+    Methods in the drivetrain that use a PID Equation and a sensor input to make an output, like a PID_Turn with a Gyro.
+- DriveTrain Getters
+    Will return the objects of the DriveTrain
