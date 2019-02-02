@@ -88,6 +88,19 @@ public final class Constants {
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
+    // Encoder ID
+    public static int kDrivetrainEncoderLeftAID = 0;
+    public static int kDrivetrainEncoderLeftBID = 1;
+    public static int kDrivetrainEncoderRightAID = 2;
+    public static int kDrivetrianEncoderRightBID = 3;
+
+    // Climb
+    public static int kClimbMotorID = 0;
+    public static int kClimbLeftHigherID = 0;
+    public static int kClimbLeftLowerID = 1;
+    public static int kClimbRightHigherID = 2;
+    public static int kClimbRightLowerID = 3;
+    
     // Intake
     public static int kIntakeRightMotorID = 4;
     public static int kIntakeLeftMotorID = 5;

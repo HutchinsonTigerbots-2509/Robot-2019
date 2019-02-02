@@ -3,15 +3,17 @@ package frc.robot; // package declartion
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedControllerGroup; 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive; 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -50,6 +52,11 @@ public class RobotMap {
     public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
     public static DoubleSolenoid IntakeOpenPiston;
+
+    // Climb
+    public static DoubleSolenoid ClimbHigherPiston;
+    public static DoubleSolenoid ClimbLowerPiston;
+    public static WPI_TalonSRX ClimbMotor;
 
     // Sensors
     public static AHRS Drivetrain_Gyro;
@@ -116,6 +123,14 @@ public class RobotMap {
         IntakeOpenPiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID, Constants.kOpenIntakePistonReverseID);
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         // #endregion
+
+    // #region Climb
+
+    ClimbHigherPiston = new DoubleSolenoid(Constants.kClimbLeftHigherID, Constants.kClimbRightHigherID);
+    ClimbLowerPiston = new DoubleSolenoid(Constants.kClimbLeftLowerID, Constants.kClimbRightLowerID);
+    ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
+
+    // //#endregion
 
     }
 }
