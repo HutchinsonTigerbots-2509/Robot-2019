@@ -21,7 +21,6 @@ import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.Follow_target;
-import frc.robot.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,7 +48,6 @@ public class OI {
   // Vision Alignment Buttons
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
-  private JoystickButton FollowButton;
   private JoystickButton Follow_low_targets_Button;
   private JoystickButton Follow_hatch_Button;
   private JoystickButton Follow_high_targets_Button;

@@ -35,7 +35,7 @@ public final class Constants {
     public static double kDriveTrainDistanceI = 0.0;
     public static double kDriveTrainDistanceD = 0.0;
 
-    public static double kDriveTrainGyroTurnP = 0.13; // PID for GyroTurn
+    public static double kDriveTrainGyroTurnP = 0.13;
     public static double kDriveTrainGyroTurnD = 0.275;
 
     /* Elevator */

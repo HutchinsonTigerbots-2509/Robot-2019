@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  * 
- * @see Constants.java region for Port #s
+ * @see Constants.java region for Port #'s
  */
 public class RobotMap {
     /* DRIVETRAIN */
@@ -71,6 +71,7 @@ public class RobotMap {
     public static void init() {
         // #region DriveTrain
         // Deadbands: https://en.wikipedia.org/wiki/Deadband
+        // Motors
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
         DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The DT Encoder
         DrivetrainLeftMaster.setInverted(false); // Tell the motor that it isn't inverted (backwards)
