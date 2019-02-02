@@ -20,6 +20,13 @@ public class Intake extends Subsystem {
   private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake");
 
+  public Intake(){
+    setSubsystem("Intake");
+    addChild(mMotor);
+    addChild(mGrip);
+    addChild(mWrist);
+  }
+
   /**
    * Sets the Intake motors to take in.
    * 
