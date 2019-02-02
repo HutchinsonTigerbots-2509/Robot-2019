@@ -92,6 +92,10 @@ public class Climb extends Subsystem {
     UpdateTelemetry();
   }
 
+  /**
+   * Will return whether the pistons are Extended or Retracted
+   * @return
+   */
   public String getHigherPistonsStatus() {
     if (HigherPistons.get() == Value.kForward){
       return "Extended";
@@ -102,6 +106,10 @@ public class Climb extends Subsystem {
     }
   }
 
+  /**
+   * Will return whether the pistons are Extended or Retracted
+   * @return
+   */
   public String getLowerPistonsStatus() {
     if (LowerPistons.get() == Value.kForward){
       return "Extended";
@@ -112,6 +120,9 @@ public class Climb extends Subsystem {
     }
   }
 
+  /**
+   * Updates the data for shuffleboard
+   */
   public void UpdateTelemetry(){
     mClimb.add("Higher Pistons", getHigherPistonsStatus());
     mClimb.add("Lower Pistons", getLowerPistonsStatus());
