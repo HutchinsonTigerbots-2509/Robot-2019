@@ -64,6 +64,7 @@ public class Robot extends TimedRobot {
     // Updates data
     sVision.UpdateLimelightSettings();
     sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
   }
 
   /**
@@ -84,7 +85,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY()); // The target's Y value from the camera
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea()); // The area of the target from the camera
 
-    sElevator.UpdateTelemetry(); // Update Data for Elevator (see Elevator Subsystem for method)
+    sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
   }
 
   /**
@@ -99,7 +101,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
-    sElevator.UpdateTelemetry(); // Updates Elevator Data
+    sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
   }
 
   /**
@@ -146,7 +149,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.updateValues(); // Updates Data on the SmartDashboard
+    SmartDashboard.updateValues();
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 

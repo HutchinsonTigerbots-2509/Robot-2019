@@ -1,4 +1,6 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems; // package declaration
+
+// imports
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -16,18 +18,19 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * Elevator Subsystem
  */
 public class Elevator extends Subsystem {
-
+  // #region IMPORT VARIBLES
+  // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
 
+  // OI Joystick
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
-  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
 
   private final double kPulseNumber = Constants.kPulsesPerRotation;
   private final double kMaxHeight = Constants.kMaxHieght;
@@ -41,18 +44,24 @@ public class Elevator extends Subsystem {
   private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
   private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
   private final double kTicksPerInch = Constants.kElevatorTicksPerInch;
-
+  
   private final Value kReverse = Value.kReverse;
   private final Value kForward = Value.kForward;
   private final Value kHighGear = Value.kReverse;
   private final Value kLowGear = Value.kForward;
 
+  // SmartDashboard Tab
+  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  // #endregion IMPORT VARIBLES
+
+  // #region PRIVATE VARIBLE DECLARATIONS
   private double mError;
   private double mPerpotional;
   private double mDerivative;
   private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
+  // #endregion PRIVATE VARIBLE DECLARATIONS
 
   public Elevator() {
     setSubsystem("Elevator");

@@ -7,11 +7,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -49,6 +51,10 @@ public class Drivetrain extends Subsystem {
   private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
+
+  // Shuffleboard
+  private final ShuffleboardTab mDriveTrainTab = Shuffleboard.getTab("Drivetrain");
+
   //#endregion IMPORTED VARIBLE FROM ROBOTMAP DELCARATIONS
 
   // #region IMPORTED VARIBLES FROM CONSTANTS DECLARATION
@@ -212,10 +218,23 @@ public class Drivetrain extends Subsystem {
   /**
    * Will update all values that are sent to the Shuffleboard
    * 
+   * <li> - Left Encoder, Right Encoder, and Encoder Average Distance
+   * <li> - Gyro Angle
+   * <li> - Differential Drive Object
+   * <li> - Shifter Object
+   * <li> - isShifted Boolean
+   * 
    * @category Update Voids
    */
-  public void UpdateTelementary() {
-
+  public void UpdateTelemetry() {
+    mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
+    mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
+    mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
+    mDriveTrainTab.add("Gyro", mGyro.getAngle());
+    mDriveTrainTab.add("Drivetrain Drive", getDrive());
+    mDriveTrainTab.add("Shifter", getShifter());
+    mDriveTrainTab.add("isShifted", isShifted());
+    Shuffleboard.update();
   }
 
   /**
@@ -280,6 +299,16 @@ public class Drivetrain extends Subsystem {
       SmartDashboard.putString("isShifted", "slowGear");
       return false;
     }
+  }
+
+  /**
+   * Returns the Shifter Object
+   * 
+   * @category Shifter
+   * @return Shifter Piston
+   */
+  public DoubleSolenoid getShifter() {
+    return mShifter;
   }
 
   // #endregion SHIFTER
