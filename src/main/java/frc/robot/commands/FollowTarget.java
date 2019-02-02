@@ -5,7 +5,6 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Drivetrain;
 
 public class FollowTarget extends Command {
   private Drivetrain sDriveTrain = Robot.sDrivetrain;

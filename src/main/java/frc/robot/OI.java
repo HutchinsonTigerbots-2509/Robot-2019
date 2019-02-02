@@ -6,16 +6,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
-import frc.robot.commands.FollowTarget;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
@@ -25,9 +22,7 @@ import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
 import frc.robot.commands.Follow_target;
-import frc.robot.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -50,7 +45,6 @@ public class OI {
 
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
-  private JoystickButton FollowButton;
   private JoystickButton Follow_low_targets_Button;
   private JoystickButton Follow_hatch_Button;
   private JoystickButton Follow_high_targets_Button;
@@ -59,8 +53,6 @@ public class OI {
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
-  private JoystickButton mExtend;
-  private JoystickButton mRetract;
 
   private JoystickButton ExtendClimbPistons;
   private JoystickButton RetractClimbPistons;
