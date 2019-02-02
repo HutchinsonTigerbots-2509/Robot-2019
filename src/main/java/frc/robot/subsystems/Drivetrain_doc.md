@@ -1,9 +1,23 @@
-## Drivetrain Subsystem
+DriveTrain Subsystem
+=====
 The Drivetrain subsystem includes the motors and other object pertaining to driving. These methods control driving of the robot. That includes TeleOperated Mode (where the driver is in control) and the Autonomous Mode of the Robot. However, the autonoumous methods aren't really used unless the method takes an input from the camera.
+##
+-----
+### Components Info
+| Name            | Type           | Port    |
+| --------------- | -------------- |:-------:|
+| *Left Master*   | TalonSRX       |  __0__  |
+| *Left Slave*    | VictorSPX      |  __1__  |
+| *Right Master*  | TalonSRX       |  __2__  |
+| *Right Slave*   | VictorSPX      |  __3__  |
+| *Left Encoder*  | TalonSRX Quad  | __N/A__ |
+| *Right Encoder* | TalonSRX Quad  | __N/A__ |
 
+*Note: More can be found [here](https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing)*
+##
+-----
 <!-- @see Constants.java -->
 <!-- @see Drivetrain Category - PID Controller -->
-
 ### PID Info
 > A PID equation is a control equation. There are three constants needed; a P, I, and D. For more information, read [this]( https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html)
 - PID Turn Info
@@ -22,6 +36,8 @@ The Drivetrain subsystem includes the motors and other object pertaining to driv
   - kD = 0
 <p> The PID Distance Void will drive the robot to a certain distance and then fine tune adjust to a certain distance that is set with the parameter </p>
 
+##
+---------
 ### JavaDoc Categories
 - Basic Drive Methods
     The Basic Drive Methods are the simplest forms of driving, like the OperatorDrive Method. These normally are autonomous.
