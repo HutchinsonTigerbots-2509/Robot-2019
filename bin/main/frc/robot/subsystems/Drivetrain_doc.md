@@ -8,6 +8,7 @@ The Drivetrain subsystem includes the motors and other object pertaining to driv
 > A PID equation is a control equation. There are three constants needed; a P, I, and D. For more information, read [this]( https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html)
 - PID Turn Info
   - kP = 0.13
+  - KI = 0.0 (it doesn't work);
   - kD = 0.275
 <p>The Turning Method will take an input from the Gyro to turn to a certain angle. It doesn't use an I varible because the I varible doesn't work well in this scenario. </p>
 - PID Aim to Target Info
