@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -15,7 +17,8 @@ public class Intake extends Subsystem {
   /* Subsystem Varible Declarations */
   private final VictorSP mMotor = RobotMap.IntakeMotor;
   private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
-  private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
+  private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
+  private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake");
 
   /**
    * Sets the Intake motors to take in.
@@ -25,6 +28,7 @@ public class Intake extends Subsystem {
    */
   public void MotorsIn() {
     mMotor.set(Constants.kMaxSpeed);
+    UpdateTelemetry();
   }
 
   /**
@@ -35,6 +39,7 @@ public class Intake extends Subsystem {
    */
   public void MotorsOut() {
     mMotor.set(Constants.kSlowSpeed);
+    UpdateTelemetry();
   }
 
   /**
@@ -45,6 +50,7 @@ public class Intake extends Subsystem {
    */
   public void MotorsStop() {
     mMotor.set(0);
+    UpdateTelemetry();
   }
 
   /**
@@ -54,7 +60,8 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void Up() {
-    mWristPiston.set(Value.kForward);
+    mWrist.set(Value.kForward);
+    UpdateTelemetry();
   }
 
   /**
@@ -64,7 +71,8 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void Down() {
-    mWristPiston.set(Value.kReverse);
+    mWrist.set(Value.kReverse);
+    UpdateTelemetry();
   }
 
   /**
@@ -72,7 +80,8 @@ public class Intake extends Subsystem {
    * @author Tony Stops the up and down movement of the intake wrist
    */
   public void StopWrist() {
-    mWristPiston.set(Value.kOff);
+    mWrist.set(Value.kOff);
+    UpdateTelemetry();
   }
 
   /**
@@ -83,6 +92,7 @@ public class Intake extends Subsystem {
    */
   public void Open() {
     mGrip.set(Value.kForward);
+    UpdateTelemetry();
   }
 
   /**
@@ -93,6 +103,7 @@ public class Intake extends Subsystem {
    */
   public void Close() {
     mGrip.set(Value.kReverse);
+    UpdateTelemetry();
   }
 
   /**
@@ -103,11 +114,43 @@ public class Intake extends Subsystem {
    */
   public void Stop() {
     mGrip.set(Value.kOff);
+    UpdateTelemetry();
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public String getGripStatus(){
+    if (mGrip.get() == Value.kForward){
+      return "Open";
+    }
+    else if (mGrip.get() == Value.kForward){
+      return "Close";
+    }
+    else{
+      return "Null";
+    }
+  }
+
+  public String getWristStatus(){
+    if (mWrist.get() == Value.kForward){
+      return "Up";
+    }
+    else if (mWrist.get() == Value.kForward){
+      return "Down";
+    }
+    else{
+      return "Null";
+    }
+  }
+
+  public void UpdateTelemetry() {
+    mIntakeTab.add("Motor Speed", mMotor.get());
+    mIntakeTab.add("Grip Status", getGripStatus());
+    mIntakeTab.add("Wrist Status", getWristStatus());
+    Shuffleboard.update();
   }
 }
