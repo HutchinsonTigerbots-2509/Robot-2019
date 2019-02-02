@@ -9,11 +9,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AlignWithTarget;
-import frc.robot.commands.AlignWithTargetPID;
-import frc.robot.commands.ClimbExtend;
-import frc.robot.commands.FollowTarget;
-import frc.robot.commands.RetractPistons;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -28,6 +24,8 @@ public class OI {
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
+  private JoystickButton mExtend;
+  private JoystickButton mRetract;
 
   private JoystickButton ExtendClimbPistons;
   private JoystickButton RetractClimbPistons;
