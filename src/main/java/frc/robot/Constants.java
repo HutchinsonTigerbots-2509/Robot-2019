@@ -95,11 +95,11 @@ public final class Constants {
     public static int kDrivetrianEncoderRightBID = 3;
 
     // Climb
-    public static int kClimbMotorID = 0;
-    public static int kClimbLeftHigherID = 0;
-    public static int kClimbLeftLowerID = 1;
-    public static int kClimbRightHigherID = 2;
-    public static int kClimbRightLowerID = 3;
+    public static int kClimbMotorID = 6;
+    public static int kClimbLeftHigherID = 6;
+    public static int kClimbLeftLowerID = 8;
+    public static int kClimbRightHigherID = 7;
+    public static int kClimbRightLowerID = 9;
     
     // Intake
     public static int kIntakeRightMotorID = 4;
