@@ -38,22 +38,47 @@ public class Climb extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  /**
+   * Extends the Higher Pistons
+   * 
+   * @author Cole
+   */
   public void ExtendHigherPistons(){
     HigherPistons.set(Value.kForward);
   }
 
+  /**
+   * Extends the Lower Pistons
+   * 
+   * @author Cole
+   */
   public void ExtendLowerPistons(){
     LowerPistons.set(Value.kForward);
   }
   
+  /**
+   * Retracts the Higher Pistons
+   * 
+   * @author Cole
+   */
   public void RetractHigherPistons(){
     HigherPistons.set(Value.kReverse);
   }
 
+  /**
+   * Retracts the Lower Pistons
+   * 
+   * @author Cole
+   */
   public void RetractLowerPistons(){
     LowerPistons.set(Value.kReverse);
   }
 
+  /**
+   * Stops all Pistons
+   * 
+   * @author Cole
+   */
   public void StopPistons(){
     HigherPistons.set(Value.kOff);
     LowerPistons.set(Value.kOff);
