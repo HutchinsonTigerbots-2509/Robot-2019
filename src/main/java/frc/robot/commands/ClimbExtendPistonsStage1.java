@@ -7,9 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Climb;
 
 public class ClimbExtendPistonsStage1 extends Command {
