@@ -20,20 +20,26 @@ The Drivetrain subsystem includes the motors and other object pertaining to driv
 <!-- @see Drivetrain Category - PID Controller -->
 ### PID Info
 > A PID equation is a control equation. There are three constants needed; a P, I, and D. For more information, read [this]( https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html)
+
 - PID Turn Info
   - kP = 0.13
   - KI = 0.0 (it doesn't work);
   - kD = 0.275
+
 <p>The Turning Method will take an input from the Gyro to turn to a certain angle. It doesn't use an I varible because the I varible doesn't work well in this scenario. </p>
+
 - PID Aim to Target Info
   - kP = 0.3
   - kI = 0.0
   - kD = 0.0
+
 <p>The Aim to Target Method will take an input from the camera network table (tx) and then turn to a target. Based off of the Case Study in the limelight docs <a href="http://docs.limelightvision.io/en/latest/cs_aiming.html">here</a> </p>
+
 - PID Distance Info
   - kP = 1
   - kI = 0
   - kD = 0
+
 <p> The PID Distance Void will drive the robot to a certain distance and then fine tune adjust to a certain distance that is set with the parameter </p>
 
 ##
