@@ -89,27 +89,19 @@ public class Elevator extends Subsystem {
     SpoolMaster.setSelectedSensorPosition(0);
   }
 
-  /**
-   * Gets height we want the arm to move to in encoder counts
-   */
-  public double TargetHeight() {
-    if (CoOpStick.getRawAxis(1) != 0) {
-      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
-    } else if (CoOpStick.getRawButton(4)) {
-      mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
-    } else if (CoOpStick.getRawButton(2)) {
-      mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
-    } else if (CoOpStick.getRawButton(1)) {
-      mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
-    }
+  public double getTargetHeight(){
     return mEncoderTargetHieght;
+  }
+
+  public void setTargetHeight(double height){
+    mEncoderTargetHieght = height;
   }
 
   /**
    * Calculates PID Speed to send to the master
    */
   public double PIDFinal() {
-    mError = TargetHeight() - CurrentHeight();
+    mError = getTargetHeight() - CurrentHeight();
     mPerpotional = mError * PGain;
     mDerivative = (mError - mPerviousError) * DGain;
     mIntegral += (mError * .02);
