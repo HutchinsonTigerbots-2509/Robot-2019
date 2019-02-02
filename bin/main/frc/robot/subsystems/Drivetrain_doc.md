@@ -1,8 +1,7 @@
 DriveTrain Subsystem
 =====
 The Drivetrain subsystem includes the motors and other object pertaining to driving. These methods control driving of the robot. That includes TeleOperated Mode (where the driver is in control) and the Autonomous Mode of the Robot. However, the autonoumous methods aren't really used unless the method takes an input from the camera.
-##
------
+
 ### Components Info
 | Name            | Type           | Port    |
 | --------------- | -------------- |:-------:|
