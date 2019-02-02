@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
+  public static Climb sClimb;
   /*OI Declaration*/
   public static OI oi;
   /*Command Declarations*/
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+    sClimb = new Climb();
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();

@@ -7,18 +7,55 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class Climb extends Subsystem {
+  private final DoubleSolenoid HigherPistons = RobotMap.ClimbHigherPiston;
+  private final DoubleSolenoid LowerPistons = RobotMap.ClimbLowerPiston;
+  private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  public Climb(){
+    setSubsystem("Climb");
+    addChild(HigherPistons);
+    addChild(LowerPistons);
+    addChild(Motor);
+  }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public void ExtendHigherPistons(){
+    HigherPistons.set(Value.kForward);
+  }
+
+  public void ExtendLowerPistons(){
+    LowerPistons.set(Value.kForward);
+  }
+  
+  public void RetractHigherPistons(){
+    HigherPistons.set(Value.kReverse);
+  }
+
+  public void RetractLowerPistons(){
+    LowerPistons.set(Value.kReverse);
+  }
+
+  public void StopPistons(){
+    HigherPistons.set(Value.kOff);
+    LowerPistons.set(Value.kOff);
   }
 }

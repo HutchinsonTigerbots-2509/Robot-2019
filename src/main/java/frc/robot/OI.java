@@ -1,17 +1,19 @@
 package frc.robot; // package declaraition
 
 // imports
-import edu.wpi.first.networktables.NetworkTable; 
-import edu.wpi.first.wpilibj.Joystick; 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-import frc.robot.subsystems.Vision; 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
+import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.FollowTarget;
+import frc.robot.commands.RetractPistons;
 import frc.robot.subsystems.*;
 
 /**
@@ -26,6 +28,9 @@ public class OI {
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
   private NetworkTable mLimeTable;
+
+  private JoystickButton ExtendClimbPistons;
+  private JoystickButton RetractClimbPistons;
 
   // #region Joystic Button Creation
   //// CREATING BUTTONS
@@ -73,6 +78,12 @@ public class OI {
     FollowButton.toggleWhenPressed(new FollowTarget());
     SmartDashboard.putData(FollowButton);
 
+    ExtendClimbPistons = new JoystickButton(mOpStick, 0);
+    ExtendClimbPistons.whenPressed(new ClimbExtend());
+
+    RetractClimbPistons = new JoystickButton(mOpStick, 1);
+    RetractClimbPistons.whenPressed(new RetractPistons());
+
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
 
@@ -82,6 +93,7 @@ public class OI {
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
   }
+
   public Joystick getOperatorStick(){
     return mOpStick;
   }
