@@ -22,10 +22,10 @@ import frc.robot.RobotMap;
  * is stored and can be accessed and used throughout the project
  * 
  * <h3> JavaDoc Categories for Functions: </h3>
- * <li> + Lift Methods - Will use the lift mechanism for
+ * <li> + Lift Methods - Will use the lift mechanism
  * <li> + Shifter - Will have something to do with the shifter for the spool masters
  * <li> + Update Voids - Updates something, like data or sensors
- * <li> + Elevator Getters - Will return a value or object
+ * <li> + Elevator Getters - Will return a value or an object
  * 
  * @author DJ, Tony, Cole G, and Nate
  */

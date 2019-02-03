@@ -16,6 +16,8 @@ public final class Constants {
     /* Motors */
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.45; // IDK but sure
+    public static double kReverseFastSpeed = -kMaxSpeed;
+    public static double kReverseSlowSpeed = -kSlowSpeed;    
     public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
     public static double kNeutralDeadband = 0.04;
@@ -98,8 +100,9 @@ public final class Constants {
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
     // Intake
-    public static int kIntakeRightMotorID = 4;
-    public static int kIntakeLeftMotorID = 5;
+    // public static int kIntakeRightMotorID = 4;
+    // public static int kIntakeLeftMotorID = 5;
+    public static int kIntakeMotorID = 4;
 
     /* DigitalInput ID */
     // public static int kDrivetrainEncoderLeftAID = 0;
@@ -114,11 +117,18 @@ public final class Constants {
     // Drivetrain
     public static int kDrivetrainShifterForwardID = 0;
     public static int kDrivetrainShifterReverseID = 1;
+    // Elevator
+    public static int kElevatorShifterForwardID = 12;
+    public static int kElevatorShifterReverseID = 13;
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
     public static int kOpenIntakePistonForwardID = 4;
     public static int kOpenIntakePistonReverseID = 5;
+    public static int kIntakeHatchOutPistonLeftForwardID = 8; // 2/2/2019
+    public static int kIntakeHatchOutPistonLeftReverseID = 9; // 2/2/2019
+    public static int kIntakeHatchOutPistonRightForwardID = 10; // 2/2/2019
+    public static int kIntakeHatchOutPistonRightReverseID = 11; // 2/2/2019
     public static int kIntakePushForwardID = 6;
     public static int kIntakePushReverseID = 7;
 }

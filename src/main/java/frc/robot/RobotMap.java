@@ -67,6 +67,8 @@ public class RobotMap {
     public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
     public static DoubleSolenoid IntakeOpenPiston;
+    public static DoubleSolenoid IntakeHatchOutPistonLeft;
+    public static DoubleSolenoid IntakeHatchOutPistonRight;
 
     public static void init() {
         // #region DriveTrain
@@ -115,7 +117,7 @@ public class RobotMap {
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
         ElevatorMotorSlave.setSubsystem("Elevator");
 
-        ElevatorShifter = new DoubleSolenoid(0, 1);
+        ElevatorShifter = new DoubleSolenoid(Constants.kElevatorShifterForwardID, Constants.kIntakeWristReverseID);
 
         ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
 
@@ -127,11 +129,14 @@ public class RobotMap {
         // IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
         // IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
-        IntakeMotor = new VictorSP(1);
+        IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
 
         IntakePushPiston  = new DoubleSolenoid(Constants.kIntakePushForwardID, Constants.kIntakePushReverseID);
         IntakeOpenPiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID, Constants.kOpenIntakePistonReverseID);
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
+        
+        IntakeHatchOutPistonLeft = new DoubleSolenoid(Constants.kIntakeHatchOutPistonLeftForwardID, Constants.kIntakeHatchOutPistonLeftReverseID); // 2/2/2019
+        IntakeHatchOutPistonRight = new DoubleSolenoid(Constants.kIntakeHatchOutPistonRightForwardID, Constants.kIntakeHatchOutPistonRightReverseID); // 2/2/2019
         // #endregion
 
     }
