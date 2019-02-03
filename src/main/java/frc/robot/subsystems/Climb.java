@@ -1,124 +1,109 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * The climbing subsystem is the subsystem where we climb up
+ * onto the habitat ramps. We do this be using a two stage
+ * piston system on both sides of the robot, with the lower ones
+ * firing first, followed by the second stage
  */
 public class Climb extends Subsystem {
-  private final DoubleSolenoid HigherPistons = RobotMap.ClimbHigherPiston;
-  private final DoubleSolenoid LowerPistons = RobotMap.ClimbLowerPiston;
+  //#region SUBSYSTEM IMPORT VARIBLE DECLARATIONS
+  
+  // Motors
   private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
-  private final ShuffleboardTab mClimb = Shuffleboard.getTab("Climb");
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  
+  // Pistons
+  private final DoubleSolenoid HigherLeftPiston = RobotMap.ClimbLeftHigherPiston;
+  private final DoubleSolenoid LowerLeftPiston = RobotMap.ClimbLeftLowerPiston;
+  private final DoubleSolenoid HigherRightPiston = RobotMap.ClimbRightHigherPiston;
+  private final DoubleSolenoid LowerRightPiston = RobotMap.ClimbRightLowerPiston;
 
+  // Shuffleboard Tab
+  private final ShuffleboardTab mClimb = Shuffleboard.getTab("Climb");
+  
+  // #endregion SUBSYSTEM IMPORT VARIBLE DECLARATIONS
+
+  /**
+   * Constructor that adds children to the object so
+   * we can play with components in test mode
+   */
   public Climb(){
     setSubsystem("Climb");
-    addChild(HigherPistons);
-    addChild(LowerPistons);
+    addChild(HigherLeftPiston);
+    addChild(LowerLeftPiston);
+    addChild(HigherRightPiston);
+    addChild(LowerRightPiston);
     addChild(Motor);
   }
-
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
-
+  // #region Climbing Voids
+  
   /**
-   * Extends the Higher Pistons
+   * Extends the Higher Pistons on both sides
    * 
-   * @author Cole
+   * @author CRahne
    */
   public void ExtendHigherPistons(){
-    HigherPistons.set(Value.kForward);
-    UpdateTelemetry();
+    HigherLeftPiston.set(Value.kForward);
+    HigherRightPiston.set(Value.kForward);
   }
 
   /**
-   * Extends the Lower Pistons
+   * Extends the Lower Pistons on both sides
    * 
-   * @author Cole
+   * @author CRahne
    */
   public void ExtendLowerPistons(){
-    LowerPistons.set(Value.kForward);
-    UpdateTelemetry();
+    LowerLeftPiston.set(Value.kForward);
+    LowerRightPiston.set(Value.kForward);
   }
   
   /**
-   * Retracts the Higher Pistons
+   * Retracts the Higher Pistons on both sides
    * 
-   * @author Cole
+   * @author CRahne
    */
   public void RetractHigherPistons(){
-    HigherPistons.set(Value.kReverse);
-    UpdateTelemetry();
+    HigherLeftPiston.set(Value.kReverse);
+    HigherRightPiston.set(Value.kReverse);
   }
 
   /**
-   * Retracts the Lower Pistons
+   * Retracts the Lower Pistons on both sides
    * 
-   * @author Cole
+   * @author CRahne
    */
   public void RetractLowerPistons(){
-    LowerPistons.set(Value.kReverse);
-    UpdateTelemetry();
+    LowerLeftPiston.set(Value.kReverse);
+    LowerRightPiston.set(Value.kReverse);
   }
 
   /**
    * Stops all Pistons
    * 
-   * @author Cole
+   * @author CRahne
    */
   public void StopPistons(){
-    HigherPistons.set(Value.kOff);
-    LowerPistons.set(Value.kOff);
-    UpdateTelemetry();
+    // Left
+    HigherLeftPiston.set(Value.kOff);
+    LowerLeftPiston.set(Value.kOff);
+    // Right
+    HigherRightPiston.set(Value.kOff);
+    LowerRightPiston.set(Value.kOff);
   }
+  
+  // #endregion Climbing Voids
 
-  /**
-   * Will return whether the pistons are Extended or Retracted
-   * @return
-   */
-  public String getHigherPistonsStatus() {
-    if (HigherPistons.get() == Value.kForward){
-      return "Extended";
-    } else if (HigherPistons.get() == Value.kReverse){
-      return "Retracted";
-    } else {
-      return "Null";
-    }
-  }
-
-  /**
-   * Will return whether the pistons are Extended or Retracted
-   * @return
-   */
-  public String getLowerPistonsStatus() {
-    if (LowerPistons.get() == Value.kForward){
-      return "Extended";
-    } else if (LowerPistons.get() == Value.kReverse){
-      return "Retracted";
-    } else {
-      return "Null";
-    }
-  }
+  // #region General
 
   /**
    * Updates the data for shuffleboard
@@ -127,5 +112,117 @@ public class Climb extends Subsystem {
     mClimb.add("Higher Pistons", getHigherPistonsStatus());
     mClimb.add("Lower Pistons", getLowerPistonsStatus());
     mClimb.add("Motor Speed", Motor.get());
+  }
+
+  // #endregion General
+  // #region Climb Getters
+
+  /**
+   * Will return the higher piston on the left side
+   * 
+   * @return High Left Piston
+   * @author CRahne
+   */
+  public DoubleSolenoid getLeftHighPiston() {
+    return HigherLeftPiston;
+  }
+
+  /**
+   * Will return the lower piston on the left side
+   * 
+   * @return Low Left Piston
+   * @author CRahne
+   */
+  public DoubleSolenoid getLeftLowPiston() {
+    return LowerLeftPiston;
+  }
+
+  /**
+   * Will return the higher piston on the right side
+   * 
+   * @return High Right Piston
+   * @author CRahne
+   */
+  public DoubleSolenoid getRightHighPiston() {
+    return HigherRightPiston;
+  }
+
+  /**
+   * Will return the lower piston on the right side
+   * 
+   * @return Right Low Piston
+   * @author CRahne
+   */
+  public DoubleSolenoid getRightLowPiston() {
+    return getRightLowPiston();
+  }
+
+  /**
+   * Will return whether the high pistons are extended
+   * 
+   * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
+   * @author CRahne
+   */
+  public String getHigherPistonsStatus() {
+    if (HigherLeftPiston.get() == Value.kForward && HigherRightPiston.get() == Value.kForward){
+      return "Extended";
+    } else if (HigherLeftPiston.get() == Value.kReverse && HigherRightPiston.get() == Value.kReverse){
+      return "Retracted";
+    } else {
+      return "Null";
+    }
+  }
+
+  /**
+   * Will return whether the low pistons are Extended or Retracted
+   * 
+   * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
+   * @author CRahne
+   */
+  public String getLowerPistonsStatus() {
+    if (LowerLeftPiston.get() == Value.kForward && LowerRightPiston.get() == Value.kForward){
+      return "Extended";
+    } else if (LowerLeftPiston.get() == Value.kReverse && LowerRightPiston.get() == Value.kReverse){
+      return "Retracted";
+    } else {
+      return "Null";
+    }
+  }
+
+  /**
+   * Will say if the high pistons are extended or not
+   * 
+   * @return if pistons are extened or not
+   * @author CRahne
+   */
+  public Boolean areHighPistonsExtended() {
+    String state = getHigherPistonsStatus();
+    if(state == "Extended") {
+      SmartDashboard.putString("High Climb Piston State", state);
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Will say if the low pistons are extended or not
+   * 
+   * @return if pistons are extened or not
+   * @author CRahne
+   */
+  public Boolean areLowPistonsExtended() {
+    String state = getLowerPistonsStatus();
+    if(state == "Extended") {
+      SmartDashboard.putString("Low Climb Piston State", state);
+      return true;
+    }
+    return false;
+  }
+
+  // #endregion Climb Getters
+
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }
