@@ -18,7 +18,17 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * The climbing subsystem is the subsystem where we climb up
+ * onto the habitat ramps. We do this be using a two stage
+ * piston system on both sides of the robot, with the lower ones
+ * firing first, followed by the second stage
+ *
+ * <h3> JavaDoc Categories for Functions: </h3>
+ * <li> + Climbing Voids - All of the voids related to climbing
+ * <li> + General - Voids that interact with all of the subsystem components
+ * <li> + Climb Getters - Will return objects and data
+ *
+ * @author Cole
  */
 public class Climb extends Subsystem {
   private final DoubleSolenoid HigherPistons = RobotMap.ClimbHigherPiston;
@@ -40,7 +50,8 @@ public class Climb extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-
+  
+  // #region Climbing Voids
   /**
    * Extends the Higher Pistons
    * 
@@ -92,6 +103,11 @@ public class Climb extends Subsystem {
     UpdateTelemetry();
   }
 
+  // #endregion Climbing Voids
+  // #region General
+
+  // #endregion General
+  // #region Climb Getters
   /**
    * Will return whether the pistons are Extended or Retracted
    * @return
@@ -119,6 +135,8 @@ public class Climb extends Subsystem {
       return "Null";
     }
   }
+
+  // #endregion Climb Getters
 
   /**
    * Updates the data for shuffleboard
