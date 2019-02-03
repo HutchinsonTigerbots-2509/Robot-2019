@@ -25,28 +25,14 @@ import frc.robot.RobotMap;
  * @author CRahne, Tony, and Cole G
  */
 public class Intake extends Subsystem {
-<<<<<<< HEAD
-  /* Subsystem Varible Declarations */
-  private final VictorSP mMotor = RobotMap.IntakeMotor;
-  private final DoubleSolenoid mGrip = RobotMap.IntakeOpenPiston;
-  private final DoubleSolenoid mWrist = RobotMap.IntakeWristPiston;
-  private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake");
-
-  public Intake(){
-    setSubsystem("Intake");
-    addChild(mMotor);
-    addChild(mGrip);
-    addChild(mWrist);
-  }
-=======
   // #region SUBSYSTEM VARIBLE DECLARATIONS
   private final VictorSP mMotor = RobotMap.IntakeRightMotor;
   private final DoubleSolenoid mOpenPiston = RobotMap.IntakeOpenPiston;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
   private final DoubleSolenoid mHatchOutPistonL = RobotMap.IntakeHatchOutPistonLeft; // 2/2/2019
   private final DoubleSolenoid mHatchOutPistonR = RobotMap.IntakeHatchOutPistonRight; // 2/2/2019
+  private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
->>>>>>> Drivetrain
 
   // #region Hatch
   /**
@@ -55,16 +41,10 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-<<<<<<< HEAD
-  public void MotorsIn() {
-    mMotor.set(Constants.kMaxSpeed);
-    UpdateTelemetry();
-=======
   public void HatchStart() { // 2/2/2019
     MotorStop();
     CloseArms();
     WristPistonDown();
->>>>>>> Drivetrain
   }
 
   /**
@@ -73,15 +53,9 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-<<<<<<< HEAD
-  public void MotorsOut() {
-    mMotor.set(Constants.kSlowSpeed);
-    UpdateTelemetry();
-=======
   public void HatchEnd() { // 2/2/2019
     WristPistonUp();
     RetractHatchOutPistons();
->>>>>>> Drivetrain
   }
 
   /**
@@ -91,11 +65,6 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-<<<<<<< HEAD
-  public void MotorsStop() {
-    mMotor.set(0);
-    UpdateTelemetry();
-=======
   public void HatchEject() { // 2/2/2019
     ExtendHatchOutPistons();
   }
@@ -131,7 +100,6 @@ public class Intake extends Subsystem {
   public void StopHatchOutPistons() { // 2/2/2019
     mHatchOutPistonL.set(Value.kOff);
     mHatchOutPistonR.set(Value.kOff);
->>>>>>> Drivetrain
   }
 
   /**
@@ -140,14 +108,8 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-<<<<<<< HEAD
-  public void Up() {
-    mWrist.set(Value.kForward);
-    UpdateTelemetry();
-=======
   public void WristPistonUp() {
     mWristPiston.set(Value.kForward);
->>>>>>> Drivetrain
   }
 
   /**
@@ -156,14 +118,8 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-<<<<<<< HEAD
-  public void Down() {
-    mWrist.set(Value.kReverse);
-    UpdateTelemetry();
-=======
   public void WristPistonDown() {
     mWristPiston.set(Value.kReverse);
->>>>>>> Drivetrain
   }
 
   /**
@@ -173,14 +129,8 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-<<<<<<< HEAD
-  public void StopWrist() {
-    mWrist.set(Value.kOff);
-    UpdateTelemetry();
-=======
   public void StopWristPiston() {
     mWristPiston.set(Value.kOff);
->>>>>>> Drivetrain
   }
 
   // #endregion Hatch
@@ -227,11 +177,6 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-<<<<<<< HEAD
-  public void Open() {
-    mGrip.set(Value.kForward);
-    UpdateTelemetry();
-=======
   public void MotorIn() {
     mMotor.set(Constants.kMaxSpeed);
   }
@@ -244,7 +189,6 @@ public class Intake extends Subsystem {
    */
   public void MotorOut() {
     mMotor.set(Constants.kReverseFastSpeed);
->>>>>>> Drivetrain
   }
 
   /**
@@ -254,11 +198,6 @@ public class Intake extends Subsystem {
    * @author Cole
    * @author Tony
    */
-<<<<<<< HEAD
-  public void Close() {
-    mGrip.set(Value.kReverse);
-    UpdateTelemetry();
-=======
   public void MotorStop() {
     mMotor.set(0);
   }
@@ -281,7 +220,6 @@ public class Intake extends Subsystem {
    */
   public void CloseArms() {
     mOpenPiston.set(Value.kReverse);
->>>>>>> Drivetrain
   }
 
   /**
@@ -296,6 +234,7 @@ public class Intake extends Subsystem {
 
   // #endregion Ball 
   // #region General
+  
   /**
    * Will end all components of the subsystem
    * 
@@ -308,6 +247,16 @@ public class Intake extends Subsystem {
     CloseArms();
     WristPistonUp();
   }
+  /**
+   * Will update data on the shuffleboard tab for this class
+   */
+  public void UpdateTelemetry() {
+    mIntakeTab.add("Motor Speed", mMotor.get());
+    mIntakeTab.add("Grip Status", getGripStatus());
+    mIntakeTab.add("Wrist Status", getWristStatus());
+    Shuffleboard.update();
+  }
+
   //#endregion General
   // #region Intake Getters
   
@@ -366,28 +315,15 @@ public class Intake extends Subsystem {
    * @author CRahne
    * @return Right Side Hatch Eject Piston
    */
-<<<<<<< HEAD
-  public void Stop() {
-    mGrip.set(Value.kOff);
-    UpdateTelemetry();
-=======
   public DoubleSolenoid getHatchOutRightPiston() {
     return mHatchOutPistonR;
->>>>>>> Drivetrain
-  }
-
-  // #endregion Intake Getters
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 
   public String getGripStatus(){
-    if (mGrip.get() == Value.kForward){
+    if (mOpenPiston.get() == Value.kForward){
       return "Open";
     }
-    else if (mGrip.get() == Value.kForward){
+    else if (mOpenPiston.get() == Value.kForward){
       return "Close";
     }
     else{
@@ -396,10 +332,10 @@ public class Intake extends Subsystem {
   }
 
   public String getWristStatus(){
-    if (mWrist.get() == Value.kForward){
+    if (mWristPiston.get() == Value.kForward){
       return "Up";
     }
-    else if (mWrist.get() == Value.kForward){
+    else if (mWristPiston.get() == Value.kForward){
       return "Down";
     }
     else{
@@ -407,10 +343,10 @@ public class Intake extends Subsystem {
     }
   }
 
-  public void UpdateTelemetry() {
-    mIntakeTab.add("Motor Speed", mMotor.get());
-    mIntakeTab.add("Grip Status", getGripStatus());
-    mIntakeTab.add("Wrist Status", getWristStatus());
-    Shuffleboard.update();
+  // #endregion Intake Getters
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }
