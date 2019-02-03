@@ -84,7 +84,8 @@ public class Drivetrain extends Subsystem {
   // #endregion PRIVATE VARIBLES
 
   /**
-   * Add children to the drivetrain class with this constructor
+   * Adds children to the object so we can play with components
+   * in test mode
    */
   public Drivetrain() {
     setName("Drivetrain");

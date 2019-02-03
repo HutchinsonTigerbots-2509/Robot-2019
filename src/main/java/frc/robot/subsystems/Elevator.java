@@ -18,7 +18,16 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
- * Elevator Subsystem
+ * The Elevator Subsystem is where code that uses the lift mechanism
+ * is stored and can be accessed and used throughout the project
+ * 
+ * <h3> JavaDoc Categories for Functions: </h3>
+ * <li> + Lift Methods - Will use the lift mechanism for
+ * <li> + Shifter - Will have something to do with the shifter for the spool masters
+ * <li> + Update Voids - Updates something, like data or sensors
+ * <li> + Elevator Getters - Will return a value or object
+ * 
+ * @author DJ, Tony, Cole G, and Nate
  */
 public class Elevator extends Subsystem {
   // #region IMPORT VARIBLES
@@ -63,6 +72,10 @@ public class Elevator extends Subsystem {
   private double mEncoderTargetHieght;
   // #endregion PRIVATE VARIBLE DECLARATIONS
 
+  /**
+   * Adds children to the object so we can play with components
+   * in test mode
+   */
   public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
@@ -72,12 +85,11 @@ public class Elevator extends Subsystem {
     addChild(mRightLimit);
   }
 
-  @Override
-  public void initDefaultCommand() {
-  }
-
+  // #region Lift Methods 
   /**
    * Stops both the Master and Slave motors
+   * 
+   * @category Lift Methods
    */
   public void StopMotors() {
     SpoolMaster.stopMotor();
@@ -85,14 +97,9 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Sets the SpoolMasters's enocder position to zero
-   */
-  public void ZeroSensor() {
-    SpoolMaster.setSelectedSensorPosition(0);
-  }
-
-  /**
    * Gets height we want the arm to move to in encoder counts
+   * 
+   * @category Lift Methods
    */
   public double TargetHeight() {
     if (CoOpStick.getRawAxis(1) != 0) {
@@ -109,6 +116,8 @@ public class Elevator extends Subsystem {
 
   /**
    * Calculates PID Speed to send to the master
+   * 
+   * @category Lift Methods
    */
   public double PIDFinal() {
     mError = TargetHeight() - CurrentHeight();
@@ -123,13 +132,17 @@ public class Elevator extends Subsystem {
 
   /**
    * Trys to follow goal height, by sending PID speeds to motors
+   * 
+   * @category Lift Methods
    */
   public void ChaseTarget() {
     SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
   }
 
   /**
-   * Changes gear when arm is going down Smith wanted but not currently used he he
+   * Changes gear when arm is going down Smith wanted but not currently used
+   * 
+   * @category Lift Methods
    */
   public void ChaseTargetGearChanger() {
     if (PIDFinal() > 0) {
@@ -142,18 +155,10 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Gets Current Height in encoder counts
-   */
-  public double CurrentHeight() {
-    return SpoolMaster.getSelectedSensorPosition();
-
-    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
-    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
-  }
-
-  /**
    * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
    * control loop.
+   * 
+   * @category Lift Methods
    * 
    * @author Nate
    */
@@ -166,29 +171,12 @@ public class Elevator extends Subsystem {
       SpoolMaster.set(ControlMode.PercentOutput, 0);
     }
   }
-
-  /**
-   * This will return `true` if either the left or right limit switches return
-   * true. Or simply are triggered.
-   * 
-   * @return
-   */
-  public boolean getLimitsValue() {
-    return (mLeftLimit.get() || mRightLimit.get());
-  }
-
-  /**
-   * @author Nate
-   * @return Current Height in Inches
-   */
-  public double InchesOffGround() {
-    double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
-    return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
-  }
-
+  // #endregion Lift Method
+  // #region Shifter
   /**
    * Shifts the Gear to High
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -199,6 +187,7 @@ public class Elevator extends Subsystem {
   /**
    * Shifts the Gear to Low
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -209,6 +198,7 @@ public class Elevator extends Subsystem {
   /**
    * Returns a boolean and if True means that it is shifted
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -227,6 +217,7 @@ public class Elevator extends Subsystem {
   /**
    * Returns a string of which gear the Elevator is in
    * 
+   * @category Shifter
    * @return "High Gear" || "Low Gear"
    */
   public String getGear() {
@@ -237,9 +228,22 @@ public class Elevator extends Subsystem {
     }
   }
 
+  // #endregion Shifter
+  // #region Update Voids
+  /**
+   * Sets the SpoolMasters's enocder position to zero
+   * 
+   * @category Update Voids
+   */
+  public void ZeroSensor() {
+    SpoolMaster.setSelectedSensorPosition(0);
+  }
+
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
    * for the smartdashboard has been removed.
+   * 
+   * @category Update Voids
    */
   public void UpdateTelemetry() {
     // SmartDashboard.putNumber("ElevatorEncoder",
@@ -257,5 +261,47 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Derivative", mDerivative);
     mElevatorTab.add("Integral", mIntegral);
     Shuffleboard.update();
+  }
+  //#endregion Update Voids
+  // #region Elevator Getters
+  /**
+   * Gets Current Height in encoder counts
+   * 
+   * @category Elevator Getters
+   */
+  public double CurrentHeight() {
+    return SpoolMaster.getSelectedSensorPosition();
+
+    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
+    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
+  }
+
+  /**
+   * This will return `true` if either the left or right limit switches return
+   * true. Or simply are triggered.
+   * 
+   * @category Elevator Getters
+   * @return Left Limit Or Right Limit
+   */
+  public boolean getLimitsValue() {
+    return (mLeftLimit.get() || mRightLimit.get());
+  }
+
+  /**
+   * Will return the inches off the ground that the elevator is
+   * 
+   * @category Elevator Getters
+   * @author Nate
+   * @return Current Height in Inches
+   */
+  public double getInchesOffGround() {
+    double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
+    return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
+  }
+
+  // #endregion Elevator Getters
+  
+  @Override
+  public void initDefaultCommand() {
   }
 }
