@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,9 +20,6 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  /* Shuffleboard Declarations */
-  ShuffleboardTab tab = Shuffleboard.getTab("Commands");
-  
   /*Subsystem Declarations*/
   public static Intake sIntake;
   public static Drivetrain sDrivetrain;
@@ -44,16 +42,12 @@ public class Robot extends TimedRobot {
     // because everything else uses that as
     // a reference
     RobotMap.init();
-
-    sIntake = new Intake();
-    sVision = new Vision();
-    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
+    sIntake = new Intake();
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
-
     
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
@@ -63,8 +57,8 @@ public class Robot extends TimedRobot {
     // This command must be defined after OI because they use
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
-
     sVision.UpdateLimelightSettings();
+    Shuffleboard.startRecording();
   }
 
   /**
@@ -81,9 +75,7 @@ public class Robot extends TimedRobot {
   {
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
+    sVision.UpdateTelemetry();
   }
 
   /**
@@ -93,6 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    Shuffleboard.addEventMarker("Robot Disabled", EventImportance.kHigh);
   }
 
   @Override
@@ -114,6 +107,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
     // if (cAutoCommand != null) {
     // cAutoCommand.start();
     // }
@@ -129,6 +123,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
