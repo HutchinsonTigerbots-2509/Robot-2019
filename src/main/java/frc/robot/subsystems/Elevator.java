@@ -14,7 +14,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -33,7 +32,6 @@ public class Elevator extends Subsystem {
   private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
 
-  private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
 
   private final double kPulseNumber = Constants.kPulsesPerRotation;
