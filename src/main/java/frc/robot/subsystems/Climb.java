@@ -15,6 +15,13 @@ import frc.robot.RobotMap;
  * onto the habitat ramps. We do this be using a two stage
  * piston system on both sides of the robot, with the lower ones
  * firing first, followed by the second stage
+ *
+ * <h3> JavaDoc Categories for Functions: </h3>
+ * <li> + Climbing Voids - All of the voids related to climbing
+ * <li> + General - Voids that interact with all of the subsystem components
+ * <li> + Climb Getters - Will return objects and data
+ *
+ * @author CRahne and Cole
  */
 public class Climb extends Subsystem {
   //#region SUBSYSTEM IMPORT VARIBLE DECLARATIONS
