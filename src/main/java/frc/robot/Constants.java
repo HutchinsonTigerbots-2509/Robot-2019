@@ -1,4 +1,4 @@
-package frc.robot;// package
+package frc.robot;// package declaration
 
 /**
  * Constants is the class where the varibles that we use accross code are
@@ -25,9 +25,18 @@ public final class Constants {
     /* Drivetrain */
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
-    public static double kDrivetrainP = 1;
-    public static double kDrivetrainI = 0;
-    public static double kDrivetrainD = 0;
+    
+    // PID
+    public static double kDrivetrainAimToTargetP = 1;
+    public static double kDrivetrainAimToTargetI = 0;
+    public static double kDrivetrainAimToTargetD = 0;
+
+    public static double kDriveTrainDistanceP = 0.3;
+    public static double kDriveTrainDistanceI = 0.0;
+    public static double kDriveTrainDistanceD = 0.0;
+
+    public static double kDriveTrainGyroTurnP = 0.13;
+    public static double kDriveTrainGyroTurnD = 0.275;
 
     /* Elevator */
     public static double kElevatorPGain = 0.15;
