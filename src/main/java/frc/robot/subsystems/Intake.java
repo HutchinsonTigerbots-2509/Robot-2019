@@ -34,6 +34,15 @@ public class Intake extends Subsystem {
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
+  public Intake(){
+    setSubsystem("Intake");
+    addChild(mMotor);
+    addChild(mOpenPiston);
+    addChild(mWristPiston);
+    addChild(mHatchOutPistonL);
+    addChild(mHatchOutPistonR);
+  }
+
   // #region Hatch
   /**
    * Will start the hatch pickup process

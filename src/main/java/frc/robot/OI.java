@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
@@ -52,7 +53,12 @@ public class OI {
   private JoystickButton Follow_hatch_Button;
   private JoystickButton Follow_high_targets_Button;
   private JoystickButton Follow_ball_Button;
-  
+
+  /* Misc */
+
+  // Shuffleboard
+  private ShuffleboardTab mCommandTab = Shuffleboard.getTab("Commands");
+
   // Subsystem Import Declarations
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
@@ -104,37 +110,37 @@ public class OI {
     // #region Intake Subsystem Buttons
     mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
     mCloseintake.whileHeld(new IntakeClose());
-    Shuffleboard.getTab("Commands").add("IntakeClose()", new IntakeClose());
+    mCommandTab.add("IntakeClose()", new IntakeClose());
 
     mOpenintake = new JoystickButton(mOpStick, 1); // Open intake
     mOpenintake.whileHeld(new IntakeOpen());
-    Shuffleboard.getTab("Commands").add("IntakeOpen()", new IntakeOpen());
+    mCommandTab.add("IntakeOpen()", new IntakeOpen());
 
     mIntakein = new JoystickButton(mOpStick, 2); // Take in
     mIntakein.whileHeld(new IntakeIn());
-    Shuffleboard.getTab("Commands").add("IntakeIn()", new IntakeIn());
+    mCommandTab.add("IntakeIn()", new IntakeIn());
 
     mIntakeout = new JoystickButton(mOpStick, 3); // Take out
     mIntakeout.whileHeld(new IntakeOut());
-    Shuffleboard.getTab("Commands").add("IntakeOut()", new IntakeOut());
+    mCommandTab.add("IntakeOut()", new IntakeOut());
 
     mWristdown = new JoystickButton(mOpStick, 4); // Wrist down
     mWristdown.whileHeld(new WristDown());
-    Shuffleboard.getTab("Commands").add("WristDown()", new WristDown());
+    mCommandTab.add("WristDown()", new WristDown());
 
     mWristup = new JoystickButton(mOpStick, 5); // Wrist up
     mWristup.whileHeld(new WristUp());
-    Shuffleboard.getTab("Commands").add("WristUp()", new WristUp());
+    mCommandTab.add("WristUp()", new WristUp());
     // #endregion
     
     // #region Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
-    Shuffleboard.getTab("Commands").add("AlignWithTarget()", new AlignWithTarget());
+    mCommandTab.add("AlignWithTarget()", new AlignWithTarget());
 
     AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
-    Shuffleboard.getTab("Commands").add("AlignWithTargetPID()", new AlignWithTargetPID());
+    mCommandTab.add("AlignWithTargetPID()", new AlignWithTargetPID());
 
     Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
     //mLimeTable.putNumber("pipeline", 0);
