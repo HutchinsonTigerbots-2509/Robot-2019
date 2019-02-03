@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
 
 /**
@@ -22,6 +24,7 @@ public class Climb extends Subsystem {
   private final DoubleSolenoid HigherPistons = RobotMap.ClimbHigherPiston;
   private final DoubleSolenoid LowerPistons = RobotMap.ClimbLowerPiston;
   private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
+  private final ShuffleboardTab mClimb = Shuffleboard.getTab("Climb");
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -45,6 +48,7 @@ public class Climb extends Subsystem {
    */
   public void ExtendHigherPistons(){
     HigherPistons.set(Value.kForward);
+    UpdateTelemetry();
   }
 
   /**
@@ -54,6 +58,7 @@ public class Climb extends Subsystem {
    */
   public void ExtendLowerPistons(){
     LowerPistons.set(Value.kForward);
+    UpdateTelemetry();
   }
   
   /**
@@ -63,6 +68,7 @@ public class Climb extends Subsystem {
    */
   public void RetractHigherPistons(){
     HigherPistons.set(Value.kReverse);
+    UpdateTelemetry();
   }
 
   /**
@@ -72,6 +78,7 @@ public class Climb extends Subsystem {
    */
   public void RetractLowerPistons(){
     LowerPistons.set(Value.kReverse);
+    UpdateTelemetry();
   }
 
   /**
@@ -82,5 +89,43 @@ public class Climb extends Subsystem {
   public void StopPistons(){
     HigherPistons.set(Value.kOff);
     LowerPistons.set(Value.kOff);
+    UpdateTelemetry();
+  }
+
+  /**
+   * Will return whether the pistons are Extended or Retracted
+   * @return
+   */
+  public String getHigherPistonsStatus() {
+    if (HigherPistons.get() == Value.kForward){
+      return "Extended";
+    } else if (HigherPistons.get() == Value.kReverse){
+      return "Retracted";
+    } else {
+      return "Null";
+    }
+  }
+
+  /**
+   * Will return whether the pistons are Extended or Retracted
+   * @return
+   */
+  public String getLowerPistonsStatus() {
+    if (LowerPistons.get() == Value.kForward){
+      return "Extended";
+    } else if (LowerPistons.get() == Value.kReverse){
+      return "Retracted";
+    } else {
+      return "Null";
+    }
+  }
+
+  /**
+   * Updates the data for shuffleboard
+   */
+  public void UpdateTelemetry(){
+    mClimb.add("Higher Pistons", getHigherPistonsStatus());
+    mClimb.add("Lower Pistons", getLowerPistonsStatus());
+    mClimb.add("Motor Speed", Motor.get());
   }
 }

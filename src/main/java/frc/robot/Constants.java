@@ -1,4 +1,4 @@
-package frc.robot;// package declaration
+package frc.robot;// package
 
 /**
  * Constants is the class where the varibles that we use accross code are
@@ -17,6 +17,8 @@ public final class Constants {
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.45; // IDK but sure
     public static double kTurnSpeed = 0.20;
+    public static double kReverseFastSpeed = -kMaxSpeed;
+    public static double kReverseSlowSpeed = -kSlowSpeed;
     public static double kTargetFollowSpeed = 0.2;
     public static double kNeutralDeadband = 0.04;
     /* Encoders */
@@ -104,11 +106,11 @@ public final class Constants {
     public static int kDrivetrianEncoderRightBID = 3;
 
     // Climb
-    public static int kClimbMotorID = 0;
-    public static int kClimbLeftHigherID = 0;
-    public static int kClimbLeftLowerID = 1;
-    public static int kClimbRightHigherID = 2;
-    public static int kClimbRightLowerID = 3;
+    public static int kClimbMotorID = 6;
+    public static int kClimbLeftHigherID = 6;
+    public static int kClimbLeftLowerID = 8;
+    public static int kClimbRightHigherID = 7;
+    public static int kClimbRightLowerID = 9;
     
     // Intake
     public static int kIntakeRightMotorID = 4;
