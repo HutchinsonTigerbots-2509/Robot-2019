@@ -13,5 +13,5 @@ This subsystem is the main scoring subsystem of the robot. This subsystem will h
 
 #
 
-## [Elevator](Docs/Elevator)
+## [Elevator](Docs/Elevator.md)
 The elevator subsystem handles the lifting and lowering of the robot's scoring mechanism. This subsystem will use a spool of string and a motor to extend upwards towards the set height. This subsystem will move the Intake one up and down in order to score points on the rocket and cargo ship.
