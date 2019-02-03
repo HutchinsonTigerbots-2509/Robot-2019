@@ -33,8 +33,8 @@ public final class Constants {
     //public static double kCameraAngle = -28.23744554;
     public static double kCameraAngle = -31.47286489;
     public static double kTargetHeight = 31.5;
-    public static double KpAim = -0.009;
-    public static double KpDistance = -0.1;
+    public static double KpAim = -0.02;
+    public static double KpDistance = -0.05;
     public static double min_aim_command = -0.5;
     public static double distance_command = -0.5;
     public static double kTargetDistanceFromTarget = 24;
@@ -53,7 +53,8 @@ public final class Constants {
     public static String kLimelightTargetYID = "ty";
     public static String kLimelightTargetAreaID = "ta";
     public static String kLimelightTargetSkewID = "ts";
-
+    public static String kLimelightTargetvert = "tvert";
+    public static String kLimelightTargethorID = "thor";
     // Do not change anything after this line unless you rewire the robot and
     // update the spreadsheet!
     // Port assignments should match up with the spreadsheet here:

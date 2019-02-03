@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-
+import com.kauailabs.navx.frc.AHRS;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
@@ -53,6 +53,7 @@ public class Drivetrain extends Subsystem {
   private double mSetpoint = 0;
   private double error = 0;
   private double previousError = 0;
+  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
 
   public Drivetrain() {
     setName("Drivetrain");
@@ -80,7 +81,12 @@ public class Drivetrain extends Subsystem {
   public void driveForwardSlow() {
     mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
   }
-
+  public AHRS getGyro(){
+    return mGyro;
+  }
+  public void ResetGyro(){
+    mGyro.zeroYaw();
+  }
   /**
    * Will drive in reverse at 95%.
    * @warning Highly not reccommened!
@@ -100,11 +106,11 @@ public class Drivetrain extends Subsystem {
 
   public void track_taget(double left, double right, double pipeline){
     //mDrive.tankDrive(-left, -right);
-    if(pipeline == 0){
+    if(pipeline == 0 || pipeline == 2 || pipeline == 1 || pipeline == 4){
       mDrive.arcadeDrive(left, -right);
-    } else if(pipeline == 2){
-        mDrive.arcadeDrive(-left, -right);
-    }
+    } //else if(pipeline == 9){
+        //mDrive.arcadeDrive(-left, -right);
+    
     //mDrive.arcadeDrive(-0.5, -right);
 
   }

@@ -12,6 +12,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants;
 import frc.robot.subsystems.Vision;
 
 public class AlignWithTarget extends Command {
@@ -19,7 +20,9 @@ public class AlignWithTarget extends Command {
   private Vision sVision = Robot.sVision;
   private double TargetX;
   private double TargetY;
-  
+  private double X;
+  private double ErrorX;
+  private double steering_adjust;
   public AlignWithTarget() {
     TargetX = sVision.getTargetX();
     TargetY = sVision.getTargetY();
@@ -37,25 +40,49 @@ public class AlignWithTarget extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TargetX = sVision.getTargetX();
-    if (TargetX < - 0.5) {
-      sDriveTrain.TargetAligned = false;
-      sDriveTrain.TurnLeft();
+    ErrorX = -sVision.getTargetX();
+    //ErrorY = -sVision.getTargetY();
+    X = sVision.getTargetX();
+    if (X > 0){
+      steering_adjust = Constants.KpAim * ErrorX - Constants.min_aim_command;
       
-    } else if (TargetX > 0.5) {
-        sDriveTrain.TurnRight();
-    } else {
-        sDriveTrain.TargetAligned = true;
-        sDriveTrain.StopMotors();
-        end(); 
+      //left_speed = steering_adjust;
+      //+ distance_adjust;
+      //right_speed = steering_adjust;
+      // + distance_adjust;
+      
+      //SmartDashboard.putNumber("right_2", right_speed);
+      //SmartDashboard.putNumber("left_2", left_speed);
+      
+      sDriveTrain.track_taget(0 , steering_adjust, 0);
+      //SmartDashboard.putNumber("distance_adjust", distance_adjust);
+      //TargetDistanceCheck = false;
+    } else if (X < 0) {
+        //SmartDashboard.putNumber("right", right_speed
+        //SmartDashboard.putNumber("left", left_speed;
+        steering_adjust = Constants.KpAim * ErrorX + Constants.min_aim_command;
+        //sDriveTrain.StopMotors();
+        //TargetDistanceCheck = true;
+        
+        //left_speed = steering_adjust; 
+        //+ distance_adjust;
+        //right_speed = steering_adjust; 
+        //+ distance_adjust;
+        //SmartDashboard.putNumber("right", right_speed);
+        //SmartDashboard.putNumber("left", left_speed);
+        //sDriveTrain.track_taget(left_speed , -right_speed);
+        //SmartDashboard.putNumber("distance_adjust", distance_adjust);
+      
+        sDriveTrain.track_taget(0, steering_adjust, 0);
+
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (TargetY < 0) {
-      return TargetY < 0;
+    if (X < 0.25 && X > 0) {
+      return X < 0.25 && X > 0 ;
     } else {
       return false;
     }

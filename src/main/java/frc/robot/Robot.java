@@ -61,8 +61,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
     SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
     SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getCompassHeading());
-
+    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.Drivetrain_Gyro.getYaw()/90)));
+    SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
+    SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
+    SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getYaw());
+    //SmartDashboard.putNumber("sk", value)
   }
 
   /**

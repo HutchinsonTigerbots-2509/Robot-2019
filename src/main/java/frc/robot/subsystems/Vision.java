@@ -1,5 +1,7 @@
 package frc.robot.subsystems; // package declaration
 
+
+
 // imports
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,16 +20,23 @@ public class Vision extends Subsystem {
   private NetworkTableEntry mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
   private NetworkTableEntry mTableS = mTable.getEntry(Constants.kLimelightTargetSkewID);
   private NetworkTableEntry mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
+  private NetworkTableEntry mTablevert = mTable.getEntry(Constants.kLimelightTargetvert);
+  private NetworkTableEntry mTablehor;
+  private NetworkTableEntry mTableCorners = mTable.getEntry("tcornx");
   private double mTargetX = 0;
   private double mTargetY = 0;
   private double mTargetArea = 0;
+  private double mTargetvert = 0;
   private double distance = 0;
   private double mTargetSkew = 0;
+  private double mTargetHor = 0;
   public double DistanceOne;
   public double DistanceTwo;
   public double DistanceToDrive;
   public double AngleOne;
   public double Turn_angle = 0;
+  
+ 
 
 
   /**
@@ -50,6 +59,17 @@ public class Vision extends Subsystem {
     mTargetX = mTableX.getDouble(0.0);
     return mTargetX;
   }
+  public double getTargetVert() {
+    mTablevert = mTable.getEntry(Constants.kLimelightTargetvert);
+    mTargetvert = mTablevert.getDouble(0.0);
+    return mTargetvert;
+  }
+  public double getTargethor() {
+    mTablehor = mTable.getEntry(Constants.kLimelightTargethorID);
+    mTargetHor = mTablehor.getDouble(0.0);
+    return mTargetHor;
+  }
+ 
 
   /**
    * Returns the 'Y' value from the Limelight. If no value is detected will return
@@ -71,7 +91,7 @@ public class Vision extends Subsystem {
    */
   public double getTargetArea() {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
-    mTargetArea = mTableX.getDouble(0.0);
+    mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
   }
   public double getTargetSkew() {
@@ -83,8 +103,8 @@ public class Vision extends Subsystem {
     mTable.getEntry("pipeline").setNumber(pipeline);
 
   }
-  public double cal_distance(double Y){
-    distance = ((Constants.kTargetHeight-Constants.kCameraHeight)/(Math.tan(Math.toRadians(Constants.kCameraAngle) + Math.toRadians(Y))));
+  public double cal_distance(){
+    distance = (86.9 * Math.pow(mTableArea.getDouble(0.0), -0.483));
     return distance;
   }
   public double calculateDistanceVariables(double thetaAngle,  double distance){
