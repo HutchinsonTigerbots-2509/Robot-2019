@@ -1,4 +1,4 @@
-package frc.robot;// package
+package frc.robot;// package declaration
 
 /**
  * Constants is the class where the varibles that we use accross code are
@@ -15,13 +15,30 @@ public final class Constants {
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
-    public static double kSlowSpeed = 0.65; // IDK but sure
-    public static double kTurnSpeed = 0.57575;
-    public static double kWheelDiameter = 6;
+    public static double kSlowSpeed = 0.45; // IDK but sure
+    public static double kReverseFastSpeed = -kMaxSpeed;
+    public static double kReverseSlowSpeed = -kSlowSpeed;    
+    public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
-    public static double kDrivetrainP = 1;
-    public static double kDrivetrainI = 0;
-    public static double kDrivetrainD = 0;
+    public static double kNeutralDeadband = 0.04;
+    /* Encoders */
+    public static double kPulsesPerRevoultuion = 256;
+
+    /* Drivetrain */
+    public static double kWheelDiameter = 6;
+    public static double kEncoderRatio = 3;
+    
+    // PID
+    public static double kDrivetrainAimToTargetP = 1;
+    public static double kDrivetrainAimToTargetI = 0;
+    public static double kDrivetrainAimToTargetD = 0;
+
+    public static double kDriveTrainDistanceP = 0.3;
+    public static double kDriveTrainDistanceI = 0.0;
+    public static double kDriveTrainDistanceD = 0.0;
+
+    public static double kDriveTrainGyroTurnP = 0.13;
+    public static double kDriveTrainGyroTurnD = 0.275;
 
     /* Elevator */
     public static double kElevatorPGain = 0.15;
@@ -30,22 +47,27 @@ public final class Constants {
 
     public static double kSpoolDiam = 4;//inches
     public static double kPulsesPerRotation = 256;
+    public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
+    public static int kEncoderErrorRange = 5;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
+    public static double kHomePositionInches = 5;
 
-    public static int kRightSpoolMasterMasterID = 4;
-    public static int kLeftSpoolSlaveID = 5;
+    public static int kElevatorMasterID = 4;
+    public static int kElevatorSlaveID = 5;
 
     /* Vision */
     // Physical
     public static double kCameraHeight = 24;
     public static double kCameraAngle = 1.7;
     public static double kTargetHeight = 31.5;
-
+    public static double KpAim = -0.1;
+    public static double KpDistance = -0.1;
+    public static double min_aim_command = 0.05;
     /* Limelight */
     // Network
     public static String kLimelightIP = "10.25.9.11";
@@ -77,24 +99,36 @@ public final class Constants {
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
-
     // Intake
-    public static int kIntakeRightMotorID = 4;
-    public static int kIntakeLeftMotorID = 5;
+    // public static int kIntakeRightMotorID = 4;
+    // public static int kIntakeLeftMotorID = 5;
+    public static int kIntakeMotorID = 4;
 
-    /* Encoder ID */
-    public static int kDrivetrainEncoderLeftAID = 0;
-    public static int kDrivetrainEncoderLeftBID = 1;
-    public static int kDrivetrainEncoderRightAID = 2;
-    public static int kDrivetrianEncoderRightBID = 3;
+    /* DigitalInput ID */
+    // public static int kDrivetrainEncoderLeftAID = 0;
+    // public static int kDrivetrainEncoderLeftBID = 1;
+    // public static int kDrivetrainEncoderRightAID = 2;
+    // public static int kDrivetrianEncoderRightBID = 3;
+    public static int kElevatorLeftLimitID = 0;
+    public static int kElevatorRightLimitID = 1;
+
 
     /* Pneumatics ID */
+    // Drivetrain
+    public static int kDrivetrainShifterForwardID = 0;
+    public static int kDrivetrainShifterReverseID = 1;
+    // Elevator
+    public static int kElevatorShifterForwardID = 12;
+    public static int kElevatorShifterReverseID = 13;
     // Intake
-    public static int kIntakeLeftPistonForwardID = 0;
-    public static int kIntakeLeftPistonReverseID = 1;
-    public static int kIntakeWristPistonForwardID = 2;
-    public static int kIntakeWristPistonReverseID = 3;
+    public static int kIntakeWristForwardID = 2;
+    public static int kIntakeWristReverseID = 3;
     public static int kOpenIntakePistonForwardID = 4;
     public static int kOpenIntakePistonReverseID = 5;
-    //#endregion
+    public static int kIntakeHatchOutPistonLeftForwardID = 8; // 2/2/2019
+    public static int kIntakeHatchOutPistonLeftReverseID = 9; // 2/2/2019
+    public static int kIntakeHatchOutPistonRightForwardID = 10; // 2/2/2019
+    public static int kIntakeHatchOutPistonRightReverseID = 11; // 2/2/2019
+    public static int kIntakePushForwardID = 6;
+    public static int kIntakePushReverseID = 7;
 }
