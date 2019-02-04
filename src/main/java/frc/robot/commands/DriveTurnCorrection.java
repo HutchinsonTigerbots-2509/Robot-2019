@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *Corrects the robot if we under turn or over turn.
  *
- * @deprecated
  * @author 2018 code
  */
 public class DriveTurnCorrection extends Command {

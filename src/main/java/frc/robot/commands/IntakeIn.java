@@ -16,7 +16,7 @@ public class IntakeIn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.In();
+    sIntake.MotorIn();
   
   }
 
@@ -34,7 +34,7 @@ public class IntakeIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.motorsStop();
+    sIntake.MotorStop();
 
   }
   // Called when another command which requires one or more of the same
