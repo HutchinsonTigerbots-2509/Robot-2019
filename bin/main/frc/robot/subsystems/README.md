@@ -23,4 +23,4 @@ The elevator subsystem handles the lifting and lowering of the robot's scoring m
 
 ## [Climb](Docs/Climb.md)
 
-This subsystem will climb onto the habitat in the 2019 game. The robot will push itself onto the platform with a dual-stage piston system.
+This subsystem will climb onto the habitat in the 2019 game. The robot will push itself onto the platform with a dual-stage piston system with a motor in case the robot is stuck and can't move
