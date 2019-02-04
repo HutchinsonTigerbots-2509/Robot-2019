@@ -27,20 +27,18 @@ import frc.robot.RobotMap;
 public class Intake extends Subsystem {
   // #region SUBSYSTEM VARIBLE DECLARATIONS
   private final VictorSP mMotor = RobotMap.IntakeRightMotor;
-  private final DoubleSolenoid mOpenPiston = RobotMap.IntakeOpenPiston;
+  private final DoubleSolenoid mGripPiston = RobotMap.IntakeGripPiston;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
-  private final DoubleSolenoid mHatchOutPistonL = RobotMap.IntakeHatchOutPistonLeft; // 2/2/2019
-  private final DoubleSolenoid mHatchOutPistonR = RobotMap.IntakeHatchOutPistonRight; // 2/2/2019
+  private final DoubleSolenoid mHatchOutPiston = RobotMap.IntakeHatchPiston; // Works as two pistons
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
   public Intake(){
     setSubsystem("Intake");
     addChild(mMotor);
-    addChild(mOpenPiston);
+    addChild(mGripPiston);
     addChild(mWristPiston);
-    addChild(mHatchOutPistonL);
-    addChild(mHatchOutPistonR);
+    addChild(mHatchOutPiston);
   }
 
   // #region Hatch
@@ -85,8 +83,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void RetractHatchOutPistons() { // 2/2/2019
-    mHatchOutPistonR.set(Value.kReverse);
-    mHatchOutPistonL.set(Value.kReverse);
+    mHatchOutPiston.set(Value.kReverse);
   }
 
   /**
@@ -96,8 +93,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void ExtendHatchOutPistons() { // 2/2/2019
-    mHatchOutPistonL.set(Value.kForward);
-    mHatchOutPistonR.set(Value.kForward);
+    mHatchOutPiston.set(Value.kForward);
   }
 
   /**
@@ -107,8 +103,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void StopHatchOutPistons() { // 2/2/2019
-    mHatchOutPistonL.set(Value.kOff);
-    mHatchOutPistonR.set(Value.kOff);
+    mHatchOutPiston.set(Value.kOff);
   }
 
   /**
@@ -218,7 +213,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void OpenArms() {
-    mOpenPiston.set(Value.kForward);
+    mGripPiston.set(Value.kForward);
   }
 
   /**
@@ -228,7 +223,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void CloseArms() {
-    mOpenPiston.set(Value.kReverse);
+    mGripPiston.set(Value.kReverse);
   }
 
   /**
@@ -238,7 +233,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void StopArmPiston() {
-    mOpenPiston.set(Value.kOff);
+    mGripPiston.set(Value.kOff);
   }
 
   // #endregion Ball 
@@ -281,15 +276,15 @@ public class Intake extends Subsystem {
   }
   
   /**
-   * Will return the opening piston that opens
+   * Will return the gripper piston that opens
    * and closes the arms of the intake
    * 
    * @category Intake Getters
    * @author CRahne
-   * @return Open Piston
+   * @return Grip Piston
    */
-  public DoubleSolenoid getOpenerPiston() {
-    return mOpenPiston;
+  public DoubleSolenoid getGripperPiston() {
+    return mGripPiston;
   }
 
   /**
@@ -305,34 +300,30 @@ public class Intake extends Subsystem {
   }
 
   /**
-   * Will return the Left Side Hatch Ejection
-   * Piston
+   * Will return the Hatch Ejection Piston
    * 
    * @category Intake Getters
    * @author CRahne
-   * @return Left Side Hatch Eject Piston
+   * @return Hatch Eject Piston
    */
   public DoubleSolenoid getHatchOutLeftPiston() {
-    return mHatchOutPistonL;
+    return mHatchOutPiston;
   }
 
   /**
-   * Will return the right side Hatch ejection
-   * Piston
+   * Will return the status of the grip piston in a string
+   * <p> `Open` = Piston is set to Forward </p>
+   * <p> `Close` = Piston is set to Reverse </p>
+   * <p> `Null` = Piston is set to Off / default value </p>
    * 
    * @category Intake Getters
-   * @author CRahne
-   * @return Right Side Hatch Eject Piston
+   * @return Grip Piston Status
    */
-  public DoubleSolenoid getHatchOutRightPiston() {
-    return mHatchOutPistonR;
-  }
-
   public String getGripStatus(){
-    if (mOpenPiston.get() == Value.kForward){
+    if (mGripPiston.get() == Value.kForward){
       return "Open";
     }
-    else if (mOpenPiston.get() == Value.kForward){
+    else if (mGripPiston.get() == Value.kForward){
       return "Close";
     }
     else{
@@ -340,6 +331,15 @@ public class Intake extends Subsystem {
     }
   }
 
+  /**
+   * Will return the status of the grip piston in a string
+   * <p> `Up` = Piston is set to Reverse and not collecting a hatch panel </p>
+   * <p> `Down` = Piston is set to Forward and collecting a hatch panel </p>
+   * <p> `Null` = Piston is set to Off / default value </p>
+   * 
+   * @category Intake Getters
+   * @return Grip Piston Status
+   */
   public String getWristStatus(){
     if (mWristPiston.get() == Value.kForward){
       return "Up";

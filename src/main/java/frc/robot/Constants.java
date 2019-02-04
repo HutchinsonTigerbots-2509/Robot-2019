@@ -123,12 +123,10 @@ public final class Constants {
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
-    public static int kOpenIntakePistonForwardID = 4;
-    public static int kOpenIntakePistonReverseID = 5;
-    public static int kIntakeHatchOutPistonLeftForwardID = 8; // 2/2/2019
-    public static int kIntakeHatchOutPistonLeftReverseID = 9; // 2/2/2019
-    public static int kIntakeHatchOutPistonRightForwardID = 10; // 2/2/2019
-    public static int kIntakeHatchOutPistonRightReverseID = 11; // 2/2/2019
+    public static int kIntakeGripPistonForwardID = 4;
+    public static int kIntakeGripPistonReverseID = 5; 
     public static int kIntakePushForwardID = 6;
     public static int kIntakePushReverseID = 7;
+    public static int kIntakeHatchPistonForwardID = 8; // 2/2/2019
+    public static int kIntakeHatchPistonReverseID = 8; // 2/2/2019
 }
