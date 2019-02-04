@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
-<<<<<<< HEAD
-=======
 /**
  * The intake subsystem is the main scoring subsystem of the
  * robot. It can pick up balls and hatches, and then release
@@ -26,7 +24,6 @@ import frc.robot.RobotMap;
  * 
  * @author CRahne, Tony, and Cole G
  */
->>>>>>> 007069e8a60efb168db94c650a2d62117f937cd7
 public class Intake extends Subsystem {
   // #region SUBSYSTEM VARIBLE DECLARATIONS
   private final VictorSP mMotor = RobotMap.IntakeRightMotor;
