@@ -30,10 +30,8 @@ public class Climb extends Subsystem {
   private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
   
   // Pistons
-  private final DoubleSolenoid HigherLeftPiston = RobotMap.ClimbLeftHigherPiston;
-  private final DoubleSolenoid LowerLeftPiston = RobotMap.ClimbLeftLowerPiston;
-  private final DoubleSolenoid HigherRightPiston = RobotMap.ClimbRightHigherPiston;
-  private final DoubleSolenoid LowerRightPiston = RobotMap.ClimbRightLowerPiston;
+  private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbHighPistons; // 2 Pistons, one on each side
+  private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowPistons;   // Same for the low ones
 
   // Shuffleboard Tab
   private final ShuffleboardTab mClimb = Shuffleboard.getTab("Climb");
@@ -46,10 +44,8 @@ public class Climb extends Subsystem {
    */
   public Climb(){
     setSubsystem("Climb");
-    addChild(HigherLeftPiston);
-    addChild(LowerLeftPiston);
-    addChild(HigherRightPiston);
-    addChild(LowerRightPiston);
+    addChild(HighPistonSystem);
+    addChild(LowPistonSystem);
     addChild(Motor);
   }
   // #region Climbing Voids
@@ -60,8 +56,7 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public void ExtendHigherPistons(){
-    HigherLeftPiston.set(Value.kForward);
-    HigherRightPiston.set(Value.kForward);
+    HighPistonSystem.set(Value.kForward);
   }
 
   /**
@@ -70,8 +65,7 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public void ExtendLowerPistons(){
-    LowerLeftPiston.set(Value.kForward);
-    LowerRightPiston.set(Value.kForward);
+    LowPistonSystem.set(Value.kForward);
   }
   
   /**
@@ -80,8 +74,7 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public void RetractHigherPistons(){
-    HigherLeftPiston.set(Value.kReverse);
-    HigherRightPiston.set(Value.kReverse);
+    HighPistonSystem.set(Value.kReverse);
   }
 
   /**
@@ -90,8 +83,7 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public void RetractLowerPistons(){
-    LowerLeftPiston.set(Value.kReverse);
-    LowerRightPiston.set(Value.kReverse);
+    LowPistonSystem.set(Value.kReverse);
   }
 
   /**
@@ -100,12 +92,9 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public void StopPistons(){
-    // Left
-    HigherLeftPiston.set(Value.kOff);
-    LowerLeftPiston.set(Value.kOff);
-    // Right
-    HigherRightPiston.set(Value.kOff);
-    LowerRightPiston.set(Value.kOff);
+    // Will set both sides' pistons to off
+    HighPistonSystem.set(Value.kOff);
+    LowPistonSystem.set(Value.kOff);
   }
   
   // #endregion Climbing Voids
@@ -125,43 +114,23 @@ public class Climb extends Subsystem {
   // #region Climb Getters
 
   /**
-   * Will return the higher piston on the left side
+   * Will return the higher pistons
    * 
-   * @return High Left Piston
+   * @return High Pistons
    * @author CRahne
    */
-  public DoubleSolenoid getLeftHighPiston() {
-    return HigherLeftPiston;
+  public DoubleSolenoid getHighPistons() {
+    return HighPistonSystem;
   }
 
   /**
-   * Will return the lower piston on the left side
+   * Will return the lower pistons
    * 
    * @return Low Left Piston
    * @author CRahne
    */
-  public DoubleSolenoid getLeftLowPiston() {
-    return LowerLeftPiston;
-  }
-
-  /**
-   * Will return the higher piston on the right side
-   * 
-   * @return High Right Piston
-   * @author CRahne
-   */
-  public DoubleSolenoid getRightHighPiston() {
-    return HigherRightPiston;
-  }
-
-  /**
-   * Will return the lower piston on the right side
-   * 
-   * @return Right Low Piston
-   * @author CRahne
-   */
-  public DoubleSolenoid getRightLowPiston() {
-    return getRightLowPiston();
+  public DoubleSolenoid getLowPistons() {
+    return LowPistonSystem;
   }
 
   /**
@@ -171,9 +140,9 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public String getHigherPistonsStatus() {
-    if (HigherLeftPiston.get() == Value.kForward && HigherRightPiston.get() == Value.kForward){
+    if (HighPistonSystem.get() == Value.kForward) {
       return "Extended";
-    } else if (HigherLeftPiston.get() == Value.kReverse && HigherRightPiston.get() == Value.kReverse){
+    } else if (HighPistonSystem.get() == Value.kReverse) {
       return "Retracted";
     } else {
       return "Null";
@@ -187,9 +156,9 @@ public class Climb extends Subsystem {
    * @author CRahne
    */
   public String getLowerPistonsStatus() {
-    if (LowerLeftPiston.get() == Value.kForward && LowerRightPiston.get() == Value.kForward){
+    if (LowPistonSystem.get() == Value.kForward) {
       return "Extended";
-    } else if (LowerLeftPiston.get() == Value.kReverse && LowerRightPiston.get() == Value.kReverse){
+    } else if (LowPistonSystem.get() == Value.kReverse) {
       return "Retracted";
     } else {
       return "Null";

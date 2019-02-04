@@ -75,10 +75,8 @@ public class RobotMap {
     public static WPI_TalonSRX ClimbMotor;
 
     // Pneumatics
-    public static DoubleSolenoid ClimbLeftHigherPiston;
-    public static DoubleSolenoid ClimbLeftLowerPiston;
-    public static DoubleSolenoid ClimbRightHigherPiston;
-    public static DoubleSolenoid ClimbRightLowerPiston;
+    public static DoubleSolenoid ClimbHighPistons;
+    public static DoubleSolenoid ClimbLowPistons;
 
     public static void init() {
         // #region DriveTrain
@@ -154,12 +152,9 @@ public class RobotMap {
         // Motors
         ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
 
-        // Pneumatics
-        ClimbLeftHigherPiston = new DoubleSolenoid(Constants.kClimbLeftHigherForwardID, Constants.kClimbLeftHigherReverseID);
-        ClimbLeftLowerPiston = new DoubleSolenoid(Constants.kClimbLeftLowerForwardID, Constants.kClimbLeftLowerReverseID);
-        ClimbRightHigherPiston = new DoubleSolenoid(Constants.kClimbRightHighForwardID, Constants.kClimbRightHighReverseID);
-        ClimbRightLowerPiston = new DoubleSolenoid(Constants.kClimbRightLowForwardID, Constants.kClimbLeftLowReverseID);        
-        
+        // Pneumatics will work like a master-slave system
+        ClimbHighPistons = new DoubleSolenoid(Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
+        ClimbLowPistons = new DoubleSolenoid(Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
         //#endregion Climb
 
     }
