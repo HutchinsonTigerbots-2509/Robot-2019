@@ -51,7 +51,8 @@ public class RobotMap {
 
     public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
-    public static DoubleSolenoid IntakeOpenPiston;
+    public static DoubleSolenoid IntakeGripPiston;
+    public static DoubleSolenoid IntakeHatchPiston;
 
     // Climb
     public static DoubleSolenoid ClimbHigherPiston;
@@ -105,7 +106,7 @@ public class RobotMap {
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
         ElevatorMotorSlave.setSubsystem("Elevator");
 
-        ElevatorShifter = new DoubleSolenoid(0, 1);
+        ElevatorShifter = new DoubleSolenoid(Constants.kElevatorShifterForwardID, Constants.kIntakeWristReverseID);
 
         ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
 
@@ -117,11 +118,15 @@ public class RobotMap {
         // IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
         // IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
-        IntakeMotor = new VictorSP(1);
+        IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
 
         IntakePushPiston  = new DoubleSolenoid(Constants.kIntakePushForwardID, Constants.kIntakePushReverseID);
-        IntakeOpenPiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID, Constants.kOpenIntakePistonReverseID);
+        IntakeGripPiston = new DoubleSolenoid(Constants.kIntakeGripPistonForwardID, Constants.kIntakeGripPistonReverseID);
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
+        
+        // They are two pistons, but the air is split
+        // so this works as almost a slave-master system
+        IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID); // 2/2/2019
         // #endregion
 
     // #region Climb
