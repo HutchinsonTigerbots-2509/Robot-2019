@@ -1,4 +1,4 @@
-package frc.robot;// package
+package frc.robot;// package declaration
 
 /**
  * Constants is the class where the varibles that we use accross code are
@@ -24,7 +24,8 @@ public final class Constants {
     /* Encoders */
     public static double kPulsesPerRevoultuion = 256;
 
-    /* Drivetrain */
+    /* Drivetrain */    
+    // PID
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
     
@@ -130,16 +131,26 @@ public final class Constants {
     // Drivetrain
     public static int kDrivetrainShifterForwardID = 0;
     public static int kDrivetrainShifterReverseID = 1;
+    
     // Elevator
     public static int kElevatorShifterForwardID = 12;
     public static int kElevatorShifterReverseID = 13;
+    
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
     public static int kIntakeGripPistonForwardID = 4;
     public static int kIntakeGripPistonReverseID = 5; 
-    public static int kIntakePushForwardID = 6;
-    public static int kIntakePushReverseID = 7;
-    public static int kIntakeHatchPistonForwardID = 8; // 2/2/2019
-    public static int kIntakeHatchPistonReverseID = 8; // 2/2/2019
+    public static int kOpenIntakePistonForwardID = 4;
+    public static int kOpenIntakePistonReverseID = 5;
+    public static int kIntakeHatchPistonForwardID = 6;
+    public static int kIntakeHatchPistonReverseID = 7;
+
+    // Climb
+     // High 
+     public static int kClimbHighForwardID = 12;
+     public static int kClimbHighReverseID = 13;
+     // Low
+     public static int kClimbLowForwardID = 14;
+     public static int kClimbLowReverseID = 15;
 }
