@@ -1,4 +1,4 @@
-package frc.robot;// package
+package frc.robot;// package declaration
 
 /**
  * Constants is the class where the varibles that we use accross code are
@@ -16,15 +16,16 @@ public final class Constants {
     /* Motors */
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.45; // IDK but sure
-    public static double kTurnSpeed = 0.20;
     public static double kReverseFastSpeed = -kMaxSpeed;
-    public static double kReverseSlowSpeed = -kSlowSpeed;
+    public static double kReverseSlowSpeed = -kSlowSpeed;    
+    public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
     public static double kNeutralDeadband = 0.04;
     /* Encoders */
     public static double kPulsesPerRevoultuion = 256;
 
-    /* Drivetrain */
+    /* Drivetrain */    
+    // PID
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
     
@@ -50,7 +51,7 @@ public final class Constants {
     public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
-    public static int kEncoderErrorRange = 5;
+    public static int kEncoderErrorRange = 2;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
@@ -113,8 +114,9 @@ public final class Constants {
     public static int kClimbRightLowerID = 9;
     
     // Intake
-    public static int kIntakeRightMotorID = 4;
-    public static int kIntakeLeftMotorID = 5;
+    // public static int kIntakeRightMotorID = 4;
+    // public static int kIntakeLeftMotorID = 5;
+    public static int kIntakeMotorID = 4;
 
     /* DigitalInput ID */
     // public static int kDrivetrainEncoderLeftAID = 0;
@@ -129,11 +131,26 @@ public final class Constants {
     // Drivetrain
     public static int kDrivetrainShifterForwardID = 0;
     public static int kDrivetrainShifterReverseID = 1;
+    
+    // Elevator
+    public static int kElevatorShifterForwardID = 12;
+    public static int kElevatorShifterReverseID = 13;
+    
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
+    public static int kIntakeGripPistonForwardID = 4;
+    public static int kIntakeGripPistonReverseID = 5; 
     public static int kOpenIntakePistonForwardID = 4;
     public static int kOpenIntakePistonReverseID = 5;
-    public static int kIntakePushForwardID = 6;
-    public static int kIntakePushReverseID = 7;
+    public static int kIntakeHatchPistonForwardID = 6;
+    public static int kIntakeHatchPistonReverseID = 7;
+
+    // Climb
+     // High 
+     public static int kClimbHighForwardID = 12;
+     public static int kClimbHighReverseID = 13;
+     // Low
+     public static int kClimbLowForwardID = 14;
+     public static int kClimbLowReverseID = 15;
 }
