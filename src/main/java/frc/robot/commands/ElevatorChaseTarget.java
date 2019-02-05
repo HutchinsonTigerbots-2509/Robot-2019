@@ -45,6 +45,7 @@ public class ElevatorChaseTarget extends Command {
     }
     else { return false; }
   }
+  //(CHieght - THieght) <= kErrorRange && (CHieght - THieght) >= -1*(kErrorRange)
 
   // Called once after isFinished returns true
   @Override

@@ -103,7 +103,7 @@ public class Elevator extends Subsystem {
    * Trys to follow goal height, by sending PID speeds to motors
    */
   public void ChaseTarget() {
-    SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
   }
 
   /**
