@@ -1,5 +1,8 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
   "wpilib.autoSaveOnDeploy": true,
-  "wpilib.online": true
+  "git.autofetch": true,
+  "git.autorefresh": true,
+  "git.postCommitCommand": "sync",
+  "git.fetchOnPull": true
 }
