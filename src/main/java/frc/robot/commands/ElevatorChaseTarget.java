@@ -15,42 +15,37 @@ import frc.robot.subsystems.Elevator;
 public class ElevatorChaseTarget extends Command {
 
   private final Elevator sElevator = Robot.sElevator;
-  private final int kErrorRange = Constants.kEncoderErrorRange;
-  private double THieght;
-  private double CHieght;
+  private int mTargetHeight;
+  private double CurrentHeight;
 
-  public ElevatorChaseTarget() {
+  public ElevatorChaseTarget(int TargetHeight) {
+    mTargetHeight = TargetHeight;
     requires(sElevator);
   }
 
+  // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    THieght = sElevator.TargetHeight();
-    CHieght = sElevator.CurrentHeight();
-    sElevator.ChaseTarget();
+  protected void initialize() { 
+    CurrentHeight = sElevator.CurrentHeight();
   }
 
-  /*
-  Runs all the function gets the current height,
-  gets the target height, calculate the PID speed value,
-  and sends the speed to the motors
-  */
+  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    CHieght=sElevator.CurrentHeight();
-    THieght=sElevator.TargetHeight();
+    CurrentHeight = sElevator.CurrentHeight();
+    sElevator.setTargetHeight(mTargetHeight);
     sElevator.ChaseTarget();
   }
 
-  // Is finished if error is within 5 encoder counts
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if ((CHieght - THieght) <= kErrorRange && (CHieght - THieght) >= -1*(kErrorRange)){
+    if (sElevator.CurrentHeight() == mTargetHeight){
       return true;
-    }else{
-    return false;
     }
+    else { return false; }
   }
+  //(CHieght - THieght) <= kErrorRange && (CHieght - THieght) >= -1*(kErrorRange)
 
   // Called once after isFinished returns true
   @Override
@@ -60,6 +55,6 @@ public class ElevatorChaseTarget extends Command {
 
   @Override
   protected void interrupted() {
-    sElevator.StopMotors();
+    end();
   }
 }

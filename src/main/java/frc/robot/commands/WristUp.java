@@ -16,7 +16,7 @@ public class WristUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.Up();
+    sIntake.WristPistonUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -33,7 +33,7 @@ public class WristUp extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.StopWrist();
+    sIntake.StopWristPiston();
   }
 
   // Called when another command which requires one or more of the same

@@ -7,13 +7,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.Change_pipeline;
+
+import frc.robot.commands.FollowTarget;
 public class Follow_target extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Follow_target() {
+  public Follow_target(int Pipeline_id, double kPdistance, double kPangle) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,7 +33,7 @@ public class Follow_target extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    //addParallel(new AlignWithTargetPID());
-    addParallel(new FollowTarget());
+    addSequential(new Change_pipeline(Pipeline_id));
+    addSequential(new FollowTarget(Pipeline_id, kPdistance, kPangle));
   }
 }

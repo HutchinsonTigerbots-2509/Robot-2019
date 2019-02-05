@@ -66,9 +66,9 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
+    public static DoubleSolenoid IntakeGripPiston;
+    public static DoubleSolenoid IntakeHatchPiston;
     public static DoubleSolenoid IntakeOpenPiston;
-    public static DoubleSolenoid IntakeHatchOutPistonLeft;
-    public static DoubleSolenoid IntakeHatchOutPistonRight;
 
     /* CLIMB */
     // Motors
@@ -138,13 +138,12 @@ public class RobotMap {
         // IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
-
-        IntakePushPiston  = new DoubleSolenoid(Constants.kIntakePushForwardID, Constants.kIntakePushReverseID);
-        IntakeOpenPiston = new DoubleSolenoid(Constants.kOpenIntakePistonForwardID, Constants.kOpenIntakePistonReverseID);
+        IntakeGripPiston = new DoubleSolenoid(Constants.kIntakeGripPistonForwardID, Constants.kIntakeGripPistonReverseID);
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         
-        IntakeHatchOutPistonLeft = new DoubleSolenoid(Constants.kIntakeHatchOutPistonLeftForwardID, Constants.kIntakeHatchOutPistonLeftReverseID); // 2/2/2019
-        IntakeHatchOutPistonRight = new DoubleSolenoid(Constants.kIntakeHatchOutPistonRightForwardID, Constants.kIntakeHatchOutPistonRightReverseID); // 2/2/2019
+        // They are two pistons, but the air is split
+        // so this works as almost a slave-master system
+        IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID); // 2/2/2019
         // #endregion
 
         // #region Climb
