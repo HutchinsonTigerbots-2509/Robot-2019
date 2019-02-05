@@ -1,11 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+package frc.robot.subsystems; // package declaration
 
-package frc.robot.subsystems;
+// imports
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -14,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -35,6 +31,7 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
   // #region IMPORT VARIBLES
+  
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
@@ -44,6 +41,9 @@ public class Elevator extends Subsystem {
 
   // ShuffleBoard Tab
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  
+  // OI Joystick
+  private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
   // Constants
   private final double kPulseNumber = Constants.kPulsesPerRotation;
@@ -64,7 +64,11 @@ public class Elevator extends Subsystem {
   private final Value kForward = Value.kForward;
   private final Value kHighGear = Value.kReverse;
   private final Value kLowGear = Value.kForward;
+  
+  // #endregion IMPORT VARIBLES
 
+  // #region PRIVATE VARIBLE DECLARATIONS
+  
   // Private PID Varibles
   private double mError;
   private double mPerpotional;
@@ -72,9 +76,15 @@ public class Elevator extends Subsystem {
   private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
+  
+  // #endregion PRIVATE VARIBLE DECLARATIONS
 
   // #endregion IMPORT VARIBLES
 
+  /**
+   * Adds children to the object so we can play with components
+   * in test mode
+   */
   public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
@@ -84,11 +94,8 @@ public class Elevator extends Subsystem {
     addChild(mRightLimit);
   }
 
-  @Override
-  public void initDefaultCommand() {
-  }
+  // #region Lift Methods
 
-   // #region Lift Methods
   /**
    * Stops both the Master and Slave motors
    * 
@@ -100,14 +107,52 @@ public class Elevator extends Subsystem {
   }
 
   /**
+   * Gets height we want the arm to move to in encoder counts
+   * 
+   * @category Lift Methods
+   */
+  public double TargetHeight() {
+    if (CoOpStick.getRawAxis(1) != 0) {
+      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
+    } else if (CoOpStick.getRawButton(4)) {
+      mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
+    } else if (CoOpStick.getRawButton(2)) {
+      mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
+    } else if (CoOpStick.getRawButton(1)) {
+      mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
+    }
+    return mEncoderTargetHieght;
+  }
+
+  /**
+   * Calculates PID Speed to send to the master
+   * 
+   * @category Lift Methods
+   */
+  public double PIDFinal() {
+    mError = TargetHeight() - CurrentHeight();
+    mPerpotional = mError * PGain;
+    mDerivative = (mError - mPerviousError) * DGain;
+    mIntegral += (mError * .02);
+    mPerviousError = mError;
+    UpdateTelemetry();
+    return (mPerpotional + mDerivative + (mIntegral * IGain));
+
+  }
+
+  /**
    * Trys to follow goal height, by sending PID speeds to motors
+   * 
+   * @category Lift Methods
    */
   public void ChaseTarget() {
     SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
   }
 
   /**
-   * Changes gear when arm is going down Smith wanted but not currently used he he
+   * Changes gear when arm is going down Smith wanted but not currently used
+   * 
+   * @category Lift Methods
    */
   public void ChaseTargetGearChanger() {
     if (PIDFinal() > 0) {
@@ -119,12 +164,13 @@ public class Elevator extends Subsystem {
     }
   }
 
-  // #endregion Lift Methods
+  // #endregion Lift Method
   // #region Shifter
-
+  
   /**
    * Shifts the Gear to High
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -135,6 +181,7 @@ public class Elevator extends Subsystem {
   /**
    * Shifts the Gear to Low
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -145,6 +192,7 @@ public class Elevator extends Subsystem {
   /**
    * Returns a boolean and if True means that it is shifted
    * 
+   * @category Shifter
    * @author Cole
    * @author Tony
    */
@@ -163,6 +211,7 @@ public class Elevator extends Subsystem {
   /**
    * Returns a string of which gear the Elevator is in
    * 
+   * @category Shifter
    * @return "High Gear" || "Low Gear"
    */
   public String getGear() {
@@ -178,6 +227,10 @@ public class Elevator extends Subsystem {
 
   /**
    * Sets the SpoolMasters's enocder position to zero
+  /**
+   * Sets the SpoolMasters's enocder position to zero
+   * 
+   * @category Update Voids
    */
   public void ZeroSensor() {
     SpoolMaster.setSelectedSensorPosition(0);
@@ -186,6 +239,8 @@ public class Elevator extends Subsystem {
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
    * for the smartdashboard has been removed.
+   * 
+   * @category Update Voids
    */
   public void UpdateTelemetry() {
     // SmartDashboard.putNumber("ElevatorEncoder",
@@ -217,21 +272,13 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Calculates PID Speed to send to the master
-   */
-  public double PIDFinal() {
-    mError = getTargetHeight() - CurrentHeight();
-    mPerpotional = mError * PGain;
-    mDerivative = (mError - mPerviousError) * DGain;
-    mIntegral += (mError * .02);
-    mPerviousError = mError;
-    UpdateTelemetry();
-    return (mPerpotional + mDerivative + (mIntegral * IGain));
-
-  }
-
+   * Gets Current Height in encoder counts
+  //#endregion Update Voids
+  // #region Elevator Getters
   /**
    * Gets Current Height in encoder counts
+   * 
+   * @category Elevator Getters
    */
   public double CurrentHeight() {
     return SpoolMaster.getSelectedSensorPosition();
@@ -261,19 +308,31 @@ public class Elevator extends Subsystem {
    * true. Or simply are triggered.
    * 
    * @return
+   * This will return `true` if either the left or right limit switches return
+   * true. Or simply are triggered.
+   * 
+   * @category Elevator Getters
+   * @return Left Limit Or Right Limit
    */
   public boolean getLimitsValue() {
     return (mLeftLimit.get() || mRightLimit.get());
   }
 
   /**
+   * * Will return the inches off the ground that the elevator is
+   * 
+   * @category Elevator Getters
    * @author Nate
    * @return Current Height in Inches
    */
-  public double InchesOffGround() {
+  public double getInchesOffGround() {
     double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
     return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
   }
 
-  // #endregion
+  // #endregion Elevator Getters
+  
+  @Override
+  public void initDefaultCommand() {
+  }
 }
