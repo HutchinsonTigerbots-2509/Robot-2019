@@ -157,8 +157,13 @@ public class Drivetrain extends Subsystem {
    * @category Basic Drive Methods
    */
   public void OperatorDrive(Joystick stick) {
-    mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
+    // If the stick is not moved more than 10% this will not execute
+    if (stick.getY() > 0.1 || stick.getZ() > 0.1){
+      mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
     // mDrive.arcadeDrive(-stick.getY(), 0);
+    } else {
+
+    }
   }
 
   /**
