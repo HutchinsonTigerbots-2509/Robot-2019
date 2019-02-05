@@ -26,6 +26,11 @@ public class Angle_check extends Command {
   private double Distance_To_Drive;
   private double Gyro_angle_raw;
   private double Gyro_angle_absolute;
+  private double Gyro_angle_adjusted;
+  private double Angle_off;
+  private double Pi_over_2;
+   
+  private double atan_hf; 
   public Angle_check() {
     
     // Use requires() here to declare subsystem dependencies
@@ -45,20 +50,27 @@ public class Angle_check extends Command {
   @Override
   protected void execute() {
     //SmartDashboard.putNumber("distance", (distance));
-    Gyro_angle = RobotMap.Drivetrain_Gyro.getYaw();
-    Gyro_angle_absolute = Math.abs(Gyro_angle);
+    //Gyro_angle = RobotMap.Drivetrain_Gyro.getYaw();
+    //Gyro_angle_absolute = Math.abs(Gyro_angle);
     Gyro_angle_raw = RobotMap.Drivetrain_Gyro.getYaw();
-    Gyro_angle = Math.abs(Math.toRadians(Gyro_angle_absolute - ((Math.round(Gyro_angle_absolute/90)*90))));
+    Gyro_angle_adjusted = Math.abs(Math.toRadians(((Math.round(Gyro_angle_raw/90)*90))));
+    Angle_off = Math.toRadians(Gyro_angle_raw - Gyro_angle_adjusted);
     distance = sVision.cal_distance();
-    Distance_X = distance * Math.sin(Gyro_angle);
-    Distance_Y = distance * Math.cos(Gyro_angle);
+    Distance_X = Math.abs(distance * Math.sin(Angle_off));
+    Distance_Y = distance * Math.cos(Angle_off);
     Distance_offsetted = Distance_Y - 36;
-    Angle_To_Turn = Math.toRadians(90) - (Gyro_angle + Math.atan(Distance_offsetted/Distance_X));
-    Distance_To_Drive = (Distance_X) / (Math.cos( Math.atan(Distance_offsetted/Distance_X)));
+    Pi_over_2 = (Math.PI / 2);
+    atan_hf = Math.atan(Distance_offsetted/Distance_X);
+    Angle_To_Turn = Math.abs(Pi_over_2 - atan_hf - (Math.abs(Angle_off)));
+    
+    
+    //Angle_To_Turn = Math.toRadians(90) - (Gyro_angle + Math.atan(Distance_offsetted/Distance_X));
+    Distance_To_Drive = Math.sqrt(Math.pow(Distance_X, 2) + Math.pow(Distance_offsetted, 2));
     Angle_To_Turn = Math.toDegrees(Angle_To_Turn);
-    if(Gyro_angle_raw - (Math.round(Gyro_angle_absolute/90)*90) < 0){
+    if(Angle_off < 0){
       Angle_To_Turn = Angle_To_Turn * -1;
     }
+    
     SmartDashboard.putNumber("Angle_To_Turn", Angle_To_Turn);
     SmartDashboard.putNumber("Distance_To_drive", Distance_To_Drive);
   
