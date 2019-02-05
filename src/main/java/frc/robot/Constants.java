@@ -30,7 +30,7 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
-    public static double kSpoolDiam = 4;//inches
+    public static double kSpoolDiam = 4;//inches we need
     public static double kPulsesPerRotation = 256;
     public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
