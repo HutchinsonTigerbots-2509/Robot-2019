@@ -46,12 +46,13 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
-    public static double kSpoolDiam = 4;//inches
+    public static double kSpoolDiam = 4;//inches we need
     public static double kPulsesPerRotation = 256;
     public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
-    public static int kEncoderErrorRange = 2;
+    public static int kEncoderErrorRange = 2; // 5?
+    public static double kMaxElevatorSpeed =0.9;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;

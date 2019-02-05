@@ -31,6 +31,7 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
   // #region IMPORT VARIBLES
+  
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
@@ -38,9 +39,13 @@ public class Elevator extends Subsystem {
   private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
 
+  // ShuffleBoard Tab
+  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  
   // OI Joystick
   private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
 
+  // Constants
   private final double kPulseNumber = Constants.kPulsesPerRotation;
   private final double kMaxHeight = Constants.kMaxHieght;
   private final double kMidHeight = Constants.kMidHieght;
@@ -53,24 +58,28 @@ public class Elevator extends Subsystem {
   private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
   private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
   private final double kTicksPerInch = Constants.kElevatorTicksPerInch;
-  
+
+  // Pneumatics Values
   private final Value kReverse = Value.kReverse;
   private final Value kForward = Value.kForward;
   private final Value kHighGear = Value.kReverse;
   private final Value kLowGear = Value.kForward;
-
-  // SmartDashboard Tab
-  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  
   // #endregion IMPORT VARIBLES
 
   // #region PRIVATE VARIBLE DECLARATIONS
+  
+  // Private PID Varibles
   private double mError;
   private double mPerpotional;
   private double mDerivative;
   private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
+  
   // #endregion PRIVATE VARIBLE DECLARATIONS
+
+  // #endregion IMPORT VARIBLES
 
   /**
    * Adds children to the object so we can play with components
@@ -85,7 +94,8 @@ public class Elevator extends Subsystem {
     addChild(mRightLimit);
   }
 
-  // #region Lift Methods 
+  // #region Lift Methods
+
   /**
    * Stops both the Master and Slave motors
    * 
@@ -136,7 +146,7 @@ public class Elevator extends Subsystem {
    * @category Lift Methods
    */
   public void ChaseTarget() {
-    SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
   }
 
   /**
@@ -154,25 +164,9 @@ public class Elevator extends Subsystem {
     }
   }
 
-  /**
-   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
-   * control loop.
-   * 
-   * @category Lift Methods
-   * 
-   * @author Nate
-   */
-  public void setPosition(double targetInchesOffGround) {
-    double positionFromHome = targetInchesOffGround - kHomePositionInches;
-    double targetPositionRaw = positionFromHome * kTicksPerInch;
-    if (getLimitsValue() == false) {
-      SpoolMaster.set(ControlMode.Position, targetPositionRaw);
-    } else {
-      SpoolMaster.set(ControlMode.PercentOutput, 0);
-    }
-  }
   // #endregion Lift Method
   // #region Shifter
+  
   /**
    * Shifts the Gear to High
    * 
@@ -230,6 +224,9 @@ public class Elevator extends Subsystem {
 
   // #endregion Shifter
   // #region Update Voids
+
+  /**
+   * Sets the SpoolMasters's enocder position to zero
   /**
    * Sets the SpoolMasters's enocder position to zero
    * 
@@ -262,6 +259,20 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Integral", mIntegral);
     Shuffleboard.update();
   }
+
+  // #endregion Update Voids
+  // #region Elevator Getters and Setters
+
+  public double getTargetHeight(){
+    return mEncoderTargetHieght;
+  }
+
+  public void setTargetHeight(double height){
+    mEncoderTargetHieght = height;
+  }
+
+  /**
+   * Gets Current Height in encoder counts
   //#endregion Update Voids
   // #region Elevator Getters
   /**
@@ -277,6 +288,26 @@ public class Elevator extends Subsystem {
   }
 
   /**
+   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
+   * control loop.
+   * 
+   * @author Nate
+   */
+  public void setPosition(double targetInchesOffGround) {
+    double positionFromHome = targetInchesOffGround - kHomePositionInches;
+    double targetPositionRaw = positionFromHome * kTicksPerInch;
+    if (getLimitsValue() == false) {
+      SpoolMaster.set(ControlMode.Position, targetPositionRaw);
+    } else {
+      SpoolMaster.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
+  /**
+   * This will return `true` if either the left or right limit switches return
+   * true. Or simply are triggered.
+   * 
+   * @return
    * This will return `true` if either the left or right limit switches return
    * true. Or simply are triggered.
    * 
@@ -288,7 +319,7 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Will return the inches off the ground that the elevator is
+   * * Will return the inches off the ground that the elevator is
    * 
    * @category Elevator Getters
    * @author Nate
