@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-
+import com.kauailabs.navx.frc.AHRS;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
@@ -114,7 +114,9 @@ public class Drivetrain extends Subsystem {
   public void driveForwardSlow() {
     mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
   }
-
+  public void ResetGyro(){
+    mGyro.zeroYaw();
+  }
   /**
    * Will drive in reverse at 95%. (probably not a good idea though)
    * 
@@ -122,6 +124,7 @@ public class Drivetrain extends Subsystem {
    */
   public void driveReverse() {
     mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
+    mDrive.arcadeDrive(-kMaxSpeed, -kMaxSpeed);
   }
 
   /**
@@ -134,8 +137,14 @@ public class Drivetrain extends Subsystem {
     mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
   }
 
-  public void track_taget(double left, double right){
-    mDrive.tankDrive(left, -right);
+  public void track_taget(double left, double right, double pipeline){
+    //mDrive.tankDrive(-left, -right);
+    if(pipeline == 0 || pipeline == 2 || pipeline == 1 || pipeline == 4){
+      mDrive.arcadeDrive(left, -right);
+    } //else if(pipeline == 9){
+        //mDrive.arcadeDrive(-left, -right);
+    
+    //mDrive.arcadeDrive(-0.5, -right);
 
   }
 
@@ -148,8 +157,13 @@ public class Drivetrain extends Subsystem {
    * @category Basic Drive Methods
    */
   public void OperatorDrive(Joystick stick) {
-    mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
+    // If the stick is not moved more than 10% this will not execute
+    if (stick.getY() > 0.1 || stick.getZ() > 0.1){
+      mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
     // mDrive.arcadeDrive(-stick.getY(), 0);
+    } else {
+
+    }
   }
 
   /**
