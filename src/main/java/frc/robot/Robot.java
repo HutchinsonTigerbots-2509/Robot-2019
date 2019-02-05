@@ -1,4 +1,6 @@
-package frc.robot;
+package frc.robot; // package declaration
+
+// imports
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -20,16 +22,16 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  /*Subsystem Declarations*/
+  /* Subsystem Declarations */
   public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
 
-  /*OI Declaration*/
+  /* OI DECLARATION */
   public static OI oi;
 
-  /*Command Declarations*/
+  /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
 
   /**
@@ -39,7 +41,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // RobotMap must be initialized first
-    // because everything else uses that as
+    // because everything else uses it as
     // a reference
     RobotMap.init();
     // Subsystems must be initialized next because commands/OI use
@@ -57,8 +59,12 @@ public class Robot extends TimedRobot {
     // This command must be defined after OI because they use
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
+
+    // Updates data
     sVision.UpdateLimelightSettings();
     Shuffleboard.startRecording();
+    sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
   }
 
   /**
@@ -73,9 +79,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     RobotMap.Drivetrain_Gyro.setAngleAdjustment(90);
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
     SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
     SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.Drivetrain_Gyro.getYaw()/90)));
     SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
@@ -85,7 +88,8 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("sk", value)
  
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
+    sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
   }
 
@@ -101,7 +105,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.UpdateTelemetry();
+    sDrivetrain.UpdateTelemetry();
   }
 
   /**
@@ -129,7 +135,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
   @Override
@@ -151,7 +157,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.updateValues();
-    Scheduler.getInstance().run();
+    Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
   /**

@@ -12,7 +12,12 @@ import frc.robot.Constants;
 
 
 /**
- * The Vision Subsystem is the limelight camera thing -- Nate you finish pls
+ * The Vision Subsystem is where the methods pertaining to the Limelight
+ * Camera on the robot exsist. This subsystems mainly uses the Network
+ * Table returned to the code by the Camera. The table sends 3 different
+ * varibles about the target back to the code for us to use - the X and
+ * Y position of the target (in pixels) and the area of the target. This
+ * allows us to make autonomous moves. 
  * 
  * @author Nate C
  */

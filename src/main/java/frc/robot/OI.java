@@ -10,29 +10,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
-import frc.robot.commands.Reset_Gyro;
+import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ElevatorRise;
+import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
-//jimport frc.robot.commands.Angle_check;
-import frc.robot.commands.FollowTarget;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
+import frc.robot.commands.Reset_Gyro;
+import frc.robot.commands.RetractPistons;
 import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  private Joystick mOpStick;
-  private Joystick mCoOpStick;
+  /* JOYSTICK DECLARATIONS */
+  private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
+  private Joystick mCoOpStick; // Everything else is used here
 
+  /* BUTTON DECLARATIONS */
+  // Intake Buttons
   private JoystickButton mCloseintake;
   private JoystickButton mOpenintake;
   private JoystickButton mIntakein;
@@ -40,11 +44,14 @@ public class OI {
   private JoystickButton mWristdown;
   private JoystickButton mWristup;
 
+  // Elevator Buttons
+  private JoystickButton mElevatorShift;
+  private JoystickButton mElevatorRiseMid;
   private JoystickButton mShifter;
 
+  // Vision Alignment Buttons
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
-  private JoystickButton FollowButton;
   private JoystickButton Follow_low_targets_Button;
   private JoystickButton Follow_hatch_Button;
   private JoystickButton Follow_high_targets_Button;
@@ -53,9 +60,16 @@ public class OI {
     //Follow_alingment_tape_Button = new JoystickButton(mOpStick, 14);
   private JoystickButton Follow_alingment_tape_Button;
   private JoystickButton Reset_gyro;
+  
+  // Subsystem Import Declarations
   private final Drivetrain sDrivetrain = Robot.sDrivetrain;
   private final Vision sVision = Robot.sVision;
+  
+  // Vision Table
   private NetworkTable mLimeTable;
+
+  private JoystickButton ExtendClimbPistons;
+  private JoystickButton RetractClimbPistons;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -86,10 +100,14 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   // #endregion
-
+  
+  /**
+   * OI class constructor that will create an object with access to all
+   * of the buttons and joysticks
+   */
   public OI() {
     /* Joysticks & Buttons */
-    // Joysticks
+    // #region Joystick Declarations
     mOpStick = new Joystick(0);
     Distance_Calculated = new JoystickButton(mOpStick, 11);
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
@@ -106,8 +124,9 @@ public class OI {
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
     // SmartDashboard.putData(AlignButtonPID);
     mCoOpStick = new Joystick(1);
+    // #endregion
 
-    // Intake Subsystem
+    // #region Intake Subsystem Buttons
     mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
     mCloseintake.whileHeld(new IntakeClose());
     Shuffleboard.getTab("Commands").add("IntakeClose()", new IntakeClose());
@@ -131,8 +150,9 @@ public class OI {
     mWristup = new JoystickButton(mOpStick, 5); // Wrist up
     mWristup.whileHeld(new WristUp());
     Shuffleboard.getTab("Commands").add("WristUp()", new WristUp());
-
-    // Vision Subsystem
+    // #endregion
+    
+    // #region Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
     Shuffleboard.getTab("Commands").add("AlignWithTarget()", new AlignWithTarget());
@@ -164,8 +184,14 @@ public class OI {
     //mLimeTable.("pipeline", 3);
     Reset_gyro.whenPressed(new Reset_Gyro());
     //SmartDashboard.putData(FollowButton);
-
+    // #endregion
     
+
+    ExtendClimbPistons = new JoystickButton(mOpStick, 0);
+    ExtendClimbPistons.whenPressed(new ClimbExtend());
+
+    RetractClimbPistons = new JoystickButton(mOpStick, 1);
+    RetractClimbPistons.whenPressed(new RetractPistons());
 
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
@@ -173,15 +199,21 @@ public class OI {
 
     mShifter = new JoystickButton(mOpStick, 12);
     mShifter.whenPressed(new Shift());
+    // #endregion
 
-    /* Vision & NetworkTables */
+    // #region Vision & NetworkTables
     mLimeTable = sVision.getTable();
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX());
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY());
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea());
     SmartDashboard.putNumber("distance", (41.5 * Math.pow(sVision.getTargetArea(), -0.416)));
     
+    // #endregion
 
+    // #region Elevator
+    mElevatorShift = new JoystickButton(mOpStick, 12);
+    mElevatorShift.whenPressed(new ElevatorShift());
+
+    mElevatorRiseMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorRiseMid.whenPressed(new ElevatorRise(36));
+    // #endregion
   }
 
   /**
