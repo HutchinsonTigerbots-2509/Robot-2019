@@ -5,6 +5,8 @@ package frc.robot.subsystems; // package declaration
 // imports
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.*;
 import frc.robot.Constants;
 
@@ -38,6 +40,7 @@ public class Vision extends Subsystem {
   
  
 
+  private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
 
   /**
    * Returns the NetworkTable for the Limelight Camera
@@ -45,7 +48,7 @@ public class Vision extends Subsystem {
    * @return mTable
    */
   public NetworkTable getTable() {
-    return mTable;
+    return mTable; 
   }
 
   /**
@@ -55,9 +58,9 @@ public class Vision extends Subsystem {
    * @return targetX
    */
   public double getTargetX() {
-    mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
-    mTargetX = mTableX.getDouble(0.0);
-    return mTargetX;
+    mTableX = mTable.getEntry(Constants.kLimelightTargetXID); 
+    mTargetX = mTableX.getDouble(0.0); 
+    return mTargetX; 
   }
   public double getTargetVert() {
     mTablevert = mTable.getEntry(Constants.kLimelightTargetvert);
@@ -93,6 +96,9 @@ public class Vision extends Subsystem {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
+    //mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID); 
+    //mTargetArea = mTableX.getDouble(0.0); 
+  //return mTargetArea; 
   }
   public double getTargetSkew() {
     mTableS = mTable.getEntry(Constants.kLimelightTargetAreaID);
@@ -133,18 +139,26 @@ public class Vision extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  @Deprecated
   private void PullFromTable() {
-    mTableX = mTable.getEntry(Constants.kLimelightTargetXID);
-    mTableY = mTable.getEntry(Constants.kLimelightTargetYID);
-    mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
+    mTableX = mTable.getEntry(Constants.kLimelightTargetXID); 
+    mTableY = mTable.getEntry(Constants.kLimelightTargetYID); 
+    mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID); 
   }
 
-  @Deprecated
   private void UpdateValuesFromTable() {
+    PullFromTable(); 
+    mTargetX = mTableX.getDouble(0.0); 
+    mTargetY = mTableY.getDouble(0.0); 
+    mTargetArea = mTableArea.getDouble(0.0); 
+  }
+
+  /**
+   * Updates the Vision subsystem Telemetry
+   */
+  public void UpdateTelemetry(){
     PullFromTable();
-    mTargetX = mTableX.getDouble(0.0);
-    mTargetY = mTableY.getDouble(0.0);
-    mTargetArea = mTableArea.getDouble(0.0);
+    mVisionTab.add("Target X", mTableX.getDouble(0));
+    mVisionTab.add("Target Y", mTableY.getDouble(0));
+    mVisionTab.add("Target Area", mTableArea.getDouble(0));
   }
 }

@@ -2,10 +2,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -16,13 +20,15 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-
   /*Subsystem Declarations*/
+  public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
   public static Vision sVision;
+
   /*OI Declaration*/
   public static OI oi;
+
   /*Command Declarations*/
   public static OperatorDrive cOpDrive;
 
@@ -32,17 +38,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // RobotMap must be initialized first
+    // because everything else uses that as
+    // a reference
     RobotMap.init();
+    // Subsystems must be initialized next because commands/OI use
+    // the subsystems
+    sIntake = new Intake();
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
+    
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
+    
     // Commands must be defined after OI
+    // This command must be defined after OI because they use
+    // the joystick object in the commands
     cOpDrive = new OperatorDrive();
-
     sVision.UpdateLimelightSettings();
+    Shuffleboard.startRecording();
   }
 
   /**
@@ -67,6 +83,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
     SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getYaw());
     //SmartDashboard.putNumber("sk", value)
+ 
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle());
+    sVision.UpdateTelemetry();
   }
 
   /**
@@ -76,6 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    Shuffleboard.addEventMarker("Robot Disabled", EventImportance.kHigh);
   }
 
   @Override
@@ -97,6 +118,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
     // if (cAutoCommand != null) {
     // cAutoCommand.start();
     // }
@@ -112,6 +134,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -119,7 +142,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    cOpDrive.start();
+    cOpDrive.start(); // Tells the TeleOp Command to start
   }
 
   /**

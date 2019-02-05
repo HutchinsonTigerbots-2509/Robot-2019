@@ -1,6 +1,6 @@
 # :sparkles: :rocket: FRC 2019 :rocket: :sparkles:
 
-Team 2509's 2019 FRC robot code for *RobotName*. *RobotName*'s code is written in Java and is based off of WPILib's Java control system.
+Team 2509's 2019 FRC robot code for *Resurgence*. *Resurgence*'s code is written in Java and is based off of WPILib's Java control system.
 
 The code is divided into several packages, each responsible for a different aspect of the robot function. This README explains setup instructions, the function of each package, and some of the variable naming conventions used. Additional information about each specific class can be found in that class' Java file.
 
@@ -16,7 +16,7 @@ The code is divided into several packages, each responsible for a different aspe
 - Run `./gradlew build` to build the code. Use the `--info` flag for more details
 - Run `./gradlew deploy -PteamNumber=2509` to deploy to the robot in Terminal (Mac) or Powershell (Windows)
 
-### Motor Wiring Diagram
+### Wiring Compontents Diagram
 
 Subsystem | Controller | Name | ID | PDP |
 --------- | ---------- | ---- | -- | ---|
@@ -24,6 +24,8 @@ Drive     | TalonSRX   | Left Front | 0  | - |
 Drive     | TalonSRX   | Left Rear | 1  | - |
 Drive     | TalonSRX   | Right Front | 2  | - |
 Drive     | TalonSRX   | Right Rear | 3  | - |
+Intake    | VictorSP   | Left | 1 | - |
+Intake    | VictorSP   | Right | 2 | - |
 
 
 ## Code Highlights
@@ -177,3 +179,7 @@ PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 * [FerisJumbo](https://github.com/FerisJumbo) :ferris_wheel:
 * [danevenson13](https://github.com/danevenson13) :muscle:
 * [Tjwiseguy](https://github.com/Tjwiseguy) :tiger:
+
+## Dependencies Documents
+* [Phoenix](https://phoenix-documentation.readthedocs.io/en/latest/index.html#) :chicken:
+* [FRC Programming Done Right](https://frc-pdr.readthedocs.io/en/latest/index.html)
