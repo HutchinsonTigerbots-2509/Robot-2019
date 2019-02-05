@@ -106,8 +106,11 @@ public class Intake extends Subsystem {
     mHatchOutPiston.set(Value.kOff);
   }
 
+  // #endregion Hatch
+  // #region Ball
+  
   /**
-   * Moves the wrist of the intake arms up
+   * Sets the Intake motors to take in.
    * 
    * @category Hatch
    * @author CRahne
@@ -117,7 +120,7 @@ public class Intake extends Subsystem {
   }
 
   /**
-   * Moves the Wrist down
+   * Sets the Intake motors to reverse and push out
    * 
    * @category Hatch
    * @author CRahne

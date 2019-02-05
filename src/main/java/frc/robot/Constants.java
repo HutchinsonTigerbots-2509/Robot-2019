@@ -24,7 +24,8 @@ public final class Constants {
     /* Encoders */
     public static double kPulsesPerRevoultuion = 256;
 
-    /* Drivetrain */
+    /* Drivetrain */    
+    // PID
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
     
@@ -45,12 +46,13 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
-    public static double kSpoolDiam = 4;//inches
+    public static double kSpoolDiam = 4;//inches we need
     public static double kPulsesPerRotation = 256;
     public static double kElevatorTicksPerInch = 20.3;
     public static double kElevatorMaxSpeed = 0.5;
     public static double kElevatorSensitivity = 0.5;
-    public static int kEncoderErrorRange = 2;
+    public static int kEncoderErrorRange = 2; // 5?
+    public static double kMaxElevatorSpeed =0.9;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
@@ -62,12 +64,15 @@ public final class Constants {
 
     /* Vision */
     // Physical
-    public static double kCameraHeight = 24;
-    public static double kCameraAngle = 1.7;
+    public static double kCameraHeight = 4;
+    //public static double kCameraAngle = -28.23744554;
+    public static double kCameraAngle = -31.47286489;
     public static double kTargetHeight = 31.5;
-    public static double KpAim = -0.1;
-    public static double KpDistance = -0.1;
-    public static double min_aim_command = 0.05;
+    public static double KpAim = -0.02;
+    public static double KpDistance = -0.05;
+    public static double min_aim_command = -0.5;
+    public static double distance_command = -0.5;
+    public static double kTargetDistanceFromTarget = 24;
     /* Limelight */
     // Network
     public static String kLimelightIP = "10.25.9.11";
@@ -83,6 +88,8 @@ public final class Constants {
     public static String kLimelightTargetYID = "ty";
     public static String kLimelightTargetAreaID = "ta";
     public static String kLimelightTargetSkewID = "ts";
+    public static String kLimelightTargetvert = "tvert";
+    public static String kLimelightTargethorID = "thor";
     //#endregion
 
 
@@ -99,6 +106,19 @@ public final class Constants {
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
+    // Encoder ID
+    public static int kDrivetrainEncoderLeftAID = 0;
+    public static int kDrivetrainEncoderLeftBID = 1;
+    public static int kDrivetrainEncoderRightAID = 2;
+    public static int kDrivetrianEncoderRightBID = 3;
+
+    // Climb
+    public static int kClimbMotorID = 6;
+    public static int kClimbLeftHigherID = 6;
+    public static int kClimbLeftLowerID = 8;
+    public static int kClimbRightHigherID = 7;
+    public static int kClimbRightLowerID = 9;
+    
     // Intake
     // public static int kIntakeRightMotorID = 4;
     // public static int kIntakeLeftMotorID = 5;
@@ -117,16 +137,26 @@ public final class Constants {
     // Drivetrain
     public static int kDrivetrainShifterForwardID = 0;
     public static int kDrivetrainShifterReverseID = 1;
+    
     // Elevator
     public static int kElevatorShifterForwardID = 12;
     public static int kElevatorShifterReverseID = 13;
+    
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
     public static int kIntakeGripPistonForwardID = 4;
     public static int kIntakeGripPistonReverseID = 5; 
-    public static int kIntakePushForwardID = 6;
-    public static int kIntakePushReverseID = 7;
-    public static int kIntakeHatchPistonForwardID = 8; // 2/2/2019
-    public static int kIntakeHatchPistonReverseID = 8; // 2/2/2019
+    public static int kOpenIntakePistonForwardID = 4;
+    public static int kOpenIntakePistonReverseID = 5;
+    public static int kIntakeHatchPistonForwardID = 6;
+    public static int kIntakeHatchPistonReverseID = 7;
+
+    // Climb
+     // High 
+     public static int kClimbHighForwardID = 12;
+     public static int kClimbHighReverseID = 13;
+     // Low
+     public static int kClimbLowForwardID = 14;
+     public static int kClimbLowReverseID = 15;
 }

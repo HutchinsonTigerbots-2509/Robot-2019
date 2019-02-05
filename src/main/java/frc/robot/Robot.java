@@ -4,6 +4,9 @@ package frc.robot; // package declaration
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -19,7 +22,7 @@ import frc.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  /* SUBSYSTEM DECLARATIONS */
+  /* Subsystem Declarations */
   public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
@@ -41,16 +44,12 @@ public class Robot extends TimedRobot {
     // because everything else uses it as
     // a reference
     RobotMap.init();
-
-    sIntake = new Intake();
-    sVision = new Vision();
-    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
+    sIntake = new Intake();
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
     sVision = new Vision();
-
     
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
@@ -63,6 +62,7 @@ public class Robot extends TimedRobot {
 
     // Updates data
     sVision.UpdateLimelightSettings();
+    Shuffleboard.startRecording();
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
   }
@@ -77,16 +77,20 @@ public class Robot extends TimedRobot {
    * and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic()
-  {
-    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOARD */
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getAngle()); // Drivetrain Gyro's angle reading
-    SmartDashboard.putNumber("limeLightX", sVision.getTargetX()); // The target's X value from the camera
-    SmartDashboard.putNumber("limeLightY", sVision.getTargetY()); // The target's Y value from the camera
-    SmartDashboard.putNumber("limeLightArea", sVision.getTargetArea()); // The area of the target from the camera
-
+  public void robotPeriodic() {
+    RobotMap.Drivetrain_Gyro.setAngleAdjustment(90);
+    SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
+    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.Drivetrain_Gyro.getYaw()/90)));
+    SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
+    SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
+    SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
+    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getYaw());
+    //SmartDashboard.putNumber("sk", value)
+ 
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
+    sVision.UpdateTelemetry();
   }
 
   /**
@@ -96,6 +100,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    Shuffleboard.addEventMarker("Robot Disabled", EventImportance.kHigh);
   }
 
   @Override
@@ -119,6 +124,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
     // if (cAutoCommand != null) {
     // cAutoCommand.start();
     // }
@@ -134,6 +140,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

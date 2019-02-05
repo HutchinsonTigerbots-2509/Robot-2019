@@ -68,6 +68,15 @@ public class RobotMap {
     public static DoubleSolenoid IntakeWristPiston;
     public static DoubleSolenoid IntakeGripPiston;
     public static DoubleSolenoid IntakeHatchPiston;
+    public static DoubleSolenoid IntakeOpenPiston;
+
+    /* CLIMB */
+    // Motors
+    public static WPI_TalonSRX ClimbMotor;
+
+    // Pneumatics
+    public static DoubleSolenoid ClimbHighPistons;
+    public static DoubleSolenoid ClimbLowPistons;
 
     public static void init() {
         // #region DriveTrain
@@ -129,8 +138,6 @@ public class RobotMap {
         // IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
-
-        IntakePushPiston  = new DoubleSolenoid(Constants.kIntakePushForwardID, Constants.kIntakePushReverseID);
         IntakeGripPiston = new DoubleSolenoid(Constants.kIntakeGripPistonForwardID, Constants.kIntakeGripPistonReverseID);
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         
@@ -138,6 +145,16 @@ public class RobotMap {
         // so this works as almost a slave-master system
         IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID); // 2/2/2019
         // #endregion
+
+        // #region Climb
+        
+        // Motors
+        ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
+
+        // Pneumatics will work like a master-slave system
+        ClimbHighPistons = new DoubleSolenoid(Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
+        ClimbLowPistons = new DoubleSolenoid(Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
+        //#endregion Climb
 
     }
 }
