@@ -116,20 +116,27 @@ public class RobotMap {
 
         // #region Elevator
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
+        ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         // ElevatorMotorMaster.setInverted(false);
-        ElevatorMotorMaster.setSubsystem("Elevator");
+        ElevatorMotorMaster.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        ElevatorMotorMaster.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
+        ElevatorMotorSlave.setSubsystem("Elevator");
         ElevatorMotorSlave.follow(ElevatorMotorMaster);
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        ElevatorMotorSlave.setSubsystem("Elevator");
+        ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorShifter = new DoubleSolenoid(Constants.kElevatorShifterForwardID, Constants.kIntakeWristReverseID);
+        ElevatorShifter.setSubsystem("Elevator");
 
         ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
+        ElevatorLeftLimit.setSubsystem("Elevator");
 
         ElevatorRightLimit = new DigitalInput(Constants.kElevatorRightLimitID);
+        ElevatorRightLimit.setSubsystem("Elevator");
         // #endregion
 
         // #region Intake
