@@ -17,7 +17,7 @@ public class PID_Turn extends Command {
   // Import Varible Declarations
   private Drivetrain sDT = Robot.sDrivetrain;
   private DifferentialDrive mDrive = sDT.getDrive();
-  private AHRS mGyro = RobotMap.Drivetrain_Gyro;
+  private AHRS mGyro = RobotMap.DrivetrainGyro;
   private double error = 0.0, pre_error = 0.0, targ_angle = 0.0;
 
   /**

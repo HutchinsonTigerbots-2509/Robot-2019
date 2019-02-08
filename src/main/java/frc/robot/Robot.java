@@ -78,13 +78,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    RobotMap.Drivetrain_Gyro.setAngleAdjustment(90);
+    RobotMap.DrivetrainGyro.setAngleAdjustment(90);
     SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
-    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.Drivetrain_Gyro.getYaw()/90)));
+    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.DrivetrainGyro.getYaw()/90)));
     SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
     SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
     SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getYaw());
+    SmartDashboard.putNumber("Gyro", RobotMap.DrivetrainGyro.getYaw());
     //SmartDashboard.putNumber("sk", value)
  
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
