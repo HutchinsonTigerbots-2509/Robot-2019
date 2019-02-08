@@ -133,17 +133,20 @@ public class RobotMap {
         // #endregion
 
         // #region Intake
-
         // IntakeRightMotor = new VictorSP(Constants.kIntakeRightMotorID);
         // IntakeLeftMotor = new VictorSP(Constants.kIntakeLeftMotorID);
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
+        IntakeMotor.setSubsystem("Intake");
+
         IntakeGripPiston = new DoubleSolenoid(Constants.kIntakeGripPistonForwardID, Constants.kIntakeGripPistonReverseID);
+        IntakeGripPiston.setSubsystem("Intake");
+
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
+        IntakeWristPiston.setSubsystem("Intake");
         
-        // They are two pistons, but the air is split
-        // so this works as almost a slave-master system
         IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID); // 2/2/2019
+        IntakeHatchPiston.setSubsystem("Intake");
         // #endregion
 
         // #region Climb
