@@ -84,8 +84,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
     SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
     SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
-    SmartDashboard.putNumber("Gyro", RobotMap.DrivetrainGyro.getYaw());
-    //SmartDashboard.putNumber("sk", value)
  
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     sElevator.UpdateTelemetry();
