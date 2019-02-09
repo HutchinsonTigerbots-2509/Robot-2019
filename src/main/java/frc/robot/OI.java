@@ -47,8 +47,8 @@ public class OI {
   private JoystickButton mWristup;
 
   // Elevator Buttons
-  private JoystickButton mElevatorHigh;
-  private JoystickButton mElevatorMid;
+  public JoystickButton mElevatorHigh;
+  public JoystickButton mElevatorMid;
   public JoystickButton mElevatorLow;
   private JoystickButton mHeightToggle;
   private JoystickButton mElevatorShift;
@@ -200,14 +200,14 @@ public class OI {
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     mHeightToggle.toggleWhenPressed(new HeightToggle());
 
-    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
 
-    mElevatorMid = new JoystickButton(mCoOpStick, 3);
-    mElevatorMid.whenPressed(new ElevatorRise(mMid));
+    // mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    // mElevatorMid.whenPressed(new ElevatorRise(mMid));
 
-    mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    mElevatorLow.whenPressed(new ElevatorRise(mLow));
+    // mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    // mElevatorLow.whenPressed(new ElevatorRise(mLow));
 
     mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -244,9 +244,9 @@ public class OI {
     mCommandTab.add("Climb Retract", new RetractPistons());
 
     //Elevator
-    mCommandTab.add("Elevator High", new ElevatorRise(mHigh));
-    mCommandTab.add("Elevator Mid", new ElevatorRise(mMid));
-    mCommandTab.add("Elevator Low", new ElevatorRise(mLow));
+    // mCommandTab.add("Elevator High", new ElevatorRise(mHigh));
+    // mCommandTab.add("Elevator Mid", new ElevatorRise(mMid));
+    // mCommandTab.add("Elevator Low", new ElevatorRise(mLow));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 

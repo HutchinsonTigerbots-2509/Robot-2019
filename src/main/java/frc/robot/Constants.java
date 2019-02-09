@@ -59,6 +59,13 @@ public final class Constants {
     public static double kMinHieght = 10;
     public static double kHomePositionInches = 5;
 
+    public static double kHatchLow = 20.0;
+    public static double kHatchMid = 47.5;
+    public static double kHatchHigh = 75.0;
+    public static double kBallLow = 28.5;
+    public static double kBallMid = 56.0;
+    public static double kBallHigh = 83.0;
+
     public static int kElevatorMasterID = 4;
     public static int kElevatorSlaveID = 5;
 

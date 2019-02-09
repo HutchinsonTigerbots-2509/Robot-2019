@@ -10,25 +10,30 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.Constants;
 
 public class HeightToggle extends Command {
 
-  private double mHatchLow = 20.0;
-  private double mHatchMid = 47.5;
-  private double mHatchHigh = 75.0;
-  private double mBallLow = 28.5;
-  private double mBallMid = 56.0;
-  private double mBallHigh = 83.0;
+  private double mHatchLow = Constants.kHatchLow;
+  private double mHatchMid = Constants.kHatchMid;
+  private double mHatchHigh = Constants.kHatchHigh;
+  private double mBallLow = Constants.kBallLow;
+  private double mBallMid = Constants.kBallMid;
+  private double mBallHigh = Constants.kBallHigh;
   private JoystickButton mLowButton;
   private JoystickButton mMidButton;
   private JoystickButton mHighButton;
 
   public HeightToggle() {
+    mHighButton = Robot.oi.mElevatorHigh;
+    mMidButton = Robot.oi.mElevatorMid;
     mLowButton = Robot.oi.mElevatorLow;
   }
 
   @Override
   protected void initialize() {
+    Robot.oi.mElevatorHigh.whenPressed(new ElevatorRise(mBallHigh));
+    Robot.oi.mElevatorMid.whenPressed(new ElevatorRise(mBallMid));
     Robot.oi.mElevatorLow.whenPressed(new ElevatorRise(mBallLow));
   }
 
@@ -43,6 +48,8 @@ public class HeightToggle extends Command {
 
   @Override
   protected void end() {
+    mHighButton.whenPressed(new ElevatorRise(mHatchHigh));
+    mMidButton.whenPressed(new ElevatorRise(mHatchMid));
     mLowButton.whenPressed(new ElevatorRise(mHatchLow));
 
   }
