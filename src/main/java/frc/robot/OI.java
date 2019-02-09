@@ -26,12 +26,18 @@ import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.HeightToggle;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
+  private double mLow = HeightToggle.mtLow;
+  private double mMid = HeightToggle.mtMid;
+  private double mHigh = HeightToggle.mtHigh;
+
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
   private Joystick mCoOpStick; // Everything else is used here
@@ -46,8 +52,13 @@ public class OI {
   private JoystickButton mWristup;
 
   // Elevator Buttons
+  private JoystickButton mElevatorHigh;
+  private JoystickButton mElevatorMid;
+  private JoystickButton mElevatorLow;
+  private JoystickButton mHeightToggle;
   private JoystickButton mElevatorShift;
-  private JoystickButton mElevatorRiseMid;
+
+  //Drive Train
   private JoystickButton mShifter;
 
   // Vision Alignment Buttons
@@ -116,6 +127,8 @@ public class OI {
     /* Joysticks & Buttons */
     // #region Joystick Declarations
     mOpStick = new Joystick(0);
+    mCoOpStick = new Joystick(1);
+
     Distance_Calculated = new JoystickButton(mOpStick, 11);
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
     Distance_Calculated.whenPressed(new Angle_check());
@@ -130,31 +143,33 @@ public class OI {
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
     // SmartDashboard.putData(AlignButtonPID);
-    mCoOpStick = new Joystick(1);
     // #endregion
 
     // #region Intake Subsystem Buttons
-    mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
+    mCloseintake = new JoystickButton(mOpStick, 5); // Close intake
     mCloseintake.whileHeld(new IntakeClose());
     mCommandTab.add("IntakeClose()", new IntakeClose());
 
-    mOpenintake = new JoystickButton(mOpStick, 1); // Open intake
+    mOpenintake = new JoystickButton(mOpStick, 6); // Open intake
     mOpenintake.whileHeld(new IntakeOpen());
     mCommandTab.add("IntakeOpen()", new IntakeOpen());
 
-    mIntakein = new JoystickButton(mOpStick, 2); // Take in
-    mIntakein.whileHeld(new IntakeIn());
-    mCommandTab.add("IntakeIn()", new IntakeIn());
+     //Doing this cuz idk its easier
+    if(mOpStick.getRawAxis(2) != 0){
+      new IntakeIn();
+      mCommandTab.add("IntakeIn()", new IntakeIn());
+    }
+  
+    if(mOpStick.getRawAxis(3) != 0){
+      new IntakeOut();
+      mCommandTab.add("IntakeOut()", new IntakeOut());
+    }
 
-    mIntakeout = new JoystickButton(mOpStick, 3); // Take out
-    mIntakeout.whileHeld(new IntakeOut());
-    mCommandTab.add("IntakeOut()", new IntakeOut());
-
-    mWristdown = new JoystickButton(mOpStick, 4); // Wrist down
+    mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
     mWristdown.whileHeld(new WristDown());
     mCommandTab.add("WristDown()", new WristDown());
 
-    mWristup = new JoystickButton(mOpStick, 5); // Wrist up
+    mWristup = new JoystickButton(mOpStick, 6); // Wrist up
     mWristup.whileHeld(new WristUp());
     mCommandTab.add("WristUp()", new WristUp());
     // #endregion
@@ -202,7 +217,6 @@ public class OI {
 
     /* Drivetrain */
     SmartDashboard.putData(sDrivetrain);
-    
 
     mShifter = new JoystickButton(mOpStick, 12);
     mShifter.whenPressed(new Shift());
@@ -215,11 +229,21 @@ public class OI {
     // #endregion
 
     // #region Elevator
-    mElevatorShift = new JoystickButton(mOpStick, 12);
+    mHeightToggle = new JoystickButton(mCoOpStick, 2);
+    mHeightToggle.toggleWhenPressed(new HeightToggle());
+
+    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+
+    mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorMid.whenPressed(new ElevatorRise(mMid));
+
+    mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    mElevatorLow.whenPressed(new ElevatorRise(mLow));
+
+    mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
 
-    mElevatorRiseMid = new JoystickButton(mCoOpStick, 3);
-    mElevatorRiseMid.whenPressed(new ElevatorRise(36));
     // #endregion
   }
 
