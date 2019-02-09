@@ -6,8 +6,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
@@ -19,7 +19,6 @@ import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
-import frc.robot.commands.Reset_Gyro;
 import frc.robot.commands.RetractPistons;
 import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
@@ -53,9 +52,9 @@ public class OI {
   // Vision Alignment Buttons
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
-  private JoystickButton Follow_low_targets_Button;
+  // private JoystickButton Follow_low_targets_Button;
   private JoystickButton Follow_hatch_Button;
-  private JoystickButton Follow_high_targets_Button;
+  // private JoystickButton Follow_high_targets_Button;
   private JoystickButton Follow_ball_Button;
   private JoystickButton Distance_Calculated;
     //Follow_alingment_tape_Button = new JoystickButton(mOpStick, 14);
@@ -125,11 +124,9 @@ public class OI {
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
-    SmartDashboard.putData(AlignButton);
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-    // SmartDashboard.putData(AlignButtonPID);
     mCoOpStick = new Joystick(1);
     // #endregion
 
@@ -168,29 +165,14 @@ public class OI {
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
     mCommandTab.add("AlignWithTargetPID()", new AlignWithTargetPID());
 
-    //Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
-    //mLimeTable.putNumber("pipeline", 0);
-    //Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
-    //SmartDashboard.putData(FollowButton);
-
     Follow_hatch_Button = new JoystickButton(mOpStick, 4);
-    //mLimeTable.putNumber("pipeline", 1);
     Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
-    //SmartDashboard.putData(FollowButton);
 
     Follow_alingment_tape_Button = new JoystickButton(mOpStick, 3);
-    //mLimeTable.putNumber("pipeline", 2);
     Follow_alingment_tape_Button.toggleWhenPressed(new Follow_target(1, -0.05, -0.02));
-    //SmartDashboard.putData(FollowButton);
     
     Follow_ball_Button = new JoystickButton(mOpStick, 6);
-    //mLimeTable.("pipeline", 3);
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
-    //SmartDashboard.putData(FollowButton);
-    Reset_gyro = new JoystickButton(mOpStick, 2);
-    //mLimeTable.("pipeline", 3);
-    Reset_gyro.whenPressed(new Reset_Gyro());
-    //SmartDashboard.putData(FollowButton);
     // #endregion
     
 
@@ -201,9 +183,6 @@ public class OI {
     RetractClimbPistons.whenPressed(new RetractPistons());
 
     /* Drivetrain */
-    SmartDashboard.putData(sDrivetrain);
-    
-
     mShifter = new JoystickButton(mOpStick, 12);
     mShifter.whenPressed(new Shift());
     // #endregion

@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import com.kauailabs.navx.frc.AHRS;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential

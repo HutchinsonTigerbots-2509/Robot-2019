@@ -13,9 +13,9 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
-public class Reset_Gyro extends Command {
+public class ResetGyro extends Command {
   private Drivetrain sDriveTrain = Robot.sDrivetrain;
-  public Reset_Gyro() {
+  public ResetGyro() {
     sDriveTrain.ResetGyro();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

@@ -16,7 +16,6 @@ public class FollowTarget extends Command {
   private double ErrorX;
   private double ErrorY;
   public boolean TargetDistanceCheck = false;
-  private Command AlignWithTarget;
   public double steering_adjust;
   public double X;
   public double Y;
