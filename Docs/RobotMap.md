@@ -2,7 +2,7 @@
 
 RobotMap is the class that stores all of the robot's components. These include the sensors, motors, and pistons that are used in the subsystems of the code. This class creates the objects for the code to use. The objects are all initialized first with the void init (which is called in Robot.robotInit). This makes it easier and cleaner to understand and write code. It also makes it very neat to import the object needed (by just accessing this class). The port numbers for each part are stored in Constants.java.
 
-### DriveTrain Components
+### **DriveTrain Components**
 
 | Name            | Type            | Port    |
 | --------------- | --------------- |:-------:|
@@ -14,7 +14,7 @@ RobotMap is the class that stores all of the robot's components. These include t
 | *Left Encoder*  | TalonSRX Quad   | __N/A__ |
 | *Right Encoder* | TalonSRX Quad   | __N/A__ |
 
-### Climb Components
+### **Climb Components**
 
 | Name               | Type            | Port      |
 | ------------------ | --------------- |:---------:|
@@ -22,7 +22,7 @@ RobotMap is the class that stores all of the robot's components. These include t
 | *High Pistons*     | Double Solenoid | __12,13__ |
 | *Low Pistons*      | Double Solenoid | __14,15__ |
 
-### Elevator Comopnents
+### **Elevator Comopnents**
 
 | Name            | Type            | Port    |
 | --------------- | --------------- |:-------:|
@@ -32,7 +32,7 @@ RobotMap is the class that stores all of the robot's components. These include t
 | *Left Limit*    | Digital Input   |  __0__  |
 | *Right Limit*   | Digital Input   |  __1__  |
 
-### Intake Components
+### **Intake Components**
 
 | Name                      | Type             | Port         |
 | ------------------------- | ---------------- |:------------:|

@@ -2,7 +2,7 @@
 
 The OI Class, short for Operator Interface, is the place where physical joysticks/buttons are bound to the commands in the commands folder. That allows the driver(s) to control the robot during the teleOperated period of the match. The buttons are always bound to a command, and they are built to be called a certain way. This class will declare all of the joystick and button objects and will bind commands to them. This class will also update the commands on the SmartDashboard so they can be called during a test.
 
-### Button Information
+### **Button Information**
 
 | Button                       | Joystick   | ## | Command                |
 | ---------------------------- | ---------- | -- | ---------------------- |
@@ -22,9 +22,9 @@ The OI Class, short for Operator Interface, is the place where physical joystick
 | ExtendClimbPistons           | mOpStick   | 0  | *ClimbExtend.java*     |
 | RetractClimbPistons          | mOpStick   | 1  | *RestractPistons.java* |
 
-### Joystick Information
+### **Joystick Information**
 
-| Name | Desc |
+| Name       | Desc                                                                              |
 | ---------- | --------------------------------------------------------------------------------- |
 | mOpStick   | *This joystick is the main joystick responsible for driving and intaking objects* |
 | mCoOpStick | *This joystick will mainly control the climbing and elevator*                     |

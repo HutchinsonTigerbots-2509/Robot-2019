@@ -356,6 +356,7 @@ public class Intake extends Subsystem {
   }
 
   // #endregion Intake Getters
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
