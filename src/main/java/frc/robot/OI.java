@@ -5,7 +5,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
@@ -14,16 +13,16 @@ import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
+import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
-import frc.robot.commands.Reset_Gyro;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractPistons;
 import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -31,6 +30,7 @@ import frc.robot.subsystems.Vision;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
   private Joystick mCoOpStick; // Everything else is used here
@@ -45,37 +45,34 @@ public class OI {
   private JoystickButton mWristup;
 
   // Elevator Buttons
+  public JoystickButton mElevatorHigh;
+  public JoystickButton mElevatorMid;
+  public JoystickButton mElevatorLow;
+  private JoystickButton mHeightToggle;
   private JoystickButton mElevatorShift;
-  private JoystickButton mElevatorRiseMid;
+
+  //Drive Train
   private JoystickButton mShifter;
 
   // Vision Alignment Buttons
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
-  private JoystickButton Follow_low_targets_Button;
+  // private JoystickButton Follow_low_targets_Button;
   private JoystickButton Follow_hatch_Button;
-  private JoystickButton Follow_high_targets_Button;
+  // private JoystickButton Follow_high_targets_Button;
   private JoystickButton Follow_ball_Button;
   private JoystickButton Distance_Calculated;
-    //Follow_alingment_tape_Button = new JoystickButton(mOpStick, 14);
   private JoystickButton Follow_alingment_tape_Button;
   private JoystickButton Reset_gyro;
   
-
-  /* Misc */
-
-  // Shuffleboard
-  private ShuffleboardTab mCommandTab = Shuffleboard.getTab("Commands");
-
-  // Subsystem Import Declarations
-  private final Drivetrain sDrivetrain = Robot.sDrivetrain;
-  private final Vision sVision = Robot.sVision;
-  
-  // Vision Table
-  private NetworkTable mLimeTable;
-
+  // Climb
   private JoystickButton ExtendClimbPistons;
   private JoystickButton RetractClimbPistons;
+
+  /* Misc */
+  private ShuffleboardTab mCommandTab;
+  private Vision sVision;
+  private NetworkTable mLimeTable;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -112,12 +109,15 @@ public class OI {
    * of the buttons and joysticks
    */
   public OI() {
+    sVision  = Robot.sVision;
+    mCommandTab = Shuffleboard.getTab("Commands");
     /* Joysticks & Buttons */
 
     // #region Joystick Declarations
     mOpStick = new Joystick(0);
+    mCoOpStick = new Joystick(1);
+
     Distance_Calculated = new JoystickButton(mOpStick, 11);
-    //AlignButton.toggleWhenPressed(new FollowTarget(0));
     Distance_Calculated.whenPressed(new Angle_check());
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
     
@@ -125,72 +125,63 @@ public class OI {
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
-    SmartDashboard.putData(AlignButton);
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-    // SmartDashboard.putData(AlignButtonPID);
     mCoOpStick = new Joystick(1);
     // #endregion
 
+    // AlignButtonPID = new JoystickButton(mOpStick, 10);
+    // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
+
     // #region Intake Subsystem Buttons
-    mCloseintake = new JoystickButton(mOpStick, 0); // Close intake
+    mCloseintake = new JoystickButton(mOpStick, 5); // Close intake
     mCloseintake.whileHeld(new IntakeClose());
     mCommandTab.add("IntakeClose()", new IntakeClose());
 
-    mOpenintake = new JoystickButton(mOpStick, 1); // Open intake
+    mOpenintake = new JoystickButton(mOpStick, 6); // Open intake
     mOpenintake.whileHeld(new IntakeOpen());
     mCommandTab.add("IntakeOpen()", new IntakeOpen());
 
-    mIntakein = new JoystickButton(mOpStick, 2); // Take in
-    mIntakein.whileHeld(new IntakeIn());
-    mCommandTab.add("IntakeIn()", new IntakeIn());
+     //Doing this cuz idk its easier
+    if(mOpStick.getRawAxis(2) != 0){
+      new IntakeIn();
+      mCommandTab.add("IntakeIn()", new IntakeIn());
+    }
+  
+    if(mOpStick.getRawAxis(3) != 0){
+      new IntakeOut();
+      mCommandTab.add("IntakeOut()", new IntakeOut());
+    }
 
-    mIntakeout = new JoystickButton(mOpStick, 3); // Take out
-    mIntakeout.whileHeld(new IntakeOut());
-    mCommandTab.add("IntakeOut()", new IntakeOut());
-
-    mWristdown = new JoystickButton(mOpStick, 4); // Wrist down
+    mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
     mWristdown.whileHeld(new WristDown());
-    mCommandTab.add("WristDown()", new WristDown());
 
-    mWristup = new JoystickButton(mOpStick, 5); // Wrist up
+    mWristup = new JoystickButton(mOpStick, 6); // Wrist up
     mWristup.whileHeld(new WristUp());
-    mCommandTab.add("WristUp()", new WristUp());
     // #endregion
     
     // #region Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
-    mCommandTab.add("AlignWithTarget()", new AlignWithTarget());
 
     AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
-    mCommandTab.add("AlignWithTargetPID()", new AlignWithTargetPID());
 
     //Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
-    //mLimeTable.putNumber("pipeline", 0);
     //Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
-    //SmartDashboard.putData(FollowButton);
 
     Follow_hatch_Button = new JoystickButton(mOpStick, 4);
-    //mLimeTable.putNumber("pipeline", 1);
     Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
-    //SmartDashboard.putData(FollowButton);
 
     Follow_alingment_tape_Button = new JoystickButton(mOpStick, 3);
-    //mLimeTable.putNumber("pipeline", 2);
     Follow_alingment_tape_Button.toggleWhenPressed(new Follow_target(1, -0.05, -0.02));
-    //SmartDashboard.putData(FollowButton);
     
     Follow_ball_Button = new JoystickButton(mOpStick, 6);
-    //mLimeTable.("pipeline", 3);
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
-    //SmartDashboard.putData(FollowButton);
+
     Reset_gyro = new JoystickButton(mOpStick, 2);
-    //mLimeTable.("pipeline", 3);
-    Reset_gyro.whenPressed(new Reset_Gyro());
-    //SmartDashboard.putData(FollowButton);
+    Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
     
 
@@ -201,26 +192,33 @@ public class OI {
     RetractClimbPistons.whenPressed(new RetractPistons());
 
     /* Drivetrain */
-    SmartDashboard.putData(sDrivetrain);
-    
-
     mShifter = new JoystickButton(mOpStick, 12);
     mShifter.whenPressed(new Shift());
     // #endregion
 
     // #region Vision & NetworkTables
     mLimeTable = sVision.getTable();
-    SmartDashboard.putNumber("distance", (41.5 * Math.pow(sVision.getTargetArea(), -0.416)));
+    // SmartDashboard.putNumber("distance", (41.5 * Math.pow(sVision.getTargetArea(), -0.416)));
     
     // #endregion
 
     // #region Elevator
-    mElevatorShift = new JoystickButton(mOpStick, 12);
-    mElevatorShift.whenPressed(new ElevatorShift());
+    mHeightToggle = new JoystickButton(mCoOpStick, 2);
+    mHeightToggle.toggleWhenPressed(new HeightToggle());
 
-    mElevatorRiseMid = new JoystickButton(mCoOpStick, 3);
-    mElevatorRiseMid.whenPressed(new ElevatorRise(36));
+    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+
+    // mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    // mElevatorMid.whenPressed(new ElevatorRise(mMid));
+
+    // mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    // mElevatorLow.whenPressed(new ElevatorRise(mLow));
+
+    mElevatorShift = new JoystickButton(mOpStick, 7);
+    mElevatorShift.whenPressed(new ElevatorShift());
     // #endregion
+    UpdateCommands();
   }
 
   /**
@@ -239,5 +237,44 @@ public class OI {
    */
   public Joystick getCoOperatorStick() {
     return mCoOpStick;
+  }
+   
+  public void UpdateCommands(){
+
+    //Drivetrain
+    mCommandTab.add("Drivetrain Shift", new Shift());
+    mCommandTab.add("Gyro Reset", new ResetGyro());
+
+    //Climb
+    mCommandTab.add("Climb Extend", new ClimbExtend());
+    mCommandTab.add("Climb Retract", new RetractPistons());
+
+    //Elevator
+    mCommandTab.add("Elevator Hatch High", new ElevatorRise(Constants.kHatchHigh));
+    mCommandTab.add("Elevator Hatch Mid", new ElevatorRise(Constants.kHatchMid));
+    mCommandTab.add("Elevator Hatch Low", new ElevatorRise(Constants.kHatchLow));
+    mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
+    mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
+    mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
+    mCommandTab.add("Elevator Shift", new ElevatorShift());
+    mCommandTab.add("Elevaotr Hieght", new HeightToggle());
+
+    //Intake
+    mCommandTab.add("Intake Close", new IntakeClose());
+    mCommandTab.add("Intake Open", new IntakeOpen());
+    mCommandTab.add("Intake In", new IntakeIn());
+    mCommandTab.add("Intake Out", new IntakeOut());
+    mCommandTab.add("Intake Down", new WristDown());
+    mCommandTab.add("Intake Up", new WristUp());
+
+    //Vision
+    mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));
+    mCommandTab.add("Align PID", new AlignWithTargetPID());
+    mCommandTab.add("Distance Calculated", new Angle_check());
+    mCommandTab.add("Follow Ball", new Follow_target(2, -.03 , -0.02));
+    mCommandTab.add("Follow Hatch", new Follow_target(4, -0.02, -0.02));
+    mCommandTab.add("Follow Tape", new Follow_target(1, -0.05, -.02));
+    // mCommandTab.add("Follow Low Targets",);
+    // mCommandTab.add("Follow High Targets", );
   }
 }

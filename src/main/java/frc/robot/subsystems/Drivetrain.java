@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import com.kauailabs.navx.frc.AHRS;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
@@ -48,7 +47,7 @@ public class Drivetrain extends Subsystem {
   private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
-  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
+  private final AHRS mGyro = RobotMap.DrivetrainGyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
 
@@ -61,7 +60,7 @@ public class Drivetrain extends Subsystem {
   // Vision
   public boolean TargetAligned;
   public boolean TargetDistanceCheck;
-  
+
   // PID Constants For Gyro Turn
   private final double kTurnP = Constants.kDriveTrainGyroTurnP;
   private final double kTurnD = Constants.kDriveTrainGyroTurnD;
@@ -145,7 +144,6 @@ public class Drivetrain extends Subsystem {
         //mDrive.arcadeDrive(-left, -right);
     
     //mDrive.arcadeDrive(-0.5, -right);
-
   }
 
   /**
@@ -157,12 +155,14 @@ public class Drivetrain extends Subsystem {
    * @category Basic Drive Methods
    */
   public void OperatorDrive(Joystick stick) {
-    // If the stick is not moved more than 10% this will not execute
-    if (stick.getY() > 0.1 || stick.getZ() > 0.1){
+    // If the absolute value of the joystick is not greater than 10 %,
+    // then don't do anything.
+    if (Math.abs(stick.getY()) > Constants.minMoveSpeed || Math.abs(stick.getZ()) > Constants.minMoveSpeed) {
       mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
     // mDrive.arcadeDrive(-stick.getY(), 0);
     } else {
-
+      // So the robot will not stay at a +- 0.11 input
+      mDrive.arcadeDrive(0, 0);
     }
   }
 
