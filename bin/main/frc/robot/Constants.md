@@ -2,7 +2,7 @@
 
 The constants class contains all constants that will be used throughout the entire code. This include port numbers for RobotMap.java to max speeds to PID values for subsystems. This is an important part of our code because it allows us to quickly change and access values. All of the varibles declared in this class start with the prefix *-k*, so the varible is instantly known to be part of constants.
 
-## How to Use
+### How to Use
 
 **First,** import the class
 
