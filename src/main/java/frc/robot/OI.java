@@ -11,21 +11,19 @@ import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
 import frc.robot.commands.ClimbExtend;
-import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
+import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
-import frc.robot.commands.Reset_Gyro;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractPistons;
 import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.HeightToggle;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -124,6 +122,12 @@ public class OI {
     AlignButton = new JoystickButton(mOpStick, 5);
     //AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
+    //AlignButton.toggleWhenPressed(new FollowTarget(0));
+
+    // AlignButtonPID = new JoystickButton(mOpStick, 10);
+    // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
+    mCoOpStick = new Joystick(1);
+    // #endregion
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
@@ -175,7 +179,7 @@ public class OI {
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
 
     Reset_gyro = new JoystickButton(mOpStick, 2);
-    Reset_gyro.whenPressed(new Reset_Gyro());
+    Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
     
 
@@ -237,7 +241,7 @@ public class OI {
 
     //Drivetrain
     mCommandTab.add("Drivetrain Shift", new Shift());
-    mCommandTab.add("Gyro Reset", new Reset_Gyro());
+    mCommandTab.add("Gyro Reset", new ResetGyro());
 
     //Climb
     mCommandTab.add("Climb Extend", new ClimbExtend());

@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import com.kauailabs.navx.frc.AHRS;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code
  * through the motors created in RobotMap, which are stored in a Differential
@@ -48,7 +47,7 @@ public class Drivetrain extends Subsystem {
   private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   
   // Gyro
-  private final AHRS mGyro = RobotMap.Drivetrain_Gyro;
+  private final AHRS mGyro = RobotMap.DrivetrainGyro;
   private double kMaxSpeed = Constants.kMaxSpeed;
   private double kSlowSpeed = Constants.kSlowSpeed;
 
@@ -61,7 +60,7 @@ public class Drivetrain extends Subsystem {
   // Vision
   public boolean TargetAligned;
   public boolean TargetDistanceCheck;
-  
+
   // PID Constants For Gyro Turn
   private final double kTurnP = Constants.kDriveTrainGyroTurnP;
   private final double kTurnD = Constants.kDriveTrainGyroTurnD;
