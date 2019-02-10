@@ -11,6 +11,7 @@ import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
 import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
@@ -248,9 +249,12 @@ public class OI {
     mCommandTab.add("Climb Retract", new RetractPistons());
 
     //Elevator
-    // mCommandTab.add("Elevator High", new ElevatorRise(mHigh));
-    // mCommandTab.add("Elevator Mid", new ElevatorRise(mMid));
-    // mCommandTab.add("Elevator Low", new ElevatorRise(mLow));
+    mCommandTab.add("Elevator Hatch High", new ElevatorRise(Constants.kHatchHigh));
+    mCommandTab.add("Elevator Hatch Mid", new ElevatorRise(Constants.kHatchMid));
+    mCommandTab.add("Elevator Hatch Low", new ElevatorRise(Constants.kHatchLow));
+    mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
+    mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
+    mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
