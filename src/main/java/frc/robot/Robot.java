@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
     // because everything else uses it as
     // a reference
     RobotMap.init();
+    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
     sIntake = new Intake();

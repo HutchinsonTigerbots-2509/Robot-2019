@@ -46,7 +46,7 @@ public class PID_Turn extends Command {
 
   // Make this return true when this Command no longer needs to run execute()
   protected boolean isFinished() {
-    if(targ_angle == mGyro.getAngle()) {
+    if(mGyro.getAngle() == targ_angle) {
       return true;
     }
     return false;
