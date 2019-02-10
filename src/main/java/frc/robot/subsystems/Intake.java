@@ -68,10 +68,34 @@ public class Intake extends Subsystem {
     setHatchPistons(Value.kReverse);
   }
 
+  /**
+   * Will set the gripper piston on the intake subsystem
+   * to the value passed in the parameter
+   * 
+   * <li> <b>To Eject the Pistons: </b> Set the value to Value.kForward
+   * <li> <b>To Retract the Pistons: </b> Set the value to Value.kReverse
+   * <li> <b>To turn off Pistons: </b> Set the value to Value.kOff
+   * 
+   * @category Ball
+   * @author CRahne
+   * @param Value that the piston will be set to
+   */
   public void setHatchPistons(Value value) {
     mHatchOutPiston.set(value);
   }
   
+  /**
+   * Will set the gripper piston on the intake subsystem
+   * to the value passed in the parameter
+   * 
+   * <li> <b>To Lift the Wrist Mechanism: </b> Set the value to Value.kForward
+   * <li> <b>To Lower the Wrist Mechanism: </b> Set the value to Value.kReverse
+   * <li> <b>To turn off Piston: </b> Set the value to Value.kOff
+   * 
+   * @category Ball
+   * @author CRahne
+   * @param value - the value that the piston will be set to
+   */
   public void setWristPiston(Value value) {
     mWristPiston.set(value);
   } 
@@ -80,25 +104,27 @@ public class Intake extends Subsystem {
   // #region Ball
   
   /**
-   * Will take a ball in
+   * Will take a ball in using the gripper piston
+   * and the intake motor
    * 
    * @category Ball
    * @author CRahne
    */
-  public void In() { // 2/2/2019
+  public void IntakeBall() {
     setGripPiston(Value.kForward);
     MotorIn();
   }
 
   /**
-   * Will shoot a ball out
+   * Will reverse the motor's direction and open the grip
+   * piston, which will release the ball
    * 
    * @category Ball
    * @author CRahne
    */
-  public void Close() { // 2/2/2019
-    MotorStop();
-    setGripPiston(Value.kReverse);
+  public void SendBallOut() {
+    setGripPiston(Value.kForward);
+    MotorReverse();
   }
 
   /**
@@ -107,9 +133,11 @@ public class Intake extends Subsystem {
    * @category Ball
    * @author CRahne
    */
-  public void StopBallSystem() { // 2/2/2019
+  public void StopBallIntake() {
     MotorStop();
+    setGripPiston(Value.kReverse);
     setGripPiston(Value.kOff);
+    setWristPiston(Value.kReverse); // Or kForward depending on how it works
     setWristPiston(Value.kOff);
   }
 
@@ -130,7 +158,7 @@ public class Intake extends Subsystem {
    * @category Ball
    * @author CRahne
    */
-  public void MotorOut() {
+  public void MotorReverse() {
     mMotor.set(Constants.kReverseFastSpeed);
   }
 
@@ -145,6 +173,18 @@ public class Intake extends Subsystem {
     mMotor.set(0);
   }
 
+  /**
+   * Will set the gripper piston on the intake subsystem
+   * to the value passed in the parameter
+   * 
+   * <li> <b>To Open Arms: </b> Set the value to Value.kForward
+   * <li> <b>To Close Arms: </b> Set the value to Value.kReverse
+   * <li> <b>To turn off Piston: </b> Set the value to Value.kOff
+   * 
+   * @category Ball
+   * @author CRahne
+   * @param Value that the piston will be set to
+   */
   public void setGripPiston(Value value) {
     mGripPiston.set(value);
   }
@@ -163,6 +203,19 @@ public class Intake extends Subsystem {
     setHatchPistons(Value.kOff);
     setGripPiston(Value.kOff);
     setWristPiston(Value.kOff);
+  }
+
+  /**
+   * If the EndAll() void doesn't work
+   * 
+   * @category General
+   * @author CRahne
+   */
+  public void RetractAllPistons() {
+    setHatchPistons(Value.kReverse);
+    setGripPiston(Value.kReverse);
+    setGripPiston(Value.kReverse);
+    MotorStop();
   }
 
   /**
