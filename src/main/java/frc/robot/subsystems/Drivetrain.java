@@ -60,7 +60,7 @@ public class Drivetrain extends Subsystem {
   // Vision
   public boolean TargetAligned;
   public boolean TargetDistanceCheck;
-  
+
   // PID Constants For Gyro Turn
   private final double kTurnP = Constants.kDriveTrainGyroTurnP;
   private final double kTurnD = Constants.kDriveTrainGyroTurnD;
