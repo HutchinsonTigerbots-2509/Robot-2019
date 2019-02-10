@@ -2,7 +2,7 @@ Intake Subsystem
 =====
 The Intake Subsystem is the main scoring mechanism on the robot. It will intake balls using a motor and will pick up the hatch by using a system of pistons and the underside of the subsystem. Then, it will be rasied by the Elevator Subsystem to a scoring height, where it will place either the ball or the hatch for points.
 
-### Components Info
+### **Components Info**
 | Name                      | Type             | Port         |
 | ------------------------- | ---------------- |:------------:|
 | *Intake Motor*            | VictorSP         |     __4__    |
@@ -12,10 +12,10 @@ The Intake Subsystem is the main scoring mechanism on the robot. It will intake 
 | *Intake HatchOut Right*   | Double Solenoid  |   __10,11__  |
 
 *Note: More can be found [here](https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing)*
-##
+
 -----
 
-### Summary of Actions
+### **Summary of Actions**
 
 #### Hatch Collection
 
@@ -25,10 +25,9 @@ The Intake Subsystem is the main scoring mechanism on the robot. It will intake 
 
 <p> The robot will drive up to a ball. The intake arms will open using a piston and then have a motor and belt system attached to wheels  spin inwards, so the ball is sucked in. The robot will then drive to a target, the Elevator will raise to a certain height, and then the ball will be sent out by setting the motors to spin outward. </p>
 
-##
 ---------
 
-### JavaDoc Categories
+### **JavaDoc Categories**
 ####  Hatch
 
 <p> These methods will pretain to the intake of the hatch subsystem. </p>

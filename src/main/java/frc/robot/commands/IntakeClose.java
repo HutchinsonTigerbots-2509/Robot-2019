@@ -1,5 +1,6 @@
 package frc.robot.commands; // package declaration
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
@@ -16,7 +17,7 @@ public class IntakeClose extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.CloseArms();
+    sIntake.setGripPiston(Value.kReverse);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -33,7 +34,7 @@ public class IntakeClose extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.StopArmPiston();
+    sIntake.setGripPiston(Value.kOff);
   }
 
   // Called when another command which requires one or more of the same

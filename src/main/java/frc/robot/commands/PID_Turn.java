@@ -17,7 +17,7 @@ public class PID_Turn extends Command {
   // Import Varible Declarations
   private Drivetrain sDT = Robot.sDrivetrain;
   private DifferentialDrive mDrive = sDT.getDrive();
-  private AHRS mGyro = RobotMap.Drivetrain_Gyro;
+  private AHRS mGyro = RobotMap.DrivetrainGyro;
   private double error = 0.0, pre_error = 0.0, targ_angle = 0.0;
 
   /**
@@ -46,7 +46,7 @@ public class PID_Turn extends Command {
 
   // Make this return true when this Command no longer needs to run execute()
   protected boolean isFinished() {
-    if(targ_angle == mGyro.getAngle()) {
+    if(mGyro.getAngle() == targ_angle) {
       return true;
     }
     return false;

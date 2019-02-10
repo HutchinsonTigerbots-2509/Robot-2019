@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -44,6 +43,7 @@ public class Robot extends TimedRobot {
     // because everything else uses it as
     // a reference
     RobotMap.init();
+    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
     sIntake = new Intake();
@@ -78,14 +78,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    RobotMap.Drivetrain_Gyro.setAngleAdjustment(90);
+    RobotMap.DrivetrainGyro.setAngleAdjustment(90);
     SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
-    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.Drivetrain_Gyro.getYaw()/90)));
+    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.DrivetrainGyro.getYaw()/90)));
     SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
     SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
     SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
-    SmartDashboard.putNumber("Gyro", RobotMap.Drivetrain_Gyro.getYaw());
-    //SmartDashboard.putNumber("sk", value)
  
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     sElevator.UpdateTelemetry();

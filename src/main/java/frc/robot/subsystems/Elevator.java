@@ -137,7 +137,6 @@ public class Elevator extends Subsystem {
     mPerviousError = mError;
     UpdateTelemetry();
     return (mPerpotional + mDerivative + (mIntegral * IGain));
-
   }
 
   /**

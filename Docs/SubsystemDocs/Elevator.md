@@ -3,7 +3,7 @@ Elevator Subsystem
 
 The Elevator Subsystem is the class with everything for the lift mechanism on the robot. This includes lifting the intake subsystem up and down. This controls the up and down motion of the scoring system.
 
-### Components Info
+### **Components Info**
 | Name            | Type            | Port    |
 | --------------- | --------------- |:-------:|
 | *Spool Master*  | TalonSRX        |  __4__  |
@@ -13,9 +13,10 @@ The Elevator Subsystem is the class with everything for the lift mechanism on th
 | *Right Limit*   | Digital Input   |  __1__  |
 
 *Note: More can be found [here](https://docs.google.com/spreadsheets/d/1FEBEgIgFHLcY4xUZjEkiHl1moupbKuoPvh55APKpakg/edit?usp=sharing)*
-##
+
 -----
-### PID Info
+
+### **PID Info**
 - PID Lift Info -- PIDFinal()
   - kP = 0.15
   - KI = 0.0
@@ -23,9 +24,9 @@ The Elevator Subsystem is the class with everything for the lift mechanism on th
 
 <p> This PID Control will have the lift move up and down as it settles into a target height. This is the main control of the subsystem. </p>
 
-##
 -----
-### Mechanism Info
+
+### **Mechanism Info**
 
 This Subsystem works like so:
 
@@ -62,7 +63,7 @@ Which lifts the intake subsystem. This allows us to score at varying heights on 
 ##
 ---------
 
-### JavaDoc Categories
+### **JavaDoc Categories**
 #### Lift Methods
     
 <p> The Lift Methods are for lifting. These will lift the mechansism either up or down with the spool motors. </p>

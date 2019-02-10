@@ -40,7 +40,7 @@ public class RobotMap {
     public static DoubleSolenoid DrivetrainShifter;
     
     // Sensors
-    public static AHRS Drivetrain_Gyro;
+    public static AHRS DrivetrainGyro;
 
     /* ELEVATOR */
     // Motors
@@ -86,32 +86,49 @@ public class RobotMap {
         DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The DT Encoder
         DrivetrainLeftMaster.setInverted(false); // Tell the motor that it isn't inverted (backwards)
         DrivetrainLeftMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Will set the motor's deadband (above)
+        DrivetrainLeftMaster.configPeakOutputForward(Constants.kMaxSpeed);
+        DrivetrainLeftMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainLeftMaster.setSubsystem("Drivetrain");
 
         DrivetrainLeftSlave = new WPI_VictorSPX(Constants.kDrivetrainLeftSlaveID); // Rear Left Motor
         DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.setInverted(InvertType.FollowMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Will set the motor's deadband (above)
+        DrivetrainLeftSlave.configPeakOutputForward(Constants.kMaxSpeed);
+        DrivetrainLeftSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainLeftSlave.setSubsystem("Drivetrain");
 
         DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
         DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
         DrivetrainRightMaster.setInverted(false); // Inverted is false
         DrivetrainRightMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
+        DrivetrainRightMaster.configPeakOutputForward(Constants.kMaxSpeed);
+        DrivetrainRightMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightMaster.setSubsystem("Drivetrain");
 
         DrivetrainRightSlave = new WPI_VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
         DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
         DrivetrainRightSlave.setInverted(InvertType.FollowMaster); // Follow Your Master
         DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
+        DrivetrainRightSlave.configPeakOutputForward(Constants.kMaxSpeed);
+        DrivetrainRightSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightSlave.setSubsystem("Drivetrain");
 
         // A Master is used as a SpeedControllerGroup in this case. This allows us to
         // use the VictorSPX datatype for motors. However, the masters must still be Talons.
         // NOTE: The Master Motor objects have the encoder linked to them
         DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
+        DrivetrainDifferential.setDeadband(Constants.kNeutralDeadband);
+        DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
+        DrivetrainDifferential.setSubsystem("Drivetrain");
 
         // The shifter will be used to switch between high and low gear
         DrivetrainShifter = new DoubleSolenoid(Constants.kDrivetrainShifterForwardID, Constants.kDrivetrainShifterReverseID);
-
+        DrivetrainShifter.setSubsystem("Drivetrain");
+        
         // The gyro keeps track of our turning movement along the z axis
-        Drivetrain_Gyro = new AHRS(SPI.Port.kMXP);
+        DrivetrainGyro = new AHRS(SPI.Port.kMXP);
+        DrivetrainGyro.setSubsystem("Drivetrain");
         // #endregion
 
         // #region Elevator
