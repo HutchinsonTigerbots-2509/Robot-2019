@@ -26,11 +26,13 @@ import frc.robot.RobotMap;
  */
 public class Intake extends Subsystem {
   // #region SUBSYSTEM VARIBLE DECLARATIONS
+  
   private final VictorSP mMotor = RobotMap.IntakeRightMotor;
   private final DoubleSolenoid mGripPiston = RobotMap.IntakeGripPiston;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
   private final DoubleSolenoid mHatchOutPiston = RobotMap.IntakeHatchPiston; // Works as two pistons
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
+  
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
   public Intake(){
@@ -49,7 +51,7 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-  public void HatchStart() { // 2/2/2019
+  public void HatchStart() {
     MotorStop();
     setGripPiston(Value.kReverse);
     setWristPiston(Value.kReverse);
@@ -61,27 +63,14 @@ public class Intake extends Subsystem {
    * @category Hatch
    * @author CRahne
    */
-  public void HatchEnd() { // 2/2/2019
+  public void HatchEnd() {
     setWristPiston(Value.kForward);
     setHatchPistons(Value.kReverse);
-  }
-
-  /**
-   * Will detach the hatch from the subsystem
-   * for a score
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void HatchEject() { // 2/2/2019
-    setHatchPistons(Value.kForward);
   }
 
   public void setHatchPistons(Value value) {
     mHatchOutPiston.set(value);
   }
-
-  // #endregion Hatch
   
   public void setWristPiston(Value value) {
     mWristPiston.set(value);

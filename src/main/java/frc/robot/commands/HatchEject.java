@@ -1,5 +1,7 @@
 package frc.robot.commands; // package declaration
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 // imports
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,13 +23,13 @@ public class HatchEject extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.HatchEject();
+    sIntake.setHatchPistons(Value.kForward);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.HatchEject();
+    sIntake.setHatchPistons(Value.kForward);
   }
 
   // Make this return true when this Command no longer needs to run execute()
