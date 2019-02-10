@@ -42,6 +42,7 @@ public class Intake extends Subsystem {
   }
 
   // #region Hatch
+  
   /**
    * Will start the hatch pickup process
    * 
@@ -50,8 +51,8 @@ public class Intake extends Subsystem {
    */
   public void HatchStart() { // 2/2/2019
     MotorStop();
-    CloseArms();
-    WristPistonDown();
+    setGripPiston(Value.kReverse);
+    setWristPiston(Value.kReverse);
   }
 
   /**
@@ -61,8 +62,8 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void HatchEnd() { // 2/2/2019
-    WristPistonUp();
-    RetractHatchOutPistons();
+    setWristPiston(Value.kForward);
+    setHatchPistons(Value.kReverse);
   }
 
   /**
@@ -73,72 +74,18 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void HatchEject() { // 2/2/2019
-    ExtendHatchOutPistons();
+    setHatchPistons(Value.kForward);
   }
 
-  /**
-   * Retract the `hatch out` pistons
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void RetractHatchOutPistons() { // 2/2/2019
-    mHatchOutPiston.set(Value.kReverse);
-  }
-
-  /**
-   * Will extend the Hatch Out Pistons
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void ExtendHatchOutPistons() { // 2/2/2019
-    mHatchOutPiston.set(Value.kForward);
-  }
-
-  /**
-   * Will stop the hatch Pistons
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void StopHatchOutPistons() { // 2/2/2019
-    mHatchOutPiston.set(Value.kOff);
+  public void setHatchPistons(Value value) {
+    mHatchOutPiston.set(value);
   }
 
   // #endregion Hatch
-  // #region Ball
   
-  /**
-   * Sets the Intake motors to take in.
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void WristPistonUp() {
-    mWristPiston.set(Value.kForward);
-  }
-
-  /**
-   * Sets the Intake motors to reverse and push out
-   * 
-   * @category Hatch
-   * @author CRahne
-   */
-  public void WristPistonDown() {
-    mWristPiston.set(Value.kReverse);
-  }
-
-  /**
-   * Stops the intake wrist
-   * 
-   * @category Hatch
-   * @author Cole
-   * @author Tony
-   */
-  public void StopWristPiston() {
-    mWristPiston.set(Value.kOff);
-  }
+  public void setWristPiston(Value value) {
+    mWristPiston.set(value);
+  } 
 
   // #endregion Hatch
   // #region Ball
@@ -150,7 +97,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void In() { // 2/2/2019
-    OpenArms();
+    setGripPiston(Value.kForward);
     MotorIn();
   }
 
@@ -162,7 +109,7 @@ public class Intake extends Subsystem {
    */
   public void Close() { // 2/2/2019
     MotorStop();
-    CloseArms();
+    setGripPiston(Value.kReverse);
   }
 
   /**
@@ -171,10 +118,10 @@ public class Intake extends Subsystem {
    * @category Ball
    * @author CRahne
    */
-  public void StopAllBallSystem() { // 2/2/2019
+  public void StopBallSystem() { // 2/2/2019
     MotorStop();
-    StopArmPiston();
-    StopWristPiston();
+    setGripPiston(Value.kOff);
+    setWristPiston(Value.kOff);
   }
 
   /**
@@ -209,34 +156,8 @@ public class Intake extends Subsystem {
     mMotor.set(0);
   }
 
-  /**
-   * Opens the Intake Arms
-   * 
-   * @category Ball
-   * @author CRahne
-   */
-  public void OpenArms() {
-    mGripPiston.set(Value.kForward);
-  }
-
-  /**
-   * Closes the Intake Arms
-   * 
-   * @category Ball
-   * @author CRahne
-   */
-  public void CloseArms() {
-    mGripPiston.set(Value.kReverse);
-  }
-
-  /**
-   * Stops the Intake Arms from opening or closing
-   * 
-   * @category Ball
-   * @author CRahne
-   */
-  public void StopArmPiston() {
-    mGripPiston.set(Value.kOff);
+  public void setGripPiston(Value value) {
+    mGripPiston.set(value);
   }
 
   // #endregion Ball 
@@ -248,12 +169,13 @@ public class Intake extends Subsystem {
    * @category General
    * @author CRahne
    */
-  public void EndAll() { // 2/2/2019
+  public void EndAll() {
     MotorStop();
-    RetractHatchOutPistons();
-    CloseArms();
-    WristPistonUp();
+    setHatchPistons(Value.kOff);
+    setGripPiston(Value.kOff);
+    setWristPiston(Value.kOff);
   }
+
   /**
    * Will update data on the shuffleboard tab for this class
    */
@@ -315,44 +237,28 @@ public class Intake extends Subsystem {
 
   /**
    * Will return the status of the grip piston in a string
-   * <p> `Open` = Piston is set to Forward </p>
-   * <p> `Close` = Piston is set to Reverse </p>
-   * <p> `Null` = Piston is set to Off / default value </p>
+   * <p> `kForward` = Piston is set to Forward </p>
+   * <p> `kReverse` = Piston is set to Reverse </p>
+   * <p> `kOff` = Piston is set to Off / default value </p>
    * 
    * @category Intake Getters
    * @return Grip Piston Status
    */
-  public String getGripStatus(){
-    if (mGripPiston.get() == Value.kForward){
-      return "Open";
-    }
-    else if (mGripPiston.get() == Value.kForward){
-      return "Close";
-    }
-    else{
-      return "Null";
-    }
+  public Value getGripStatus(){
+    return mGripPiston.get();
   }
 
   /**
    * Will return the status of the grip piston in a string
-   * <p> `Up` = Piston is set to Reverse and not collecting a hatch panel </p>
-   * <p> `Down` = Piston is set to Forward and collecting a hatch panel </p>
-   * <p> `Null` = Piston is set to Off / default value </p>
+   * <p> `kReverse` = Piston is set to Reverse and not collecting a hatch panel </p>
+   * <p> `kForward` = Piston is set to Forward and collecting a hatch panel </p>
+   * <p> `kOff` = Piston is set to Off / default value </p>
    * 
    * @category Intake Getters
    * @return Grip Piston Status
    */
-  public String getWristStatus(){
-    if (mWristPiston.get() == Value.kForward){
-      return "Up";
-    }
-    else if (mWristPiston.get() == Value.kForward){
-      return "Down";
-    }
-    else{
-      return "Null";
-    }
+  public Value getWristStatus(){
+    return mWristPiston.get();
   }
 
   // #endregion Intake Getters
