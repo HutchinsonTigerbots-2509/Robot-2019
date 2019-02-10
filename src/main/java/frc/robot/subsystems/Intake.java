@@ -122,7 +122,7 @@ public class Intake extends Subsystem {
    * @category Ball
    * @author CRahne
    */
-  public void SendBallOut() {
+  public void EjectBall() {
     setGripPiston(Value.kForward);
     MotorReverse();
   }
