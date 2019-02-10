@@ -1,5 +1,4 @@
-
-package frc.robot; // package declaraition
+package frc.robot; // package declaration
 
 // imports
 import edu.wpi.first.networktables.NetworkTable;
@@ -114,6 +113,7 @@ public class OI {
    */
   public OI() {
     /* Joysticks & Buttons */
+
     // #region Joystick Declarations
     mOpStick = new Joystick(0);
     Distance_Calculated = new JoystickButton(mOpStick, 11);
