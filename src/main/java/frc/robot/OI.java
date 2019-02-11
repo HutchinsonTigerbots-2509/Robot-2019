@@ -141,17 +141,6 @@ public class OI {
     mOpenintake.whileHeld(new IntakeOpen());
     mCommandTab.add("IntakeOpen()", new IntakeOpen());
 
-     //Doing this cuz idk its easier
-    if(mOpStick.getRawAxis(2) != 0){
-      new IntakeIn();
-      mCommandTab.add("IntakeIn()", new IntakeIn());
-    }
-  
-    if(mOpStick.getRawAxis(3) != 0){
-      new IntakeOut();
-      mCommandTab.add("IntakeOut()", new IntakeOut());
-    }
-
     mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
     mWristdown.whileHeld(new WristDown());
 

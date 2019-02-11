@@ -11,7 +11,7 @@ package frc.robot;// package declaration
 public final class Constants {
     public Constants() {
     }
-
+    
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
