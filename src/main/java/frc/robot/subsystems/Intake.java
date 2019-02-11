@@ -1,7 +1,6 @@
 package frc.robot.subsystems; // package declaration
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -14,11 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
-enum IntakeHasThis {
-  Cargo, // Ball
-  Hatch,
-  Nothing
-}
 /**
  * The intake subsystem is the main scoring subsystem of the
  * robot. It can pick up balls and hatches, and then release
@@ -40,8 +34,7 @@ public class Intake extends Subsystem {
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
   private final DoubleSolenoid mHatchOutPiston = RobotMap.IntakeHatchPiston; // Works as two pistons
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
-  private IntakeHasThis IntakeHas = IntakeHasThis.Nothing;
-  
+
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
   public Intake(){
@@ -62,16 +55,15 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void IntakeHatch() {
-    if(IntakeHas == IntakeHasThis.Cargo) {
-      SmartDashboard.putString("Intake Is: ", "Releasing Cargo");
-      setGripPiston(Value.kForward);
-      MotorReverse();
-      Timer.delay(10);
-      setGripPiston(Value.kReverse);
-      setWristPiston(Value.kReverse); // IDK
-    }
+    // if(IntakeHas == IntakeHasThis.Cargo) {
+      // SmartDashboard.putString("Intake Is: ", "Releasing Cargo");
+      // setGripPiston(Value.kForward);
+      // MotorReverse();
+      // Timer.delay(10);
+      // setGripPiston(Value.kReverse);
+      // setWristPiston(Value.kReverse); // IDK
+    // }
     SmartDashboard.putString("Intake Is: ", "Intaking Hatch");
-    IntakeHas = IntakeHasThis.Hatch;
     setHatchPistons(Value.kReverse);
     setWristPiston(Value.kForward); // Still IDK
   }
@@ -83,17 +75,10 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void EjectHatch() {
-    if(IntakeHas == IntakeHasThis.Hatch) {
-      SmartDashboard.putString("Intake Is: ", "Ejecting Hatch");
-      setWristPiston(Value.kForward);
-      setHatchPistons(Value.kForward);
-      setHatchPistons(Value.kReverse);
-    }
-    else {
-      SmartDashboard.putString("Intake Is: ", "Wondering What You Are Doing?");
-    }
-    IntakeHas = IntakeHasThis.Nothing;
-    SmartDashboard.putString("Intake Is: ", "Doesn't Have Anything");
+    SmartDashboard.putString("Intake Is: ", "Ejecting Hatch");
+    setWristPiston(Value.kForward);
+    setHatchPistons(Value.kForward);
+    setHatchPistons(Value.kReverse);
   }
   /**
    * Will set the gripper piston on the intake subsystem
@@ -137,14 +122,13 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void IntakeBall() {
-    if(IntakeHas == IntakeHasThis.Hatch) {
-      SmartDashboard.putString("Intake Is: ", "Releasing the Hatch");
-      setHatchPistons(Value.kForward);
-      setHatchPistons(Value.kReverse);
-      setWristPiston(Value.kReverse); // IS THIS RIGHT?
-    }
+    // if(IntakeHas == IntakeHasThis.Hatch) {
+      // SmartDashboard.putString("Intake Is: ", "Releasing the Hatch");
+      // setHatchPistons(Value.kForward);
+      // setHatchPistons(Value.kReverse);
+      // setWristPiston(Value.kReverse); // IS THIS RIGHT?
+    // }
     SmartDashboard.putString("Intake Is: ", "Getting A Ball");
-    IntakeHas = IntakeHasThis.Cargo;
     setWristPiston(Value.kReverse); // IS THIS RIGHT?
     setGripPiston(Value.kForward);
     MotorIn();
@@ -158,14 +142,22 @@ public class Intake extends Subsystem {
    */
   public void EjectBall() {
     SmartDashboard.putString("Intake Is: ", "Ejecting A Ball");
-    if(IntakeHas == IntakeHasThis.Cargo) {
-      setGripPiston(Value.kForward);
-      MotorReverse();
-    }
-    else {
-      SmartDashboard.putString("Intake Is: ", "Wondering What You Are Doing?");
-    }
-    IntakeHas = IntakeHasThis.Nothing;
+    setGripPiston(Value.kForward);
+    MotorReverse();
+  }
+
+  /**
+   * Will stop everything in the ball system
+   * 
+   * @category Ball
+   * @author CRahne
+   */
+  public void StopBallIntake() {
+    MotorStop();
+    setGripPiston(Value.kReverse);
+    setGripPiston(Value.kOff);
+    setWristPiston(Value.kReverse); // Or kForward depending on how it works
+    setWristPiston(Value.kOff);
   }
 
   /**
@@ -264,20 +256,11 @@ public class Intake extends Subsystem {
     mIntakeTab.add("Motor Speed", mMotor.get());
     mIntakeTab.add("Grip Status", getGripStatus());
     mIntakeTab.add("Wrist Status", getWristStatus());
-    mIntakeTab.add("Mode: ", getIntakeHas());
     Shuffleboard.update();
-  }
-
-  public void setIntakeHas(IntakeHasThis newMode) {
-    IntakeHas = newMode;
   }
 
   //#endregion General
   // #region Intake Getters
-  
-  public IntakeHasThis getIntakeHas() {
-    return IntakeHas;
-  }
   
   /**
    * Will return the intake motor
@@ -349,39 +332,6 @@ public class Intake extends Subsystem {
    */
   public Value getWristStatus(){
     return mWristPiston.get();
-  }
-
-  /**
-   * Will return the Cargo Var
-   * 
-   * @category Intake Getters
-   * @author CRahne
-   * @return IntakeHasThis.Cargo
-   */
-  public IntakeHasThis getIntakeHasCargoVar() {
-    return IntakeHasThis.Cargo;
-  }
-
-  /**
-   * Will return the Hatch Var
-   * 
-   * @category Intake Getters
-   * @author CRahne
-   * @return IntakeHasThis.Hatch
-   */
-  public IntakeHasThis getIntakeHasHatchVar() {
-    return IntakeHasThis.Hatch;
-  }
-
-  /**
-   * Will return the Nothing (null) Var
-   * 
-   * @category Intake Getters
-   * @author CRahne
-   * @return IntakeHasThis.Nothing
-   */
-  public IntakeHasThis getIntakeHasNothingVar() {
-    return IntakeHasThis.Nothing;
   }
 
   // #endregion Intake Getters
