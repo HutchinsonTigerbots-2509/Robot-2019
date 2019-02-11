@@ -11,6 +11,7 @@ import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.State;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+  public static State robotState;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -59,6 +61,7 @@ public class Robot extends TimedRobot {
     // This command must be defined after OI because they use
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
+    robotState = new State(0);
 
     // Updates data
     sVision.UpdateLimelightSettings();
@@ -89,6 +92,7 @@ public class Robot extends TimedRobot {
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
+    Shuffleboard.getTab("Tele-Op").add("Robot State",robotState.toString());
   }
 
   /**

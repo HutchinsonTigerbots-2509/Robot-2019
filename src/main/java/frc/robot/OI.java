@@ -1,5 +1,4 @@
-
-package frc.robot; // package declaraition
+package frc.robot; // package declaration
 
 // imports
 import edu.wpi.first.networktables.NetworkTable;
@@ -10,7 +9,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
+import frc.robot.commands.ChangeState;
 import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
@@ -112,6 +113,8 @@ public class OI {
     sVision  = Robot.sVision;
     mCommandTab = Shuffleboard.getTab("Commands");
     /* Joysticks & Buttons */
+
+    // #region Joystick Declarations
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
 
@@ -192,15 +195,16 @@ public class OI {
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     mHeightToggle.toggleWhenPressed(new HeightToggle());
+    mHeightToggle.toggleWhenPressed(new ChangeState());
 
-    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
 
-    // mElevatorMid = new JoystickButton(mCoOpStick, 3);
-    // mElevatorMid.whenPressed(new ElevatorRise(mMid));
+    mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
 
-    // mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    // mElevatorLow.whenPressed(new ElevatorRise(mLow));
+    mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
 
     mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -237,9 +241,12 @@ public class OI {
     mCommandTab.add("Climb Retract", new RetractPistons());
 
     //Elevator
-    // mCommandTab.add("Elevator High", new ElevatorRise(mHigh));
-    // mCommandTab.add("Elevator Mid", new ElevatorRise(mMid));
-    // mCommandTab.add("Elevator Low", new ElevatorRise(mLow));
+    mCommandTab.add("Elevator Hatch High", new ElevatorRise(Constants.kHatchHigh));
+    mCommandTab.add("Elevator Hatch Mid", new ElevatorRise(Constants.kHatchMid));
+    mCommandTab.add("Elevator Hatch Low", new ElevatorRise(Constants.kHatchLow));
+    mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
+    mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
+    mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
@@ -260,5 +267,28 @@ public class OI {
     mCommandTab.add("Follow Tape", new Follow_target(1, -0.05, -.02));
     // mCommandTab.add("Follow Low Targets",);
     // mCommandTab.add("Follow High Targets", );
+    
+    //State 
+    mCommandTab.add("Toggle Robot State", new ChangeState());
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Hatch Heights
+   */ 
+  public void setElevatorButtonsHatch(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Cargo Heights
+   */ 
+  public void setElevatorButtonsCargo(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kBallLow));
   }
 }

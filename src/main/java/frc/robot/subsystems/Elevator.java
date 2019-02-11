@@ -270,8 +270,6 @@ public class Elevator extends Subsystem {
     mEncoderTargetHieght = height;
   }
 
-  /**
-   * Gets Current Height in encoder counts
   //#endregion Update Voids
   // #region Elevator Getters
   /**
