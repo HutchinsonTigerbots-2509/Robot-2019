@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
+import frc.robot.commands.ChangeState;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
@@ -205,15 +206,16 @@ public class OI {
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     mHeightToggle.toggleWhenPressed(new HeightToggle());
+    mHeightToggle.toggleWhenPressed(new ChangeState());
 
-    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
 
-    // mElevatorMid = new JoystickButton(mCoOpStick, 3);
-    // mElevatorMid.whenPressed(new ElevatorRise(mMid));
+    mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
 
-    // mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    // mElevatorLow.whenPressed(new ElevatorRise(mLow));
+    mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
 
     mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -276,5 +278,28 @@ public class OI {
     mCommandTab.add("Follow Tape", new Follow_target(1, -0.05, -.02));
     // mCommandTab.add("Follow Low Targets",);
     // mCommandTab.add("Follow High Targets", );
+    
+    //State 
+    mCommandTab.add("Toggle Robot State", new ChangeState());
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Hatch Heights
+   */ 
+  public void setElevatorButtonsHatch(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Cargo Heights
+   */ 
+  public void setElevatorButtonsCargo(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kBallLow));
   }
 }
