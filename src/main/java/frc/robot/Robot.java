@@ -12,6 +12,8 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +29,9 @@ public class Robot extends TimedRobot {
   public static Elevator sElevator;
   public static Vision sVision;
 
+  AnalogInput ultra = new AnalogInput(0);
+
+
   /* OI DECLARATION */
   public static OI oi;
 
@@ -39,6 +44,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
     // RobotMap must be initialized first
     // because everything else uses it as
     // a reference
@@ -154,6 +160,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putData("Ultra", ultra);
+
     SmartDashboard.updateValues();
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
