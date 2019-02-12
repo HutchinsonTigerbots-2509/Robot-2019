@@ -43,8 +43,7 @@ public class Elevator extends Subsystem {
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   
   // OI Joystick
-  private final Joystick CoOpStick = Robot.oi.getCoOperatorStick();
-
+  
   // Constants
   private final double kPulseNumber = Constants.kPulsesPerRotation;
   private final double kMaxHeight = Constants.kMaxHieght;
@@ -112,15 +111,15 @@ public class Elevator extends Subsystem {
    * @category Lift Methods
    */
   public double TargetHeight() {
-    if (CoOpStick.getRawAxis(1) != 0) {
-      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (CoOpStick.getRawAxis(1) * -1));
-    } else if (CoOpStick.getRawButton(4)) {
-      mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
-    } else if (CoOpStick.getRawButton(2)) {
-      mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
-    } else if (CoOpStick.getRawButton(1)) {
-      mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
-    }
+    // if (CoOpStick.getRawAxis(1) != 0) {
+      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (0.5 * -1));
+    // } else if (CoOpStick.getRawButton(4)) {
+    //   mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
+    // } else if (CoOpStick.getRawButton(2)) {
+    //   mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
+    // } else if (CoOpStick.getRawButton(1)) {
+    //   mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
+    // }
     return mEncoderTargetHieght;
   }
 
@@ -250,13 +249,13 @@ public class Elevator extends Subsystem {
     // SmartDashboard.putNumber("Integral", mIntegral);
     // SmartDashboard.updateValues();
 
-    mElevatorTab.add("ElevatorEncoder", SpoolMaster.getSelectedSensorPosition());
-    mElevatorTab.add("Left Limit", mLeftLimit.get());
-    mElevatorTab.add("Right Limit", mRightLimit.get());
-    mElevatorTab.add("Elevator Shifter", getGear());
-    mElevatorTab.add("Perpotional", mPerpotional);
-    mElevatorTab.add("Derivative", mDerivative);
-    mElevatorTab.add("Integral", mIntegral);
+    // mElevatorTab.add("Elevator Encoder", SpoolMaster.getSelectedSensorPosition());
+    // mElevatorTab.add("Left Limit", mLeftLimit.get());
+    // mElevatorTab.add("Right Limit", mRightLimit.get());
+    // mElevatorTab.add("Elevator Shifter", getGear());
+    // mElevatorTab.add("Perpotional", mPerpotional);
+    // mElevatorTab.add("Derivative", mDerivative);
+    // mElevatorTab.add("Integral", mIntegral);
     Shuffleboard.update();
   }
 

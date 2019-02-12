@@ -79,9 +79,9 @@ public class RobotMap {
     public static DoubleSolenoid ClimbLowPistons;
 
     public static void init() {
-        // #region DriveTrain
-        // Deadbands: https://en.wikipedia.org/wiki/Deadband
-        // Motors
+        //#region DriveTrain
+        //Deadbands: https://en.wikipedia.org/wiki/Deadband
+        //Motors
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
         DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The DT Encoder
         DrivetrainLeftMaster.setInverted(false); // Tell the motor that it isn't inverted (backwards)
@@ -142,7 +142,7 @@ public class RobotMap {
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
         ElevatorMotorSlave.setSubsystem("Elevator");
 
-        ElevatorShifter = new DoubleSolenoid(Constants.kElevatorShifterForwardID, Constants.kIntakeWristReverseID);
+        ElevatorShifter = new DoubleSolenoid(1,Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
 
         ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
 
@@ -169,8 +169,8 @@ public class RobotMap {
         ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
 
         // Pneumatics will work like a master-slave system
-        ClimbHighPistons = new DoubleSolenoid(Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
-        ClimbLowPistons = new DoubleSolenoid(Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
+        ClimbHighPistons = new DoubleSolenoid(1,Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
+        ClimbLowPistons = new DoubleSolenoid(1,Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
         //#endregion Climb
 
     }

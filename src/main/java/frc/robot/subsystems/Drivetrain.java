@@ -242,13 +242,13 @@ public class Drivetrain extends Subsystem {
    * @category Update Voids
    */
   public void UpdateTelemetry() {
-    mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
-    mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
-    mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
-    mDriveTrainTab.add("Gyro", mGyro.getAngle());
-    mDriveTrainTab.add("Drivetrain Drive", getDrive());
-    mDriveTrainTab.add("Shifter", getShifter());
-    mDriveTrainTab.add("isShifted", isShifted());
+    // mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
+    // mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
+    // mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
+    // mDriveTrainTab.add("Gyro", mGyro.getAngle());
+    // mDriveTrainTab.add("Drivetrain Drive", getDrive());
+    // mDriveTrainTab.add("Shifter", getShifter());
+    // mDriveTrainTab.add("isShifted", isShifted());
     Shuffleboard.update();
   }
 

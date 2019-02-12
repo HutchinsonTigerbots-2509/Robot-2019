@@ -13,7 +13,9 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +31,8 @@ public class Robot extends TimedRobot {
   public static Elevator sElevator;
   public static Vision sVision;
 
-  AnalogInput ultra = new AnalogInput(0);
+  Ultrasonic ultra = new Ultrasonic(8, 9);
+  // Ultrasonic mUltra = new Ultrasonic(pingChannel, echoChannel)
 
 
   /* OI DECLARATION */
@@ -44,6 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
 
     // RobotMap must be initialized first
     // because everything else uses it as
@@ -71,6 +75,9 @@ public class Robot extends TimedRobot {
     Shuffleboard.startRecording();
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
+    ultra.setAutomaticMode(true);
+    ultra.setDistanceUnits(Unit.kInches);
+    // ultra.setEnabled(true);
   }
 
   /**
@@ -85,12 +92,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     RobotMap.DrivetrainGyro.setAngleAdjustment(90);
+    SmartDashboard.putNumber("ultra", ultra.getRangeInches());
     SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
     SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.DrivetrainGyro.getYaw()/90)));
     SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
     SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
     SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
- 
+    SmartDashboard.updateValues();
     /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
@@ -144,6 +152,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    // ultra.setAutomaticMode(true);
+    Compressor comp= new Compressor();
+    comp.stop();
     Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -160,8 +171,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putData("Ultra", ultra);
-
+    SmartDashboard.putNumber("ultra", ultra.getRangeInches());
+    System.out.println(ultra.getRangeInches());
     SmartDashboard.updateValues();
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
@@ -171,5 +182,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+  public void ultrasonicSample(){
+    double range = ultra.getRangeInches();
   }
 }

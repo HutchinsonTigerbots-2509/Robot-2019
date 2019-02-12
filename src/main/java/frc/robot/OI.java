@@ -127,7 +127,7 @@ public class OI {
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-    mCoOpStick = new Joystick(1);
+  
     // #endregion
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
@@ -203,7 +203,7 @@ public class OI {
 
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
-    mHeightToggle.toggleWhenPressed(new HeightToggle());
+    // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
     // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));

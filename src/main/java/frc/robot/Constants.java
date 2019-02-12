@@ -147,8 +147,8 @@ public final class Constants {
     public static int kDrivetrainShifterReverseID = 1;
     
     // Elevator
-    public static int kElevatorShifterForwardID = 12;
-    public static int kElevatorShifterReverseID = 13;
+    public static int kElevatorShifterForwardID = 0;
+    public static int kElevatorShifterReverseID = 1;
     
     // Intake
     public static int kIntakeWristForwardID = 2;
@@ -162,9 +162,9 @@ public final class Constants {
 
     // Climb
      // High 
-     public static int kClimbHighForwardID = 12;
-     public static int kClimbHighReverseID = 13;
+     public static int kClimbHighForwardID = 2;
+     public static int kClimbHighReverseID = 3;
      // Low
-     public static int kClimbLowForwardID = 14;
-     public static int kClimbLowReverseID = 15;
+     public static int kClimbLowForwardID = 4;
+     public static int kClimbLowReverseID = 5;
 }

@@ -34,11 +34,11 @@ public class Intake extends Subsystem {
   //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
   public Intake(){
-    setSubsystem("Intake");
-    addChild(mMotor);
-    addChild(mGripPiston);
-    addChild(mWristPiston);
-    addChild(mHatchOutPiston);
+    // setSubsystem("Intake");
+    // addChild(mMotor);
+    // addChild(mGripPiston);
+    // addChild(mWristPiston);
+    // addChild(mHatchOutPiston);
   }
 
   // #region Hatch
@@ -258,9 +258,9 @@ public class Intake extends Subsystem {
    * Will update data on the shuffleboard tab for this class
    */
   public void UpdateTelemetry() {
-    mIntakeTab.add("Motor Speed", mMotor.get());
-    mIntakeTab.add("Grip Status", getGripStatus());
-    mIntakeTab.add("Wrist Status", getWristStatus());
+    // mIntakeTab.add("Motor Speed", mMotor.get());
+    // mIntakeTab.add("Grip Status", getGripStatus());
+    // mIntakeTab.add("Wrist Status", getWristStatus());
     Shuffleboard.update();
   }
 
