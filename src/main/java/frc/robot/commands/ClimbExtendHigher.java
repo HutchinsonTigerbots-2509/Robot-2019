@@ -7,28 +7,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Climb;
 
-/**
- * Add your docs here.
- */
-public class Shift extends InstantCommand {
-  private Drivetrain mDriveTrain = new Drivetrain();
-  private boolean isShifted;
-  /**
-   * Add your docs here.
-   */
-  public Shift() {
+public class ClimbExtendHigher extends InstantCommand {
+  private final Climb sClimb = new Climb();
+  public ClimbExtendHigher() {
     super();
-    requires(mDriveTrain);
+    requires(sClimb);
   }
-
-  // Called once when the command executes
+  
   @Override
   protected void initialize() {
-    isShifted = mDriveTrain.isShifted();
-    mDriveTrain.setHighGear(!isShifted);
+    sClimb.ExtendHigherPistons();
+    Timer.delay(0.1);
+    sClimb.StopPistons();
   }
-
 }

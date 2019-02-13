@@ -134,21 +134,17 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Shifts the Gear to High
-   * @author Cole
-   * @author Tony
-   */
-  public void ShiftHighGear() {
-    mShifter.set(kHighGear);
-  }
-
-  /**
    * Shifts the Gear to Low
+   * 
    * @author Cole
    * @author Tony
    */
-  public void ShiftLowGear() {
-    mShifter.set(kLowGear);
+  public void setHighGear(boolean mHighGear) {
+    if (mHighGear) {
+      mShifter.set(Value.kForward);
+    } else {
+      mShifter.set(Value.kReverse);
+    }
   }
 
   /**
