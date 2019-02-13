@@ -6,16 +6,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Ultrasonic.Unit;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,18 +22,12 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class Robot extends TimedRobot {
   /* Subsystem Declarations */
-  public static Intake sIntake;
   public static Drivetrain sDrivetrain;
   public static Elevator sElevator;
+  public static Intake sIntake;
   public static Vision sVision;
-
-  Ultrasonic ultra = new Ultrasonic(8, 9);
-  // Ultrasonic mUltra = new Ultrasonic(pingChannel, echoChannel)
-
-
   /* OI DECLARATION */
   public static OI oi;
-
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
 
@@ -47,20 +37,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
-
-    // RobotMap must be initialized first
-    // because everything else uses it as
+    // RobotMap must be initialized first because everything else uses it as
     // a reference
     RobotMap.init();
-    
     // Subsystems must be initialized next because commands/OI use
     // the subsystems
-    sIntake = new Intake();
     sDrivetrain = new Drivetrain();
     sElevator = new Elevator();
+    sIntake = new Intake();
     sVision = new Vision();
-    
     // OI must be inialized after Subsystems because OI
     // refrences subsystem objects.
     oi = new OI();
@@ -69,15 +54,13 @@ public class Robot extends TimedRobot {
     // This command must be defined after OI because they use
     // the joystick object in the commands
     cOpDrive = new OperatorDrive();
-
     // Updates data
-    sVision.UpdateLimelightSettings();
-    Shuffleboard.startRecording();
+  //sVision.UpdateLimelightSettings();
+    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
-    ultra.setAutomaticMode(true);
-    ultra.setDistanceUnits(Unit.kInches);
-    // ultra.setEnabled(true);
+    sVision.UpdateTelemetry();
+    Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
   }
 
   /**
@@ -91,18 +74,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    RobotMap.DrivetrainGyro.setAngleAdjustment(90);
-    SmartDashboard.putNumber("ultra", ultra.getRangeInches());
-    SmartDashboard.putNumber("limeLightSkew", sVision.getTargetSkew());
-    SmartDashboard.putNumber("Gyro adjusted", (Math.round(RobotMap.DrivetrainGyro.getYaw()/90)));
-    SmartDashboard.putNumber("limelightVert", sVision.getTargetVert());
-    SmartDashboard.putNumber("limelightHor", sVision.getTargethor());
-    SmartDashboard.putNumber("distance", (86.9 * Math.pow(sVision.getTargetArea(), -0.483)));
-    SmartDashboard.updateValues();
-    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
-    sElevator.UpdateTelemetry();
-    sDrivetrain.UpdateTelemetry();
-    sVision.UpdateTelemetry();
+    Shuffleboard.update();
   }
 
   /**
@@ -118,8 +90,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
-    sElevator.UpdateTelemetry();
-    sDrivetrain.UpdateTelemetry();
+    Shuffleboard.update();
   }
 
   /**
@@ -152,18 +123,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // ultra.setAutomaticMode(true);
-    Compressor comp= new Compressor();
-    comp.stop();
     Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    // This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove this line or comment it out.
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    cOpDrive.start(); // Tells the TeleOp Command to start
+    if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
   }
 
   /**
@@ -171,9 +137,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("ultra", ultra.getRangeInches());
-    System.out.println(ultra.getRangeInches());
-    SmartDashboard.updateValues();
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
@@ -182,8 +145,5 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-  }
-  public void ultrasonicSample(){
-    double range = ultra.getRangeInches();
   }
 }
