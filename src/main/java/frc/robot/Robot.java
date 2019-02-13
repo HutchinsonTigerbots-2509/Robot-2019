@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
+    oi.UpdateCommands();
     Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
   }
 
