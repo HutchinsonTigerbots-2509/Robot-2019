@@ -98,10 +98,6 @@ public class RobotMap {
         DrivetrainRightSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
         DrivetrainRightSlave.setSubsystem("Drivetrain");
 
-        // A Master is used as a SpeedControllerGroup in this case. This allows us to
-        // use the VictorSPX datatype for motors. However, the masters must still be
-        // Talons.
-        // NOTE: The Master Motor objects have the encoder linked to them
         DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
         DrivetrainDifferential.setDeadband(Constants.kNeutralDeadband);
         DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
@@ -125,8 +121,7 @@ public class RobotMap {
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
         ElevatorMotorSlave.setSubsystem("Elevator");
 
-        ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID,
-                Constants.kElevatorShifterReverseID);
+        ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
         ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
@@ -155,8 +150,13 @@ public class RobotMap {
 
         // #region Climb
         ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
+        ClimbMotor.setSubsystem("Climb");
+
         ClimbHighPistons = new DoubleSolenoid(1, Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
+        ClimbHighPistons.setSubsystem("Climb");
+
         ClimbLowPistons = new DoubleSolenoid(1, Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
+        ClimbLowPistons.setSubsystem("Climb");
         // #endregion Climb
 
     }

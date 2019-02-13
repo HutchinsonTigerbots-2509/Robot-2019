@@ -1,17 +1,15 @@
-package frc.robot; // package declaration
-
-// imports
+package frc.robot; 
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.OperatorDrive;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +21,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class Robot extends TimedRobot {
   /* Subsystem Declarations */
   public static Drivetrain sDrivetrain;
+  public static Climb sClimb;
   public static Elevator sElevator;
   public static Intake sIntake;
   public static Vision sVision;
@@ -37,26 +36,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // RobotMap must be initialized first because everything else uses it as
-    // a reference
+    Shuffleboard.startRecording();//Starts the Shuffleboard recording
+    // RobotMap must be initialized first
     RobotMap.init();
-    // Subsystems must be initialized next because commands/OI use
-    // the subsystems
+    // Subsystems must be initialized after RobotMap
     sDrivetrain = new Drivetrain();
+    sClimb = new Climb();
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();
-    // OI must be inialized after Subsystems because OI
-    // refrences subsystem objects.
+    // OI must be inialized after Subsystems
     oi = new OI();
-    
     // Commands must be defined after OI
-    // This command must be defined after OI because they use
-    // the joystick object in the commands
     cOpDrive = new OperatorDrive();
-    // Updates data
-  //sVision.UpdateLimelightSettings();
-    /* PUT DATA ON THE SMARTDASHBOARD/SHUFFLEBOADR */
+    // Put data on Shuffleboard
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
