@@ -153,10 +153,6 @@ public final class Constants {
     // Intake
     public static int kIntakeWristForwardID = 2;
     public static int kIntakeWristReverseID = 3;
-    public static int kIntakeGripPistonForwardID = 4;
-    public static int kIntakeGripPistonReverseID = 5; 
-    public static int kOpenIntakePistonForwardID = 4;
-    public static int kOpenIntakePistonReverseID = 5;
     public static int kIntakeHatchPistonForwardID = 6;
     public static int kIntakeHatchPistonReverseID = 7;
 

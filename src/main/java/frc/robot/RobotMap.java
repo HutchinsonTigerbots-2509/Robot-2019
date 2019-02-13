@@ -64,11 +64,8 @@ public class RobotMap {
     public static SpeedControllerGroup IntakeMotors;
     
     // Pneumatics
-    public static DoubleSolenoid IntakePushPiston;
     public static DoubleSolenoid IntakeWristPiston;
-    public static DoubleSolenoid IntakeGripPiston;
     public static DoubleSolenoid IntakeHatchPiston;
-    public static DoubleSolenoid IntakeOpenPiston;
 
     /* CLIMB */
     // Motors
@@ -162,10 +159,7 @@ public class RobotMap {
         // IntakeMotors = new SpeedControllerGroup(IntakeRightMotor, IntakeLeftMotor);
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
         IntakeMotor.setSubsystem("Intake");
-
-        IntakeGripPiston = new DoubleSolenoid(Constants.kIntakeGripPistonForwardID, Constants.kIntakeGripPistonReverseID);
-        IntakeGripPiston.setSubsystem("Intake");
-
+        
         IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         IntakeWristPiston.setSubsystem("Intake");
         

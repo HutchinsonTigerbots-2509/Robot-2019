@@ -15,9 +15,7 @@ import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
-import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeIn;
-import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractPistons;
@@ -38,8 +36,6 @@ public class OI {
 
   /* BUTTON DECLARATIONS */
   // Intake Buttons
-  private JoystickButton mCloseintake;
-  private JoystickButton mOpenintake;
   private JoystickButton mIntakein;
   private JoystickButton mIntakeout;
   private JoystickButton mWristdown;
@@ -136,13 +132,6 @@ public class OI {
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
 
     // #region Intake Subsystem Buttons
-    mCloseintake = new JoystickButton(mOpStick, 5); // Close intake
-    mCloseintake.whileHeld(new IntakeClose());
-    mCommandTab.add("IntakeClose()", new IntakeClose());
-
-    mOpenintake = new JoystickButton(mOpStick, 6); // Open intake
-    mOpenintake.whileHeld(new IntakeOpen());
-    mCommandTab.add("IntakeOpen()", new IntakeOpen());
 
     mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
     mWristdown.whileHeld(new WristDown());
@@ -251,8 +240,6 @@ public class OI {
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
     //Intake
-    mCommandTab.add("Intake Close", new IntakeClose());
-    mCommandTab.add("Intake Open", new IntakeOpen());
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
     mCommandTab.add("Intake Down", new WristDown());
