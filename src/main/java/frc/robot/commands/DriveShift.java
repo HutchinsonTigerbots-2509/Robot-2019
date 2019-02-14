@@ -7,14 +7,28 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.subsystems.Drivetrain;
 
-public class ClimbExtend extends CommandGroup {
+/**
+ * Add your docs here.
+ */
+public class DriveShift extends InstantCommand {
+  private Drivetrain mDriveTrain = new Drivetrain();
+  private boolean isShifted;
   /**
    * Add your docs here.
    */
-  public ClimbExtend() {
-    addSequential(new ClimbExtendHigher());
-    addSequential(new ClimbExtendLower());
+  public DriveShift() {
+    super();
+    requires(mDriveTrain);
   }
+
+  // Called once when the command executes
+  @Override
+  protected void initialize() {
+    isShifted = mDriveTrain.isShifted();
+    mDriveTrain.setHighGear(!isShifted);
+  }
+
 }

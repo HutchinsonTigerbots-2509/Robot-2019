@@ -1,45 +1,22 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
-public class WristDown extends Command {
-  public Intake sIntake = Robot.sIntake;
-  
+public class WristDown extends InstantCommand {
+  private Intake sIntake = Robot.sIntake;
   public WristDown() {
+    super();
     requires(sIntake);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
-  // Called just before this Command runs the first time
+  // Called once when the command executes
   @Override
   protected void initialize() {
-    sIntake.setWristPiston(Value.kReverse);                                                                
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    sIntake.setWristPiston(Value.kOff);
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    sIntake.WristPistonUp();
+    Timer.delay(0.1);
+    sIntake.StopWristPiston();
   }
 }
