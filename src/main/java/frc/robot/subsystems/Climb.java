@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -24,20 +23,11 @@ import frc.robot.RobotMap;
  * @author CRahne and Cole
  */
 public class Climb extends Subsystem {
-  //#region SUBSYSTEM IMPORT VARIBLE DECLARATIONS
-  
-  // Motors
   private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
-  
-  // Pistons
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbHighPistons; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowPistons;   // Same for the low ones
-
-  // Shuffleboard Tab
-  private final ShuffleboardTab mClimb = Shuffleboard.getTab("Climb");
+  private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
   
-  // #endregion SUBSYSTEM IMPORT VARIBLE DECLARATIONS
-
   /**
    * Constructor that adds children to the object so
    * we can play with components in test mode
@@ -48,11 +38,9 @@ public class Climb extends Subsystem {
     addChild(LowPistonSystem);
     addChild(Motor);
   }
-  // #region Climbing Voids
   
   /**
    * Extends the Higher Pistons on both sides
-   * 
    * @author CRahne
    */
   public void ExtendHigherPistons(){
@@ -61,7 +49,6 @@ public class Climb extends Subsystem {
 
   /**
    * Extends the Lower Pistons on both sides
-   * 
    * @author CRahne
    */
   public void ExtendLowerPistons(){
@@ -70,7 +57,6 @@ public class Climb extends Subsystem {
   
   /**
    * Retracts the Higher Pistons on both sides
-   * 
    * @author CRahne
    */
   public void RetractHigherPistons(){
@@ -79,7 +65,6 @@ public class Climb extends Subsystem {
 
   /**
    * Retracts the Lower Pistons on both sides
-   * 
    * @author CRahne
    */
   public void RetractLowerPistons(){
@@ -88,7 +73,6 @@ public class Climb extends Subsystem {
 
   /**
    * Stops all Pistons
-   * 
    * @author CRahne
    */
   public void StopPistons(){
@@ -96,26 +80,18 @@ public class Climb extends Subsystem {
     HighPistonSystem.set(Value.kOff);
     LowPistonSystem.set(Value.kOff);
   }
-  
-  // #endregion Climbing Voids
-
-  // #region General
 
   /**
    * Updates the data for shuffleboard
    */
   public void UpdateTelemetry(){
-    mClimb.add("Higher Pistons", getHigherPistonsStatus());
-    mClimb.add("Lower Pistons", getLowerPistonsStatus());
-    mClimb.add("Motor Speed", Motor.get());
+    mClimbTab.add("Higher Pistons", getHigherPistonsStatus());
+    mClimbTab.add("Lower Pistons", getLowerPistonsStatus());
+    mClimbTab.add("Motor Speed", Motor.get());
   }
-
-  // #endregion General
-  // #region Climb Getters
 
   /**
    * Will return the higher pistons
-   * 
    * @return High Pistons
    * @author CRahne
    */
@@ -125,7 +101,6 @@ public class Climb extends Subsystem {
 
   /**
    * Will return the lower pistons
-   * 
    * @return Low Left Piston
    * @author CRahne
    */
@@ -135,7 +110,6 @@ public class Climb extends Subsystem {
 
   /**
    * Will return whether the high pistons are extended
-   * 
    * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
    * @author CRahne
    */
@@ -151,7 +125,6 @@ public class Climb extends Subsystem {
 
   /**
    * Will return whether the low pistons are Extended or Retracted
-   * 
    * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
    * @author CRahne
    */
@@ -167,34 +140,29 @@ public class Climb extends Subsystem {
 
   /**
    * Will say if the high pistons are extended or not
-   * 
    * @return if pistons are extened or not
    * @author CRahne
    */
   public Boolean areHighPistonsExtended() {
     String state = getHigherPistonsStatus();
     if(state == "Extended") {
-      SmartDashboard.putString("High Climb Piston State", state);
       return true;
     }
     return false;
   }
+
   /**
    * Will say if the low pistons are extended or not
-   * 
    * @return if pistons are extened or not
    * @author CRahne
    */
   public Boolean areLowPistonsExtended() {
     String state = getLowerPistonsStatus();
     if(state == "Extended") {
-      SmartDashboard.putString("Low Climb Piston State", state);
       return true;
     }
     return false;
   }
-
-  // #endregion Climb Getters
 
   @Override
   public void initDefaultCommand() {
