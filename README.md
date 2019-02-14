@@ -18,20 +18,24 @@ The code is divided into several packages, each responsible for a different aspe
 
 ### Wiring Compontents Diagram
 
-Subsystem | Controller | Name | ID | PDP |
---------- | ---------- | ---- | -- | ---|
-Drive     | TalonSRX   | Left Front | 0  | - |
-Drive     | TalonSRX   | Left Rear | 1  | - |
-Drive     | TalonSRX   | Right Front | 2  | - |
-Drive     | TalonSRX   | Right Rear | 3  | - |
-<<<<<<< HEAD
-Elevator  | TalonSRX   | Master | 4 | - |
-Elevator  | VictorSPX  | Slave | 5 | - |
-=======
-Intake    | VictorSP   | Left | 1 | - |
-Intake    | VictorSP   | Right | 2 | - |
+Subsystem  | Controller       | Name           | ID     | PDP  |
+---------- | ---------------- | -------------- | ------ | ---- |
+Drive      | TalonSRX         | Right Master   | 0      | ---- |
+Drive      | VictorSPX        | Right Slave    | 1      | ---- |
+Drive      | TalonSRX         | Left Master    | 2      | ---- |
+Drive      | VictorSPX        | Left Slave     | 3      | ---- |
+Drive      | Double Solenoid  | Shifter        | 0,1    | ---- |
+Elevator   | TalonSRX         | Master         | 4      | ---- |
+Elevator   | VictorSPX        | Slave          | 5      | ---- |
+Elevator   | Double Solenoid  | Shifter        | 12,13  | ---- |
+Intake     | VictorSP         | Main           | 1      | ---- |
+Intake     | Double Solenoid  | Wrist          | 1      | ---- |
+Intake     | Double Solenoid  | Hatch Pistons  | 1      | ---- |
+Climb      | TalonSRX         | Main           | 4      | ---- |
+Climb      | Double Solenoid  | High System    | 6,7    | ---- |
+Climb      | Double Solenoid  | Low System     | 8,9    | ---- |
 
->>>>>>> pseudoMaster
+
 
 ## Code Highlights
 
