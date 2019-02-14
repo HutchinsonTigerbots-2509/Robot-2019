@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -27,14 +26,10 @@ import frc.robot.RobotMap;
  * @author CRahne, Tony, and Cole G
  */
 public class Intake extends Subsystem {
-  // #region SUBSYSTEM VARIBLE DECLARATIONS
-  
   private final VictorSP mMotor = RobotMap.IntakeRightMotor;
   private final DoubleSolenoid mWristPiston = RobotMap.IntakeWristPiston;
   private final DoubleSolenoid mHatchOutPiston = RobotMap.IntakeHatchPiston; // Works as two pistons
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
-
-  //#endregion SUBSYSTEM VARIBLE DECLARATIONS
 
   public Intake(){
     setSubsystem("Intake");
@@ -43,13 +38,28 @@ public class Intake extends Subsystem {
     addChild(mHatchOutPiston);
   }
 
-  // #region Hatch
+  /**
+   * Will start the hatch pickup process
+   * @author CRahne
+   */
+  public void HatchStart() { // 2/2/2019
+    MotorStop();
+    // CloseArms();
+    WristPistonDown();
+  }
 
   /**
-   * Will intake a hatch after making sure it doesn't have a 
-   * ball in the intake
-   * 
-   * @category Hatch
+   * Will end the hatch pick up process
+   * @author CRahne
+   */
+  public void HatchEnd() { // 2/2/2019
+    WristPistonUp();
+    RetractHatchOutPistons();
+  }
+
+  /**
+   * Will detach the hatch from the subsystem
+   * for a score
    * @author CRahne
    */
   public void IntakeHatch() {
@@ -61,32 +71,38 @@ public class Intake extends Subsystem {
       // setGripPiston(Value.kReverse);
       // setWristPiston(Value.kReverse); // IDK
     // }
-    SmartDashboard.putString("Intake Is: ", "Intaking Hatch");
     setHatchPistons(Value.kReverse);
     setWristPiston(Value.kForward); // Still IDK
   }
 
   /**
    * Will eject a hatch after making sure it has a hatch
-   * 
-   * @category Hatch
    * @author CRahne
    */
   public void EjectHatch() {
-    SmartDashboard.putString("Intake Is: ", "Ejecting Hatch");
     setWristPiston(Value.kForward);
     setHatchPistons(Value.kForward);
     setHatchPistons(Value.kReverse);
   }
+
   /**
-   * Will set the gripper piston on the intake subsystem
-   * to the value passed in the parameter
-   * 
-   * <li> <b>To Eject the Pistons: </b> Set the value to Value.kForward
-   * <li> <b>To Retract the Pistons: </b> Set the value to Value.kReverse
-   * <li> <b>To turn off Pistons: </b> Set the value to Value.kOff
-   * 
-   * @category Ball
+   * Retract the `hatch out` pistons
+   * @author CRahne
+   */
+  public void RetractHatchOutPistons() {
+    mHatchOutPiston.set(Value.kReverse);
+  }
+
+  /**
+   * Will extend the Hatch Out Pistons
+   * @author CRahne
+   */
+  public void ExtendHatchOutPistons() {
+    mHatchOutPiston.set(Value.kForward);
+  }
+
+  /**
+   * Will stop the hatch Pistons
    * @author CRahne
    * @param Value that the piston will be set to
    */
@@ -101,8 +117,21 @@ public class Intake extends Subsystem {
    * <li> <b>To Lift the Wrist Mechanism: </b> Set the value to Value.kForward
    * <li> <b>To Lower the Wrist Mechanism: </b> Set the value to Value.kReverse
    * <li> <b>To turn off Piston: </b> Set the value to Value.kOff
-   * 
-   * @category Ball
+   * /
+  public void StopHatchOutPistons() {
+    mHatchOutPiston.set(Value.kOff);
+  }
+
+  /**
+   * Sets the Intake motors to take in.
+   * @author CRahne
+   */
+  public void WristPistonUp() {
+    mWristPiston.set(Value.kForward);
+  }
+
+  /**
+   * Sets the Intake motors to reverse and push out
    * @author CRahne
    * @param value - the value that the piston will be set to
    */
@@ -115,8 +144,6 @@ public class Intake extends Subsystem {
 
   /**
    * Intakes a Ball after checking if it might have a hatch
-   * 
-   * @category Ball
    * @author CRahne
    */
   public void IntakeBall() {
@@ -126,38 +153,61 @@ public class Intake extends Subsystem {
       // setHatchPistons(Value.kReverse);
       // setWristPiston(Value.kReverse); // IS THIS RIGHT?
     // }
-    SmartDashboard.putString("Intake Is: ", "Getting A Ball");
     setWristPiston(Value.kReverse); // IS THIS RIGHT?
+    }
+
+  public void WristPistonDown() {
+    mWristPiston.set(Value.kReverse);
+  }
+
+  /**
+   * Stops the intake wrist
+   * @author Cole
+   * @author Tony
+   */
+  public void StopWristPiston() {
+    mWristPiston.set(Value.kOff);
+  }
+
+  /**
+   * Will take a ball in
+   * @author CRahne
+   */
+  public void In() { // 2/2/2019
+    // OpenArms();
     MotorIn();
   }
 
   /**
    * Ejects the ball after making sure the intake subsystem has a ball
-   * 
-   * @category Ball
    * @author CRahne
    */
   public void EjectBall() {
-    SmartDashboard.putString("Intake Is: ", "Ejecting A Ball");
     MotorReverse();
+  }
+  /**
+   * Will shoot a ball out
+   * @author CRahne
+   */
+  public void Close() { // 2/2/2019
+    MotorStop();
+    // CloseArms();
   }
 
   /**
    * Will stop everything in the ball system
-   * 
-   * @category Ball
    * @author CRahne
    */
   public void StopBallIntake() {
     MotorStop();
     setWristPiston(Value.kReverse); // Or kForward depending on how it works
     setWristPiston(Value.kOff);
+    // StopArmPiston();
+    StopWristPiston();
   }
 
   /**
    * Sets the Intake motors to take in.
-   * 
-   * @category Ball
    * @author Cole
    * @author Tony
    */
@@ -167,8 +217,6 @@ public class Intake extends Subsystem {
 
   /**
    * Will shoot the ball out
-   * 
-   * @category Ball
    * @author CRahne
    */
   public void MotorReverse() {
@@ -177,9 +225,6 @@ public class Intake extends Subsystem {
 
   /**
    * Stops the intake motors
-   * 
-   * @category Ball
-   * @author Cole
    * @author Tony
    */
   public void MotorStop() {
@@ -188,8 +233,6 @@ public class Intake extends Subsystem {
 
   /**
    * Resets the ball system.
-   * 
-   * @category Ball
    * @author CRahne
    */
   public void resetBallMechanism() {
@@ -197,13 +240,27 @@ public class Intake extends Subsystem {
     setWristPiston(Value.kReverse);
   }
 
+  /**
+   * Opens the Intake Arms
+   * @author CRahne
+   */
+  // public void OpenArms() {
+  //   mGripPiston.set(Value.kForward);
+  // }
+
+  /**
+   * Closes the Intake Arms
+   * @author CRahne
+   */
+  // public void CloseArms() {
+  //   mGripPiston.set(Value.kReverse);
+  // }
+
   // #endregion Ball 
   // #region General
   
   /**
    * Will end all components of the subsystem
-   * 
-   * @category General
    * @author CRahne
    */
   public void EndAll() {
@@ -214,13 +271,14 @@ public class Intake extends Subsystem {
 
   /**
    * If the EndAll() void doesn't work
-   * 
-   * @category General
    * @author CRahne
    */
   public void RetractAllPistons() {
     setHatchPistons(Value.kReverse);
     MotorStop();
+    RetractHatchOutPistons();
+    // CloseArms();
+    WristPistonUp();
   }
 
   /**
@@ -229,29 +287,33 @@ public class Intake extends Subsystem {
   public void UpdateTelemetry() {
     mIntakeTab.add("Motor Speed", mMotor.get());
     mIntakeTab.add("Hatch Pistons Status", getHatchPistonStatus());
+    // mIntakeTab.add("Grip Status", getGripStatus());
     mIntakeTab.add("Wrist Status", getWristStatus());
     Shuffleboard.update();
   }
-
-  //#endregion General
-  // #region Intake Getters
   
   /**
    * Will return the intake motor
-   * 
-   * @category Intake Getters
    * @author CRahne
    * @return Intake Motor
    */
   public VictorSP getIntakeMotor() {
     return mMotor;
   }
+  
+  /**
+   * Will return the gripper piston that opens
+   * and closes the arms of the intake
+   * @author CRahne
+   * @return Grip Piston
+   */
+  // public DoubleSolenoid getGripperPiston() {
+  //   return mGripPiston;
+  // }
 
   /**
    * Will return the wrist piston that moves
    * the intake subsystem up and down (for hatch)
-   * 
-   * @category Intake Getters
    * @author CRahne
    * @return Wrist Piston
    */
@@ -261,8 +323,6 @@ public class Intake extends Subsystem {
 
   /**
    * Will return the Hatch Ejection Piston
-   * 
-   * @category Intake Getters
    * @author CRahne
    * @return Hatch Eject Piston
    */
@@ -275,8 +335,6 @@ public class Intake extends Subsystem {
    * <p> `kReverse` = The pistons are retracted and not in use
    * <p> `kForward` = The pistons are extended and ejecting a hatch panel
    * <p> `kOff` = Pistons are off and not doing anything
-   * 
-   * @category Intake Getters
    * @author CRahne
    * @return Hatch Pistons Status
    */
@@ -289,15 +347,11 @@ public class Intake extends Subsystem {
    * <p> `kReverse` = Piston is set to Reverse and not collecting a hatch panel </p>
    * <p> `kForward` = Piston is set to Forward and collecting a hatch panel </p>
    * <p> `kOff` = Piston is set to Off / default value </p>
-   * 
-   * @category Intake Getters
    * @return Grip Piston Status
    */
   public Value getWristStatus(){
     return mWristPiston.get();
   }
-
-  // #endregion Intake Getters
   
   @Override
   public void initDefaultCommand() {

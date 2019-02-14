@@ -7,14 +7,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.subsystems.Climb;
 
-public class ClimbExtend extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public ClimbExtend() {
-    addSequential(new ClimbExtendHigher());
-    addSequential(new ClimbExtendLower());
+public class ClimbExtendLower extends InstantCommand {
+  private final Climb sClimb = new Climb();
+  public ClimbExtendLower() {
+    super();
+    requires(sClimb);
+  }
+  
+  @Override
+  protected void initialize() {
+    sClimb.ExtendLowerPistons();
+    Timer.delay(0.1);
+    sClimb.StopPistons();
   }
 }

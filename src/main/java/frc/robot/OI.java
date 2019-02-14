@@ -1,6 +1,5 @@
-package frc.robot; // package declaration
+package frc.robot; 
 
-// imports
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -11,6 +10,7 @@ import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
 import frc.robot.commands.ChangeState;
 import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
@@ -19,7 +19,6 @@ import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractPistons;
-import frc.robot.commands.Shift;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Vision;
@@ -48,7 +47,7 @@ public class OI {
   private JoystickButton mHeightToggle;
   private JoystickButton mElevatorShift;
 
-  //Drive Train
+  // Drive Train
   private JoystickButton mShifter;
 
   // Vision Alignment Buttons
@@ -61,7 +60,7 @@ public class OI {
   private JoystickButton Distance_Calculated;
   private JoystickButton Follow_alingment_tape_Button;
   private JoystickButton Reset_gyro;
-  
+
   // Climb
   private JoystickButton ExtendClimbPistons;
   private JoystickButton RetractClimbPistons;
@@ -100,13 +99,13 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
   // #endregion
-  
+
   /**
-   * OI class constructor that will create an object with access to all
-   * of the buttons and joysticks
+   * OI class constructor that will create an object with access to all of the
+   * buttons and joysticks
    */
   public OI() {
-    sVision  = Robot.sVision;
+    sVision = Robot.sVision;
     mCommandTab = Shuffleboard.getTab("Commands");
     /* Joysticks & Buttons */
 
@@ -116,16 +115,16 @@ public class OI {
 
     Distance_Calculated = new JoystickButton(mOpStick, 11);
     Distance_Calculated.whenPressed(new Angle_check());
-    //AlignButton.toggleWhenPressed(new FollowTarget(0));
-    
+    // AlignButton.toggleWhenPressed(new FollowTarget(0));
+
     AlignButton = new JoystickButton(mOpStick, 5);
-    //AlignButton.toggleWhenPressed(new FollowTarget(0));
+    // AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
-    //AlignButton.toggleWhenPressed(new FollowTarget(0));
+    // AlignButton.toggleWhenPressed(new FollowTarget(0));
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-    mCoOpStick = new Joystick(1);
+
     // #endregion
 
     // AlignButtonPID = new JoystickButton(mOpStick, 10);
@@ -139,7 +138,7 @@ public class OI {
     mWristup = new JoystickButton(mOpStick, 6); // Wrist up
     mWristup.whileHeld(new WristUp());
     // #endregion
-    
+
     // #region Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
@@ -147,22 +146,21 @@ public class OI {
     AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
 
-    //Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
-    //Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
+    // Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
+    // Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
 
     Follow_hatch_Button = new JoystickButton(mOpStick, 4);
     Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
 
     Follow_alingment_tape_Button = new JoystickButton(mOpStick, 3);
     Follow_alingment_tape_Button.toggleWhenPressed(new Follow_target(1, -0.05, -0.02));
-    
+
     Follow_ball_Button = new JoystickButton(mOpStick, 6);
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
 
     Reset_gyro = new JoystickButton(mOpStick, 2);
     Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
-    
 
     ExtendClimbPistons = new JoystickButton(mOpStick, 0);
     ExtendClimbPistons.whenPressed(new ClimbExtend());
@@ -172,7 +170,7 @@ public class OI {
 
     /* Drivetrain */
     mShifter = new JoystickButton(mOpStick, 12);
-    mShifter.whenPressed(new Shift());
+    mShifter.whenPressed(new DriveShift());
     // #endregion
 
     // #region Vision & NetworkTables
@@ -183,8 +181,7 @@ public class OI {
 
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
-    mHeightToggle.toggleWhenPressed(new HeightToggle());
-    mHeightToggle.toggleWhenPressed(new ChangeState());
+    // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
@@ -222,7 +219,7 @@ public class OI {
   public void UpdateCommands(){
 
     //Drivetrain
-    mCommandTab.add("Drivetrain Shift", new Shift());
+    mCommandTab.add("Drivetrain Shift", new DriveShift());
     mCommandTab.add("Gyro Reset", new ResetGyro());
 
     //Climb
@@ -240,6 +237,8 @@ public class OI {
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
     //Intake
+    // mCommandTab.add("Intake Close", new IntakeClose());
+    // mCommandTab.add("Intake Open", new IntakeOpen());
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
     mCommandTab.add("Intake Down", new WristDown());
