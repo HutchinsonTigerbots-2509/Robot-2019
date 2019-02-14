@@ -25,9 +25,6 @@ public class HeightToggle extends Command {
   private JoystickButton mHighButton;
 
   public HeightToggle() {
-    mHighButton = Robot.oi.mElevatorHigh;
-    mMidButton = Robot.oi.mElevatorMid;
-    mLowButton = Robot.oi.mElevatorLow;
   }
 
   @Override
