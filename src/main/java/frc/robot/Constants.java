@@ -54,11 +54,13 @@ public final class Constants {
     public static double kElevatorSensitivity = 0.5;
     public static int kEncoderErrorRange = 2; // 5?
     public static double kMaxElevatorSpeed =0.9;
+    public static double kHomePositionInches = 5;
+    public static double kHighGearRatio = 0.588235; //Not currently used, numbers not checked
+    public static double kLowGearRatio = 0.19;//Numbers not checked
 
-    public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
+    public static double kMaxHieght = 72;//All of these are hieghts off the ground inches (also not used I think)
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
-    public static double kHomePositionInches = 5;
 
     public static double kHatchLow = 20.0;
     public static double kHatchMid = 47.5;

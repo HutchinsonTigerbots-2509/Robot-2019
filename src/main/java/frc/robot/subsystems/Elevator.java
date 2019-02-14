@@ -122,6 +122,8 @@ public class Elevator extends Subsystem {
 
   /**
    * Changes gear when arm is going down Smith wanted but not currently used
+   * 
+   * HAS NO GEAR RATIO CHANGES FOR HIGH GEAR SHIFT
    */
   public void ChaseTargetGearChanger() {
     if (PIDFinal() > 0) {
@@ -240,13 +242,13 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * * Will return the inches off the ground that the elevator is
+   * * Will return the inches off the ground that the elevator is (low gear ratio)
    * @author Nate
    * @return Current Height in Inches
    */
   public double getInchesOffGround() {
     double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
-    return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
+    return (currentRawPosition / kTicksPerInch)*Constants.kLowGearRatio + kHomePositionInches;
   }
 
   @Override
