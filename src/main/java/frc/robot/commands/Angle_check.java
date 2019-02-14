@@ -41,7 +41,7 @@ public class Angle_check extends Command {
   @Override
   protected void initialize() {
     //Y = (sVision.getTargetY());
-    Gyro_angle = RobotMap.Drivetrain_Gyro.getYaw();
+    Gyro_angle = RobotMap.DrivetrainGyro.getYaw();
     distance = sVision.cal_distance();
     
   }
@@ -52,7 +52,7 @@ public class Angle_check extends Command {
     //SmartDashboard.putNumber("distance", (distance));
     //Gyro_angle = RobotMap.Drivetrain_Gyro.getYaw();
     //Gyro_angle_absolute = Math.abs(Gyro_angle);
-    Gyro_angle_raw = RobotMap.Drivetrain_Gyro.getYaw();
+    Gyro_angle_raw = RobotMap.DrivetrainGyro.getYaw();
     Gyro_angle_adjusted = Math.abs(Math.toRadians(((Math.round(Gyro_angle_raw/90)*90))));
     Angle_off = Math.toRadians(Gyro_angle_raw - Gyro_angle_adjusted);
     distance = sVision.cal_distance();

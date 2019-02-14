@@ -4,5 +4,6 @@
   "git.autofetch": true,
   "git.autorefresh": true,
   "git.postCommitCommand": "sync",
-  "git.fetchOnPull": true
+  "git.fetchOnPull": true,
+  "wpilib.deployOffline": false
 }

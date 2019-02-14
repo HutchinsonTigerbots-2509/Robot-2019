@@ -17,7 +17,8 @@ public final class Constants {
     public static double kMaxSpeed = 0.95;
     public static double kSlowSpeed = 0.45; // IDK but sure
     public static double kReverseFastSpeed = -kMaxSpeed;
-    public static double kReverseSlowSpeed = -kSlowSpeed;    
+    public static double kReverseSlowSpeed = -kSlowSpeed;
+    public static double minMoveSpeed = 0.1; // For OperatorDrive void in Drivetrain.java
     public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
     public static double kNeutralDeadband = 0.04;
@@ -25,7 +26,7 @@ public final class Constants {
     public static double kPulsesPerRevoultuion = 256;
 
     /* Drivetrain */    
-    // PID
+    // Wheel Info
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
     
@@ -58,6 +59,13 @@ public final class Constants {
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
     public static double kHomePositionInches = 5;
+
+    public static double kHatchLow = 20.0;
+    public static double kHatchMid = 47.5;
+    public static double kHatchHigh = 75.0;
+    public static double kBallLow = 28.5;
+    public static double kBallMid = 56.0;
+    public static double kBallHigh = 83.0;
 
     public static int kElevatorMasterID = 4;
     public static int kElevatorSlaveID = 5;
@@ -139,8 +147,8 @@ public final class Constants {
     public static int kDrivetrainShifterReverseID = 1;
     
     // Elevator
-    public static int kElevatorShifterForwardID = 12;
-    public static int kElevatorShifterReverseID = 13;
+    public static int kElevatorShifterForwardID = 0;
+    public static int kElevatorShifterReverseID = 1;
     
     // Intake
     public static int kIntakeWristForwardID = 2;
@@ -154,9 +162,9 @@ public final class Constants {
 
     // Climb
      // High 
-     public static int kClimbHighForwardID = 12;
-     public static int kClimbHighReverseID = 13;
+     public static int kClimbHighForwardID = 2;
+     public static int kClimbHighReverseID = 3;
      // Low
-     public static int kClimbLowForwardID = 14;
-     public static int kClimbLowReverseID = 15;
+     public static int kClimbLowForwardID = 4;
+     public static int kClimbLowReverseID = 5;
 }

@@ -162,8 +162,8 @@ public class Vision extends Subsystem {
    */
   public void UpdateTelemetry(){
     PullFromTable();
-    mVisionTab.add("Target X", mTableX.getDouble(0));
-    mVisionTab.add("Target Y", mTableY.getDouble(0));
-    mVisionTab.add("Target Area", mTableArea.getDouble(0));
+  //   mVisionTab.add("Target X", mTableX.getDouble(0));
+  //   mVisionTab.add("Target Y", mTableY.getDouble(0));
+  //   mVisionTab.add("Target Area", mTableArea.getDouble(0));
   }
 }
