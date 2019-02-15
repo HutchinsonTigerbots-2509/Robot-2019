@@ -18,8 +18,6 @@ import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractPistons;
-import frc.robot.commands.WristDown;
-import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -38,8 +36,8 @@ public class OI {
   private JoystickButton mOpenintake;
   private JoystickButton mIntakein;
   private JoystickButton mIntakeout;
-  private JoystickButton mWristdown;
-  private JoystickButton mWristup;
+  // private JoystickButton mWristdown;
+  // private JoystickButton mWristup;
 
   // Elevator Buttons
   public JoystickButton mElevatorHigh;
@@ -149,11 +147,11 @@ public class OI {
       mCommandTab.add("IntakeOut()", new IntakeOut());
     }
 
-    mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
-    mWristdown.whileHeld(new WristDown());
+    // mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
+    // mWristdown.whileHeld(new WristDown());
 
-    mWristup = new JoystickButton(mOpStick, 6); // Wrist up
-    mWristup.whileHeld(new WristUp());
+    // mWristup = new JoystickButton(mOpStick, 6); // Wrist up
+    // mWristup.whileHeld(new WristUp());
     // #endregion
 
     // #region Vision Subsystem
@@ -258,8 +256,8 @@ public class OI {
     // mCommandTab.add("Intake Open", new IntakeOpen());
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
-    mCommandTab.add("Intake Down", new WristDown());
-    mCommandTab.add("Intake Up", new WristUp());
+    // mCommandTab.add("Intake Down", new WristDown());
+    // mCommandTab.add("Intake Up", new WristUp());
 
     //Vision
     mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));

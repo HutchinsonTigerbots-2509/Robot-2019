@@ -24,8 +24,8 @@ import frc.robot.RobotMap;
  */
 public class Climb extends Subsystem {
   private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
-  private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbHighPistons; // 2 Pistons, one on each side
-  private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowPistons;   // Same for the low ones
+  private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
+  private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
   
   /**
