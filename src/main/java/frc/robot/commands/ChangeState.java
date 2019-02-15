@@ -43,10 +43,10 @@ public class ChangeState extends InstantCommand {
   protected void initialize() {
     if(mState==State.CargoState){
       mOI.setElevatorButtonsCargo();
-      if(sIntake.getWristStatus() != Value.kReverse){
-        sIntake.setWristPiston(Value.kReverse);
+      //if(sIntake.getWristStatus() != Value.kReverse){
+      //  sIntake.setWristPiston(Value.kReverse);
       }
-    }
+    //}
     if(mState==State.HatchState){
       mOI.setElevatorButtonsHatch();
     }
