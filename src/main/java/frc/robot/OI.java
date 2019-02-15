@@ -9,6 +9,7 @@ import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
 import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorRise;
 import frc.robot.commands.ElevatorShift;
@@ -17,7 +18,6 @@ import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.RetractPistons;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -36,8 +36,6 @@ public class OI {
   private JoystickButton mOpenintake;
   private JoystickButton mIntakein;
   private JoystickButton mIntakeout;
-  // private JoystickButton mWristdown;
-  // private JoystickButton mWristup;
 
   // Elevator Buttons
   public JoystickButton mElevatorHigh;
@@ -47,7 +45,7 @@ public class OI {
   private JoystickButton mElevatorShift;
 
   // Drive Train
-  private JoystickButton mShifter;
+  private JoystickButton DriveShifter;
 
   // Vision Alignment Buttons
   private JoystickButton AlignButton;
@@ -61,8 +59,8 @@ public class OI {
   private JoystickButton Reset_gyro;
 
   // Climb
-  private JoystickButton ExtendClimbPistons;
-  private JoystickButton RetractClimbPistons;
+  private JoystickButton ExtendClimbPistons; // Should extend the climb pistons in sequence
+  private JoystickButton RetractClimbPistons; // Should retract the climb pistons in sequence
 
   /* Misc */
   private ShuffleboardTab mCommandTab;
@@ -105,7 +103,9 @@ public class OI {
    */
   public OI() {
     sVision = Robot.sVision;
+    
     mCommandTab = Shuffleboard.getTab("Commands");
+    
     /* Joysticks & Buttons */
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
@@ -176,16 +176,20 @@ public class OI {
     Reset_gyro = new JoystickButton(mOpStick, 2);
     Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
-
+    // #region Climb Subsystem
+    
     ExtendClimbPistons = new JoystickButton(mOpStick, 0);
     ExtendClimbPistons.whenPressed(new ClimbExtend());
 
     RetractClimbPistons = new JoystickButton(mOpStick, 1);
-    RetractClimbPistons.whenPressed(new RetractPistons());
+    RetractClimbPistons.whenPressed(new ClimbRetract());
+    
+    // #endregion Climb Subsystem
+    // #region Drivetrain Subsystem
 
-    /* Drivetrain */
-    mShifter = new JoystickButton(mOpStick, 12);
-    mShifter.whenPressed(new DriveShift());
+    DriveShifter = new JoystickButton(mOpStick, 12);
+    DriveShifter.whenPressed(new DriveShift());
+    
     // #endregion
 
     // #region Vision & NetworkTables
@@ -239,7 +243,7 @@ public class OI {
 
     //Climb
     mCommandTab.add("Climb Extend", new ClimbExtend());
-    mCommandTab.add("Climb Retract", new RetractPistons());
+    mCommandTab.add("Climb Retract", new ClimbRetract());
 
     //Elevator
     mCommandTab.add("Elevator Hatch High", new ElevatorRise(Constants.kHatchHigh));

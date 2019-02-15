@@ -145,15 +145,18 @@ public class RobotMap {
         // #endregion
 
         // #region Climb
+        
         ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
         ClimbMotor.setSubsystem("Climb");
 
-        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
-        ClimbUpperPiston.setSubsystem("Climb");
-
+        // Stage 1 - Should fire first
         ClimbLowerPiston = new DoubleSolenoid(1, Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
-        // #endregion Climb
 
+        // Stage 2 - Should fire Second
+        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        ClimbUpperPiston.setSubsystem("Climb");
+        
+        // #endregion Climb
     }
 }
