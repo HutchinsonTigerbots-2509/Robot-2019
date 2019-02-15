@@ -9,6 +9,7 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.State;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+  public static State robotState;
 
   /**
    * This function is run when the robot is first started up and should be used

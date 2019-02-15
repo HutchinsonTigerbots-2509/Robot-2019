@@ -11,7 +11,7 @@ package frc.robot;// package declaration
 public final class Constants {
     public Constants() {
     }
-
+    
     //#region Constant Values
     /* Motors */
     public static double kMaxSpeed = 0.95;
@@ -132,10 +132,11 @@ public final class Constants {
     public static int kElevatorShifterForwardID = 2;
     public static int kElevatorShifterReverseID = 3;
     // Intake
-    public static int kIntakeWristForwardID = 2;
-    public static int kIntakeWristReverseID = 3;
-    public static int kIntakeHatchPistonForwardID = 6;
-    public static int kIntakeHatchPistonReverseID = 7;
+    // public static int kIntakeWristForwardID = 2;
+    // public static int kIntakeWristReverseID = 3;
+    // public static int kIntakeHatchPistonForwardID = 6;
+    // public static int kIntakeHatchPistonReverseID = 7;
+    public static int kWristMotorID = 6;
     // Climb
     public static int kClimbUpperForwardID = 6;
     public static int kClimbUpperReverseID = 7;

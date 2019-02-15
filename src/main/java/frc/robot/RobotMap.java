@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -50,6 +51,7 @@ public class RobotMap {
     /* INTAKE */
     // Motors
     public static VictorSP IntakeMotor;
+    public static WPI_TalonSRX WristMotor;
     // Pneumatics
     // public static DoubleSolenoid IntakeWristPiston;
     // public static DoubleSolenoid IntakeHatchPiston;
@@ -108,14 +110,18 @@ public class RobotMap {
 
         // #region Elevator
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
+        ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         // ElevatorMotorMaster.setInverted(false);
-        ElevatorMotorMaster.setSubsystem("Elevator");
+        ElevatorMotorMaster.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        ElevatorMotorMaster.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
+        ElevatorMotorSlave.setSubsystem("Elevator");
         ElevatorMotorSlave.follow(ElevatorMotorMaster);
         ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        ElevatorMotorSlave.setSubsystem("Elevator");
+        ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
@@ -136,6 +142,8 @@ public class RobotMap {
         // #region Intake
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
         IntakeMotor.setSubsystem("Intake");
+        WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
+        WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         // IntakeWristPiston.setSubsystem("Intake");

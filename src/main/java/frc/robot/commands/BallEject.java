@@ -22,13 +22,13 @@ public class BallEject extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.MotorOut();
+    sIntake.MotorReverse();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.MotorOut();
+    sIntake.MotorReverse();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,13 +40,13 @@ public class BallEject extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.StopAllBallSystem();
+    sIntake.EndAll();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    sIntake.StopAllBallSystem();
+    sIntake.EndAll();
   }
 }
