@@ -49,21 +49,17 @@ public class RobotMap {
 
     /* INTAKE */
     // Motors
-    public static VictorSP IntakeRightMotor;
-    public static VictorSP IntakeLeftMotor;
     public static VictorSP IntakeMotor;
-    // Motor Groups
-    public static SpeedControllerGroup IntakeMotors;
     // Pneumatics
-    public static DoubleSolenoid IntakeWristPiston;
-    public static DoubleSolenoid IntakeHatchPiston;
+    // public static DoubleSolenoid IntakeWristPiston;
+    // public static DoubleSolenoid IntakeHatchPiston;
 
     /* CLIMB */
     // Motors
     public static WPI_TalonSRX ClimbMotor;
     // Pneumatics
-    public static DoubleSolenoid ClimbHighPistons;
-    public static DoubleSolenoid ClimbLowPistons;
+    public static DoubleSolenoid ClimbUpperPiston;
+    public static DoubleSolenoid ClimbLowerPiston;
 
     public static void init() {
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
@@ -145,22 +141,22 @@ public class RobotMap {
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
         IntakeMotor.setSubsystem("Intake");
 
-        IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
-        IntakeWristPiston.setSubsystem("Intake");
+        // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
+        // IntakeWristPiston.setSubsystem("Intake");
 
-        IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID);
-        IntakeHatchPiston.setSubsystem("Intake");
+        // IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID);
+        // IntakeHatchPiston.setSubsystem("Intake");
         // #endregion
 
         // #region Climb
         ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
         ClimbMotor.setSubsystem("Climb");
 
-        ClimbHighPistons = new DoubleSolenoid(1, Constants.kClimbHighForwardID, Constants.kClimbHighReverseID);
-        ClimbHighPistons.setSubsystem("Climb");
+        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        ClimbUpperPiston.setSubsystem("Climb");
 
-        ClimbLowPistons = new DoubleSolenoid(1, Constants.kClimbLowForwardID, Constants.kClimbLowReverseID);
-        ClimbLowPistons.setSubsystem("Climb");
+        ClimbLowerPiston = new DoubleSolenoid(1, Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
+        ClimbLowerPiston.setSubsystem("Climb");
         // #endregion Climb
 
     }

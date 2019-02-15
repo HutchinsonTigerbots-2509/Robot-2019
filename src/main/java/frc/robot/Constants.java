@@ -67,9 +67,6 @@ public final class Constants {
     public static double kBallMid = 56.0;
     public static double kBallHigh = 83.0;
 
-    public static int kElevatorMasterID = 4;
-    public static int kElevatorSlaveID = 5;
-
     /* Vision */
     // Physical
     public static double kCameraHeight = 4;
@@ -114,53 +111,34 @@ public final class Constants {
     public static int kDrivetrainLeftSlaveID = 1;
     public static int kDrivetrainRightMasterID = 2;
     public static int kDrivetrainRightSlaveID = 3;
-    // Encoder ID
-    public static int kDrivetrainEncoderLeftAID = 0;
-    public static int kDrivetrainEncoderLeftBID = 1;
-    public static int kDrivetrainEncoderRightAID = 2;
-    public static int kDrivetrianEncoderRightBID = 3;
-
+    // Elevator
+    public static int kElevatorMasterID = 4;
+    public static int kElevatorSlaveID = 5;
     // Climb
-    public static int kClimbMotorID = 6;
-    public static int kClimbLeftHigherID = 6;
-    public static int kClimbLeftLowerID = 8;
-    public static int kClimbRightHigherID = 7;
-    public static int kClimbRightLowerID = 9;
+    public static int kClimbMotorID = 0;
     
     // Intake
-    // public static int kIntakeRightMotorID = 4;
-    // public static int kIntakeLeftMotorID = 5;
-    public static int kIntakeMotorID = 4;
+    public static int kIntakeMotorID = 1;
 
     /* DigitalInput ID */
-    // public static int kDrivetrainEncoderLeftAID = 0;
-    // public static int kDrivetrainEncoderLeftBID = 1;
-    // public static int kDrivetrainEncoderRightAID = 2;
-    // public static int kDrivetrianEncoderRightBID = 3;
     public static int kElevatorLeftLimitID = 0;
     public static int kElevatorRightLimitID = 1;
-
 
     /* Pneumatics ID */
     // Drivetrain
     public static int kDrivetrainShifterForwardID = 0;
     public static int kDrivetrainShifterReverseID = 1;
-    
     // Elevator
-    public static int kElevatorShifterForwardID = 0;
-    public static int kElevatorShifterReverseID = 1;
-    
+    public static int kElevatorShifterForwardID = 2;
+    public static int kElevatorShifterReverseID = 3;
     // Intake
-    public static int kIntakeWristForwardID = 2;
-    public static int kIntakeWristReverseID = 3;
-    public static int kIntakeHatchPistonForwardID = 6;
-    public static int kIntakeHatchPistonReverseID = 7;
-
+    // public static int kIntakeWristForwardID = 2;
+    // public static int kIntakeWristReverseID = 3;
+    // public static int kIntakeHatchPistonForwardID = 6;
+    // public static int kIntakeHatchPistonReverseID = 7;
     // Climb
-     // High 
-     public static int kClimbHighForwardID = 2;
-     public static int kClimbHighReverseID = 3;
-     // Low
-     public static int kClimbLowForwardID = 4;
-     public static int kClimbLowReverseID = 5;
+    public static int kClimbUpperForwardID = 6;
+    public static int kClimbUpperReverseID = 7;
+    public static int kClimbLowerForwardID = 4;
+    public static int kClimbLowerReverseID = 5;
 }
