@@ -38,8 +38,7 @@ public class RobotMap {
 
     /* ELEVATOR */
     // Motors
-    public static WPI_TalonSRX ElevatorMotorMaster;
-    public static WPI_VictorSPX ElevatorMotorSlave;
+    public static WPI_TalonSRX ElevatorMotor;
     // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
     // Digital Input
@@ -111,19 +110,12 @@ public class RobotMap {
         // #endregion
 
         // #region Elevator
-        ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
-        ElevatorMotorMaster.setSubsystem("Elevator");
-        ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        // ElevatorMotorMaster.setInverted(false);
-        ElevatorMotorMaster.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        ElevatorMotorMaster.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
-
-        ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
-        ElevatorMotorSlave.setSubsystem("Elevator");
-        ElevatorMotorSlave.follow(ElevatorMotorMaster);
-        ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
+        ElevatorMotor = new WPI_TalonSRX(Constants.kElevatorMasterID);
+        ElevatorMotor.setSubsystem("Elevator");
+        ElevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // ElevatorMotor.setInverted(false);
+        ElevatorMotor.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        ElevatorMotor.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");

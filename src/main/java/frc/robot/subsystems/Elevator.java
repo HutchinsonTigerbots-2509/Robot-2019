@@ -29,8 +29,7 @@ import frc.robot.RobotMap;
  */
 public class Elevator extends Subsystem {
   // RobotMap Objects
-  private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+  private final WPI_TalonSRX SpoolEncoder = RobotMap.ElevatorMotor;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
@@ -68,8 +67,7 @@ public class Elevator extends Subsystem {
    */
   public Elevator() {
     setSubsystem("Elevator");
-    addChild(SpoolMaster);
-    addChild(SpoolSlave);
+    addChild(SpoolEncoder);
     addChild(mShifter);
     addChild(mLeftLimit);
     addChild(mRightLimit);
@@ -79,8 +77,7 @@ public class Elevator extends Subsystem {
    * Stops both the Master and Slave motors
    */
   public void StopMotors() {
-    SpoolMaster.stopMotor();
-    SpoolSlave.stopMotor();
+    SpoolEncoder.stopMotor();
   }
 
   /**
@@ -117,7 +114,7 @@ public class Elevator extends Subsystem {
    * Trys to follow goal height, by sending PID speeds to motors
    */
   public void ChaseTarget() {
-    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
+    SpoolEncoder.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
   }
 
   /**
@@ -128,10 +125,10 @@ public class Elevator extends Subsystem {
   public void ChaseTargetGearChanger() {
     if (PIDFinal() > 0) {
       mShifter.set(kForward);
-      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+      SpoolEncoder.set(ControlMode.PercentOutput, (1 * PIDFinal()));
     } else {
       mShifter.set(kReverse);
-      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+      SpoolEncoder.set(ControlMode.PercentOutput, (1 * PIDFinal()));
     }
   }
 
@@ -179,10 +176,10 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Sets the SpoolMasters's enocder position to zero
+   * Sets the SpoolEncoders's enocder position to zero
    */
   public void ZeroSensor() {
-    SpoolMaster.setSelectedSensorPosition(0);
+    SpoolEncoder.setSelectedSensorPosition(0);
   }
 
   /**
@@ -190,7 +187,7 @@ public class Elevator extends Subsystem {
    * for the smartdashboard has been removed.
    */
   public void UpdateTelemetry() {
-    mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
+    mElevatorTab.add("Encoder", SpoolEncoder.getSelectedSensorPosition());
     mElevatorTab.add("Left Limit", mLeftLimit.get());
     mElevatorTab.add("Right Limit", mRightLimit.get());
     mElevatorTab.add("Shifter", getGear());
@@ -212,7 +209,7 @@ public class Elevator extends Subsystem {
    * Gets Current Height in encoder counts
    */
   public double CurrentHeight() {
-    return SpoolMaster.getSelectedSensorPosition();
+    return SpoolEncoder.getSelectedSensorPosition();
     // * ((kSpoolDiam * Math.PI) / kPulseNumber);
     // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
   }
@@ -226,9 +223,9 @@ public class Elevator extends Subsystem {
     double positionFromHome = targetInchesOffGround - kHomePositionInches;
     double targetPositionRaw = positionFromHome * kTicksPerInch;
     if (getLimitsValue() == false) {
-      SpoolMaster.set(ControlMode.Position, targetPositionRaw);
+      SpoolEncoder.set(ControlMode.Position, targetPositionRaw);
     } else {
-      SpoolMaster.set(ControlMode.PercentOutput, 0);
+      SpoolEncoder.set(ControlMode.PercentOutput, 0);
     }
   }
 
@@ -247,7 +244,7 @@ public class Elevator extends Subsystem {
    * @return Current Height in Inches
    */
   public double getInchesOffGround() {
-    double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
+    double currentRawPosition = SpoolEncoder.getSelectedSensorPosition();
     return (currentRawPosition / kTicksPerInch)*Constants.kLowGearRatio + kHomePositionInches;
   }
 
