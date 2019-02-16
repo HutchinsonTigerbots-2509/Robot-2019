@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.AlignWithTarget;
 
-public class AngleCheck extends CommandGroup {
+public class angleCheck extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AngleCheck() {
+  public angleCheck() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -40,7 +42,7 @@ public class RobotMap {
     /* ELEVATOR */
     // Motors
     public static WPI_TalonSRX ElevatorMotorMaster;
-    public static WPI_VictorSPX ElevatorMotorSlave;
+    // public static WPI_VictorSPX ElevatorMotorSlave;
     // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
     // Digital Input
@@ -58,7 +60,7 @@ public class RobotMap {
 
     /* CLIMB */
     // Motors
-    public static WPI_TalonSRX ClimbMotor;
+    public static VictorSP ClimbMotor;
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
@@ -116,12 +118,12 @@ public class RobotMap {
         ElevatorMotorMaster.configPeakOutputForward(Constants.kMaxElevatorSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
-        ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
-        ElevatorMotorSlave.setSubsystem("Elevator");
-        ElevatorMotorSlave.follow(ElevatorMotorMaster);
-        ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
+        // ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
+        // ElevatorMotorSlave.setSubsystem("Elevator");
+        // ElevatorMotorSlave.follow(ElevatorMotorMaster);
+        // ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
+        // ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
+        // ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
@@ -153,15 +155,18 @@ public class RobotMap {
         // #endregion
 
         // #region Climb
-        ClimbMotor = new WPI_TalonSRX(Constants.kClimbMotorID);
+        
+        ClimbMotor = new VictorSP(Constants.kClimbMotorID);
         ClimbMotor.setSubsystem("Climb");
 
-        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
-        ClimbUpperPiston.setSubsystem("Climb");
-
+        // Stage 1 - Should fire first
         ClimbLowerPiston = new DoubleSolenoid(1, Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
-        // #endregion Climb
 
+        // Stage 2 - Should fire Second
+        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        ClimbUpperPiston.setSubsystem("Climb");
+        
+        // #endregion Climb
     }
 }

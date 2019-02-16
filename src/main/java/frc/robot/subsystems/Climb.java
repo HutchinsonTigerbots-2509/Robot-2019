@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -23,7 +24,7 @@ import frc.robot.RobotMap;
  * @author CRahne and Cole
  */
 public class Climb extends Subsystem {
-  private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
+  private final VictorSP Motor = RobotMap.ClimbMotor;
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
@@ -39,47 +40,55 @@ public class Climb extends Subsystem {
     addChild(Motor);
   }
   
+  // #region Climbing Voids
+  
   /**
-   * Extends the Higher Pistons on both sides
-   * @author CRahne
+   * Extends the Low Pistons (stage 1) on both sides
    */
-  public void ExtendHigherPistons(){
-    HighPistonSystem.set(Value.kForward);
+  public void StageOneStart() {
+    LowPistonSystem.set(Value.kForward);
   }
 
   /**
-   * Extends the Lower Pistons on both sides
+   * Extends the High Pistons (stage 2) on both sides
+   * 
    * @author CRahne
    */
-  public void ExtendLowerPistons(){
-    LowPistonSystem.set(Value.kForward);
+  public void StageTwoStart() {
+    HighPistonSystem.set(Value.kForward);
   }
   
   /**
-   * Retracts the Higher Pistons on both sides
+   * Retracts the Higher Pistons (stage 2) on both sides
+   * 
    * @author CRahne
    */
-  public void RetractHigherPistons(){
+  public void RetractStageTwo(){
     HighPistonSystem.set(Value.kReverse);
   }
 
   /**
-   * Retracts the Lower Pistons on both sides
+   * Retracts the Lower Pistons (stage 1) on both sides
+   * 
    * @author CRahne
    */
-  public void RetractLowerPistons(){
+  public void RetractStageOne(){
     LowPistonSystem.set(Value.kReverse);
   }
 
   /**
    * Stops all Pistons
+   * 
    * @author CRahne
    */
-  public void StopPistons(){
+  public void PistonsOff(){
     // Will set both sides' pistons to off
     HighPistonSystem.set(Value.kOff);
     LowPistonSystem.set(Value.kOff);
   }
+
+  //#endregion Climbing Voids
+  // #region General
 
   /**
    * Updates the data for shuffleboard
@@ -90,8 +99,12 @@ public class Climb extends Subsystem {
     mClimbTab.add("Motor Speed", Motor.get());
   }
 
+  // #endregion General
+  // #region Climb Getters
+
   /**
    * Will return the higher pistons
+   * 
    * @return High Pistons
    * @author CRahne
    */
@@ -101,6 +114,7 @@ public class Climb extends Subsystem {
 
   /**
    * Will return the lower pistons
+   * 
    * @return Low Left Piston
    * @author CRahne
    */
@@ -110,6 +124,7 @@ public class Climb extends Subsystem {
 
   /**
    * Will return whether the high pistons are extended
+   * 
    * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
    * @author CRahne
    */
@@ -125,6 +140,7 @@ public class Climb extends Subsystem {
 
   /**
    * Will return whether the low pistons are Extended or Retracted
+   * 
    * @return if(kForward) -> "Extended", if(kReverse) -> "Retracted", else "Null"
    * @author CRahne
    */
@@ -140,6 +156,7 @@ public class Climb extends Subsystem {
 
   /**
    * Will say if the high pistons are extended or not
+   * 
    * @return if pistons are extened or not
    * @author CRahne
    */
@@ -153,6 +170,7 @@ public class Climb extends Subsystem {
 
   /**
    * Will say if the low pistons are extended or not
+   * 
    * @return if pistons are extened or not
    * @author CRahne
    */
@@ -163,6 +181,8 @@ public class Climb extends Subsystem {
     }
     return false;
   }
+
+  // #endregion Climb Getters
 
   @Override
   public void initDefaultCommand() {
