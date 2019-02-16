@@ -9,6 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.Constants;
 
@@ -29,6 +31,7 @@ public class HeightToggle extends Command {
 
   @Override
   protected void initialize() {
+    SmartDashboard.putString("Mode", "Ball");
     Robot.oi.mElevatorHigh.whenPressed(new ElevatorRise(mBallHigh));
     Robot.oi.mElevatorMid.whenPressed(new ElevatorRise(mBallMid));
     Robot.oi.mElevatorLow.whenPressed(new ElevatorRise(mBallLow));
@@ -45,6 +48,7 @@ public class HeightToggle extends Command {
 
   @Override
   protected void end() {
+    SmartDashboard.putString("Mode", "Hatch");
     mHighButton.whenPressed(new ElevatorRise(mHatchHigh));
     mMidButton.whenPressed(new ElevatorRise(mHatchMid));
     mLowButton.whenPressed(new ElevatorRise(mHatchLow));

@@ -1,9 +1,10 @@
-package frc.robot; 
+package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
@@ -11,6 +12,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.State;
 import frc.robot.subsystems.Vision;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -70,6 +72,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
+    System.out.print(SpoolMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
+    SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
     Shuffleboard.update();
   }
 
@@ -133,6 +139,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
+    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
+    SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 
