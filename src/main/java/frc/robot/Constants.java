@@ -52,6 +52,8 @@ public final class Constants {
     public static double kElevatorTicksPerInch = 61.76330098;
     public static double kElevatorMaxSpeed = 0.75;
     public static double kElevatorSensitivity = 0.5;
+    public static double kElevatorMinSpeedUp = 0.5;
+    public static double kElevatorMinSpeedDown = -0.4;
     public static int kEncoderErrorRange = 2; // 5?
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
@@ -59,7 +61,6 @@ public final class Constants {
     public static double kMinHieght = 10;
     public static double kHomePositionInches = 6.75;
 
-    public static double kElevatorLow = 5.0;
     public static double kHatchLow = 20.0; //0
     public static double kHatchMid = 47.5;
     public static double kHatchHigh = 75.0;

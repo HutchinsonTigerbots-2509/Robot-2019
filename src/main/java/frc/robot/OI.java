@@ -236,10 +236,8 @@ public class OI {
     mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
     mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
     mCommandTab.add("Elevator 12", new ElevatorRise(12));
-    mCommandTab.add("Elevator 0", new ElevatorRise(0));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
-    mCommandTab.add("Elevator 5", new ElevatorRise(5));
 
     //Intake
     // mCommandTab.add("Intake Close", new IntakeClose());
