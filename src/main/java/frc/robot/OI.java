@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
+import frc.robot.commands.ChangeState;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
@@ -32,8 +33,6 @@ public class OI {
 
   /* BUTTON DECLARATIONS */
   // Intake Buttons
-  private JoystickButton mCloseintake;
-  private JoystickButton mOpenintake;
   private JoystickButton mIntakein;
   private JoystickButton mIntakeout;
 
@@ -107,6 +106,8 @@ public class OI {
     mCommandTab = Shuffleboard.getTab("Commands");
     
     /* Joysticks & Buttons */
+
+    // #region Joystick Declarations
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
 
@@ -128,24 +129,6 @@ public class OI {
     // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
 
     // #region Intake Subsystem Buttons
-    // mCloseintake = new JoystickButton(mOpStick, 5); // Close intake
-    // mCloseintake.whileHeld(new IntakeClose());
-    // mCommandTab.add("IntakeClose()", new IntakeClose());
-
-    // mOpenintake = new JoystickButton(mOpStick, 6); // Open intake
-    // mOpenintake.whileHeld(new IntakeOpen());
-    // mCommandTab.add("IntakeOpen()", new IntakeOpen());
-
-    // Doing this cuz idk its easier
-    if (mOpStick.getRawAxis(2) != 0) {
-      new IntakeIn();
-      mCommandTab.add("IntakeIn()", new IntakeIn());
-    }
-
-    if (mOpStick.getRawAxis(3) != 0) {
-      new IntakeOut();
-      mCommandTab.add("IntakeOut()", new IntakeOut());
-    }
 
     // mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
     // mWristdown.whileHeld(new WristDown());
@@ -202,14 +185,14 @@ public class OI {
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
-    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    // mElevatorHigh.whenPressed(new ElevatorRise(mHigh));
+    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
 
-    // mElevatorMid = new JoystickButton(mCoOpStick, 3);
-    // mElevatorMid.whenPressed(new ElevatorRise(mMid));
+    mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
 
-    // mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    // mElevatorLow.whenPressed(new ElevatorRise(mLow));
+    mElevatorLow = new JoystickButton(mCoOpStick, 1);
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
 
     mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -272,5 +255,28 @@ public class OI {
     mCommandTab.add("Follow Tape", new Follow_target(1, -0.05, -.02));
     // mCommandTab.add("Follow Low Targets",);
     // mCommandTab.add("Follow High Targets", );
+    
+    //State 
+    mCommandTab.add("Toggle Robot State", new ChangeState());
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Hatch Heights
+   */ 
+  public void setElevatorButtonsHatch(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
+  }
+
+  /**
+   * Sets the Joystick Buttons for the Elevator Rise
+   *  to be the Cargo Heights
+   */ 
+  public void setElevatorButtonsCargo(){
+    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorRise(Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorRise(Constants.kBallLow));
   }
 }

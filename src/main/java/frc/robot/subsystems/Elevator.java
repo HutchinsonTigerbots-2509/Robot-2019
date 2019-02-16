@@ -30,7 +30,7 @@ import frc.robot.RobotMap;
 public class Elevator extends Subsystem {
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+  // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
   private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
@@ -69,7 +69,7 @@ public class Elevator extends Subsystem {
   public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
-    addChild(SpoolSlave);
+    // addChild(SpoolSlave);
     addChild(mShifter);
     addChild(mLeftLimit);
     addChild(mRightLimit);
@@ -80,7 +80,7 @@ public class Elevator extends Subsystem {
    */
   public void StopMotors() {
     SpoolMaster.stopMotor();
-    SpoolSlave.stopMotor();
+    // SpoolSlave.stopMotor();
   }
 
   /**
@@ -110,7 +110,6 @@ public class Elevator extends Subsystem {
     mPerviousError = mError;
     UpdateTelemetry();
     return (mPerpotional + mDerivative + (mIntegral * IGain));
-
   }
 
   /**
