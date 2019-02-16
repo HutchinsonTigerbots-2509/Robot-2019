@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();
+    robotState = new State(State.HatchState);
     // OI must be inialized after Subsystems
     oi = new OI();
     // Commands must be defined after OI
@@ -55,7 +56,6 @@ public class Robot extends TimedRobot {
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
-    oi.UpdateCommands();
     Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
   }
 

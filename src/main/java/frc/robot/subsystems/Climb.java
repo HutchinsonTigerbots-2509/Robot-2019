@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -23,7 +24,7 @@ import frc.robot.RobotMap;
  * @author CRahne and Cole
  */
 public class Climb extends Subsystem {
-  private final WPI_TalonSRX Motor = RobotMap.ClimbMotor;
+  private final VictorSP Motor = RobotMap.ClimbMotor;
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
