@@ -25,20 +25,35 @@ public class HeightToggle extends Command {
   private JoystickButton mLowButton;
   private JoystickButton mMidButton;
   private JoystickButton mHighButton;
+  public double Low;
+  public double Mid;
+  public double High;
 
   public HeightToggle() {
   }
 
   @Override
   protected void initialize() {
-    SmartDashboard.putString("Mode", "Ball");
-    Robot.oi.mElevatorHigh.whenPressed(new ElevatorRise(mBallHigh));
-    Robot.oi.mElevatorMid.whenPressed(new ElevatorRise(mBallMid));
-    Robot.oi.mElevatorLow.whenPressed(new ElevatorRise(mBallLow));
+
+    // SmartDashboard.putString("Mode", "Ball");
+    // Robot.oi.mElevatorHigh.whenPressed(new ElevatorRise(mBallHigh));
+    // Robot.oi.mElevatorMid.whenPressed(new ElevatorRise(mBallMid));
+    // Robot.oi.mElevatorLow.whenPressed(new ElevatorRise(mBallLow));
   }
 
   @Override
   protected void execute() {
+
+  if(Low == Constants.kHatchLow){
+      Low = Constants.kBallLow;
+      Mid = Constants.kBallMid;
+      High = Constants.kBallHigh;
+    }else{
+      Low = Constants.kHatchLow;
+      Mid = Constants.kHatchMid;
+      High = Constants.kHatchHigh;
+    }
+
   }
 
   @Override
@@ -48,10 +63,10 @@ public class HeightToggle extends Command {
 
   @Override
   protected void end() {
-    SmartDashboard.putString("Mode", "Hatch");
-    mHighButton.whenPressed(new ElevatorRise(mHatchHigh));
-    mMidButton.whenPressed(new ElevatorRise(mHatchMid));
-    mLowButton.whenPressed(new ElevatorRise(mHatchLow));
+    // SmartDashboard.putString("Mode", "Hatch");
+    // mHighButton.whenPressed(new ElevatorRise(mHatchHigh));
+    // mMidButton.whenPressed(new ElevatorRise(mHatchMid));
+    // mLowButton.whenPressed(new ElevatorRise(mHatchLow));
 
   }
 

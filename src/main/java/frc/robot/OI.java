@@ -183,6 +183,7 @@ public class OI {
 
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
+    mHeightToggle.whenPressed(new HeightToggle());
     // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
