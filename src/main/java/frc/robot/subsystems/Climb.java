@@ -76,6 +76,12 @@ public class Climb extends Subsystem {
     LowPistonSystem.set(Value.kReverse);
   }
 
+  public void setMotorSpeed(double speed){
+    if(Math.abs(speed)>1){
+      speed /= Math.abs(speed);
+    }
+    Motor.set(speed);
+  }
   /**
    * Stops all Pistons
    * 

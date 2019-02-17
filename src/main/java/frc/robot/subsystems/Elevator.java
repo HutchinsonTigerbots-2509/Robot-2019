@@ -40,7 +40,6 @@ public class Elevator extends Subsystem {
   // Constants
   private final double kPulseNumber = Constants.kPulsesPerRotation;
   private final double kMaxHeight = Constants.kMaxHieght;
-  private final double kMidHeight = Constants.kMidHieght;
   private final double kMinHeight = Constants.kMinHieght;
   private final double kHomePositionInches = Constants.kHomePositionInches;
   private final double kSpoolDiam = Constants.kSpoolDiam;
@@ -62,6 +61,7 @@ public class Elevator extends Subsystem {
   private double mIntegral = 0;
   private double mPerviousError;
   private double mEncoderTargetHieght;
+  public String state;
 
   /**
    * Adds children to the object so we can play with components
@@ -196,6 +196,7 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Perpotional", mPerpotional);
     mElevatorTab.add("Derivative", mDerivative);
     mElevatorTab.add("Integral", mIntegral);
+    mElevatorTab.add("State", state);
     Shuffleboard.update();
   }
 

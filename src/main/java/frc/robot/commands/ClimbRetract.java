@@ -23,8 +23,7 @@ public class ClimbRetract extends InstantCommand {
 
   protected void initialize() {
     sClimb.RetractStageTwo();
-    Timer.delay(1); // Need to tune/get rid of if needed
-    sClimb.RetractStageTwo();
+    sClimb.RetractStageOne();
   }
 
 }

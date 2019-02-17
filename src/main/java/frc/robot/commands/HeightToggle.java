@@ -8,72 +8,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 import frc.robot.Constants;
+import frc.robot.OI;
 
-public class HeightToggle extends Command {
-
-  private double mHatchLow = Constants.kHatchLow;
-  private double mHatchMid = Constants.kHatchMid;
-  private double mHatchHigh = Constants.kHatchHigh;
-  private double mBallLow = Constants.kBallLow;
-  private double mBallMid = Constants.kBallMid;
-  private double mBallHigh = Constants.kBallHigh;
-  private JoystickButton mLowButton;
-  private JoystickButton mMidButton;
-  private JoystickButton mHighButton;
-  public double Low;
-  public double Mid;
-  public double High;
+public class HeightToggle extends InstantCommand {
+  private Elevator sElevator;
+  private OI oi;
 
   public HeightToggle() {
+    oi = Robot.oi;
+    sElevator = Robot.sElevator;
   }
 
   @Override
   protected void initialize() {
-
-    // SmartDashboard.putString("Mode", "Ball");
-    // Robot.oi.mElevatorHigh.whenPressed(new ElevatorRise(mBallHigh));
-    // Robot.oi.mElevatorMid.whenPressed(new ElevatorRise(mBallMid));
-    // Robot.oi.mElevatorLow.whenPressed(new ElevatorRise(mBallLow));
-  }
-
-  @Override
-  protected void execute() {
-
-  if(Low == Constants.kHatchLow){
-      Low = Constants.kBallLow;
-      Mid = Constants.kBallMid;
-      High = Constants.kBallHigh;
-      SmartDashboard.putString("Mode", "Ball");
+    if(sElevator.state=="Hatch"){
+      oi.setElevatorButtonsCargo();
     }else{
-      Low = Constants.kHatchLow;
-      Mid = Constants.kHatchMid;
-      High = Constants.kHatchHigh;
-      SmartDashboard.putString("Mode", "Hatch");
+      oi.setElevatorButtonsHatch();
     }
-
   }
 
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  @Override
-  protected void end() {
-    // SmartDashboard.putString("Mode", "Hatch");
-    // mHighButton.whenPressed(new ElevatorRise(mHatchHigh));
-    // mMidButton.whenPressed(new ElevatorRise(mHatchMid));
-    // mLowButton.whenPressed(new ElevatorRise(mHatchLow));
-
-  }
-
-  @Override
-  protected void interrupted() {
-    end();
-  }
 }
