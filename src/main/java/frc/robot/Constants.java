@@ -56,17 +56,16 @@ public final class Constants {
     public static double kElevatorMinSpeedDown = -0.4;
     public static int kEncoderErrorRange = 2; // 5?
 
-    public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
-    public static double kMidHieght = 36;
-    public static double kMinHieght = 10;
+    public static double kMaxHieght = 78;//All of these are hieghts off the ground inches
+    public static double kMinHieght = 7;
     public static double kHomePositionInches = 6.75;
 
     public static double kHatchLow = 20.0; //0
     public static double kHatchMid = 47.5;
-    public static double kHatchHigh = 75.0;
-    public static double kBallLow = 28.5;
-    public static double kBallMid = 56.0;
-    public static double kBallHigh = 83.0;
+    public static double kHatchHigh = 68.0;
+    public static double kBallLow = 20.0;
+    public static double kBallMid = 48.0;
+    public static double kBallHigh = 74;
 
     /* Vision */
     // Physical
@@ -139,8 +138,8 @@ public final class Constants {
     // public static int kIntakeHatchPistonReverseID = 7;
     public static int kWristMotorID = 6;
     // Climb
-    public static int kClimbUpperForwardID = 6;
-    public static int kClimbUpperReverseID = 7;
-    public static int kClimbLowerForwardID = 4;
-    public static int kClimbLowerReverseID = 5;
+    public static int kClimbUpperForwardID = 4;
+    public static int kClimbUpperReverseID = 5;
+    public static int kClimbLowerForwardID = 7;
+    public static int kClimbLowerReverseID = 6;
 }

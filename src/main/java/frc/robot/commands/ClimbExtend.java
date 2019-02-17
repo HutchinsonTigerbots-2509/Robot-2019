@@ -1,6 +1,8 @@
 package frc.robot.commands; // package
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.Climb;
@@ -11,20 +13,34 @@ import frc.robot.subsystems.Climb;
  * 
  * @author CRahne
  */
-public class ClimbExtend extends InstantCommand {
+public class ClimbExtend extends Command {
   private Climb sClimb = Robot.sClimb;
+  private Joystick stick;
 
   /**
    * The constructor to make a new instance of this command
    */
-  public ClimbExtend() {
+  public ClimbExtend(Joystick joystick) {
     requires(sClimb);
+    stick = joystick;
   }
 
+  @Override
   protected void initialize() {
+    // stick = Robot.oi.getOperatorStick();
     sClimb.StageOneStart();
-    Timer.delay(1); // Need to tune/get rid of if needed
     sClimb.StageTwoStart();
   }
-
+  protected void execute(){
+    sClimb.setMotorSpeed(-stick.getY()*2);
+  }
+  protected boolean isFinished(){
+    return false;
+  }
+  protected void end(){
+    sClimb.setMotorSpeed(0);
+  }
+  protected void interrupeted(){
+    end();
+  }
 }

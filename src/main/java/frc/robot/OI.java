@@ -1,4 +1,4 @@
-package frc.robot; 
+package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,6 +19,7 @@ import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.ResetGyro;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -63,6 +64,7 @@ public class OI {
 
   /* Misc */
   private ShuffleboardTab mCommandTab;
+  private Elevator sElevator;
   private Vision sVision;
   private NetworkTable mLimeTable;
 
@@ -102,6 +104,7 @@ public class OI {
    */
   public OI() {
     sVision = Robot.sVision;
+    sElevator = Robot.sElevator;
     
     mCommandTab = Shuffleboard.getTab("Commands");
     
@@ -161,10 +164,10 @@ public class OI {
     // #endregion
     // #region Climb Subsystem
     
-    ExtendClimbPistons = new JoystickButton(mOpStick, 0);
-    ExtendClimbPistons.whenPressed(new ClimbExtend());
+    ExtendClimbPistons = new JoystickButton(mOpStick, 6);
+    ExtendClimbPistons.whenPressed(new ClimbExtend(mOpStick));
 
-    RetractClimbPistons = new JoystickButton(mOpStick, 1);
+    RetractClimbPistons = new JoystickButton(mOpStick, 7);
     RetractClimbPistons.whenPressed(new ClimbRetract());
     
     // #endregion Climb Subsystem
@@ -186,13 +189,9 @@ public class OI {
     // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
-
     mElevatorMid = new JoystickButton(mCoOpStick, 3);
-    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
-
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
+    setElevatorButtonsHatch();
 
     mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -225,7 +224,7 @@ public class OI {
     mCommandTab.add("Gyro Reset", new ResetGyro());
 
     //Climb
-    mCommandTab.add("Climb Extend", new ClimbExtend());
+    mCommandTab.add("Climb Extend", new ClimbExtend(mOpStick));
     mCommandTab.add("Climb Retract", new ClimbRetract());
 
     //Elevator
@@ -266,6 +265,7 @@ public class OI {
    *  to be the Hatch Heights
    */ 
   public void setElevatorButtonsHatch(){
+    sElevator.state = "Hatch";
     mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
     mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
     mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
@@ -276,6 +276,7 @@ public class OI {
    *  to be the Cargo Heights
    */ 
   public void setElevatorButtonsCargo(){
+    sElevator.state = "Cargo";
     mElevatorHigh.whenPressed(new ElevatorRise(Constants.kBallHigh));
     mElevatorMid.whenPressed(new ElevatorRise(Constants.kBallMid));
     mElevatorLow.whenPressed(new ElevatorRise(Constants.kBallLow));

@@ -164,14 +164,15 @@ public class RobotMap {
         // #region Climb
         
         ClimbMotor = new VictorSP(Constants.kClimbMotorID);
+        // ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
         // Stage 1 - Should fire first
-        ClimbLowerPiston = new DoubleSolenoid(1, Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
+        ClimbLowerPiston = new DoubleSolenoid(Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
         // Stage 2 - Should fire Second
-        ClimbUpperPiston = new DoubleSolenoid(1, Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        ClimbUpperPiston = new DoubleSolenoid(Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
         
         // #endregion Climb
