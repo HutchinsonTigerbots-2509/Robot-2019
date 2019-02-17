@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
@@ -25,18 +26,21 @@ public class ElevatorRise extends Command {
   @Override
   protected void execute() {
     sElevator.setPosition(mTargetHieght);
+    SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentHeight());
+    SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(sElevator.getLimitsValue()){
-      return true;
-    }
+    // if(sElevator.getLimitsValue()){
+    //   return true;
+    // }
     if(sElevator.CurrentHeight()==mTargetHieght){
       return true;
+    }else{
+     return false;
     }
-    return false;
     // return sElevator.getLimitsValue();
   }
 
@@ -45,9 +49,9 @@ public class ElevatorRise extends Command {
   protected void end() {
     sElevator.StopMotors();
     
-    if(sElevator.getLimitsValue()){
-      sElevator.ZeroSensor();
-    }
+    // if(sElevator.getLimitsValue()){
+    //   sElevator.ZeroSensor();
+    // }
   }
 
   // Called when another command which requires one or more of the same

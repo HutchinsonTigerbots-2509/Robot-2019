@@ -46,8 +46,8 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
     // Digital Input
-    public static DigitalInput ElevatorLeftLimit;
-    public static DigitalInput ElevatorRightLimit;
+    public static DigitalInput ElevatorTopLimit;
+    public static DigitalInput ElevatorBottomLimit;
     public static Ultrasonic ElevatorSonic;
 
     /* INTAKE */
@@ -114,9 +114,16 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        // ElevatorMotorMaster.setInverted(false);
-        ElevatorMotorMaster.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        ElevatorMotorMaster.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
+        ElevatorMotorMaster.setInverted(false);
+        ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
+        ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
+        ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
+        ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
+        ElevatorMotorMaster.setSensorPhase(true);
+        ElevatorMotorMaster.setSelectedSensorPosition(0);
+        // ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
+        // ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
+        // ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
 
         // ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
         // ElevatorMotorSlave.setSubsystem("Elevator");
@@ -128,11 +135,11 @@ public class RobotMap {
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
-        ElevatorLeftLimit = new DigitalInput(Constants.kElevatorLeftLimitID);
-        ElevatorLeftLimit.setSubsystem("Elevator");
+        ElevatorTopLimit = new DigitalInput(Constants.kElevatorTopLimitID);
+        ElevatorTopLimit.setSubsystem("Elevator");
 
-        ElevatorRightLimit = new DigitalInput(Constants.kElevatorRightLimitID);
-        ElevatorRightLimit.setSubsystem("Elevator");
+        ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
+        ElevatorBottomLimit.setSubsystem("Elevator");
 
         ElevatorSonic = new Ultrasonic(8, 9);
         ElevatorSonic.setAutomaticMode(true);

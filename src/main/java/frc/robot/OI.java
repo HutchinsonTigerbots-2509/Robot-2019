@@ -235,6 +235,7 @@ public class OI {
     mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
     mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
     mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
+    mCommandTab.add("Elevator 12", new ElevatorRise(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 

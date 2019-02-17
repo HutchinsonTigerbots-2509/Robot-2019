@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -32,8 +33,8 @@ public class Elevator extends Subsystem {
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
-  private final DigitalInput mLeftLimit = RobotMap.ElevatorLeftLimit;
-  private final DigitalInput mRightLimit = RobotMap.ElevatorRightLimit;
+  private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
+  private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
   // ShuffleBoard Tab
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   // Constants
@@ -71,8 +72,8 @@ public class Elevator extends Subsystem {
     addChild(SpoolMaster);
     // addChild(SpoolSlave);
     addChild(mShifter);
-    addChild(mLeftLimit);
-    addChild(mRightLimit);
+    addChild(mTopLimit);
+    addChild(mBottomLimit);
   }
 
   /**
@@ -88,7 +89,8 @@ public class Elevator extends Subsystem {
    */
   public double TargetHeight() {
     // if (CoOpStick.getRawAxis(1) != 0) {
-      mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (0.5 * -1));
+      //mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (0.5 * -1));
+
     // } else if (CoOpStick.getRawButton(4)) {
     //   mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
     // } else if (CoOpStick.getRawButton(2)) {
@@ -116,7 +118,7 @@ public class Elevator extends Subsystem {
    * Trys to follow goal height, by sending PID speeds to motors
    */
   public void ChaseTarget() {
-    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kMaxElevatorSpeed)));
+    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kElevatorMaxSpeed)));
   }
 
   /**
@@ -188,8 +190,8 @@ public class Elevator extends Subsystem {
    */
   public void UpdateTelemetry() {
     mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
-    mElevatorTab.add("Left Limit", mLeftLimit.get());
-    mElevatorTab.add("Right Limit", mRightLimit.get());
+    mElevatorTab.add("Top Limit", mTopLimit.get());
+    mElevatorTab.add("Bottom Limit", mBottomLimit.get());
     mElevatorTab.add("Shifter", getGear());
     mElevatorTab.add("Perpotional", mPerpotional);
     mElevatorTab.add("Derivative", mDerivative);
@@ -220,13 +222,19 @@ public class Elevator extends Subsystem {
    * @author Nate
    */
   public void setPosition(double targetInchesOffGround) {
-    double positionFromHome = targetInchesOffGround - kHomePositionInches;
-    double targetPositionRaw = positionFromHome * kTicksPerInch;
-    if (getLimitsValue() == false) {
-      SpoolMaster.set(ControlMode.Position, targetPositionRaw);
-    } else {
-      SpoolMaster.set(ControlMode.PercentOutput, 0);
-    }
+    double targetDistance =targetInchesOffGround-kHomePositionInches;
+    double TargetTicks = targetDistance * 274.38312189; //215.811165286
+    SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    SmartDashboard.putNumber("power", SpoolMaster.get());
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+    // if(mTopLimit.get() == true){
+    //   SpoolMaster.set(ControlMode.PercentOutput, -0.3);//0.0
+    // }else if(mBottomLimit.get() == true){
+    //   SpoolMaster.setSelectedSensorPosition(0);
+    //   SpoolMaster.set(ControlMode.Position, TargetTicks);
+    // }else {
+      // SpoolMaster.set(ControlMode.Position, TargetTicks);
+   // }
   }
 
   /**
@@ -235,7 +243,7 @@ public class Elevator extends Subsystem {
    * @return Left Limit Or Right Limit
    */
   public boolean getLimitsValue() {
-    return (mLeftLimit.get() || mRightLimit.get());
+    return (mTopLimit.get() || mBottomLimit.get());
   }
 
   /**

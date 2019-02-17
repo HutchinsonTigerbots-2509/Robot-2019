@@ -47,20 +47,21 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
-    public static double kSpoolDiam = 4;//inches we need
+    public static double kSpoolDiam = 4;//inches prob dont need
     public static double kPulsesPerRotation = 256;
-    public static double kElevatorTicksPerInch = 20.3;
-    public static double kElevatorMaxSpeed = 0.5;
+    public static double kElevatorTicksPerInch = 61.76330098;
+    public static double kElevatorMaxSpeed = 0.75;
     public static double kElevatorSensitivity = 0.5;
+    public static double kElevatorMinSpeedUp = 0.5;
+    public static double kElevatorMinSpeedDown = -0.4;
     public static int kEncoderErrorRange = 2; // 5?
-    public static double kMaxElevatorSpeed =0.9;
 
     public static double kMaxHieght = 72;//All of these are hieghts off the ground inches
     public static double kMidHieght = 36;
     public static double kMinHieght = 10;
-    public static double kHomePositionInches = 5;
+    public static double kHomePositionInches = 6.75;
 
-    public static double kHatchLow = 20.0;
+    public static double kHatchLow = 20.0; //0
     public static double kHatchMid = 47.5;
     public static double kHatchHigh = 75.0;
     public static double kBallLow = 28.5;
@@ -121,8 +122,8 @@ public final class Constants {
     public static int kIntakeMotorID = 1;
 
     /* DigitalInput ID */
-    public static int kElevatorLeftLimitID = 0;
-    public static int kElevatorRightLimitID = 1;
+    public static int kElevatorTopLimitID = 0;
+    public static int kElevatorBottomLimitID = 1;
 
     /* Pneumatics ID */
     // Drivetrain
