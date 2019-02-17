@@ -48,10 +48,12 @@ public class HeightToggle extends Command {
       Low = Constants.kBallLow;
       Mid = Constants.kBallMid;
       High = Constants.kBallHigh;
+      SmartDashboard.putString("Mode", "Ball");
     }else{
       Low = Constants.kHatchLow;
       Mid = Constants.kHatchMid;
       High = Constants.kHatchHigh;
+      SmartDashboard.putString("Mode", "Hatch");
     }
 
   }

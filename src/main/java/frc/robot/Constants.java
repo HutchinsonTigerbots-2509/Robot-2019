@@ -139,8 +139,8 @@ public final class Constants {
     // public static int kIntakeHatchPistonReverseID = 7;
     public static int kWristMotorID = 6;
     // Climb
-    public static int kClimbUpperForwardID = 6;
-    public static int kClimbUpperReverseID = 7;
-    public static int kClimbLowerForwardID = 4;
-    public static int kClimbLowerReverseID = 5;
+    public static int kClimbUpperForwardID = 4;
+    public static int kClimbUpperReverseID = 5;
+    public static int kClimbLowerForwardID = 7;
+    public static int kClimbLowerReverseID = 6;
 }

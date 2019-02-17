@@ -1,4 +1,4 @@
-package frc.robot; 
+package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,8 +18,10 @@ import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
+import frc.robot.commands.PistonExtendCreep;
 import frc.robot.commands.ResetGyro;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.Creep;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -58,6 +60,7 @@ public class OI {
   private JoystickButton Reset_gyro;
 
   // Climb
+  private JoystickButton Creep;
   private JoystickButton ExtendClimbPistons; // Should extend the climb pistons in sequence
   private JoystickButton RetractClimbPistons; // Should retract the climb pistons in sequence
 
@@ -160,9 +163,12 @@ public class OI {
     Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
     // #region Climb Subsystem
+
+    Creep = new JoystickButton(mCoOpStick, 12);
+    Creep.whileHeld(new Creep());
     
     ExtendClimbPistons = new JoystickButton(mOpStick, 0);
-    ExtendClimbPistons.whenPressed(new ClimbExtend());
+    ExtendClimbPistons.whenPressed(new PistonExtendCreep());
 
     RetractClimbPistons = new JoystickButton(mOpStick, 1);
     RetractClimbPistons.whenPressed(new ClimbRetract());
