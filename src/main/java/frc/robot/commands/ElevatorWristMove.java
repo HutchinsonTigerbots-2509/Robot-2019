@@ -13,7 +13,7 @@ public class ElevatorWristMove extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ElevatorWristMove() {
+  public ElevatorWristMove(int angle, double height) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,5 +30,7 @@ public class ElevatorWristMove extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    addParallel(new ElevatorMove(height));
+    addSequential(new WristMove(angle));
   }
 }

@@ -29,6 +29,7 @@ public class HeightToggle extends InstantCommand {
   protected void initialize() {
     if(sElevator.state=="Hatch"){
       oi.setElevatorButtonsCargo();
+      new WristMove(-90).start();
     }else{
       oi.setElevatorButtonsHatch();
     }

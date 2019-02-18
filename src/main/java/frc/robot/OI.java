@@ -22,6 +22,10 @@ import frc.robot.commands.ResetGyro;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.Creep;
+import frc.robot.commands.PrepareToClimb;
+import frc.robot.commands.Climb;
+import frc.robot.commands.ElevatorWristMove;
+import frc.robot.commands.WristMove;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -64,6 +68,12 @@ public class OI {
   private JoystickButton Creep;
   private JoystickButton ExtendClimbPistons; // Should extend the climb pistons in sequence
   private JoystickButton RetractClimbPistons; // Should retract the climb pistons in sequence
+  private JoystickButton mPrepareToClimb;
+  private JoystickButton mClimb;
+
+  //Intake
+private JoystickButton mIntakeStartingPosition;
+private JoystickButton mIntakeGroundPosition;
 
   /* Misc */
   private ShuffleboardTab mCommandTab;
@@ -167,14 +177,25 @@ public class OI {
     // #endregion
     // #region Climb Subsystem
 
-    Creep = new JoystickButton(mCoOpStick, 12);
-    Creep.whileHeld(new Creep());
     
     ExtendClimbPistons = new JoystickButton(mOpStick, 0);
     ExtendClimbPistons.whenPressed(new PistonExtendCreep());
 
     RetractClimbPistons = new JoystickButton(mOpStick, 7);
     RetractClimbPistons.whenPressed(new ClimbRetract());
+
+    //Intake
+    mIntakein = new JoystickButton(mCoOpStick, 6);
+    mIntakein.whileHeld(new IntakeIn());
+
+    mIntakeout = new JoystickButton(mCoOpStick, 5);
+    mIntakeout.whileHeld(new IntakeOut());
+
+    mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
+    mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));
+
+    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 9);
+    mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
     
     // #endregion Climb Subsystem
     // #region Drivetrain Subsystem
@@ -199,8 +220,10 @@ public class OI {
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     setElevatorButtonsHatch();
 
-    mElevatorHAB = new JoystickButton(mCoOpStick,8);//Start button?
-    mElevatorHAB.whenPressed(new ElevatorMove(Constants.kHABHeight));
+    mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
+    mPrepareToClimb.whenPressed(new PrepareToClimb());
+    mClimb = new JoystickButton(mOpStick, 8);
+    mClimb.whenPressed(new Climb());
 
     mElevatorShift = new JoystickButton(mOpStick, 11);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -274,9 +297,9 @@ public class OI {
    */ 
   public void setElevatorButtonsHatch(){
     sElevator.state = "Hatch";
-    mElevatorHigh.whenPressed(new ElevatorMove(Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorMove(Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorMove(Constants.kHatchLow));
+    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
   }
 
   /**
@@ -285,8 +308,8 @@ public class OI {
    */ 
   public void setElevatorButtonsCargo(){
     sElevator.state = "Cargo";
-    mElevatorHigh.whenPressed(new ElevatorMove(Constants.kBallHigh));
-    mElevatorMid.whenPressed(new ElevatorMove(Constants.kBallMid));
-    mElevatorLow.whenPressed(new ElevatorMove(Constants.kBallLow));
+    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
   }
 }

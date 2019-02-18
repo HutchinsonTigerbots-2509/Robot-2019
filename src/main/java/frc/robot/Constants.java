@@ -55,12 +55,12 @@ public final class Constants {
     public static double kElevatorMinSpeedDown = -0.4;
     public static int kEncoderErrorRange = 2; // 5?
 
-    public static double kMaxHieght = 78;//All of these are hieghts off the ground inches
-    public static double kMinHieght = 7;
-    public static int kElevatorStartingHieght = 19;
+    public static double kMaxHeight = 78;//All of these are heights off the ground inches
+    public static double kMinHeight = 7;
+    public static int kElevatorStartingHeight = 19;
     public static double kHomePositionInches = 6.75;
-    public static long kElevatorStartingHieghtConversion = Math.round(kElevatorTicksPerInch*(kElevatorStartingHieght-kHomePositionInches));
-    public static int kElevatorStartingHieghtTicks = (int)kElevatorStartingHieghtConversion;
+    public static long kElevatorStartingHeightConversion = Math.round(kElevatorTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
     public static double kHatchLow = 20.0; //0
     public static double kHatchMid = 47.5;
@@ -100,9 +100,12 @@ public final class Constants {
     public static String kLimelightTargethorID = "thor";
     //#endregion
     
-    /* Intaek */
+    /* Intake */
     public static int kWristTicksPerDegree  = 1;
-    public static int kWristStartingDegrees = -20;
+    public static int kWristStartingAngle = 20;
+    public static int kWristGroundAngle = -90;
+    public static int kWristHatchAngle = -45;
+    public static int kWristCargoAngle = -45;
 
 
     //#region RobotMap Constants
