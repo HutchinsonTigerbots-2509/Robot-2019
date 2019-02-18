@@ -39,8 +39,8 @@ public class Elevator extends Subsystem {
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   // Constants
   private final double kPulseNumber = Constants.kPulsesPerRotation;
-  private final double kMaxHeight = Constants.kMaxHieght;
-  private final double kMinHeight = Constants.kMinHieght;
+  private final double kMaxHeight = Constants.kMaxHeight;
+  private final double kMinHeight = Constants.kMinHeight;
   private final double kHomePositionInches = Constants.kHomePositionInches;
   private final double kSpoolDiam = Constants.kSpoolDiam;
   private final double PGain = Constants.kElevatorPGain;

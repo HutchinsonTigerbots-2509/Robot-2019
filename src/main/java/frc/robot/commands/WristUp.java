@@ -22,13 +22,13 @@ public class WristUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.WristMove(Constants.kWristStartingDegrees);
+    sIntake.WristMove(Constants.kWristStartingAngle);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.WristMove(Constants.kWristStartingDegrees);
+    sIntake.WristMove(Constants.kWristStartingAngle);
   }
 
   // Make this return true when this Command no longer needs to run execute()
