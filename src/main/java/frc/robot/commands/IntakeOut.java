@@ -34,7 +34,7 @@ public class IntakeOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.resetBallMechanism();
+    sIntake.MotorStop();
   }
 
   // Called when another command which requires one or more of the same

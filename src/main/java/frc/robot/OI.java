@@ -43,6 +43,7 @@ public class OI {
   public JoystickButton mElevatorHigh;
   public JoystickButton mElevatorMid;
   public JoystickButton mElevatorLow;
+  public JoystickButton mElevatorHAB;
   private JoystickButton mHeightToggle;
   private JoystickButton mElevatorShift;
 
@@ -193,14 +194,16 @@ public class OI {
     // #region Elevator
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     mHeightToggle.whenPressed(new HeightToggle());
-    // mHeightToggle.toggleWhenPressed(new HeightToggle());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 3);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     setElevatorButtonsHatch();
 
-    mElevatorShift = new JoystickButton(mOpStick, 7);
+    mElevatorHAB = new JoystickButton(mCoOpStick,8);//Start button?
+    mElevatorHAB.whenPressed(new ElevatorRise(Constants.kHABHeight));
+
+    mElevatorShift = new JoystickButton(mOpStick, 11);
     mElevatorShift.whenPressed(new ElevatorShift());
     // #endregion
     UpdateCommands();
@@ -241,6 +244,7 @@ public class OI {
     mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
     mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
     mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
+    mCommandTab.add("Elevator HAB", new ElevatorRise(Constants.kHABHeight));
     mCommandTab.add("Elevator 12", new ElevatorRise(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());

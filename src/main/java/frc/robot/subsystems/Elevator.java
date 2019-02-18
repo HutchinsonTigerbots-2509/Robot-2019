@@ -228,14 +228,6 @@ public class Elevator extends Subsystem {
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
     SmartDashboard.putNumber("power", SpoolMaster.get());
     SpoolMaster.set(ControlMode.Position, TargetTicks);
-    // if(mTopLimit.get() == true){
-    //   SpoolMaster.set(ControlMode.PercentOutput, -0.3);//0.0
-    // }else if(mBottomLimit.get() == true){
-    //   SpoolMaster.setSelectedSensorPosition(0);
-    //   SpoolMaster.set(ControlMode.Position, TargetTicks);
-    // }else {
-      // SpoolMaster.set(ControlMode.Position, TargetTicks);
-   // }
   }
 
   /**

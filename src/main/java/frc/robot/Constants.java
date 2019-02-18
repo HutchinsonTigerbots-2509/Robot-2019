@@ -66,6 +66,7 @@ public final class Constants {
     public static double kBallLow = 20.0;
     public static double kBallMid = 48.0;
     public static double kBallHigh = 74;
+    public static double kHABHeight = 30;
 
     /* Vision */
     // Physical
@@ -96,6 +97,9 @@ public final class Constants {
     public static String kLimelightTargetvert = "tvert";
     public static String kLimelightTargethorID = "thor";
     //#endregion
+    
+    /* Intaek */
+    public static int kWristTicksPerDegree  = 1;
 
 
     //#region RobotMap Constants

@@ -21,13 +21,13 @@ public class WristDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.Down();
+    sIntake.WristMove(-90);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.Down();
+    sIntake.WristMove(-90);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,5 +46,6 @@ public class WristDown extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    sIntake.StopWrist();
   }
 }
