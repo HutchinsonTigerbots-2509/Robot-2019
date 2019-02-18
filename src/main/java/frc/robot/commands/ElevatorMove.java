@@ -8,10 +8,10 @@ import frc.robot.subsystems.Elevator;
 /**
  * Elevator Elevates
  */
-public class ElevatorRise extends Command {
+public class ElevatorMove extends Command {
   private final Elevator sElevator = Robot.sElevator;
   private double mTargetHieght = 0;
-  public ElevatorRise(double targetHieghtInches) {
+  public ElevatorMove(double targetHieghtInches) {
     requires(sElevator);
     this.mTargetHieght = targetHieghtInches;
   }

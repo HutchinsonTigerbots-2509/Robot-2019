@@ -10,7 +10,6 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.State;
 import frc.robot.subsystems.Vision;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -32,7 +31,6 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
-  public static State robotState;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -49,11 +47,11 @@ public class Robot extends TimedRobot {
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();
-    robotState = new State(State.HatchState);
     // OI must be inialized after Subsystems
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
+    
     // Put data on Shuffleboard
     sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();

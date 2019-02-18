@@ -1,5 +1,4 @@
 package frc.robot;// package declaration
-
 /**
  * Constants is the class where the varibles that we use accross code are
  * stored. An example of this would be a max speed. You would store the max
@@ -58,7 +57,10 @@ public final class Constants {
 
     public static double kMaxHieght = 78;//All of these are hieghts off the ground inches
     public static double kMinHieght = 7;
+    public static int kElevatorStartingHieght = 19;
     public static double kHomePositionInches = 6.75;
+    public static long kElevatorStartingHieghtConversion = Math.round(kElevatorTicksPerInch*(kElevatorStartingHieght-kHomePositionInches));
+    public static int kElevatorStartingHieghtTicks = (int)kElevatorStartingHieghtConversion;
 
     public static double kHatchLow = 20.0; //0
     public static double kHatchMid = 47.5;
@@ -100,6 +102,7 @@ public final class Constants {
     
     /* Intaek */
     public static int kWristTicksPerDegree  = 1;
+    public static int kWristStartingDegrees = -20;
 
 
     //#region RobotMap Constants

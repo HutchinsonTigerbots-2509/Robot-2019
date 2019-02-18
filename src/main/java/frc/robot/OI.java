@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
-import frc.robot.commands.ChangeState;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
-import frc.robot.commands.ElevatorRise;
+import frc.robot.commands.ElevatorMove;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
@@ -201,7 +200,7 @@ public class OI {
     setElevatorButtonsHatch();
 
     mElevatorHAB = new JoystickButton(mCoOpStick,8);//Start button?
-    mElevatorHAB.whenPressed(new ElevatorRise(Constants.kHABHeight));
+    mElevatorHAB.whenPressed(new ElevatorMove(Constants.kHABHeight));
 
     mElevatorShift = new JoystickButton(mOpStick, 11);
     mElevatorShift.whenPressed(new ElevatorShift());
@@ -238,14 +237,14 @@ public class OI {
     mCommandTab.add("Climb Retract", new ClimbRetract());
 
     //Elevator
-    mCommandTab.add("Elevator Hatch High", new ElevatorRise(Constants.kHatchHigh));
-    mCommandTab.add("Elevator Hatch Mid", new ElevatorRise(Constants.kHatchMid));
-    mCommandTab.add("Elevator Hatch Low", new ElevatorRise(Constants.kHatchLow));
-    mCommandTab.add("Elevator Ball High", new ElevatorRise(Constants.kBallHigh));
-    mCommandTab.add("Elevator Ball Mid", new ElevatorRise(Constants.kBallMid));
-    mCommandTab.add("Elevator Ball Low", new ElevatorRise(Constants.kBallLow));
-    mCommandTab.add("Elevator HAB", new ElevatorRise(Constants.kHABHeight));
-    mCommandTab.add("Elevator 12", new ElevatorRise(12));
+    mCommandTab.add("Elevator Hatch High", new ElevatorMove(Constants.kHatchHigh));
+    mCommandTab.add("Elevator Hatch Mid", new ElevatorMove(Constants.kHatchMid));
+    mCommandTab.add("Elevator Hatch Low", new ElevatorMove(Constants.kHatchLow));
+    mCommandTab.add("Elevator Ball High", new ElevatorMove(Constants.kBallHigh));
+    mCommandTab.add("Elevator Ball Mid", new ElevatorMove(Constants.kBallMid));
+    mCommandTab.add("Elevator Ball Low", new ElevatorMove(Constants.kBallLow));
+    mCommandTab.add("Elevator HAB", new ElevatorMove(Constants.kHABHeight));
+    mCommandTab.add("Elevator 12", new ElevatorMove(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
@@ -267,8 +266,6 @@ public class OI {
     // mCommandTab.add("Follow Low Targets",);
     // mCommandTab.add("Follow High Targets", );
     
-    //State 
-    mCommandTab.add("Toggle Robot State", new ChangeState());
   }
 
   /**
@@ -277,9 +274,9 @@ public class OI {
    */ 
   public void setElevatorButtonsHatch(){
     sElevator.state = "Hatch";
-    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorRise(Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorRise(Constants.kHatchLow));
+    mElevatorHigh.whenPressed(new ElevatorMove(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorMove(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorMove(Constants.kHatchLow));
   }
 
   /**
@@ -288,8 +285,8 @@ public class OI {
    */ 
   public void setElevatorButtonsCargo(){
     sElevator.state = "Cargo";
-    mElevatorHigh.whenPressed(new ElevatorRise(Constants.kBallHigh));
-    mElevatorMid.whenPressed(new ElevatorRise(Constants.kBallMid));
-    mElevatorLow.whenPressed(new ElevatorRise(Constants.kBallLow));
+    mElevatorHigh.whenPressed(new ElevatorMove(Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorMove(Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorMove(Constants.kBallLow));
   }
 }

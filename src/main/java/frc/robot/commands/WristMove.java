@@ -6,15 +6,19 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.Robot;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj.command.Command;
 
-public class WristUp extends Command {
-  private Intake sIntake = Robot.sIntake;
-  public WristUp() {
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
+
+public class WristMove extends Command {
+
+  private final Intake sIntake = Robot.sIntake;
+  private double mWristAngle = 0;
+
+  public WristMove(double targetAngle) {
     requires(sIntake);
+    this.mWristAngle = targetAngle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -22,13 +26,13 @@ public class WristUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.WristMove(Constants.kWristStartingDegrees);
+    sIntake.WristMove(mWristAngle);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.WristMove(Constants.kWristStartingDegrees);
+    sIntake.WristMove(mWristAngle);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -47,5 +51,6 @@ public class WristUp extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
