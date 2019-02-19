@@ -119,50 +119,24 @@ private JoystickButton mButtonNine;
   public OI() {
     sVision = Robot.sVision;
     sElevator = Robot.sElevator;
-    
     mCommandTab = Shuffleboard.getTab("Commands");
+    mLimeTable = sVision.getTable();
     
     /* Joysticks & Buttons */
-
-    // #region Joystick Declarations
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
 
     Distance_Calculated = new JoystickButton(mOpStick, 11);
     Distance_Calculated.whenPressed(new Angle_check());
-    // AlignButton.toggleWhenPressed(new FollowTarget(0));
 
     AlignButton = new JoystickButton(mOpStick, 5);
-    // AlignButton.toggleWhenPressed(new FollowTarget(0));
     AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
-    // AlignButton.toggleWhenPressed(new FollowTarget(0));
 
-    // AlignButtonPID = new JoystickButton(mOpStick, 10);
-    // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-
-    // #endregion
-
-    // AlignButtonPID = new JoystickButton(mOpStick, 10);
-    // AlignButtonPID.toggleWhenPressed(new FollowTarget(1));
-
-    // #region Intake Subsystem Buttons
-
-    // mWristdown = new JoystickButton(mCoOpStick, 5); // Wrist down
-    // mWristdown.whileHeld(new WristDown());
-
-    // mWristup = new JoystickButton(mOpStick, 6); // Wrist up
-    // mWristup.whileHeld(new WristUp());
-    // #endregion
-
-    // #region Vision Subsystem
     AlignButton = new JoystickButton(mOpStick, 12);
     AlignButton.toggleWhenPressed(new AlignWithTarget());
 
     AlignButtonPID = new JoystickButton(mOpStick, 10);
     AlignButtonPID.whileHeld(new AlignWithTargetPID());
-
-    // Follow_low_targets_Button = new JoystickButton(mOpStick, 11);
-    // Follow_low_targets_Button.toggleWhenPressed(new FollowTarget(2));
 
     Follow_hatch_Button = new JoystickButton(mOpStick, 4);
     Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
@@ -173,17 +147,12 @@ private JoystickButton mButtonNine;
     Follow_ball_Button = new JoystickButton(mOpStick, 6);
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
 
-    //Reset_gyro = new JoystickButton(mOpStick, 2);
-    //Reset_gyro.whenPressed(new ResetGyro());
-    // #endregion
-    // #region Climb Subsystem
-
-    //Should probably add this in somewhere else
-    // ExtendClimbPistons = new JoystickButton(mOpStick, 0);
-    // ExtendClimbPistons.whenPressed(new PistonExtendCreep());
-
+    // Climb 
     RetractClimbPistons = new JoystickButton(mOpStick, 7);
     RetractClimbPistons.whenPressed(new ClimbRetract());
+
+    mClimb = new JoystickButton(mOpStick, 8);
+    mClimb.whenPressed(new Climb());
 
     //Intake
     mIntakein = new JoystickButton(mCoOpStick, 6);
@@ -206,13 +175,11 @@ private JoystickButton mButtonNine;
     
     // #endregion
 
-    // #region Vision & NetworkTables
-    mLimeTable = sVision.getTable();
-    // SmartDashboard.putNumber("distance", (41.5 * Math.pow(sVision.getTargetArea(), -0.416)));
-    
-    // #endregion
 
     // #region Elevator
+    mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
+    mPrepareToClimb.whileHeld(new PrepareToClimb());
+
     mHeightToggle = new JoystickButton(mCoOpStick, 2);
     mHeightToggle.whenPressed(new HeightToggle());
 
@@ -220,12 +187,6 @@ private JoystickButton mButtonNine;
     mElevatorMid = new JoystickButton(mCoOpStick, 3);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     setElevatorButtonsHatch();
-
-    mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
-    mPrepareToClimb.whileHeld(new PrepareToClimb());
-
-    mClimb = new JoystickButton(mOpStick, 8);
-    mClimb.whenPressed(new Climb());
 
     mElevatorShift = new JoystickButton(mOpStick, 11);
     mElevatorShift.whenPressed(new ElevatorShift());
