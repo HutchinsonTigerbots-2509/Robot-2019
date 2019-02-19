@@ -8,26 +8,23 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
+import frc.robot.commands.Climb;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
-import frc.robot.commands.ElevatorMove;
+import frc.robot.commands.ElevatorMoveHighGear;
 import frc.robot.commands.ElevatorMoveLowGear;
 import frc.robot.commands.ElevatorShift;
+import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
-import frc.robot.commands.PistonExtendCreep;
+import frc.robot.commands.PrepareToClimb;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.WristMove;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.Creep;
-import frc.robot.commands.PrepareToClimb;
-import frc.robot.commands.Climb;
-import frc.robot.commands.ElevatorWristMove;
-import frc.robot.commands.WristMove;
-import frc.robot.commands.WristMove2;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -270,29 +267,25 @@ private JoystickButton mButtonNine;
     mCommandTab.add("Climb Retract", new ClimbRetract());
 
     //Elevator
-    mCommandTab.add("Elevator Hatch High", new ElevatorMove(Constants.kHatchHigh));
-    mCommandTab.add("Elevator Hatch Mid", new ElevatorMove(Constants.kHatchMid));
-    mCommandTab.add("Elevator Hatch Low", new ElevatorMove(Constants.kHatchLow));
-    mCommandTab.add("Elevator Ball High", new ElevatorMove(Constants.kBallHigh));
-    mCommandTab.add("Elevator Ball Mid", new ElevatorMove(Constants.kBallMid));
-    mCommandTab.add("Elevator Ball Low", new ElevatorMove(Constants.kBallLow));
+    mCommandTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
+    mCommandTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
+    mCommandTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
+    mCommandTab.add("Elevator Ball High", new ElevatorMoveHighGear(Constants.kBallHigh));
+    mCommandTab.add("Elevator Ball Mid", new ElevatorMoveHighGear(Constants.kBallMid));
+    mCommandTab.add("Elevator Ball Low", new ElevatorMoveHighGear(Constants.kBallLow));
     mCommandTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
-    mCommandTab.add("Elevator 12", new ElevatorMove(12));
+    mCommandTab.add("Elevator 12", new ElevatorMoveHighGear(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
     //Intake/
-    // mCommandTab.add("Intake Close", new IntakeClose());
-    // mCommandTab.add("Intake Open", new IntakeOpen());
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
-    // mCommandTab.add("Intake Down", new WristDown());
-    // mCommandTab.add("Intake Up", new WristUp());
 
     mCommandTab.add("Wrist -30", new WristMove(-30));
     mCommandTab.add("Wrist -90", new WristMove(-90));
     mCommandTab.add("Wrist 0", new WristMove(0));
-    mCommandTab.add("Wrist I DONT KN:OW", new WristMove2());
+    mCommandTab.add("Wrist 20", new WristMove(20));
 
     //Vision
     mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));

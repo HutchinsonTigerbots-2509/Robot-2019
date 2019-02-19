@@ -223,7 +223,7 @@ public class Elevator extends Subsystem {
    * control loop.
    * @author Nate
    */
-  public void setPosition(double targetInchesOffGround) {
+  public void setPositionHighGear(double targetInchesOffGround) {
     double targetDistance =targetInchesOffGround-kHomePositionInches;
     double TargetTicks = targetDistance * 274.38312189; //215.811165286  //274.38312189
     SmartDashboard.putNumber("TargetTicks", TargetTicks);

@@ -19,6 +19,7 @@ public class ElevatorMoveLowGear extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    sElevator.setHighGear(false);
     sElevator.setPositionLowGear(mTargetHieght);
   }
 
@@ -48,10 +49,6 @@ public class ElevatorMoveLowGear extends Command {
   @Override
   protected void end() {
     sElevator.StopMotors();
-    
-    // if(sElevator.getLimitsValue()){
-    //   sElevator.ZeroSensor();
-    // }
   }
 
   // Called when another command which requires one or more of the same

@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Climber;
 
 /**
  * Should retract the high pistons, and then retract the low pistons
@@ -12,7 +12,7 @@ import frc.robot.subsystems.Climb;
  * @author CRahne
  */
 public class ClimbRetract extends InstantCommand {
-  private Climb sClimb = Robot.sClimb;
+  private Climber sClimb = Robot.sClimb;
 
   /**
    * The constructor to make a new instance of this command

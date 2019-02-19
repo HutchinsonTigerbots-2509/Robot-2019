@@ -8,10 +8,10 @@ import frc.robot.subsystems.Elevator;
 /**
  * Elevator Elevates
  */
-public class ElevatorMove extends Command {
+public class ElevatorMoveHighGear extends Command {
   private final Elevator sElevator = Robot.sElevator;
   private double mTargetHieght = 0;
-  public ElevatorMove(double targetHieghtInches) {
+  public ElevatorMoveHighGear(double targetHieghtInches) {
     requires(sElevator);
     this.mTargetHieght = targetHieghtInches;
   }
@@ -19,13 +19,14 @@ public class ElevatorMove extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.setPosition(mTargetHieght);
+    sElevator.setHighGear(true);
+    sElevator.setPositionHighGear(mTargetHieght);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sElevator.setPosition(mTargetHieght);
+    sElevator.setPositionHighGear(mTargetHieght);
     SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentHeight());
     SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());
   }

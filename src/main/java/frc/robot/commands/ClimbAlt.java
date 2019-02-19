@@ -7,28 +7,45 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
-public class WristMove2 extends Command {
+public class ClimbAlt extends Command {
+  private Elevator sElevator = Robot.sElevator;
   private Intake sIntake = Robot.sIntake;
-  public WristMove2() {
+  private Climber sClimber = Robot.sClimb;
+  private Joystick stick;
+  private int mWristAngle = -90;
+  private int mElevatorHieght = 12;
+
+  public ClimbAlt(Joystick joystick) {
+    requires(sClimber);
+    requires(sElevator);
     requires(sIntake);
+    stick = joystick;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.getWristMotor().set(ControlMode.Position, -682);
+    sClimber.StageOneStart();
+    sClimber.StageTwoStart();
+    sIntake.WristMove(mWristAngle);
+    sElevator.setHighGear(false);
+    sElevator.setPositionLowGear(mElevatorHieght);
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.getWristMotor().set(ControlMode.MotionProfile, -682);
+    sClimber.setMotorSpeed(-stick.getY()*2);
+    sIntake.WristMove(mWristAngle);
+    sElevator.setPositionLowGear(mElevatorHieght);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,13 +57,15 @@ public class WristMove2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.getWristMotor().set(ControlMode.MotionProfile,0);
+    sClimber.setMotorSpeed(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    sIntake.getWristMotor().set(ControlMode.PercentOutput,0);
+    sClimber.setMotorSpeed(0);
+    sIntake.StopWrist();
+    sElevator.StopMotors();
   }
 }

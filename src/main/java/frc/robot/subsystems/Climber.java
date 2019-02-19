@@ -23,7 +23,7 @@ import frc.robot.RobotMap;
  *
  * @author CRahne and Cole
  */
-public class Climb extends Subsystem {
+public class Climber extends Subsystem {
   private final VictorSP Motor = RobotMap.ClimbMotor;
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
@@ -33,7 +33,7 @@ public class Climb extends Subsystem {
    * Constructor that adds children to the object so
    * we can play with components in test mode
    */
-  public Climb(){
+  public Climber(){
     setSubsystem("Climb");
     addChild(HighPistonSystem);
     addChild(LowPistonSystem);

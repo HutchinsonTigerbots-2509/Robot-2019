@@ -18,6 +18,6 @@ public class IntakeStop extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    sIntake.EndAll();
+    sIntake.MotorStop();
   }
 }

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
-import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -25,7 +25,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Robot extends TimedRobot {
   /* Subsystem Declarations */
   public static Drivetrain sDrivetrain;
-  public static Climb sClimb;
+  public static Climber sClimb;
   public static Elevator sElevator;
   public static Intake sIntake;
   public static Vision sVision;
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     RobotMap.init();
     // Subsystems must be initialized after RobotMap
     sDrivetrain = new Drivetrain();
-    sClimb = new Climb();
+    sClimb = new Climber();
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();

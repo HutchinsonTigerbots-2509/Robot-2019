@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 
 public class PistonExtendCreep extends Command {
 
-    private Climb sClimb = Robot.sClimb;
+    private Climber sClimb = Robot.sClimb;
     private static VictorSP ClimbMotor = RobotMap.ClimbMotor;
     private Joystick mStick; // The Operator Stick (the one that is used for driving)
    

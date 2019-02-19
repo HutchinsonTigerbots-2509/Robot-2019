@@ -31,6 +31,6 @@ public class PrepareToClimb extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     addParallel(new WristMove(-90));
-    addSequential(new ElevatorMove(26));
+    addSequential(new ElevatorMoveHighGear(26));
   }
 }
