@@ -20,14 +20,14 @@ public class ClimbExtend extends Command {
   /**
    * The constructor to make a new instance of this command
    */
-  public ClimbExtend(Joystick joystick) {
+  public ClimbExtend() {
     requires(sClimb);
-    stick = joystick;
+    // stick = joystick;
   }
 
   @Override
   protected void initialize() {
-    // stick = Robot.oi.getOperatorStick();
+    stick = Robot.oi.getOperatorStick();
     sClimb.StageOneStart();
     sClimb.StageTwoStart();
   }

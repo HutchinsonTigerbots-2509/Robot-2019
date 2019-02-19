@@ -12,6 +12,7 @@ import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorMove;
+import frc.robot.commands.ElevatorMoveLowGear;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
@@ -26,6 +27,7 @@ import frc.robot.commands.PrepareToClimb;
 import frc.robot.commands.Climb;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.WristMove;
+import frc.robot.commands.WristMove2;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -74,6 +76,8 @@ public class OI {
   //Intake
 private JoystickButton mIntakeStartingPosition;
 private JoystickButton mIntakeGroundPosition;
+
+private JoystickButton mButtonNine;
 
   /* Misc */
   private ShuffleboardTab mCommandTab;
@@ -172,14 +176,14 @@ private JoystickButton mIntakeGroundPosition;
     Follow_ball_Button = new JoystickButton(mOpStick, 6);
     Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
 
-    Reset_gyro = new JoystickButton(mOpStick, 2);
-    Reset_gyro.whenPressed(new ResetGyro());
+    //Reset_gyro = new JoystickButton(mOpStick, 2);
+    //Reset_gyro.whenPressed(new ResetGyro());
     // #endregion
     // #region Climb Subsystem
 
-    
-    ExtendClimbPistons = new JoystickButton(mOpStick, 0);
-    ExtendClimbPistons.whenPressed(new PistonExtendCreep());
+    //Should probably add this in somewhere else
+    // ExtendClimbPistons = new JoystickButton(mOpStick, 0);
+    // ExtendClimbPistons.whenPressed(new PistonExtendCreep());
 
     RetractClimbPistons = new JoystickButton(mOpStick, 7);
     RetractClimbPistons.whenPressed(new ClimbRetract());
@@ -192,15 +196,15 @@ private JoystickButton mIntakeGroundPosition;
     mIntakeout.whileHeld(new IntakeOut());
 
     mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
-    mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));
+    mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));//kWristStartingAngle
 
-    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 9);
+    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 12);
     mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
-    
+
     // #endregion Climb Subsystem
     // #region Drivetrain Subsystem
 
-    DriveShifter = new JoystickButton(mOpStick, 12);
+    DriveShifter = new JoystickButton(mOpStick, 2);
     DriveShifter.whenPressed(new DriveShift());
     
     // #endregion
@@ -221,13 +225,19 @@ private JoystickButton mIntakeGroundPosition;
     setElevatorButtonsHatch();
 
     mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
-    mPrepareToClimb.whenPressed(new PrepareToClimb());
+    mPrepareToClimb.whileHeld(new PrepareToClimb());
+
     mClimb = new JoystickButton(mOpStick, 8);
     mClimb.whenPressed(new Climb());
 
     mElevatorShift = new JoystickButton(mOpStick, 11);
     mElevatorShift.whenPressed(new ElevatorShift());
     // #endregion
+
+    // Test Button
+    // mButtonNine = new JoystickButton(new Joystick(2),9);
+    // mButtonNine.whileHeld(new WristMove(-30));
+
     UpdateCommands();
   }
 
@@ -256,7 +266,7 @@ private JoystickButton mIntakeGroundPosition;
     mCommandTab.add("Gyro Reset", new ResetGyro());
 
     //Climb
-    mCommandTab.add("Climb Extend", new ClimbExtend(mOpStick));
+    mCommandTab.add("Climb Extend", new ClimbExtend());
     mCommandTab.add("Climb Retract", new ClimbRetract());
 
     //Elevator
@@ -266,18 +276,23 @@ private JoystickButton mIntakeGroundPosition;
     mCommandTab.add("Elevator Ball High", new ElevatorMove(Constants.kBallHigh));
     mCommandTab.add("Elevator Ball Mid", new ElevatorMove(Constants.kBallMid));
     mCommandTab.add("Elevator Ball Low", new ElevatorMove(Constants.kBallLow));
-    mCommandTab.add("Elevator HAB", new ElevatorMove(Constants.kHABHeight));
+    mCommandTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
     mCommandTab.add("Elevator 12", new ElevatorMove(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevaotr Hieght", new HeightToggle());
 
-    //Intake
+    //Intake/
     // mCommandTab.add("Intake Close", new IntakeClose());
     // mCommandTab.add("Intake Open", new IntakeOpen());
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
     // mCommandTab.add("Intake Down", new WristDown());
     // mCommandTab.add("Intake Up", new WristUp());
+
+    mCommandTab.add("Wrist -30", new WristMove(-30));
+    mCommandTab.add("Wrist -90", new WristMove(-90));
+    mCommandTab.add("Wrist 0", new WristMove(0));
+    mCommandTab.add("Wrist I DONT KN:OW", new WristMove2());
 
     //Vision
     mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));

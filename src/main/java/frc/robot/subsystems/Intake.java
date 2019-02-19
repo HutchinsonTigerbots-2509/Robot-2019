@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -27,7 +28,7 @@ public class Intake extends Subsystem {
   private final VictorSP mMotor = RobotMap.IntakeMotor;
   private final WPI_TalonSRX mWrist = RobotMap.WristMotor;
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
-  private final int kWristTicksPerDegree = Constants.kWristTicksPerDegree;
+  private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
 
   public Intake() {
     setSubsystem("Intake");
@@ -182,7 +183,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void Down(){
-    mWrist.set(ControlMode.PercentOutput,-0.9);
+    mWrist.set(ControlMode.PercentOutput,-0.5);//-0.9
   }
   /**
    * stops the movement of the intake wrist
@@ -191,9 +192,13 @@ public class Intake extends Subsystem {
   public void StopWrist(){
     mWrist.set(ControlMode.PercentOutput,0);
   }
-  public void WristMove(double angle){
-    double rawTargetAngle = angle* kWristTicksPerDegree;
-    mWrist.set(ControlMode.Position,rawTargetAngle);
+  public void WristMove(double targetAngle){
+    double rawTargetTicks = targetAngle* kWristTicksPerDegree;
+    SmartDashboard.putNumber("Target Angle", rawTargetTicks/kWristTicksPerDegree);
+    SmartDashboard.putNumber("Target RAW", rawTargetTicks);
+    SmartDashboard.putNumber("Current Angle", CurrentAngle());
+    // mWrist.set(ControlMode.PercentOutput,0.5);
+    mWrist.set(ControlMode.Position, rawTargetTicks);
   }
   /**
    * Will take a ball in
@@ -203,6 +208,8 @@ public class Intake extends Subsystem {
     // OpenArms();
     MotorIn();
   }
+
+
 
   /**
    * Ejects the ball after making sure the intake subsystem has a ball
@@ -254,7 +261,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorStop() {
-    mMotor.set(0);
+    mMotor.stopMotor();
   }
   
   /**
@@ -290,6 +297,10 @@ public class Intake extends Subsystem {
    */
   public WPI_TalonSRX getWristMotor(){
     return mWrist;
+  }
+
+  public double CurrentAngle(){
+    return (mWrist.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
   }
   
   @Override

@@ -31,6 +31,7 @@ import frc.robot.RobotMap;
 public class Elevator extends Subsystem {
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
+  private final WPI_TalonSRX Wrist = RobotMap.WristMotor;
   // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
@@ -48,7 +49,7 @@ public class Elevator extends Subsystem {
   private final double DGain = Constants.kElevatorPGain;
   private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
   private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
-  private final double kTicksPerInch = Constants.kElevatorTicksPerInch;
+  private final double kTicksPerInch = Constants.kElevatorHighGearTicksPerInch;
   // Pneumatics Values
   private final Value kReverse = Value.kReverse;
   private final Value kForward = Value.kForward;
@@ -224,7 +225,19 @@ public class Elevator extends Subsystem {
    */
   public void setPosition(double targetInchesOffGround) {
     double targetDistance =targetInchesOffGround-kHomePositionInches;
-    double TargetTicks = targetDistance * 274.38312189; //215.811165286
+    double TargetTicks = targetDistance * 274.38312189; //215.811165286  //274.38312189
+    SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    SmartDashboard.putNumber("power", SpoolMaster.get());
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  }
+  /**
+   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
+   * control loop.
+   * @author Nate
+   */
+  public void setPositionLowGear(double targetInchesOffGround) {
+    double targetDistance =targetInchesOffGround-kHomePositionInches;
+    double TargetTicks = targetDistance *831.170774803; //215.811165286  //274.38312189
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
     SmartDashboard.putNumber("power", SpoolMaster.get());
     SpoolMaster.set(ControlMode.Position, TargetTicks);

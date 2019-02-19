@@ -1,7 +1,10 @@
 package frc.robot;
 
+import java.text.BreakIterator;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -153,7 +156,19 @@ public class RobotMap {
         IntakeMotor.setSubsystem("Intake");
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
         WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
+        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
+        WristMotor.setSensorPhase(false);
+        WristMotor.configPeakOutputForward(0.95);
+        WristMotor.configPeakOutputReverse(-0.95);
+        WristMotor.configNominalOutputForward(0.05);
+        WristMotor.configNominalOutputReverse(-0.05);
         WristMotor.setSelectedSensorPosition(0);
+        WristMotor.setSubsystem("Intake");
+        WristMotor.config_kD(0, Constants.kElevatorDGain);
+        WristMotor.config_kP(0, Constants.kElevatorPGain);
+        WristMotor.config_kI(0, Constants.kElevatorIGain);
 
         // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         // IntakeWristPiston.setSubsystem("Intake");

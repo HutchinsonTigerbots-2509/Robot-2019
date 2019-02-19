@@ -11,6 +11,8 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -31,6 +33,9 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+
+  private final WPI_TalonSRX WristMotor = RobotMap.WristMotor;
+
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -74,6 +79,7 @@ public class Robot extends TimedRobot {
     System.out.print(SpoolMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
     SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
+    SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());
     Shuffleboard.update();
   }
 
@@ -123,6 +129,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
     Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove this line or comment it out.
@@ -137,6 +144,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+   // SmartDashboard.putNumber("Encoder", WristMotor.getSelectedSensorPosition());
+
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
     SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());

@@ -46,20 +46,21 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
-    public static double kSpoolDiam = 4;//inches prob dont need
+    public static double kSpoolDiam = 2;
     public static double kPulsesPerRotation = 256;
-    public static double kElevatorTicksPerInch = 61.76330098;
+    public static double kElevatorHighGearTicksPerInch =    61.76330098;//215
+    public static double kElevatorLowGearTicksPerInch =     48.35555555;
     public static double kElevatorMaxSpeed = 0.75;
     public static double kElevatorSensitivity = 0.5;
-    public static double kElevatorMinSpeedUp = 0.5;
-    public static double kElevatorMinSpeedDown = -0.4;
+    public static double kElevatorMinSpeedUp = 0.62;
+    public static double kElevatorMinSpeedDown = -0.5;
     public static int kEncoderErrorRange = 2; // 5?
 
     public static double kMaxHeight = 78;//All of these are heights off the ground inches
     public static double kMinHeight = 7;
     public static int kElevatorStartingHeight = 19;
     public static double kHomePositionInches = 6.75;
-    public static long kElevatorStartingHeightConversion = Math.round(kElevatorTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
     public static double kHatchLow = 20.0; //0
@@ -68,7 +69,7 @@ public final class Constants {
     public static double kBallLow = 20.0;
     public static double kBallMid = 48.0;
     public static double kBallHigh = 74;
-    public static double kHABHeight = 30;
+    public static double kHABHeight = 28;
 
     /* Vision */
     // Physical
@@ -101,11 +102,11 @@ public final class Constants {
     //#endregion
     
     /* Intake */
-    public static int kWristTicksPerDegree  = 1;
+    public static double kWristTicksPerDegree  = 22.755555555;
     public static int kWristStartingAngle = 20;
-    public static int kWristGroundAngle = -90;
+    public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
-    public static int kWristCargoAngle = -45;
+    public static int kWristCargoAngle = -65;
 
 
     //#region RobotMap Constants
@@ -123,7 +124,6 @@ public final class Constants {
     public static int kDrivetrainRightSlaveID = 3;
     // Elevator
     public static int kElevatorMasterID = 4;
-    public static int kElevatorSlaveID = 5;
     // Climb
     public static int kClimbMotorID = 0;
     
@@ -146,7 +146,7 @@ public final class Constants {
     // public static int kIntakeWristReverseID = 3;
     // public static int kIntakeHatchPistonForwardID = 6;
     // public static int kIntakeHatchPistonReverseID = 7;
-    public static int kWristMotorID = 6;
+    public static int kWristMotorID = 5;
     // Climb
     public static int kClimbUpperForwardID = 4;
     public static int kClimbUpperReverseID = 5;
