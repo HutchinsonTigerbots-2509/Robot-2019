@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -31,9 +32,9 @@ import frc.robot.RobotMap;
 public class Drivetrain extends Subsystem {
   // Motors
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
-  private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
+  private final WPI_VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
-  private final VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
+  private final WPI_VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
   // The Differential Drive Object object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
   // DriveTrian Shifter for High and Low gear
@@ -215,13 +216,23 @@ public class Drivetrain extends Subsystem {
    * <li>- isShifted Boolean
    */
   public void UpdateTelemetry() {
+    // Subsystem Status
     mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
     mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
     mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
-    mDriveTrainTab.add("Gyro", mGyro.getAngle());
-    mDriveTrainTab.add("Drivetrain Drive", getDrive());
+    mDriveTrainTab.add("Gyro Angle", mGyro.getAngle());
     mDriveTrainTab.add("Shifter", getShifter());
     mDriveTrainTab.add("isShifted", isShifted());
+    // Subsystem Objects
+    mDriveTrainTab.add(mLeftMaster);
+    mDriveTrainTab.add(mLeftSlave);
+    mDriveTrainTab.add(mRightMaster);
+    mDriveTrainTab.add(mRightSlave);
+    mDriveTrainTab.add(mDrive);
+    mDriveTrainTab.add(mShifter);
+    // Subsytem Commands
+
+
     Shuffleboard.update();
   }
 

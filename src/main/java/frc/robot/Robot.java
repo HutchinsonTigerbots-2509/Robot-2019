@@ -77,8 +77,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-    System.out.print(SpoolMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
     SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
     SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());

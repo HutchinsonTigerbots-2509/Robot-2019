@@ -17,8 +17,11 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorMoveHighGear;
 import frc.robot.commands.ElevatorMoveLowGear;
+import frc.robot.commands.ElevatorShift;
+import frc.robot.commands.HeightToggle;
 import frc.robot.Robot;
 import frc.robot.commands.ManualElevatorMove;
+import frc.robot.commands.ZeroElevator;
 
 
 /**
@@ -36,8 +39,6 @@ import frc.robot.commands.ManualElevatorMove;
 public class Elevator extends Subsystem {
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_TalonSRX Wrist = RobotMap.WristMotor;
-  // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
@@ -195,7 +196,7 @@ public class Elevator extends Subsystem {
    * for the smartdashboard has been removed.
    */
   public void UpdateTelemetry() {
-    //mElevatorTab.add("Manual Move", ManualElevatorMove());
+    // Subsystem Status
     mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
@@ -204,6 +205,24 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Derivative", mDerivative);
     mElevatorTab.add("Integral", mIntegral);
     mElevatorTab.add("State", state);
+    // Subsystem Objects
+    mElevatorTab.add(SpoolMaster);
+    mElevatorTab.add(mTopLimit);
+    mElevatorTab.add(mBottomLimit);
+    mElevatorTab.add(mShifter);
+    //Subsystem Commands
+    mElevatorTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
+    mElevatorTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
+    mElevatorTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
+    mElevatorTab.add("Elevator Ball High", new ElevatorMoveHighGear(Constants.kBallHigh));
+    mElevatorTab.add("Elevator Ball Mid", new ElevatorMoveHighGear(Constants.kBallMid));
+    mElevatorTab.add("Elevator Ball Low", new ElevatorMoveHighGear(Constants.kBallLow));
+    mElevatorTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
+    mElevatorTab.add("Elevator 12", new ElevatorMoveHighGear(12));
+    mElevatorTab.add("Elevator Shift", new ElevatorShift());
+    mElevatorTab.add("Elevator Hieght", new HeightToggle());
+    mElevatorTab.add("Elevator Zero", new ZeroElevator());
+    //
     Shuffleboard.update();
   }
 
