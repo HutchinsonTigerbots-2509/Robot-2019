@@ -117,7 +117,7 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        ElevatorMotorMaster.setInverted(false);
+        ElevatorMotorMaster.setInverted(true);
         ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
@@ -180,7 +180,7 @@ public class RobotMap {
         // #region Climb
         
         ClimbMotor = new VictorSP(Constants.kClimbMotorID);
-        // ClimbMotor.setInverted(true);
+        ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
         // Stage 1 - Should fire first
