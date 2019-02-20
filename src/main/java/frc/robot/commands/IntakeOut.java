@@ -16,13 +16,13 @@ public class IntakeOut extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.MotorOut();
+    sIntake.Out();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.MotorOut();
+    sIntake.Out();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -41,5 +41,6 @@ public class IntakeOut extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    sIntake.MotorStop();
   }
 }

@@ -1,12 +1,17 @@
-package frc.robot.commands;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
-import edu.wpi.first.wpilibj.command.Command;
+package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class WristDown extends Command {
-  public Intake sIntake = Robot.sIntake;
-  
+  private Intake sIntake = Robot.sIntake;
   public WristDown() {
     requires(sIntake);
     // Use requires() here to declare subsystem dependencies
@@ -16,12 +21,13 @@ public class WristDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.WristPistonDown();                                                                
+    sIntake.WristMove(-90);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    sIntake.WristMove(-90);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -33,12 +39,13 @@ public class WristDown extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.WristPistonUp();
+    sIntake.StopWrist();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    sIntake.StopWrist();
   }
 }
