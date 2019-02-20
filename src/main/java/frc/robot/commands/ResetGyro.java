@@ -10,9 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
-
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Elevator;
 public class ResetGyro extends InstantCommand {
   private Drivetrain sDriveTrain = Robot.sDrivetrain;
+  private Intake sIntake = Robot.sIntake;
+  private Elevator sElevator = Robot.sElevator;
   public ResetGyro() {
     super();
   }
@@ -21,5 +24,7 @@ public class ResetGyro extends InstantCommand {
   @Override
   protected void initialize() {
     sDriveTrain.ResetGyro();
+    sElevator.Reset_Elevator();
+    
   }
 }

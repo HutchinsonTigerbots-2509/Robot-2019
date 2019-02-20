@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.commands.ElevatorMoveHighGear;
+import frc.robot.commands.ElevatorMoveLowGear;
+import frc.robot.Robot;
+import frc.robot.commands.ManualElevatorMove;
+
 
 /**
  * The Elevator Subsystem is where code that uses the lift mechanism
@@ -190,6 +195,7 @@ public class Elevator extends Subsystem {
    * for the smartdashboard has been removed.
    */
   public void UpdateTelemetry() {
+    //mElevatorTab.add("Manual Move", ManualElevatorMove());
     mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
@@ -251,7 +257,9 @@ public class Elevator extends Subsystem {
   public boolean getLimitsValue() {
     return (mTopLimit.get() || mBottomLimit.get());
   }
-
+  public void Reset_Elevator(){
+    SpoolMaster.setSelectedSensorPosition(0);
+  }
   /**
    * * Will return the inches off the ground that the elevator is
    * @author Nate
@@ -264,5 +272,19 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+  }
+  public void BottomSafetyStop(){
+    // if(isHighGear()){
+    // SpoolMaster.set(ControlMode.Position, (Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorHighGearTicksPerInch);
+    // }else{
+    new ElevatorMoveLowGear(8);
+    // SpoolMaster.set(ControlMode.Position, 4*(Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorLowGearTicksPerInch);
+    // }
+    // if(RobotMap.ElevatorTopLimit.get() == true){
+    //   Robot.trigger = true;
+    //   SpoolMaster.stopMotor();
+    // }else if(RobotMap.ElevatorTopLimit.get() == false && Robot.trigger == false){
+    //   SpoolMaster.set(ControlMode.Position, 5000);
+    // }
   }
 }

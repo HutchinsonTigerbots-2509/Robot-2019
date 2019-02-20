@@ -46,6 +46,13 @@ public final class Constants {
     public static double kElevatorIGain = 0.0;
     public static double kElevatorDGain = 4.0;
 
+    public static double kWristPGain = 10;
+    public static double kWristIGain = 0.0;
+    public static double kWristDGain = 4.0;
+
+    public static double kBottomLimitDistanceFromGround;
+    public static double kTopLimitDistanceFromGround;
+
     public static double kSpoolDiam = 2;
     public static double kPulsesPerRotation = 256;
     public static double kElevatorHighGearTicksPerInch =    61.76330098;//215
@@ -60,6 +67,7 @@ public final class Constants {
     public static double kMinHeight = 7;
     public static int kElevatorStartingHeight = 19;
     public static double kHomePositionInches = 6.75;
+    public static double kHomePostionFromLowestPostion = 2.5;
     public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 

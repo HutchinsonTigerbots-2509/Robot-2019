@@ -123,7 +123,7 @@ public class RobotMap {
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
         ElevatorMotorMaster.setSensorPhase(true);
-        ElevatorMotorMaster.setSelectedSensorPosition(0); //Constants.kElevatorStartingHeightTicks
+        //ElevatorMotorMaster.setSelectedSensorPosition(0); //Constants.kElevatorStartingHeightTicks
         // ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
         // ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
         // ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
@@ -166,9 +166,9 @@ public class RobotMap {
         WristMotor.configNominalOutputReverse(-0.05);
         WristMotor.setSelectedSensorPosition(0);
         WristMotor.setSubsystem("Intake");
-        WristMotor.config_kD(0, Constants.kElevatorDGain);
-        WristMotor.config_kP(0, Constants.kElevatorPGain);
-        WristMotor.config_kI(0, Constants.kElevatorIGain);
+        WristMotor.config_kD(0, Constants.kWristDGain);
+        WristMotor.config_kP(0, Constants.kWristPGain);
+        WristMotor.config_kI(0, Constants.kWristIGain);
 
         // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
         // IntakeWristPiston.setSubsystem("Intake");

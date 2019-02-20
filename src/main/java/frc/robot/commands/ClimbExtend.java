@@ -28,8 +28,8 @@ public class ClimbExtend extends Command {
   @Override
   protected void initialize() {
     stick = Robot.oi.getOperatorStick();
-    sClimb.StageOneStart();
-    sClimb.StageTwoStart();
+    sClimb.StageOneStart();//low
+    sClimb.StageTwoStart();//High
   }
   protected void execute(){
     sClimb.setMotorSpeed(-stick.getY()*2);

@@ -124,7 +124,8 @@ public class Drivetrain extends Subsystem {
    * @param Joystick stick
    */
   public void OperatorDrive(Joystick stick) {
-    // If the absolute value of the joystick is not greater than 10 %,
+    // double SpeedMulti = 0.25;
+    // double Speed = stick.getRawAxis(1) * -SpeedMulti;    // If the absolute value of the joystick is not greater than 10 %,
     // then don't do anything.
      if (Math.abs(stick.getY()) > Constants.minMoveSpeed || Math.abs(stick.getZ()) > Constants.minMoveSpeed) {
       mDrive.arcadeDrive(stick.getY(), -stick.getZ());
@@ -133,6 +134,22 @@ public class Drivetrain extends Subsystem {
        // So the robot will not stay at a +- 0.11 input
        mDrive.arcadeDrive(0, 0);
      }
+
+    //  if(stick.getRawAxis(3) > 0){
+    //  Speed = stick.getRawAxis(3) * -SpeedMulti;
+    //  }else if(stick.getRawAxis(2) > 0){
+    //    Speed = stick.getRawAxis(2) * SpeedMulti;
+    //  }else{
+    //    Speed = 0;
+    //  }
+
+    //  if(Speed > 0){
+    //    mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * SpeedMulti);
+    //  }else{
+    //   mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -SpeedMulti);
+    //  }
+     
+
   }
 
   /**

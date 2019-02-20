@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.AlignWithTargetPID;
 import frc.robot.commands.Angle_check;
-import frc.robot.commands.Climb;
+import frc.robot.commands.ClimbAlt;
 import frc.robot.commands.ClimbExtend;
 import frc.robot.commands.ClimbRetract;
 import frc.robot.commands.DriveShift;
+import frc.robot.commands.ElevatorDown;
 import frc.robot.commands.ElevatorMoveHighGear;
 import frc.robot.commands.ElevatorMoveLowGear;
 import frc.robot.commands.ElevatorShift;
+import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
@@ -22,7 +24,11 @@ import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.PrepareToClimb;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.WristManualDown;
+import frc.robot.commands.WristManualUp;
 import frc.robot.commands.WristMove;
+import frc.robot.commands.WristTest;
+import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 
@@ -81,6 +87,12 @@ private JoystickButton mButtonNine;
   private Elevator sElevator;
   private Vision sVision;
   private NetworkTable mLimeTable;
+
+  private JoystickButton mWristTest;
+  private JoystickButton mElevatorManualUp;
+  private JoystickButton mElevatorManualDown;
+  private JoystickButton mWristManualUp;
+  private JoystickButton mWristManualDown;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -152,13 +164,28 @@ private JoystickButton mButtonNine;
     RetractClimbPistons.whenPressed(new ClimbRetract());
 
     mClimb = new JoystickButton(mOpStick, 8);
-    mClimb.whenPressed(new Climb());
+    mClimb.whileHeld(new ClimbAlt(mOpStick));
+
+    mWristTest = new JoystickButton(mCoOpStick, 8);
+    mWristTest.whenPressed(new WristTest());
+
+    mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
+    mElevatorManualUp.whileHeld(new ElevatorUp());
+
+    mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
+    mElevatorManualDown.whileHeld(new ElevatorDown());
+
+    mWristManualUp = new JoystickButton(mCoOpStick, 10);
+    mWristManualUp.whileHeld(new WristManualUp());
+
+    mWristManualDown = new JoystickButton(mCoOpStick, 9);
+    mWristManualDown.whileHeld(new WristManualDown());    
 
     //Intake
-    mIntakein = new JoystickButton(mCoOpStick, 6);
+    mIntakein = new JoystickButton(mOpStick, 1); //mCoOpStick, 6
     mIntakein.whileHeld(new IntakeIn());
 
-    mIntakeout = new JoystickButton(mCoOpStick, 5);
+    mIntakeout = new JoystickButton(mOpStick, 2);//mCoOpStick, 5
     mIntakeout.whileHeld(new IntakeOut());
 
     mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
@@ -170,8 +197,8 @@ private JoystickButton mButtonNine;
     // #endregion Climb Subsystem
     // #region Drivetrain Subsystem
 
-    DriveShifter = new JoystickButton(mOpStick, 2);
-    DriveShifter.whenPressed(new DriveShift());
+    // DriveShifter = new JoystickButton(mOpStick, 2);
+    // DriveShifter.whenPressed(new DriveShift());
     
     // #endregion
 
@@ -237,7 +264,8 @@ private JoystickButton mButtonNine;
     mCommandTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
     mCommandTab.add("Elevator 12", new ElevatorMoveHighGear(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
-    mCommandTab.add("Elevaotr Hieght", new HeightToggle());
+    mCommandTab.add("Elevator Hieght", new HeightToggle());
+    mCommandTab.add("Elevator Zero", new ZeroElevator());
 
     //Intake/
     mCommandTab.add("Intake In", new IntakeIn());

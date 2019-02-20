@@ -7,48 +7,42 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
-import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class ClimbAlt extends Command {
-  private Elevator sElevator = Robot.sElevator;
-  private Intake sIntake = Robot.sIntake;
-  private Climber sClimber = Robot.sClimb;
-  private Joystick stick;
-  private int mWristAngle = -90;
-  private int mElevatorHieght = 12;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import frc.robot.subsystems.Elevator;
 
-  public ClimbAlt(Joystick joystick) {
-    requires(sClimber);
-    requires(sElevator);
-    requires(sIntake);
-    stick = joystick;
+public class WristTest extends Command {
+
+  public Intake sIntake = Robot.sIntake;
+  public Elevator sElevator = Robot.sElevator;
+  private int mWristAngle = -15;
+  public TalonSRX motor = RobotMap.WristMotor;
+
+  public WristTest() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sClimber.StageOneStart();
-    sClimber.StageTwoStart();
     sIntake.WristMove(mWristAngle);
-    sElevator.setHighGear(false);
-    sElevator.setPositionLowGear(mElevatorHieght);
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sClimber.setMotorSpeed(-stick.getY()*2);
     sIntake.WristMove(mWristAngle);
-    sElevator.setPositionLowGear(mElevatorHieght);
-    SmartDashboard.putNumber("Wrist Volts", RobotMap.WristMotor.getMotorOutputVoltage());
+    SmartDashboard.putNumber("WristVolts", motor.getMotorOutputVoltage());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,20 +54,13 @@ public class ClimbAlt extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sClimber.setMotorSpeed(0);
-    sIntake.StopWrist();
-    sElevator.StopMotors();
-    RobotMap.WristMotor.config_kD(0, Constants.kElevatorDGain);
-    RobotMap.WristMotor.config_kP(0, Constants.kElevatorPGain);
-    RobotMap.WristMotor.config_kI(0, Constants.kElevatorIGain);
+    motor.set(ControlMode.PercentOutput, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    sClimber.setMotorSpeed(0);
-    sIntake.StopWrist();
-    sElevator.StopMotors();
+    end();
   }
 }
