@@ -30,40 +30,52 @@ import frc.robot.RobotMap;
  * @author CRahne, Wayne, Tony, Cole, and Nate
  */
 public class Drivetrain extends Subsystem {
+  // #region Import Varibles
+
   // Motors
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
   private final WPI_VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final WPI_VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
+  
   // The Differential Drive Object object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
   private final double kSpeedMulti = Constants.kDriveSpeedMulti;
+  
   // DriveTrian Shifter for High and Low gear
   private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
+  
   // Gyro
   private final AHRS mGyro = RobotMap.DrivetrainGyro;
-  private double kMaxSpeed = Constants.kMaxSpeed;
-  private double kSlowSpeed = Constants.kSlowSpeed;
+  
   // Shuffleboard
   private final ShuffleboardTab mDriveTrainTab = Shuffleboard.getTab("Drivetrain");
+  
   // Vision
   public boolean TargetAligned;
   public boolean TargetDistanceCheck;
-  // PID Constants For Gyro Turn
-  private final double kTurnP = Constants.kDriveTrainGyroTurnP;
-  private final double kTurnD = Constants.kDriveTrainGyroTurnD;
-  // PID Constants For Aiming to target
-  private final double kAimToTargetP = Constants.kDrivetrainAimToTargetP;
-  private final double kAimToTargetI = Constants.kDrivetrainAimToTargetI;
-  private final double kAimToTargetD = Constants.kDrivetrainAimToTargetD;
-  // PID Constants For Driving to a Distance
-  private final double kDistanceP = Constants.kDriveTrainDistanceP;
-  private final double kDIstanceI = Constants.kDriveTrainDistanceI;
-  private final double kDistanceD = Constants.kDriveTrainDistanceD;
-  private double mSetpoint = 0;
-  private double mError = 0;
-  private double mPreviousError = 0;
+  // Constants
+  private double kMaxSpeed = Constants.kMaxSpeed;
+  private double kSlowSpeed = Constants.kSlowSpeed;
 
+   // PID Constants For Gyro Turn
+    private final double kTurnP = Constants.kDriveTrainGyroTurnP;
+    private final double kTurnD = Constants.kDriveTrainGyroTurnD;
+  
+    // PID Constants For Aiming to target
+    private final double kAimToTargetP = Constants.kDrivetrainAimToTargetP;
+    private final double kAimToTargetI = Constants.kDrivetrainAimToTargetI;
+    private final double kAimToTargetD = Constants.kDrivetrainAimToTargetD;
+  
+    // PID Constants For Driving to a Distance
+    private final double kDistanceP = Constants.kDriveTrainDistanceP;
+    private final double kDIstanceI = Constants.kDriveTrainDistanceI;
+    private final double kDistanceD = Constants.kDriveTrainDistanceD;
+    private double mSetpoint = 0;
+    private double mError = 0;
+    private double mPreviousError = 0;
+  // #endregion
+  
   /**
    * Adds children to the object so we can play with components in test mode
    */
@@ -82,30 +94,8 @@ public class Drivetrain extends Subsystem {
     mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
   }
 
-  /**
-   * Will drive forward at 65%.
-   */
-  public void driveForwardSlow() {
-    mDrive.tankDrive(kSlowSpeed, kSlowSpeed);
-  }
-
   public void ResetGyro() {
     mGyro.zeroYaw();
-  }
-
-  /**
-   * Will drive in reverse at 95%. (probably not a good idea though)
-   */
-  public void driveReverse() {
-    mDrive.tankDrive(-kMaxSpeed, -kMaxSpeed);
-    mDrive.arcadeDrive(-kMaxSpeed, -kMaxSpeed);
-  }
-
-  /**
-   * Will drive in reverse at 65%. More recomeended than driveReverse()
-   */
-  public void driveReverseSlow() {
-    mDrive.tankDrive(-kSlowSpeed, -kSlowSpeed);
   }
 
   public void track_taget(double left, double right, double pipeline) {
@@ -150,8 +140,25 @@ public class Drivetrain extends Subsystem {
        // So the robot will not stay at a +- 0.11 input
        mDrive.arcadeDrive(0, 0);
      }
-     
+  }
 
+   /**
+   * OperatorDrive is the Method for driving. It uses the differential drive
+   * varible that was created in RobotMap.java. It will grab the Y-Axis and Z-Axis
+   * of the OPStick in OI.java, then drive the robot.
+   * 
+   * @param Joystick stick
+   */
+  public void OperatorDriveAlt(Joystick stick) {
+    // If the absolute value of the joystick is not greater than 10 %,
+    // then don't do anything.
+    if (Math.abs(stick.getY()) > Constants.minMoveSpeed || Math.abs(stick.getZ()) > Constants.minMoveSpeed) {
+      mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
+      // mDrive.arcadeDrive(-stick.getY(), 0);
+    } else {
+      // So the robot will not stay at a +- 0.11 input
+      mDrive.arcadeDrive(0, 0);
+    }
   }
 
   /**
@@ -181,30 +188,6 @@ public class Drivetrain extends Subsystem {
   public void StopMotors() {
     mRightMaster.stopMotor();
     mLeftMaster.stopMotor();
-  }
-
-  /**
-   * Turn left method for continous turning
-   */
-  public void TurnLeft() {
-    mLeftMaster.set(Constants.kTurnSpeed);
-    mRightMaster.set(Constants.kTurnSpeed);
-  }
-
-  /**
-   * The turn right method for continuosly turning right
-   */
-  public void TurnRight() {
-    mLeftMaster.set(-Constants.kTurnSpeed);
-    mRightMaster.set(-Constants.kTurnSpeed);
-  }
-
-  /**
-   * Drives forward at the constant kTargetFollowSpeed (0.2)
-   */
-  public void MoveForward() {
-    mLeftMaster.set(Constants.kTargetFollowSpeed);
-    mRightMaster.set(Constants.kTargetFollowSpeed);
   }
 
   /**
@@ -362,8 +345,7 @@ public class Drivetrain extends Subsystem {
     double mActual = tx;
     /* MATH */
     mError = mSetpoint - mActual;// Error = Target - Actual
-    mIntegral += (mError * .02);// Integral is increased by the error*time (which is .02 seconds using normal
-                                // IterativeRobot)
+    mIntegral += (mError * .02);// Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
     mDerivative = (mError - mPreviousError) / .02;
     mOutput = (kAimToTargetP * mError) + (kAimToTargetI * mIntegral) + (kAimToTargetD * mDerivative);
     mPreviousError = mError;// Sets pr
