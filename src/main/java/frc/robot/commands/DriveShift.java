@@ -29,7 +29,7 @@ public class DriveShift extends InstantCommand {
   protected void initialize() {
     // isShifted = mDriveTrain.isShifted();
     // mDriveTrain.setHighGear(!isShifted);
-    mDriveTain.
+    mDriveTain.DriveShift
   }
 
 }

@@ -245,8 +245,8 @@ public class Drivetrain extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void ChangeShift(boolean mHighGear) {
-    if (mHighGear) {
+  public void ChangeShift() {
+    if (isShifted()) {
       mShifter.set(Value.kForward);
     } else {
       mShifter.set(Value.kReverse);
