@@ -196,7 +196,7 @@ private JoystickButton mButtonNine;
     mIntakeGroundPosition = new JoystickButton(mCoOpStick, 12);
     mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
 
-    mIntakeBall = new JoystickButton(mCoOpStick, 800);
+    mIntakeBall = new JoystickButton(mCoOpStick, 1);
     mIntakeBall.whileHeld(new IntakeBall());
     mIntakeBall.whenReleased(new WristMove(Constants.kWristCargoAngle));
 

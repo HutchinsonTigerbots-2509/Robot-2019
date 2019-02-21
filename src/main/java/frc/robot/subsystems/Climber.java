@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
+import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ClimbRetract;
 
 /**
  * The climbing subsystem is the subsystem where we climb up
@@ -28,6 +30,8 @@ public class Climber extends Subsystem {
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
+  private final Value Extend = Value.kForward;
+  private final Value Retract = Value.kReverse;
   
   /**
    * Constructor that adds children to the object so
@@ -46,7 +50,7 @@ public class Climber extends Subsystem {
    * Extends the Low Pistons (stage 1) on both sides
    */
   public void StageOneStart() {
-    LowPistonSystem.set(Value.kForward);
+    LowPistonSystem.set(Extend);
   }
 
   /**
@@ -55,7 +59,7 @@ public class Climber extends Subsystem {
    * @author CRahne
    */
   public void StageTwoStart() {
-    HighPistonSystem.set(Value.kForward);
+    HighPistonSystem.set(Extend);
   }
   
   /**
@@ -64,7 +68,7 @@ public class Climber extends Subsystem {
    * @author CRahne
    */
   public void RetractStageTwo(){
-    HighPistonSystem.set(Value.kReverse);
+    HighPistonSystem.set(Retract);
   }
 
   /**
@@ -73,7 +77,7 @@ public class Climber extends Subsystem {
    * @author CRahne
    */
   public void RetractStageOne(){
-    LowPistonSystem.set(Value.kReverse);
+    LowPistonSystem.set(Retract);
   }
 
   public void setMotorSpeed(double speed){
@@ -100,9 +104,17 @@ public class Climber extends Subsystem {
    * Updates the data for shuffleboard
    */
   public void UpdateTelemetry(){
+    // Subsystem Status'
     mClimbTab.add("Higher Pistons", getHigherPistonsStatus());
     mClimbTab.add("Lower Pistons", getLowerPistonsStatus());
     mClimbTab.add("Motor Speed", Motor.get());
+    // Subsystem Objects
+    mClimbTab.add(Motor);
+    mClimbTab.add(LowPistonSystem);
+    mClimbTab.add(HighPistonSystem);
+    //Subsystem Commands
+    mClimbTab.add("Climb Extend", new ClimbExtend());
+    mClimbTab.add("Climb Retract", new ClimbRetract());
   }
 
   // #endregion General

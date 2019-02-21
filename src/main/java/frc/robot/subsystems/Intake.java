@@ -1,14 +1,9 @@
 package frc.robot.subsystems; // package declaration
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.VictorSP;
-
-// imports
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -16,6 +11,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.commands.IntakeIn;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.WristManualDown;
+import frc.robot.commands.WristManualUp;
 
 /**
  * The intake subsystem is the main scoring subsystem of the robot. It can pick
@@ -34,8 +33,6 @@ public class Intake extends Subsystem {
     setSubsystem("Intake");
     addChild(mMotor);
     addChild(mWrist);
-    // addChild(mWristPiston);
-    // addChild(mHatchOutPiston);
   }
 
   /**
@@ -94,10 +91,18 @@ public class Intake extends Subsystem {
    * Will update data on the shuffleboard tab for this class
    */
   public void UpdateTelemetry() {
+    // Subsystems Status
     mIntakeTab.add("Motor Speed", mMotor.get());
     mIntakeTab.add("Wrist Position", mWrist.getSelectedSensorPosition());
+    // Subsystems Object
     mIntakeTab.add(mMotor);
     mIntakeTab.add(mWrist);
+    // Subsystem Intake
+    mIntakeTab.add("Intake In", new IntakeIn());
+    mIntakeTab.add("Intake Out", new IntakeOut());
+    mIntakeTab.add("Wrist Up", new WristManualUp());
+    mIntakeTab.add("Wrist Down", new WristManualDown());
+
     Shuffleboard.update();
   }
   

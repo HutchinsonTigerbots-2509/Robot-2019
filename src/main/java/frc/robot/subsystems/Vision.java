@@ -101,9 +101,6 @@ public class Vision extends Subsystem {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
-    //mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID); 
-    //mTargetArea = mTableX.getDouble(0.0); 
-  //return mTargetArea; 
   }
   public double getTargetSkew() {
     mTableS = mTable.getEntry(Constants.kLimelightTargetAreaID);
@@ -124,11 +121,7 @@ public class Vision extends Subsystem {
     DistanceToDrive = Math.sqrt(Math.pow((DistanceOne - Constants.kTargetDistanceFromTarget), 2) + Math.pow(DistanceTwo, 2));
     AngleOne = Math.atan((DistanceOne - Constants.kTargetDistanceFromTarget)/(DistanceTwo));
     Turn_angle = (90 - thetaAngle + AngleOne);
-
     return Math.toDegrees(Turn_angle);
-
-
-
   }
   /**
    * Updateds the Limelight camera settings via the NetworkTable.
@@ -138,10 +131,6 @@ public class Vision extends Subsystem {
     mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
     mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
     //mTable.getEntry("pipeline").setNumber(0);
-  }
-
-  @Override
-  public void initDefaultCommand() {
   }
 
   private void PullFromTable() {
@@ -165,5 +154,9 @@ public class Vision extends Subsystem {
   //   mVisionTab.add("Target X", mTableX.getDouble(0));
   //   mVisionTab.add("Target Y", mTableY.getDouble(0));
   //   mVisionTab.add("Target Area", mTableArea.getDouble(0));
+  }
+
+  @Override
+  public void initDefaultCommand() {
   }
 }

@@ -45,7 +45,6 @@ public class RobotMap {
     /* ELEVATOR */
     // Motors
     public static WPI_TalonSRX ElevatorMotorMaster;
-    // public static WPI_VictorSPX ElevatorMotorSlave;
     // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
     // Digital Input
@@ -57,9 +56,6 @@ public class RobotMap {
     // Motors
     public static VictorSP IntakeMotor;
     public static WPI_TalonSRX WristMotor;
-    // Pneumatics
-    // public static DoubleSolenoid IntakeWristPiston;
-    // public static DoubleSolenoid IntakeHatchPiston;
 
     /* CLIMB */
     // Motors
@@ -67,6 +63,7 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
+
 
     public static void init() {
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
@@ -123,17 +120,6 @@ public class RobotMap {
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
         ElevatorMotorMaster.setSensorPhase(true);
-        //ElevatorMotorMaster.setSelectedSensorPosition(0); //Constants.kElevatorStartingHeightTicks
-        // ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
-        // ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
-        // ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
-
-        // ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
-        // ElevatorMotorSlave.setSubsystem("Elevator");
-        // ElevatorMotorSlave.follow(ElevatorMotorMaster);
-        // ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        // ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        // ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
 
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
@@ -156,8 +142,6 @@ public class RobotMap {
         IntakeMotor.setSubsystem("Intake");
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
         WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
-        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
         WristMotor.setSensorPhase(false);
         WristMotor.configPeakOutputForward(0.95);
@@ -169,28 +153,18 @@ public class RobotMap {
         WristMotor.config_kD(0, Constants.kWristDGain);
         WristMotor.config_kP(0, Constants.kWristPGain);
         WristMotor.config_kI(0, Constants.kWristIGain);
-
-        // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
-        // IntakeWristPiston.setSubsystem("Intake");
-
-        // IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID);
-        // IntakeHatchPiston.setSubsystem("Intake");
         // #endregion
 
         // #region Climb
-        
         ClimbMotor = new VictorSP(Constants.kClimbMotorID);
         ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
-        // Stage 1 - Should fire first
         ClimbLowerPiston = new DoubleSolenoid(Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
-        // Stage 2 - Should fire Second
         ClimbUpperPiston = new DoubleSolenoid(Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
-        
         // #endregion Climb
     }
 }
