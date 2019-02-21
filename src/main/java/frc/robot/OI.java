@@ -302,9 +302,12 @@ private JoystickButton mButtonNine;
    */ 
   public void setElevatorButtonsHatch(){
     sElevator.state = "Hatch";
-    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
+    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
+    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
+    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
+    mElevatorHigh.whenPressed(new ElevatorMoveHighGear(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorMoveHighGear(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorMoveHighGear(Constants.kHatchLow));
   }
 
   /**
@@ -313,8 +316,11 @@ private JoystickButton mButtonNine;
    */ 
   public void setElevatorButtonsCargo(){
     sElevator.state = "Cargo";
-    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
-    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
-    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
+    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
+    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
+    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
+    mElevatorHigh.whenPressed(new ElevatorMoveHighGear(Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorMoveHighGear(Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorMoveHighGear(Constants.kBallLow));
   }
 }

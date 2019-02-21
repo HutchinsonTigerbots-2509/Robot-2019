@@ -198,6 +198,7 @@ public class Elevator extends Subsystem {
   public void UpdateTelemetry() {
     // Subsystem Status
     mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
+    mElevatorTab.add("Height (In)", CurrentHeight());
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
     mElevatorTab.add("Shifter", getGear());
