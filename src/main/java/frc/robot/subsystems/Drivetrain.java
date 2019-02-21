@@ -37,6 +37,7 @@ public class Drivetrain extends Subsystem {
   private final WPI_VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
   // The Differential Drive Object object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
+  private final double kSpeedMulti = Constants.kDriveSpeedMulti;
   // DriveTrian Shifter for High and Low gear
   private final DoubleSolenoid mShifter = RobotMap.DrivetrainShifter;
   // Gyro
@@ -124,31 +125,31 @@ public class Drivetrain extends Subsystem {
    * 
    * @param Joystick stick
    */
-  public void OperatorDrive(Joystick stick) {
-    // double SpeedMulti = 0.25;
-    // double Speed = stick.getRawAxis(1) * -SpeedMulti;    // If the absolute value of the joystick is not greater than 10 %,
+  public void OperatorDrive(Joystick stick) {    // If the absolute value of the joystick is not greater than 10 %,
+    double Speed = stick.getRawAxis(1)*-kSpeedMulti;
     // then don't do anything.
-     if (Math.abs(stick.getY()) > Constants.minMoveSpeed || Math.abs(stick.getZ()) > Constants.minMoveSpeed) {
-      mDrive.arcadeDrive(stick.getY(), -stick.getZ());
+     if (Math.abs(stick.getRawAxis(3)) > Constants.minMoveSpeed || Math.abs(stick.getRawAxis(2)) > Constants.minMoveSpeed) {
+      // mDrive.arcadeDrive(stick.getY(), -stick.getZ());
        // mDrive.arcadeDrive(-stick.getY(), 0);
+
+       if(stick.getRawAxis(3) > 0){
+        Speed = stick.getRawAxis(3) * -kSpeedMulti;
+        }else if(stick.getRawAxis(2) > 0){
+          Speed = stick.getRawAxis(2) * kSpeedMulti;
+        }else{
+          Speed = 0;
+        }
+   
+        if(kSpeedMulti > 0){
+          mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * kSpeedMulti);
+        }else{
+         mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -kSpeedMulti);
+        }
+
      } else {
        // So the robot will not stay at a +- 0.11 input
        mDrive.arcadeDrive(0, 0);
      }
-
-    //  if(stick.getRawAxis(3) > 0){
-    //  Speed = stick.getRawAxis(3) * -SpeedMulti;
-    //  }else if(stick.getRawAxis(2) > 0){
-    //    Speed = stick.getRawAxis(2) * SpeedMulti;
-    //  }else{
-    //    Speed = 0;
-    //  }
-
-    //  if(Speed > 0){
-    //    mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * SpeedMulti);
-    //  }else{
-    //   mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -SpeedMulti);
-    //  }
      
 
   }

@@ -20,6 +20,7 @@ import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
+import frc.robot.commands.IntakeBall;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.PrepareToClimb;
@@ -79,6 +80,7 @@ public class OI {
   //Intake
 private JoystickButton mIntakeStartingPosition;
 private JoystickButton mIntakeGroundPosition;
+private JoystickButton mIntakeBall;
 
 private JoystickButton mButtonNine;
 
@@ -191,8 +193,14 @@ private JoystickButton mButtonNine;
     mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
     mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));//kWristStartingAngle
 
-    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 12);
+    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 1);
     mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
+
+    mIntakeBall = new JoystickButton(mCoOpStick, 1);
+    mIntakeBall.whileHeld(new IntakeBall());
+    mIntakeBall.whenReleased(new WristMove(Constants.kWristCargoAngle));
+
+    
 
     // #endregion Climb Subsystem
     // #region Drivetrain Subsystem

@@ -293,10 +293,15 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
   }
   public void BottomSafetyStop(){
+    SpoolMaster.setSelectedSensorPosition(0);
+    if(isHighGear()){
+      this.setPositionHighGear(Constants.kHatchLow);
+    }else{
+      this.setPositionLowGear(Constants.kHatchLow);
+    }
     // if(isHighGear()){
     // SpoolMaster.set(ControlMode.Position, (Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorHighGearTicksPerInch);
     // }else{
-    new ElevatorMoveLowGear(8);
     // SpoolMaster.set(ControlMode.Position, 4*(Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorLowGearTicksPerInch);
     // }
     // if(RobotMap.ElevatorTopLimit.get() == true){

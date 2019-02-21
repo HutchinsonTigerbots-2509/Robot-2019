@@ -151,10 +151,7 @@ public class Robot extends TimedRobot {
     if(RobotMap.ElevatorBottomLimit.get() == true){
       RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(0);
       sElevator.BottomSafetyStop();
-      // SmartDashboard.putString("Running", "BottomSafetyStop");
-      // trigger = false;
    }
-   // SmartDashboard.putNumber("Encoder", WristMotor.getSelectedSensorPosition());
 
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());

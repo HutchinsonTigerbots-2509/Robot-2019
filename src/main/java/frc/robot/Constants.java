@@ -10,6 +10,8 @@ package frc.robot;// package declaration
 public final class Constants {
     public Constants() {
     }
+
+    public static double kDriveSpeedMulti = 0.25;
     
     //#region Constant Values
     /* Motors */
