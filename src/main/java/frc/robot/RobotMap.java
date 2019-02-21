@@ -114,7 +114,7 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        ElevatorMotorMaster.setInverted(true);
+        ElevatorMotorMaster.setInverted(false);//True //Possibly Differnt between comp and practice
         ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
