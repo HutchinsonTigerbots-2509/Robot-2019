@@ -32,6 +32,7 @@ import frc.robot.commands.WristTest;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.IntakeHatch;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -81,6 +82,7 @@ public class OI {
 private JoystickButton mIntakeStartingPosition;
 private JoystickButton mIntakeGroundPosition;
 private JoystickButton mIntakeBall;
+private JoystickButton mIntakeHatch;
 
 private JoystickButton mButtonNine;
 
@@ -91,6 +93,7 @@ private JoystickButton mButtonNine;
   private NetworkTable mLimeTable;
 
   private JoystickButton mWristTest;
+
   private JoystickButton mElevatorManualUp;
   private JoystickButton mElevatorManualDown;
   private JoystickButton mWristManualUp;
@@ -140,73 +143,79 @@ private JoystickButton mButtonNine;
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
 
-    Distance_Calculated = new JoystickButton(mOpStick, 11);
-    Distance_Calculated.whenPressed(new Angle_check());
+    // Distance_Calculated = new JoystickButton(mOpStick, 11);
+    // Distance_Calculated.whenPressed(new Angle_check());
 
-    AlignButton = new JoystickButton(mOpStick, 5);
-    AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
+    // AlignButton = new JoystickButton(mOpStick, 5);
+    // AlignButton.toggleWhenPressed(new Follow_target(0, -0.1, -0.009));
 
-    AlignButton = new JoystickButton(mOpStick, 12);
-    AlignButton.toggleWhenPressed(new AlignWithTarget());
+    // AlignButton = new JoystickButton(mOpStick, 12);
+    // AlignButton.toggleWhenPressed(new AlignWithTarget());
 
-    AlignButtonPID = new JoystickButton(mOpStick, 10);
-    AlignButtonPID.whileHeld(new AlignWithTargetPID());
+    // AlignButtonPID = new JoystickButton(mOpStick, 10);
+    // AlignButtonPID.whileHeld(new AlignWithTargetPID());
 
-    Follow_hatch_Button = new JoystickButton(mOpStick, 4);
-    Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
+    // Follow_hatch_Button = new JoystickButton(mOpStick, 4);
+    // Follow_hatch_Button.toggleWhenPressed(new Follow_target(4, -0.02, -0.02));
 
-    Follow_alingment_tape_Button = new JoystickButton(mOpStick, 3);
-    Follow_alingment_tape_Button.toggleWhenPressed(new Follow_target(1, -0.05, -0.02));
+    // Follow_alingment_tape_Button = new JoystickButton(mOpStick, 3);
+    // Follow_alingment_tape_Button.toggleWhenPressed(new Follow_target(1, -0.05, -0.02));
 
-    Follow_ball_Button = new JoystickButton(mOpStick, 6);
-    Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
+    // Follow_ball_Button = new JoystickButton(mOpStick, 6);
+    // Follow_ball_Button.toggleWhenPressed(new Follow_target(2, -0.03, -0.03));
 
     // Climb 
-    RetractClimbPistons = new JoystickButton(mOpStick, 7);
+    RetractClimbPistons = new JoystickButton(mOpStick, 2);
     RetractClimbPistons.whenPressed(new ClimbRetract());
 
     mClimb = new JoystickButton(mOpStick, 8);
     mClimb.whileHeld(new ClimbAlt(mOpStick));
 
-    mWristTest = new JoystickButton(mCoOpStick, 8);
-    mWristTest.whenPressed(new WristTest());
+    // mWristTest = new JoystickButton(mCoOpStick, 8);
+    // mWristTest.whenPressed(new WristTest());
 
-    mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
-    mElevatorManualUp.whileHeld(new ElevatorUp());
 
-    mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
-    mElevatorManualDown.whileHeld(new ElevatorDown());
+    //NEED POV
+    // mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
+    // mElevatorManualUp.whileHeld(new ElevatorUp());
 
-    mWristManualUp = new JoystickButton(mCoOpStick, 10);
-    mWristManualUp.whileHeld(new WristManualUp());
+    // mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
+    // mElevatorManualDown.whileHeld(new ElevatorDown());
 
-    mWristManualDown = new JoystickButton(mCoOpStick, 9);
-    mWristManualDown.whileHeld(new WristManualDown());    
+    // mWristManualUp = new JoystickButton(mCoOpStick, 10);
+    // mWristManualUp.whileHeld(new WristManualUp());
+
+    // mWristManualDown = new JoystickButton(mCoOpStick, 9);
+    // mWristManualDown.whileHeld(new WristManualDown());    
 
     //Intake
-    mIntakein = new JoystickButton(mOpStick, 1); //mCoOpStick, 6
-    mIntakein.whileHeld(new IntakeIn());
+    //IN OP DRIVE
+    // mIntakein = new JoystickButton(mOpStick, 1); //mCoOpStick, 6
+    // mIntakein.whileHeld(new IntakeIn());
 
-    mIntakeout = new JoystickButton(mOpStick, 2);//mCoOpStick, 5
-    mIntakeout.whileHeld(new IntakeOut());
+    // mIntakeout = new JoystickButton(mOpStick, 2);//mCoOpStick, 5
+    // mIntakeout.whileHeld(new IntakeOut());
+    //IN OP DRIVE
 
-    mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
-    mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));//kWristStartingAngle
+    // mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
+    // mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));//kWristStartingAngle
 
-    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 1);
+    mIntakeGroundPosition = new JoystickButton(mCoOpStick, 3);
     mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
 
     mIntakeBall = new JoystickButton(mCoOpStick, 1);
     mIntakeBall.whileHeld(new IntakeBall());
     mIntakeBall.whenReleased(new WristMove(Constants.kWristCargoAngle));
 
-    
+    mIntakeHatch = new JoystickButton(mCoOpStick, 2);
+    mIntakeHatch.whileHeld(new IntakeHatch());
+    mIntakeBall.whenReleased(new WristMove(Constants.kWristHatchAngle));
 
     // #endregion Climb Subsystem
     // #region Drivetrain Subsystem
 
-    // DriveShifter = new JoystickButton(mOpStick, 2);
-    // DriveShifter.whenPressed(new DriveShift());
+    DriveShifter = new JoystickButton(mOpStick, 10);
+    DriveShifter.whenPressed(new DriveShift());
     
     // #endregion
 
@@ -215,15 +224,17 @@ private JoystickButton mButtonNine;
     mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
     mPrepareToClimb.whileHeld(new PrepareToClimb());
 
-    mHeightToggle = new JoystickButton(mCoOpStick, 2);
-    mHeightToggle.whenPressed(new HeightToggle());
+
+
+    // mHeightToggle = new JoystickButton(mCoOpStick, 2);
+    // mHeightToggle.whenPressed(new HeightToggle());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
-    mElevatorMid = new JoystickButton(mCoOpStick, 3);
+    mElevatorMid = new JoystickButton(mCoOpStick, 2);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     setElevatorButtonsHatch();
 
-    mElevatorShift = new JoystickButton(mOpStick, 11);
+    mElevatorShift = new JoystickButton(mOpStick, 7);
     mElevatorShift.whenPressed(new ElevatorShift());
     // #endregion
 
