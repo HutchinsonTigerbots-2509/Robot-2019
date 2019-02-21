@@ -147,8 +147,8 @@ public class Elevator extends Subsystem {
    * @author Cole
    * @author Tony
    */
-  public void setHighGear(boolean mHighGear) {
-    if (mHighGear) {
+  public void setHighGear() {
+    if (isHighGear()) {
       mShifter.set(Value.kForward);
     } else {
       mShifter.set(Value.kReverse);

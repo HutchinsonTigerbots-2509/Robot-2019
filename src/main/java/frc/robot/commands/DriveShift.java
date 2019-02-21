@@ -27,8 +27,9 @@ public class DriveShift extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    isShifted = mDriveTrain.isShifted();
-    mDriveTrain.setHighGear(!isShifted);
+    // isShifted = mDriveTrain.isShifted();
+    // mDriveTrain.setHighGear(!isShifted);
+    mDriveTain.
   }
 
 }
