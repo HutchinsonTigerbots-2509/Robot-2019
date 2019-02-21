@@ -33,6 +33,12 @@ public class Follow_target extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    // if (Pipeline_id == 0){
+
+    // }
+    // else if Pipeline_id == 2{
+      
+    // }
     addSequential(new Change_pipeline(Pipeline_id));
     addSequential(new FollowTarget(Pipeline_id, kPdistance, kPangle));
   }
