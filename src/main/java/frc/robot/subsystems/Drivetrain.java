@@ -206,7 +206,6 @@ public class Drivetrain extends Subsystem {
     mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
     mDriveTrainTab.add("Gyro Angle", mGyro.getAngle());
     mDriveTrainTab.add("Shifter", getShifter());
-    mDriveTrainTab.add("isShifted", isShifted());
     // Subsystem Objects
     mDriveTrainTab.add(mLeftMaster);
     mDriveTrainTab.add(mLeftSlave);
@@ -239,32 +238,16 @@ public class Drivetrain extends Subsystem {
     mRightMaster.setSelectedSensorPosition(0);
   }
 
-  /**
-   * Shifts the Gear to Low
-   * 
-   * @author Cole
-   * @author Tony
-   */
-  public void ChangeShift() {
-    if (isShifted()) {
-      mShifter.set(Value.kForward);
-    } else {
-      mShifter.set(Value.kReverse);
-    }
+  public void shiftToHigh() {
+    mShifter.set(Value.kForward);
   }
 
-  /**
-   * Returns a boolean and if True means that it is shifted
-   * 
-   * @author Cole
-   * @author Tony
-   */
-  public boolean isShifted() {
-    if (mShifter.get() == Value.kReverse) {
-      return true;
-    } else {
-      return false;
-    }
+  public void shiftToLow() {
+    mShifter.set(Value.kReverse);
+  }
+
+  public Value getCurrentShifter() {
+    return mShifter.get();
   }
 
   /**
