@@ -74,7 +74,7 @@ public class OI {
     // WristDown.whileHeld(new WristDown());
 
     IntakeIn = new JoystickButton(mOpStick, 3);
-    IntakeIn.toggleWhenPressed(new IntakeIn());
+    IntakeIn.whileHeld(new IntakeIn());
 
     IntakeOut = new JoystickButton(mOpStick, 4);
     IntakeOut.whileHeld(new IntakeOut());

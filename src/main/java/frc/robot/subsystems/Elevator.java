@@ -32,37 +32,9 @@ import frc.robot.Robot;
 public class Elevator extends Subsystem {
   // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_TalonSRX Wrist = RobotMap.WristMotor;
-  // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
-  // ShuffleBoard Tab
-  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
-  // Constants
-  private final double kPulseNumber = Constants.kPulsesPerRotation;
-  private final double kMaxHeight = Constants.kMaxHeight;
-  private final double kMinHeight = Constants.kMinHeight;
-  private final double kHomePositionInches = Constants.kHomePositionInches;
-  private final double kSpoolDiam = Constants.kSpoolDiam;
-  private final double PGain = Constants.kElevatorPGain;
-  private final double IGain = Constants.kElevatorPGain;
-  private final double DGain = Constants.kElevatorPGain;
-  private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
-  private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
-  private final double kTicksPerInch = Constants.kElevatorHighGearTicksPerInch;
-  // Pneumatics Values
-  private final Value kReverse = Value.kReverse;
-  private final Value kForward = Value.kForward;
-  private final Value kHighGear = Value.kReverse;
-  private final Value kLowGear = Value.kForward;
-  // Private PID Varibles
-  private double mError;
-  private double mPerpotional;
-  private double mDerivative;
-  private double mIntegral = 0;
-  private double mPerviousError;
-  private double mEncoderTargetHieght;
   public String state;
 
   /**
@@ -82,6 +54,7 @@ public class Elevator extends Subsystem {
    * Stops both the Master and Slave motors
    */
   public void StopMotors() {
+    SpoolMaster.set(ControlMode.PercentOutput, 0.0);
     SpoolMaster.stopMotor();
     // SpoolSlave.stopMotor();
   }

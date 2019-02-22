@@ -38,13 +38,13 @@ public class IntakeIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.MotorsStop();
+    sIntake.CargoMotorStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    sIntake.MotorsStop();
+    sIntake.CargoMotorStop();
   }
 }
