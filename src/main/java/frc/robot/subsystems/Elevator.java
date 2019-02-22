@@ -54,13 +54,15 @@ public class Elevator extends Subsystem {
    * Stops both the Master and Slave motors
    */
   public void StopMotors() {
-    SpoolMaster.set(ControlMode.PercentOutput, 0.0);
+    // SpoolMaster.set(ControlMode.PercentOutput, 0.0);
+    SpoolMaster.set(0);
     SpoolMaster.stopMotor();
     // SpoolSlave.stopMotor();
   }
 
   public void Up() {
-    SpoolMaster.set(ControlMode.PercentOutput, 0.5);
+    // SpoolMaster.set(ControlMode.PercentOutput, 0.5);
+    SpoolMaster.set(0.5);
   }
 
   public void Down() {
