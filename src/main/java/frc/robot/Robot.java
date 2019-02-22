@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.BottomLimitSafety;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -13,7 +12,6 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -35,7 +33,6 @@ public class Robot extends TimedRobot {
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
 
-  private final WPI_TalonSRX WristMotor = RobotMap.WristMotor;
   public static boolean trigger = false;
 
 
@@ -60,7 +57,6 @@ public class Robot extends TimedRobot {
     cOpDrive = new OperatorDrive();
     
     // Put data on Shuffleboard
-    sElevator.UpdateTelemetry();
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
     Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
@@ -79,9 +75,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
     System.out.print(SpoolMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
-    SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());
     Shuffleboard.update();
   }
 
@@ -152,15 +145,12 @@ public class Robot extends TimedRobot {
 
     if(RobotMap.ElevatorBottomLimit.get() == true){
       RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(0);
-      sElevator.BottomSafetyStop();
       // SmartDashboard.putString("Running", "BottomSafetyStop");
       // trigger = false;
    }
    // SmartDashboard.putNumber("Encoder", WristMotor.getSelectedSensorPosition());
 
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
 

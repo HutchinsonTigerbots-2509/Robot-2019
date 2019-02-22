@@ -28,6 +28,10 @@ public final class Constants {
     // Wheel Info
     public static double kWheelDiameter = 6;
     public static double kEncoderRatio = 3;
+
+    // OP Drive Constants
+    public static double minMovePercent = 0.1; // min input from joystick
+    public static double inputMulti = 0.8; // multi of joystick input
     
     // PID
     public static double kDrivetrainAimToTargetP = 1;
