@@ -67,14 +67,14 @@ public class OI {
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
 
-    WristUp = new JoystickButton(mOpStick, 1);
-    WristUp.whileHeld(new WristUp());
+    // WristUp = new JoystickButton(mOpStick, 1);
+    // WristUp.whileHeld(new WristUp());
 
-    WristDown = new JoystickButton(mOpStick, 2);
-    WristDown.whileHeld(new WristDown());
+    // WristDown = new JoystickButton(mOpStick, 2);
+    // WristDown.whileHeld(new WristDown());
 
     IntakeIn = new JoystickButton(mOpStick, 3);
-    IntakeIn.whileHeld(new IntakeIn());
+    IntakeIn.toggleWhenPressed(new IntakeIn());
 
     IntakeOut = new JoystickButton(mOpStick, 4);
     IntakeOut.whileHeld(new IntakeOut());

@@ -39,8 +39,9 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristUp() {
-    mWrist.set(ControlMode.PercentOutput,0.9);
+    mWrist.set(ControlMode.PercentOutput, 0.4);
   }
+  
   /**
    * moves the intake wrist down
    * @author Tony
@@ -81,8 +82,8 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void MotorsStop() {
-    mCargoMotor.stopMotor();
-    mWrist.stopMotor();
+    mCargoMotor.set(0);
+    // mWrist.set(ControlMode.PercentOutput, 0);
   }
   
   /** 
