@@ -24,15 +24,15 @@ import frc.robot.commands.WristManualUp;
  * @author CRahne, Tony, and Cole G
  */
 public class Intake extends Subsystem {
-  private final VictorSP mCargoMotor = RobotMap.IntakeMotor;
-  private final WPI_TalonSRX mWrist = RobotMap.WristMotor;
-  private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
+  private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
+  private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
+  private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
   private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
 
   public Intake() {
     setSubsystem("Intake");
-    addChild(mCargoMotor);
-    addChild(mWrist);
+    addChild(mIntakeMotor);
+    addChild(mWristMotor);
   }
 
   /**
@@ -41,7 +41,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristUp() {
-    mWrist.set(ControlMode.PercentOutput, 0.5);
+    mWristMotor.set(ControlMode.PercentOutput, 0.5);
   }
   
   /**
@@ -49,7 +49,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristDown(){
-    mWrist.set(ControlMode.PercentOutput,-0.35);
+    mWristMotor.set(ControlMode.PercentOutput,-0.35);
   }
 
   /**
@@ -57,40 +57,48 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void StopWrist(){
-    mWrist.set(ControlMode.PercentOutput,0);
+    mWristMotor.set(ControlMode.PercentOutput,0);
   }
   public void WristMove(double targetAngle){
     double rawTargetTicks = targetAngle* kWristTicksPerDegree;
     SmartDashboard.putNumber("Target Angle", rawTargetTicks/kWristTicksPerDegree);
     SmartDashboard.putNumber("Target RAW", rawTargetTicks);
-    mWrist.set(ControlMode.Position, rawTargetTicks);
+    mWristMotor.set(ControlMode.Position, rawTargetTicks);
   }
   /**
    * Will take a ball in
    * @author CRahne
    */
   public void In() {
-    mCargoMotor.set(Constants.kMaxSpeed);
+    mIntakeMotor.set(Constants.kMaxSpeed);
   }
   /**
    * Will shoot the ball out
    * @author CRahne
    */
   public void Out(){
-    mCargoMotor.set(-Constants.kMaxSpeed);
+    mIntakeMotor.set(-Constants.kMaxSpeed);
   }
   /**
    * Stops the intake motors
    * @author Tony
    */
   public void CargoMotorStop() {
-    mCargoMotor.set(0);
-    mCargoMotor.stopMotor();
+    mIntakeMotor.set(0);
+    mIntakeMotor.stopMotor();
   }
 
   public void WristMotorStop() {
-    mWrist.set(ControlMode.PercentOutput, 0.0);
-    mWrist.stopMotor();
+    mWristMotor.set(ControlMode.PercentOutput, 0.0);
+    mWristMotor.stopMotor();
+  }
+
+  public double CurrentAngle(){
+    return (mWristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
+  }
+
+  public void MotorStop() {
+    mIntakeMotor.stopMotor();
   }
   
   /** 
@@ -98,19 +106,19 @@ public class Intake extends Subsystem {
    */
   public void UpdateTelemetry() {
     // Subsystems Status
-    mIntakeTab.add("Motor Speed", mMotor.get());
-    mIntakeTab.add("Wrist Position", mWrist.getSelectedSensorPosition());
+    mIntakeMotorTab.add("Wrist Motor Speed", mWristMotor.get());
+    mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
     // Subsystems Object
-    mIntakeTab.add(mMotor);
-    mIntakeTab.add("Motor Speed", mCargoMotor.get());
-    mIntakeTab.add("Wrist Position", mWrist.getSelectedSensorPosition());
-    mIntakeTab.add(mCargoMotor);
-    mIntakeTab.add(mWrist);
+    mIntakeMotorTab.add(mIntakeMotor);
+    mIntakeMotorTab.add("Motor Speed", mIntakeMotor.get());
+    mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
+    mIntakeMotorTab.add(mIntakeMotor);
+    mIntakeMotorTab.add(mWristMotor);
     // Subsystem Intake
-    mIntakeTab.add("Intake In", new IntakeIn());
-    mIntakeTab.add("Intake Out", new IntakeOut());
-    mIntakeTab.add("Wrist Up", new WristManualUp());
-    mIntakeTab.add("Wrist Down", new WristManualDown());
+    mIntakeMotorTab.add("Intake In", new IntakeIn());
+    mIntakeMotorTab.add("Intake Out", new IntakeOut());
+    mIntakeMotorTab.add("Wrist Up", new WristManualUp());
+    mIntakeMotorTab.add("Wrist Down", new WristManualDown());
 
     Shuffleboard.update();
   }

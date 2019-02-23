@@ -11,31 +11,32 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Climber;
-import frc.robot.Robot;
 
 /**
  * Add your docs here.
  */
-public class ClimbEnd extends InstantCommand {
-  private final Climber sClimber = Robot.sClimb;
+public class DriveShift extends InstantCommand {
+  private Drivetrain sDriveTrain = new Drivetrain();
+  private boolean isShifted;
   /**
    * Add your docs here.
    */
-  public ClimbEnd() {
+  public DriveShift() {
     super();
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(sDriveTrain);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-
-    sClimber.RetractStageOne();
-    sClimber.RetractStageTwo();
-    sClimber.setMotorSpeed(0);
-
+    if(sDriveTrain.getCurrentShifter() == Value.kReverse) {
+      sDriveTrain.shiftToHigh();
+      SmartDashboard.putString("Shifted to", "High");
+    }
+    else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
+      sDriveTrain.shiftToLow();
+      SmartDashboard.putString("Shifted to", "Low");
+    }
   }
 
 }

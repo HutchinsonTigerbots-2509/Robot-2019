@@ -2,31 +2,32 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.ElevatorDown;
-import frc.robot.commands.ElevatorUp;
-import frc.robot.commands.ElevatorWristMove;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.Angle_check;
+import frc.robot.commands.ClimbAlt;
+import frc.robot.commands.ClimbEnd;
+import frc.robot.commands.ClimbExtend;
+import frc.robot.commands.ClimbHab2;
+import frc.robot.commands.ClimbRetract;
+import frc.robot.commands.DriveShift;
+import frc.robot.commands.ElevatorMoveHighGear;
+import frc.robot.commands.ElevatorMoveLowGear;
+import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.Follow_target;
 import frc.robot.commands.HeightToggle;
 import frc.robot.commands.IntakeBall;
+import frc.robot.commands.IntakeHatch;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.PrepareToClimb;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.WristManualDown;
-import frc.robot.commands.WristManualUp;
+import frc.robot.commands.WristDown;
 import frc.robot.commands.WristMove;
-import frc.robot.commands.WristTest;
+import frc.robot.commands.WristUp;
 import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Vision;
-import frc.robot.commands.IntakeHatch;
-import frc.robot.commands.IntakeIn;
-import frc.robot.commands.IntakeOut;
-import frc.robot.commands.WristDown;
-import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.ClimbEnd;
-import frc.robot.commands.ClimbHab2;
+import frc.robot.subsystems.Vision;
 
 
 /**
@@ -86,7 +87,6 @@ private JoystickButton mButtonNine;
   private ShuffleboardTab mCommandTab;
   private Elevator sElevator;
   private Vision sVision;
-  private NetworkTable mLimeTable;
 
   private JoystickButton mWristTest;
 
@@ -279,7 +279,6 @@ private JoystickButton mButtonNine;
 
     //Vision
     mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));
-    mCommandTab.add("Align PID", new AlignWithTargetPID());
     mCommandTab.add("Distance Calculated", new Angle_check());
     mCommandTab.add("Follow Ball", new Follow_target(2, -.03 , -0.02));
     mCommandTab.add("Follow Hatch", new Follow_target(4, -0.02, -0.02));

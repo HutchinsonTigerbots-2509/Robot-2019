@@ -50,9 +50,7 @@ public class Drivetrain extends Subsystem {
   
   // Gyro
   private final AHRS mGyro = RobotMap.DrivetrainGyro;
-  
-  // Gyro
-  private final AHRS mGyro = RobotMap.DrivetrainGyro;
+
   // Shuffleboard
   private final ShuffleboardTab mDriveTrainTab = Shuffleboard.getTab("Drivetrain");
   
@@ -120,32 +118,6 @@ public class Drivetrain extends Subsystem {
    * 
    * @param Joystick stick
    */
-  public void OperatorDrive(Joystick stick) {    // If the absolute value of the joystick is not greater than 10 %,
-    double Speed = stick.getRawAxis(1)*-kSpeedMulti;
-    // then don't do anything.
-     if (Math.abs(stick.getRawAxis(3)) > Constants.minMoveSpeed || Math.abs(stick.getRawAxis(2)) > Constants.minMoveSpeed) {
-      // mDrive.arcadeDrive(stick.getY(), -stick.getZ());
-       // mDrive.arcadeDrive(-stick.getY(), 0);
-
-       if(stick.getRawAxis(3) > 0){
-        Speed = stick.getRawAxis(3) * -kSpeedMulti;
-        }else if(stick.getRawAxis(2) > 0){
-          Speed = stick.getRawAxis(2) * kSpeedMulti;
-        }else{
-          Speed = 0;
-        }
-   
-        if(kSpeedMulti > 0){
-          mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * kSpeedMulti);
-        }else{
-         mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -kSpeedMulti);
-        }
-
-     } else {
-       // So the robot will not stay at a +- 0.11 input
-       mDrive.arcadeDrive(0, 0);
-     }
-  }
 
    /**
    * OperatorDrive is the Method for driving. It uses the differential drive
@@ -440,9 +412,8 @@ public class Drivetrain extends Subsystem {
     return mRightSlave;
   }
 
-    mDriveTrainTab.add("Gyro", mGyro.getAngle());
-    Shuffleboard.update();
-  }
+    // mDriveTrainTab.add("Gyro", mGyro.getAngle());
+    // Shuffleboard.update();
 
   @Override
   public void initDefaultCommand() {

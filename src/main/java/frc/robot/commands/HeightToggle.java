@@ -7,35 +7,32 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Climber;
 import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
+import frc.robot.Constants;
+import frc.robot.OI;
 
-/**
- * Add your docs here.
- */
-public class ClimbEnd extends InstantCommand {
-  private final Climber sClimber = Robot.sClimb;
-  /**
-   * Add your docs here.
-   */
-  public ClimbEnd() {
-    super();
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class HeightToggle extends InstantCommand {
+  private Elevator sElevator;
+  private OI oi;
+
+  public HeightToggle() {
+    oi = Robot.oi;
+    sElevator = Robot.sElevator;
   }
 
-  // Called once when the command executes
   @Override
   protected void initialize() {
-
-    sClimber.RetractStageOne();
-    sClimber.RetractStageTwo();
-    sClimber.setMotorSpeed(0);
-
+    if(sElevator.state=="Hatch"){
+      oi.setElevatorButtonsCargo();
+      new WristMove(-90).start();
+    }else{
+      oi.setElevatorButtonsHatch();
+    }
   }
 
 }

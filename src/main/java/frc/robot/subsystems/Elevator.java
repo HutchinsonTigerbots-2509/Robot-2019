@@ -4,7 +4,6 @@ package frc.robot.subsystems; // package declaration
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,19 +11,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorMoveHighGear;
 import frc.robot.commands.ElevatorMoveLowGear;
 import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.HeightToggle;
-import frc.robot.Robot;
-import frc.robot.commands.ManualElevatorMove;
 import frc.robot.commands.ZeroElevator;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Elevator Subsystem is where code that uses the lift mechanism
@@ -47,6 +41,7 @@ public class Elevator extends Subsystem {
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   public String state;
   private Value kHighGear = Value.kForward;
+  private double mEncoderTargetHieght;
 
   /**
    * Adds children to the object so we can play with components
@@ -69,6 +64,18 @@ public class Elevator extends Subsystem {
     SpoolMaster.set(0);
     SpoolMaster.stopMotor();
     // SpoolSlave.stopMotor();
+  }
+
+  public double getTargetHeight(){
+    return mEncoderTargetHieght;
+  }
+
+  public void setTargetHeight(double height){
+    mEncoderTargetHieght = height;
+  }
+
+  public void Reset_Elevator(){
+    SpoolMaster.setSelectedSensorPosition(0);
   }
 
   /**
@@ -136,6 +143,35 @@ public class Elevator extends Subsystem {
   public void ZeroSensor() {
     SpoolMaster.setSelectedSensorPosition(0);
   }
+  public double CurrentHeight() {
+    return SpoolMaster.getSelectedSensorPosition();
+    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
+    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
+  }
+
+  public void setPositionHighGear(double targetInchesOffGround) {
+    double targetDistance =targetInchesOffGround-Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 274.38312189; //215.811165286  //274.38312189
+    SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    SmartDashboard.putNumber("power", SpoolMaster.get());
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  }
+
+  public void setPositionLowGear(double targetInchesOffGround) {
+    double targetDistance =targetInchesOffGround-Constants.kHomePositionInches;
+    double TargetTicks = targetDistance *831.170774803; //215.811165286  //274.38312189
+    SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    SmartDashboard.putNumber("power", SpoolMaster.get());
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  }
+
+  public void setHighGear(boolean mHighGear) {
+    if (mHighGear) {
+      mShifter.set(Value.kForward);
+    } else {
+      mShifter.set(Value.kReverse);
+    }
+  }
 
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
@@ -148,9 +184,9 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
     mElevatorTab.add("Shifter", getGear());
-    mElevatorTab.add("Perpotional", mPerpotional);
-    mElevatorTab.add("Derivative", mDerivative);
-    mElevatorTab.add("Integral", mIntegral);
+    mElevatorTab.add("Perpotional", Constants.kElevatorPGain);
+    mElevatorTab.add("Derivative", Constants.kElevatorIGain);
+    mElevatorTab.add("Integral", Constants.kElevatorDGain);
     mElevatorTab.add("State", state);
     // Subsystem Objects
     mElevatorTab.add(SpoolMaster);
@@ -171,10 +207,6 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Elevator Zero", new ZeroElevator());
     //
     Shuffleboard.update();
-  }
-
-  public void Down() {
-    SpoolMaster.set(ControlMode.PercentOutput, 0.5);
   }
 
   @Override

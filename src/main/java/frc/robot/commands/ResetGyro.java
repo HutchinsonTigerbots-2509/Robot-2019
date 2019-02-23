@@ -7,35 +7,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Climber;
 import frc.robot.Robot;
-
-/**
- * Add your docs here.
- */
-public class ClimbEnd extends InstantCommand {
-  private final Climber sClimber = Robot.sClimb;
-  /**
-   * Add your docs here.
-   */
-  public ClimbEnd() {
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Elevator;
+public class ResetGyro extends InstantCommand {
+  private Drivetrain sDriveTrain = Robot.sDrivetrain;
+  private Intake sIntake = Robot.sIntake;
+  private Elevator sElevator = Robot.sElevator;
+  public ResetGyro() {
     super();
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-
-    sClimber.RetractStageOne();
-    sClimber.RetractStageTwo();
-    sClimber.setMotorSpeed(0);
-
+    sDriveTrain.ResetGyro();
+    sElevator.Reset_Elevator();
+    
   }
-
 }
