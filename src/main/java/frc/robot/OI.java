@@ -1,21 +1,8 @@
 package frc.robot;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.commands.AlignWithTarget;
-import frc.robot.commands.AlignWithTargetPID;
-import frc.robot.commands.Angle_check;
-import frc.robot.commands.ClimbAlt;
-import frc.robot.commands.ClimbExtend;
-import frc.robot.commands.ClimbRetract;
-import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorDown;
-import frc.robot.commands.ElevatorMoveHighGear;
-import frc.robot.commands.ElevatorMoveLowGear;
-import frc.robot.commands.ElevatorShift;
 import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.Follow_target;
@@ -33,12 +20,21 @@ import frc.robot.commands.ZeroElevator;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.IntakeHatch;
+import frc.robot.commands.IntakeIn;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.WristDown;
+import frc.robot.commands.WristUp;
+import frc.robot.subsystems.Intake;
+import frc.robot.commands.ClimbEnd;
+import frc.robot.commands.ClimbHab2;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  public static Intake sIntake;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -98,6 +94,12 @@ private JoystickButton mButtonNine;
   private JoystickButton mElevatorManualDown;
   private JoystickButton mWristManualUp;
   private JoystickButton mWristManualDown;
+  private JoystickButton IntakeIn;
+  private JoystickButton IntakeOut;
+  private JoystickButton WristDown;
+  private JoystickButton WristUp;
+  private JoystickButton ElevatorUp;
+  private JoystickButton ElevatorDown;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -134,14 +136,10 @@ private JoystickButton mButtonNine;
    * buttons and joysticks
    */
   public OI() {
-    sVision = Robot.sVision;
-    sElevator = Robot.sElevator;
-    mCommandTab = Shuffleboard.getTab("Commands");
-    mLimeTable = sVision.getTable();
-    
     /* Joysticks & Buttons */
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
+    sIntake = new Intake();
 
     // Climb 
     RetractClimbPistons = new JoystickButton(mOpStick, 2);
@@ -208,6 +206,25 @@ private JoystickButton mButtonNine;
     mElevatorShift.whenPressed(new ElevatorShift());
 
     UpdateCommands();
+    WristUp = new JoystickButton(mCoOpStick, 1);
+    WristUp.whileHeld(new WristUp());
+
+    WristDown = new JoystickButton(mCoOpStick, 2);
+    WristDown.whileHeld(new WristDown());
+
+    IntakeIn = new JoystickButton(mCoOpStick, 3);
+    IntakeIn.whileHeld(new IntakeIn());
+
+    IntakeOut = new JoystickButton(mCoOpStick, 4);
+    IntakeOut.whileHeld(new IntakeOut());
+
+    //AT CLIMB RIGHT NOW FOR TESTING
+    ElevatorUp = new JoystickButton(mOpStick, 5);
+    ElevatorUp.whenPressed(new ClimbHab2());
+
+    ElevatorDown = new JoystickButton(mOpStick, 6);
+    ElevatorDown.whenPressed(new ClimbEnd());
+    //AT CLIMB RIGHT NOW FOR TESTING
   }
 
   /**

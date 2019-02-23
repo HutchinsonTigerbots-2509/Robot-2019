@@ -6,29 +6,27 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.Robot;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
+
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
 
 public class WristUp extends Command {
   private Intake sIntake = Robot.sIntake;
   public WristUp() {
     requires(sIntake);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sIntake.WristMove(Constants.kWristStartingAngle);
+    sIntake.WristUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sIntake.WristMove(Constants.kWristStartingAngle);
+    sIntake.WristUp();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,12 +38,13 @@ public class WristUp extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sIntake.StopWrist();
+    sIntake.WristMotorStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    sIntake.WristMotorStop();
   }
 }

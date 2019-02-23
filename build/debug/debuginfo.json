@@ -1,9 +1,16 @@
 [
   {
+<<<<<<< HEAD
     "artifact": "frcJava (in project Robot-2019)",
     "target": "roborio",
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "Robot-2019",
+=======
+    "artifact": "frcJava (in project DriveReadyCode)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "DriveReadyCode",
+>>>>>>> origin/DriverReady
     "language": "java"
   }
 ]
