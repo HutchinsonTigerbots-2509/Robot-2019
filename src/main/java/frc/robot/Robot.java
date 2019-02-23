@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
+    //SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
     SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());
     Shuffleboard.update();
   }

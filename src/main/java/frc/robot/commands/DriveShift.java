@@ -10,13 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
 /**
  * Add your docs here.
  */
 public class DriveShift extends InstantCommand {
-  private Drivetrain sDriveTrain = new Drivetrain();
+  private Drivetrain sDriveTrain = Robot.sDrivetrain;
   private boolean isShifted;
   /**
    * Add your docs here.
