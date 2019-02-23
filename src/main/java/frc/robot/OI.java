@@ -8,6 +8,9 @@ import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.WristDown;
 import frc.robot.commands.WristUp;
+import frc.robot.subsystems.Intake;
+import frc.robot.commands.ClimbEnd;
+import frc.robot.commands.ClimbHab2;
 
 
 /**
@@ -15,6 +18,7 @@ import frc.robot.commands.WristUp;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  public static Intake sIntake;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -66,24 +70,25 @@ public class OI {
     /* Joysticks & Buttons */
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
+    sIntake = new Intake();
 
-    // WristUp = new JoystickButton(mOpStick, 1);
-    // WristUp.whileHeld(new WristUp());
+    WristUp = new JoystickButton(mCoOpStick, 1);
+    WristUp.whileHeld(new WristUp());
 
-    // WristDown = new JoystickButton(mOpStick, 2);
-    // WristDown.whileHeld(new WristDown());
+    WristDown = new JoystickButton(mCoOpStick, 2);
+    WristDown.whileHeld(new WristDown());
 
-    IntakeIn = new JoystickButton(mOpStick, 3);
+    IntakeIn = new JoystickButton(mCoOpStick, 3);
     IntakeIn.whileHeld(new IntakeIn());
 
-    IntakeOut = new JoystickButton(mOpStick, 4);
+    IntakeOut = new JoystickButton(mCoOpStick, 4);
     IntakeOut.whileHeld(new IntakeOut());
 
     ElevatorUp = new JoystickButton(mOpStick, 5);
-    ElevatorUp.whileHeld(new ElevatorUp());
+    ElevatorUp.whenPressed(new ClimbHab2());
 
     ElevatorDown = new JoystickButton(mOpStick, 6);
-    ElevatorDown.whileHeld(new ElevatorDown());
+    ElevatorDown.whenPressed(new ClimbEnd());
   }
 
   /**

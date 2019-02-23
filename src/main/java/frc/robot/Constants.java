@@ -31,8 +31,8 @@ public final class Constants {
 
     // OP Drive Constants
     public static double minMovePercent = 0.1; // min input from joystick
-    public static double inputMulti = 0.8; // multi of joystick input
-    
+    public static double PostiveInputMulti = 0.8; // multi of joystick input
+    public static double NegativeInputMulti = -0.8;
     // PID
     public static double kDrivetrainAimToTargetP = 1;
     public static double kDrivetrainAimToTargetI = 0;

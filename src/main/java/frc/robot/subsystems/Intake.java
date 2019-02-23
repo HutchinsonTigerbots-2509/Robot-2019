@@ -39,7 +39,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristUp() {
-    mWrist.set(ControlMode.PercentOutput, 0.4);
+    mWrist.set(ControlMode.PercentOutput, 0.5);
   }
   
   /**
@@ -47,7 +47,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristDown(){
-    mWrist.set(ControlMode.PercentOutput,-0.5);
+    mWrist.set(ControlMode.PercentOutput,-0.35);
   }
 
   /**
@@ -75,7 +75,7 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void Out(){
-    mCargoMotor.set(Constants.kMaxSpeed);
+    mCargoMotor.set(-Constants.kMaxSpeed);
   }
   /**
    * Stops the intake motors

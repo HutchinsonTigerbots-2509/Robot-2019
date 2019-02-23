@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.Intake;
 
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code through
@@ -29,6 +32,7 @@ import frc.robot.RobotMap;
  * @author CRahne, Wayne, Tony, Cole, and Nate
  */
 public class Drivetrain extends Subsystem {
+  private final Intake sIntake = Robot.sIntake;
   // Motors
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
   private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
@@ -63,13 +67,29 @@ public class Drivetrain extends Subsystem {
   }
 
   public void OperatorDrive(Joystick stick) {
+    SmartDashboard.putNumber("Stick Y", stick.getY());
     if(stick.getY() > Constants.minMovePercent || stick.getZ() > Constants.minMovePercent) {
-      mDrive.arcadeDrive(stick.getY() * Constants.inputMulti, stick.getZ() * Constants.inputMulti);
+        mDrive.arcadeDrive(stick.getY() * 0.8, stick.getZ() * 0.8);        
     } else {
       mDrive.arcadeDrive(0, 0);
     }
   }
+  
+  public void MarioDrive(Joystick stick) {
+    double Speed = 0.0;
+    if(stick.getRawAxis(3) > 0) {
+      Speed = stick.getRawAxis(3) * -0.8;
+    } else if(stick.getRawAxis(2) > 0) {
+      Speed = stick.getRawAxis(2) * 0.8;
+    }
 
+    if(Speed > 0) {
+      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -0.8);
+    }
+    else {
+      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -0.8);
+    }
+  }
   /**
    * Will update all values that are sent to the Shuffleboard
    * 
