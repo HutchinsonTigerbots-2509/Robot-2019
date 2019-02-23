@@ -21,7 +21,7 @@ import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.sensors.ResetGyro;
 import frc.robot.commands.vision.DistanceCheck;
-import frc.robot.commands.vision.Follow_target;
+import frc.robot.commands.vision.FollowTarget;
 import frc.robot.commands.wrist.WristDown;
 import frc.robot.commands.wrist.WristMove;
 import frc.robot.commands.wrist.WristUp;
@@ -278,11 +278,11 @@ private JoystickButton mButtonNine;
     mCommandTab.add("Wrist 20", new WristMove(20));
 
     //Vision
-    mCommandTab.add("Align",new Follow_target(0, -0.1, -0.009));
+    mCommandTab.add("Align",new FollowTarget(0, -0.1, -0.009));
     mCommandTab.add("Distance Calculated", new DistanceCheck());
-    mCommandTab.add("Follow Ball", new Follow_target(2, -.03 , -0.02));
-    mCommandTab.add("Follow Hatch", new Follow_target(4, -0.02, -0.02));
-    mCommandTab.add("Follow Tape", new Follow_target(1, -0.05, -.02));
+    mCommandTab.add("Follow Ball", new FollowTarget(2, -.03 , -0.02));
+    mCommandTab.add("Follow Hatch", new FollowTarget(4, -0.02, -0.02));
+    mCommandTab.add("Follow Tape", new FollowTarget(1, -0.05, -.02));
     // mCommandTab.add("Follow Low Targets",);
     // mCommandTab.add("Follow High Targets", );
     
