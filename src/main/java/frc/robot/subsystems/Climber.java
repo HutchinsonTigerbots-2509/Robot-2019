@@ -2,14 +2,14 @@ package frc.robot.subsystems;
 
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
-import frc.robot.commands.ClimbExtend;
-import frc.robot.commands.ClimbRetract;
+import frc.robot.commands.climb.ClimbExtend;
+import frc.robot.commands.climb.ClimbRetract;
 
 /**
  * The climbing subsystem is the subsystem where we climb up
