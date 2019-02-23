@@ -11,29 +11,29 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.ElevatorMoveHighGear;
-import frc.robot.commands.ElevatorMoveLowGear;
-import frc.robot.commands.ElevatorShift;
-import frc.robot.commands.HeightToggle;
-import frc.robot.commands.ZeroElevator;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.elevator.ElevatorMoveHighGear;
+import frc.robot.commands.elevator.ElevatorMoveLowGear;
+import frc.robot.commands.elevator.ElevatorShift;
+import frc.robot.commands.elevator.HeightToggle;
+import frc.robot.commands.elevator.ZeroElevator;
 
 /**
- * The Elevator Subsystem is where code that uses the lift mechanism
- * is stored and can be accessed and used throughout the project
+ * The Elevator Subsystem is where code that uses the lift mechanism is stored
+ * and can be accessed and used throughout the project
  * 
- * <h3> JavaDoc Categories for Functions: </h3>
- * <li> + Lift Methods - Will use the lift mechanism
- * <li> + Shifter - Will have something to do with the shifter for the spool masters
- * <li> + Update Voids - Updates something, like data or sensors
- * <li> + Elevator Getters - Will return a value or an object
+ * <h3>JavaDoc Categories for Functions:</h3>
+ * <li>+ Lift Methods - Will use the lift mechanism
+ * <li>+ Shifter - Will have something to do with the shifter for the spool
+ * masters
+ * <li>+ Update Voids - Updates something, like data or sensors
+ * <li>+ Elevator Getters - Will return a value or an object
  * 
  * @author DJ, Tony, Cole G, and Nate
  */
 public class Elevator extends Subsystem {
-  // RobotMap Objects
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
@@ -41,135 +41,58 @@ public class Elevator extends Subsystem {
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   public String state;
   private Value kHighGear = Value.kForward;
-  private double mEncoderTargetHieght;
+  private Value kLowGear = Value.kReverse;
+  private double mEncoderTargetTicks;
 
   /**
-   * Adds children to the object so we can play with components
-   * in test mode
+   * Adds children to the object so we can play with components in test mode
    */
   public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
-    // addChild(SpoolSlave);
     addChild(mShifter);
     addChild(mTopLimit);
     addChild(mBottomLimit);
   }
 
-  /**
-   * Stops both the Master and Slave motors
-   */
-  public void StopMotors() {
-    // SpoolMaster.set(ControlMode.PercentOutput, 0.0);
-    SpoolMaster.set(0);
-    SpoolMaster.stopMotor();
-    // SpoolSlave.stopMotor();
-  }
-
-  public double getTargetHeight(){
-    return mEncoderTargetHieght;
-  }
-
-  public void setTargetHeight(double height){
-    mEncoderTargetHieght = height;
-  }
-
-  public void Reset_Elevator(){
-    SpoolMaster.setSelectedSensorPosition(0);
-  }
-
-  /**
-   * Gets height we want the arm to move to in encoder counts
-   */
-
-  /**
-   * Calculates PID Speed to send to the master
-   */
-
-  /**
-   * Trys to follow goal height, by sending PID speeds to motors
-   */
-
-  /**
-   * Changes gear when arm is going down Smith wanted but not currently used
-   */
-
-  /**
-   * Shifts the Gear to Low
-   * 
-   * @author Cole
-   * @author Tony
-   */
-  public void setHighGear() {
-    if (isHighGear()) {
-      mShifter.set(Value.kForward);
-    } else {
-      mShifter.set(Value.kReverse);
-    }
-  }
-
-  /**
-   * Returns a boolean and if True means that it is shifted
-   * @author Cole
-   * @author Tony
-   */
-  public boolean isHighGear() {
-    if (mShifter.get() == kHighGear) {
-      // mElevatorTab.add("Elevator Shifter", getGear());
-      // SmartDashboard.putString("Elevator Shifter", "High Gear");
-      return true;
-    } else {
-      // mElevatorTab.add("Elevator Shifter", getGear());
-      // SmartDashboard.putString("Elevator Shifter", "Low Gear");
-      return false;
-    }
-  }
-
-  /**
-   * Returns a string of which gear the Elevator is in
-   * @return "High Gear" || "Low Gear"
-   */
-  public String getGear() {
-    if (mShifter.get() == kHighGear) {
-      return "High Gear";
-    } else {
-      return "Low Gear";
-    }
-  }
-
-  /**
-   * Sets the SpoolMasters's enocder position to zero
-   */
-  public void ZeroSensor() {
-    SpoolMaster.setSelectedSensorPosition(0);
-  }
-  public double CurrentHeight() {
-    return SpoolMaster.getSelectedSensorPosition();
-    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
-    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
-  }
-
+  /* Elevator Move Functions*/
+  
   public void setPositionHighGear(double targetInchesOffGround) {
-    double targetDistance =targetInchesOffGround-Constants.kHomePositionInches;
-    double TargetTicks = targetDistance * 274.38312189; //215.811165286  //274.38312189
+    double targetDistance = targetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 274.38312189; // 215.811165286 //274.38312189
+    mEncoderTargetTicks = TargetTicks;
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
     SmartDashboard.putNumber("power", SpoolMaster.get());
     SpoolMaster.set(ControlMode.Position, TargetTicks);
   }
 
   public void setPositionLowGear(double targetInchesOffGround) {
-    double targetDistance =targetInchesOffGround-Constants.kHomePositionInches;
-    double TargetTicks = targetDistance *831.170774803; //215.811165286  //274.38312189
+    double targetDistance = targetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 831.170774803; // 215.811165286 //274.38312189
+    mEncoderTargetTicks = TargetTicks;
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
     SmartDashboard.putNumber("power", SpoolMaster.get());
     SpoolMaster.set(ControlMode.Position, TargetTicks);
   }
+  
+  /* Elevator Shifter Functions */
+  /**
+   * Toggles the Gear Shift
+   * @author Cole & Tony
+   */
+  public void setHighGear() {
+    if (isHighGear()) {
+      mShifter.set(kLowGear);
+    } else {
+      mShifter.set(kHighGear);
+    }
+  }
 
   public void setHighGear(boolean mHighGear) {
     if (mHighGear) {
-      mShifter.set(Value.kForward);
+      mShifter.set(kHighGear);
     } else {
-      mShifter.set(Value.kReverse);
+      mShifter.set(kLowGear);
     }
   }
 
@@ -180,7 +103,7 @@ public class Elevator extends Subsystem {
   public void UpdateTelemetry() {
     // Subsystem Status
     mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
-    mElevatorTab.add("Height (In)", CurrentHeight());
+    mElevatorTab.add("Height (In)", CurrentTicks());
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
     mElevatorTab.add("Shifter", getGear());
@@ -193,7 +116,7 @@ public class Elevator extends Subsystem {
     mElevatorTab.add(mTopLimit);
     mElevatorTab.add(mBottomLimit);
     mElevatorTab.add(mShifter);
-    //Subsystem Commands
+    // Subsystem Commands
     mElevatorTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
     mElevatorTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
     mElevatorTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
@@ -211,5 +134,48 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+  }
+
+  /* Current Status */
+
+  public double CurrentTicks() {
+    return SpoolMaster.getSelectedSensorPosition();
+  }
+  public double getTargetTicks() {
+    return mEncoderTargetTicks;
+  }
+  /**
+   * Returns a string of which gear the Elevator is in
+   * 
+   * @return "High Gear" or "Low Gear"
+   */
+  public String getGear() {
+    if (mShifter.get() == kHighGear) return "High Gear";
+    else return "Low Gear";
+  }
+  /**
+   * Returns a boolean and if True means that it is shifted
+   * 
+   * @author Cole & Tony
+   */
+  public boolean isHighGear() {
+    if (mShifter.get() == kHighGear) return true;
+    else return false;
+  }
+
+  /* Sensors */
+  /**
+   * Sets the SpoolMasters's enocder position to zero
+   */
+  public void ZeroSensor() {
+    SpoolMaster.setSelectedSensorPosition(0);
+  }
+  
+  /* Motor */
+  /**
+   * Stops both the Master and Slave motors
+   */
+  public void StopMotors() {
+    SpoolMaster.stopMotor();
   }
 }

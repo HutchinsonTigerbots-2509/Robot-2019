@@ -12,8 +12,6 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -73,9 +71,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    //SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
-    SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());
+    SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
     Shuffleboard.update();
   }
 
