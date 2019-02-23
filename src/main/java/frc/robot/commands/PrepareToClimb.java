@@ -8,6 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Constants;
+import frc.robot.commands.elevator.ElevatorMoveHighGear;
+import frc.robot.commands.wrist.WristMove;
 
 public class PrepareToClimb extends CommandGroup {
   /**
@@ -30,7 +33,7 @@ public class PrepareToClimb extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addParallel(new WristMove(-90));
-    addSequential(new ElevatorMoveHighGear(26));
+    addParallel(new WristMove(Constants.kWristGroundAngle));
+    addSequential(new ElevatorMoveHighGear(Constants.kHABHeight));
   }
 }

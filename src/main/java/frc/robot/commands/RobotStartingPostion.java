@@ -9,6 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.elevator.ElevatorMoveHighGear;
+import frc.robot.commands.wrist.WristUp;
 
 public class RobotStartingPostion extends CommandGroup {
 

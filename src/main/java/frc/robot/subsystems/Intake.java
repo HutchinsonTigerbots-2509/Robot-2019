@@ -4,17 +4,16 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.VictorSP;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.IntakeIn;
-import frc.robot.commands.IntakeOut;
-import frc.robot.commands.WristManualDown;
-import frc.robot.commands.WristManualUp;
+import frc.robot.commands.intake.IntakeIn;
+import frc.robot.commands.intake.IntakeOut;
+import frc.robot.commands.wrist.WristManualDown;
+import frc.robot.commands.wrist.WristManualUp;
 
 /**
  * The intake subsystem is the main scoring subsystem of the robot. It can pick
@@ -28,11 +27,35 @@ public class Intake extends Subsystem {
   private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
   private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
   private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
+  private double mWristTargetTicks;
 
   public Intake() {
     setSubsystem("Intake");
     addChild(mIntakeMotor);
     addChild(mWristMotor);
+  }
+
+  /**
+   * Will take a ball in
+   * @author CRahne
+   */
+  public void In() {
+    mIntakeMotor.set(Constants.kMaxSpeed);
+  }
+  /**
+   * Will shoot the ball out
+   * @author CRahne
+   */
+  public void Out(){
+    mIntakeMotor.set(-Constants.kMaxSpeed);
+  }
+
+  /**
+   * Stops the intake motors
+   * @author Tony
+   */
+  public void IntakeMotorStop() {
+    mIntakeMotor.stopMotor();
   }
 
   /**
@@ -52,53 +75,18 @@ public class Intake extends Subsystem {
     mWristMotor.set(ControlMode.PercentOutput,-0.35);
   }
 
+  public void WristMove(double targetAngle){
+    mWristTargetTicks = targetAngle* kWristTicksPerDegree;
+    SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
+    SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
+    mWristMotor.set(ControlMode.Position, mWristTargetTicks);
+  }
   /**
    * stops the movement of the intake wrist
    * @author Tony
    */
   public void StopWrist(){
-    mWristMotor.set(ControlMode.PercentOutput,0);
-  }
-  public void WristMove(double targetAngle){
-    double rawTargetTicks = targetAngle* kWristTicksPerDegree;
-    SmartDashboard.putNumber("Target Angle", rawTargetTicks/kWristTicksPerDegree);
-    SmartDashboard.putNumber("Target RAW", rawTargetTicks);
-    mWristMotor.set(ControlMode.Position, rawTargetTicks);
-  }
-  /**
-   * Will take a ball in
-   * @author CRahne
-   */
-  public void In() {
-    mIntakeMotor.set(Constants.kMaxSpeed);
-  }
-  /**
-   * Will shoot the ball out
-   * @author CRahne
-   */
-  public void Out(){
-    mIntakeMotor.set(-Constants.kMaxSpeed);
-  }
-  /**
-   * Stops the intake motors
-   * @author Tony
-   */
-  public void CargoMotorStop() {
-    mIntakeMotor.set(0);
-    mIntakeMotor.stopMotor();
-  }
-
-  public void WristMotorStop() {
-    mWristMotor.set(ControlMode.PercentOutput, 0.0);
     mWristMotor.stopMotor();
-  }
-
-  public double CurrentAngle(){
-    return (mWristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
-  }
-
-  public void MotorStop() {
-    mIntakeMotor.stopMotor();
   }
   
   /** 
@@ -125,5 +113,19 @@ public class Intake extends Subsystem {
   
   @Override
   public void initDefaultCommand() {
+  }
+
+  public double getCurrentAngle(){
+    return (mWristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
+  }
+  public double getCurrentWristTicks(){
+    return mWristMotor.getSelectedSensorPosition();
+  }
+
+  public WPI_TalonSRX getWrist(){
+    return mWristMotor;
+  }
+  public VictorSP getIntake(){
+    return mIntakeMotor;
   }
 }

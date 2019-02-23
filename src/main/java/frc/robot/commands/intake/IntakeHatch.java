@@ -5,20 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
-import frc.robot.OI;
-import frc.robot.Robot;
-import frc.robot.commands.elevator.ElevatorMoveLowGear;
-import frc.robot.commands.wrist.WristMove;
-
-public class Climb extends CommandGroup {
+import frc.robot.commands.elevator.ElevatorWristMove;
+public class IntakeHatch extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Climb() {
+  public IntakeHatch() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -35,8 +31,6 @@ public class Climb extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addParallel(new ClimbExtend());
-    addParallel(new WristMove(0));//-90
-    addSequential(new ElevatorMoveLowGear(12));
+    addSequential(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));
   }
 }
