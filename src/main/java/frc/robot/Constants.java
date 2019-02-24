@@ -114,7 +114,7 @@ public final class Constants {
     //#endregion
     
     /* Intake */
-    public static double kWristTicksPerDegree  = 22.755555555;
+    public static double kWristTicksPerDegree  = 24.651776; //22.755555555
     public static int kWristStartingAngle = 20;
     public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
