@@ -19,7 +19,7 @@ import frc.robot.commands.POVManual;
  */
 public class OI {
   public static Intake sIntake;
-  public static POVManual povManual;
+  // public static POVManual povManual;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -82,8 +82,8 @@ public class OI {
     //   povManual.cancel();
     // }
 
-    ManualWrist = new JoystickButton(mCoOpStick, 9);
-    ManualWrist.whenPressed(new POVManual());
+    // ManualWrist = new JoystickButton(mCoOpStick, 9);
+    // ManualWrist.whenPressed(new POVManual());
     
     ClimbExtend = new JoystickButton(mOpStick, 5);
     ClimbExtend.whenPressed(new ClimbHab2());

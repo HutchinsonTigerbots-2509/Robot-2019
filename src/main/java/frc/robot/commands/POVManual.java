@@ -7,16 +7,18 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
 
 public class POVManual extends Command {
-  private OI oi = Robot.oi;
   private Elevator sElevator = Robot.sElevator;
   private Intake sIntake = Robot.sIntake;
+  private Joystick stick;
   public POVManual() {
     requires(sElevator);
     requires(sIntake);
@@ -27,21 +29,29 @@ public class POVManual extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    stick = Robot.oi.getCoOperatorStick();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    if(oi.getCoOperatorStick().getPOV() == 0 && oi.getCoOperatorStick().getRawButtonPressed(10)){
-      sElevator.ElevatorUp();
-    } else if(oi.getCoOperatorStick().getPOV() == 180 && oi.getCoOperatorStick().getRawButtonPressed(10)){
-      sElevator.ElevatorDown();
-    } else if (oi.getCoOperatorStick().getPOV() == 0 && oi.getCoOperatorStick().getRawButtonPressed(10) == false){
+    SmartDashboard.putNumber("POV",stick.getPOV());
+    if(stick.getPOV()!=-1){
       sIntake.WristUp();
-    } else if (oi.getCoOperatorStick().getPOV() == 180 && oi.getCoOperatorStick().getRawButtonPressed(10) == false){
+    }else if(stick.getPOVCount()!=-1){
       sIntake.WristDown();
+    }else{
+      sIntake.StopWrist();
     }
+    // if(stick.getPOV() == 0 && stick.getRawButtonPressed(10)){
+    //   sElevator.ElevatorUp();
+    // } else if(stick.getPOV() == 180 && stick.getRawButtonPressed(10)){
+    //   sElevator.ElevatorDown();
+    // } else if (stick.getPOV() == 0 && !stick.getRawButtonPressed(10)){
+    //   sIntake.WristUp();
+    // } else if (stick.getPOV() == 180 && !stick.getRawButtonPressed(10)){
+    //   sIntake.WristDown();
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -53,8 +63,8 @@ public class POVManual extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-  sElevator.StopMotors();
-  sIntake.StopWrist();
+    sElevator.StopMotors();
+    sIntake.StopWrist();
   }
 
   // Called when another command which requires one or more of the same
