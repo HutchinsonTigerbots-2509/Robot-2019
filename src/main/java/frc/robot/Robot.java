@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Manual;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.elevator.POVManual;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,11 +27,11 @@ public class Robot extends TimedRobot {
   public static Elevator sElevator;
   public static Intake sIntake;
   public static Vision sVision;
-  public static POVManual povManual = new POVManual();
   /* OI DECLARATION */
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+  public static Manual cManual;
 
   public static boolean trigger = false;
 
@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
+    cManual = new Manual();
     
     // Put data on Shuffleboard
     sDrivetrain.UpdateTelemetry();
@@ -136,6 +137,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
+    if(!cManual.isRunning())cManual.start();
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
   }
 

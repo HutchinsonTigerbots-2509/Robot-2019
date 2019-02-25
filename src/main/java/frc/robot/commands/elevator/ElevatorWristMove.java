@@ -15,7 +15,7 @@ public class ElevatorWristMove extends CommandGroup {
    * Add your docs here.
    */
   public ElevatorWristMove(int angle, double height) {
-    addParallel(new ElevatorMoveHighGear(height));
+    addParallel(new ElevatorMoveLowGear(height));
     addSequential(new WristMove(angle));
   }
 }

@@ -72,7 +72,7 @@ public final class Constants {
     public static double kMaxHeight = 78;//All of these are heights off the ground inches
     public static double kMinHeight = 7;
     public static int kElevatorStartingHeight = 19;
-    public static double kHomePositionInches = 6.75;
+    public static double kHomePositionInches = 7.5;
     public static double kHomePostionFromLowestPostion = 2.5;
     public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;

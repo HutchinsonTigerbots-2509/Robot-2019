@@ -19,6 +19,7 @@ import frc.robot.commands.elevator.ElevatorMoveLowGear;
 import frc.robot.commands.elevator.ElevatorShift;
 import frc.robot.commands.elevator.HeightToggle;
 import frc.robot.commands.elevator.ZeroElevator;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The Elevator Subsystem is where code that uses the lift mechanism is stored
@@ -35,13 +36,14 @@ import frc.robot.commands.elevator.ZeroElevator;
  */
 public class Elevator extends Subsystem {
   private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
+  private final WPI_TalonSRX WristMotor = RobotMap.WristMotor;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   public String state;
-  private Value kHighGear = Value.kForward;
-  private Value kLowGear = Value.kReverse;
+  private Value kHighGear = Value.kReverse;
+  private Value kLowGear = Value.kForward;
   private double mEncoderTargetTicks;
 
   /**
@@ -185,6 +187,23 @@ public class Elevator extends Subsystem {
 
   public void ElevatorDown(){
     SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
+  }
+  public void StickManual(Joystick CoOpStick){
+    if(CoOpStick.getRawAxis(1) < -0.2){
+      SpoolMaster.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(1));
+    }else if(CoOpStick.getRawAxis(1) > 0.2){
+      SpoolMaster.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(1));
+    }else{
+      SpoolMaster.set(ControlMode.PercentOutput, 0);
+    }
+    SmartDashboard.putNumber("R", CoOpStick.getRawAxis(5));
+    if(CoOpStick.getRawAxis(5) < -0.2){
+      WristMotor.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(5));
+    }else if(CoOpStick.getRawAxis(5) > 0.2){
+      WristMotor.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(5));
+    }else{
+      WristMotor.set(ControlMode.PercentOutput, 0);
+    }
   }
   public WPI_TalonSRX getMotor(){return SpoolMaster;}
 }

@@ -4,21 +4,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveShift;
-import frc.robot.commands.climb.ClimbAlt;
-import frc.robot.commands.climb.ClimbEnd;
 import frc.robot.commands.climb.ClimbExtend;
-import frc.robot.commands.climb.ClimbHab2;
 import frc.robot.commands.climb.ClimbRetract;
-import frc.robot.commands.climb.PrepareToClimb;
 import frc.robot.commands.elevator.ElevatorMoveHighGear;
 import frc.robot.commands.elevator.ElevatorMoveLowGear;
 import frc.robot.commands.elevator.ElevatorShift;
+import frc.robot.commands.elevator.ElevatorWristMove;
 import frc.robot.commands.elevator.HeightToggle;
 import frc.robot.commands.elevator.ZeroElevator;
-import frc.robot.commands.intake.IntakeBall;
-import frc.robot.commands.intake.IntakeHatch;
 import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.sensors.ResetGyro;
@@ -30,9 +24,6 @@ import frc.robot.commands.wrist.WristUp;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.elevator.POVManual;
-import frc.robot.commands.elevator.ElevatorDown;
-import frc.robot.commands.elevator.ElevatorUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -40,7 +31,6 @@ import frc.robot.commands.elevator.ElevatorUp;
  */
 public class OI {
   public static Intake sIntake;
-  public static POVManual povManual;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -165,11 +155,11 @@ private JoystickButton mButtonNine;
     // mClimb.whileHeld(new ClimbAlt(mOpStick));
 
     //NEED POV
-    mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
-    mElevatorManualUp.whileHeld(new ElevatorUp());
+    // mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
+    // mElevatorManualUp.whileHeld(new ElevatorUp());
 
-    mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
-    mElevatorManualDown.whileHeld(new ElevatorDown());
+    // mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
+    // mElevatorManualDown.whileHeld(new ElevatorDown());
 
     // mWristManualUp = new JoystickButton(mCoOpStick, 10);
     // mWristManualUp.whileHeld(new WristManualUp());
@@ -225,10 +215,10 @@ private JoystickButton mButtonNine;
     WristDown = new JoystickButton(mCoOpStick, 7);
     WristDown.whileHeld(new WristDown());
 
-    IntakeIn = new JoystickButton(mCoOpStick, 9);
+    IntakeIn = new JoystickButton(mCoOpStick, 5);
     IntakeIn.whileHeld(new IntakeIn());
 
-    IntakeOut = new JoystickButton(mCoOpStick, 10);
+    IntakeOut = new JoystickButton(mCoOpStick, 6);
     IntakeOut.whileHeld(new IntakeOut());
     //WRONG
 
@@ -308,12 +298,12 @@ private JoystickButton mButtonNine;
    */ 
   public void setElevatorButtonsHatch(){
     //sElevator.state = "Hatch";
-    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
-    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
-    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
-    mElevatorHigh.whenPressed(new ElevatorMoveLowGear(Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorMoveLowGear(Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorMoveLowGear(Constants.kHatchLow));
+    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
+    // mElevatorHigh.whenPressed(new ElevatorMoveLowGear(Constants.kHatchHigh));
+    // mElevatorMid.whenPressed(new ElevatorMoveLowGear(Constants.kHatchMid));
+    // mElevatorLow.whenPressed(new ElevatorMoveLowGear(Constants.kHatchLow));
   }
 
   /**

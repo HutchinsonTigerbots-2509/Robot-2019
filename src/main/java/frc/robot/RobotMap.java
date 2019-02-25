@@ -101,7 +101,7 @@ public class RobotMap {
         DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
         DrivetrainDifferential.setSubsystem("Drivetrain");
 
-        DrivetrainShifter = new DoubleSolenoid(Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
+        DrivetrainShifter = new DoubleSolenoid(0,Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
         DrivetrainShifter.setSubsystem("Drivetrain");
 
         DrivetrainGyro = new AHRS(SPI.Port.kMXP);
@@ -120,7 +120,7 @@ public class RobotMap {
         ElevatorMotorMaster.setSensorPhase(true);
         ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
-        ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
+        ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
         ElevatorTopLimit = new DigitalInput(Constants.kElevatorTopLimitID);
@@ -143,7 +143,7 @@ public class RobotMap {
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
         WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
-        WristMotor.setSensorPhase(false);
+        WristMotor.setSensorPhase(true);
         WristMotor.configPeakOutputForward(0.95);
         WristMotor.configPeakOutputReverse(-0.95);
         WristMotor.configNominalOutputForward(0.05);
@@ -162,11 +162,11 @@ public class RobotMap {
         ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
-        ClimbLowerPiston = new DoubleSolenoid(Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
+        ClimbLowerPiston = new DoubleSolenoid(0,Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
         // Stage 2 - Should fire Second Constants.kClimbUpperForwardID 
-        ClimbUpperPiston = new DoubleSolenoid(Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
         // #endregion Climb
     }
