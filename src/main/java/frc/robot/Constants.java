@@ -63,10 +63,10 @@ public final class Constants {
     public static double kPulsesPerRotation = 256;
     public static double kElevatorHighGearTicksPerInch =    61.76330098;//215
     public static double kElevatorLowGearTicksPerInch =     48.35555555;
-    public static double kElevatorMaxSpeed = 0.75;
+    public static double kElevatorMaxSpeed = 1;
     public static double kElevatorSensitivity = 0.5;
-    public static double kElevatorMinSpeedUp = 0.62;
-    public static double kElevatorMinSpeedDown = -0.5;
+    public static double kElevatorMinSpeedUp = 1;
+    public static double kElevatorMinSpeedDown = -1;
     public static int kEncoderErrorRange = 2; // 5?
 
     public static double kMaxHeight = 78;//All of these are heights off the ground inches
@@ -143,10 +143,11 @@ public final class Constants {
     
     // Intake
     public static int kIntakeMotorID = 1;
+    public static int kWristMotorID = 5;
 
     /* DigitalInput ID */
     public static int kElevatorTopLimitID = 0;
-    public static int kElevatorBottomLimitID = 1;
+    // public static int kElevatorBottomLimitID = 1;
 
     /* Pneumatics ID */
     // Drivetrain
@@ -155,12 +156,6 @@ public final class Constants {
     // Elevator
     public static int kElevatorShifterForwardID = 2;
     public static int kElevatorShifterReverseID = 3;
-    // Intake
-    // public static int kIntakeWristForwardID = 2;
-    // public static int kIntakeWristReverseID = 3;
-    // public static int kIntakeHatchPistonForwardID = 6;
-    // public static int kIntakeHatchPistonReverseID = 7;
-    public static int kWristMotorID = 5;
     // Climb
     public static int kClimbUpperForwardID = 4;
     public static int kClimbUpperReverseID = 5;

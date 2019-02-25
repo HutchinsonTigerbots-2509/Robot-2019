@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -116,6 +118,7 @@ public class RobotMap {
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
         ElevatorMotorMaster.setSensorPhase(true);
+        ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
         ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
@@ -123,8 +126,8 @@ public class RobotMap {
         ElevatorTopLimit = new DigitalInput(Constants.kElevatorTopLimitID);
         ElevatorTopLimit.setSubsystem("Elevator");
 
-        ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
-        ElevatorBottomLimit.setSubsystem("Elevator");
+        // ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
+        // ElevatorBottomLimit.setSubsystem("Elevator");
 
         ElevatorSonic = new Ultrasonic(8, 9);
         ElevatorSonic.setAutomaticMode(true);
@@ -136,6 +139,7 @@ public class RobotMap {
         // #region Intake
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
         IntakeMotor.setSubsystem("Intake");
+        
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
         WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
@@ -149,6 +153,8 @@ public class RobotMap {
         WristMotor.config_kD(0, Constants.kWristDGain);
         WristMotor.config_kP(0, Constants.kWristPGain);
         WristMotor.config_kI(0, Constants.kWristIGain);
+        WristMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        WristMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
         // #endregion
 
         // #region Climb

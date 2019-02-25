@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveShift;
 import frc.robot.commands.climb.ClimbAlt;
 import frc.robot.commands.climb.ClimbEnd;
@@ -29,7 +30,9 @@ import frc.robot.commands.wrist.WristUp;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-
+import frc.robot.commands.elevator.POVManual;
+import frc.robot.commands.elevator.ElevatorDown;
+import frc.robot.commands.elevator.ElevatorUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -37,6 +40,7 @@ import frc.robot.subsystems.Vision;
  */
 public class OI {
   public static Intake sIntake;
+  public static POVManual povManual;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -102,6 +106,8 @@ private JoystickButton mButtonNine;
   private JoystickButton ElevatorUp;
   private JoystickButton ElevatorDown;
 
+  private int POV;
+
   // #region Joystic Button Creation
   // CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -141,8 +147,16 @@ private JoystickButton mButtonNine;
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
     sIntake = new Intake();
+    //povManual = new POVManual();
     mCommandTab = Shuffleboard.getTab("Commands");
 
+    // POV = mCoOpStick.getPOV();
+    // SmartDashboard.putNumber("CoOp POV Value", mCoOpStick.getPOV());
+    // if(POV != -1){
+    //   povManual.start();
+    // } else {
+    //   povManual.cancel();
+    // }
     // Climb 
     // RetractClimbPistons = new JoystickButton(mOpStick, 2);
     // RetractClimbPistons.whenPressed(new ClimbRetract());
@@ -151,11 +165,11 @@ private JoystickButton mButtonNine;
     // mClimb.whileHeld(new ClimbAlt(mOpStick));
 
     //NEED POV
-    // mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
-    // mElevatorManualUp.whileHeld(new ElevatorUp());
+    mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
+    mElevatorManualUp.whileHeld(new ElevatorUp());
 
-    // mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
-    // mElevatorManualDown.whileHeld(new ElevatorDown());
+    mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
+    mElevatorManualDown.whileHeld(new ElevatorDown());
 
     // mWristManualUp = new JoystickButton(mCoOpStick, 10);
     // mWristManualUp.whileHeld(new WristManualUp());
@@ -186,8 +200,8 @@ private JoystickButton mButtonNine;
     // mIntakeHatch.whileHeld(new IntakeHatch());
     // mIntakeBall.whenReleased(new WristMove(Constants.kWristHatchAngle));
 
-    DriveShifter = new JoystickButton(mOpStick, 9);
-    DriveShifter.whenPressed(new DriveShift());
+    // DriveShifter = new JoystickButton(mOpStick, 9);
+    // DriveShifter.whenPressed(new DriveShift());
     
     // mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
     // mPrepareToClimb.whileHeld(new PrepareToClimb());
@@ -205,17 +219,17 @@ private JoystickButton mButtonNine;
 
     UpdateCommands();
     //WRONG
-    // WristUp = new JoystickButton(mCoOpStick, 1);
-    // WristUp.whileHeld(new WristUp());
+    WristUp = new JoystickButton(mCoOpStick, 8);
+    WristUp.whileHeld(new WristUp());
 
-    // WristDown = new JoystickButton(mCoOpStick, 2);
-    // WristDown.whileHeld(new WristDown());
+    WristDown = new JoystickButton(mCoOpStick, 7);
+    WristDown.whileHeld(new WristDown());
 
-    // IntakeIn = new JoystickButton(mCoOpStick, 3);
-    // IntakeIn.whileHeld(new IntakeIn());
+    IntakeIn = new JoystickButton(mCoOpStick, 9);
+    IntakeIn.whileHeld(new IntakeIn());
 
-    // IntakeOut = new JoystickButton(mCoOpStick, 4);
-    // IntakeOut.whileHeld(new IntakeOut());
+    IntakeOut = new JoystickButton(mCoOpStick, 10);
+    IntakeOut.whileHeld(new IntakeOut());
     //WRONG
 
     //AT CLIMB RIGHT NOW FOR TESTING
@@ -297,9 +311,9 @@ private JoystickButton mButtonNine;
     // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
     // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
     // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
-    mElevatorHigh.whenPressed(new ElevatorMoveHighGear(Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorMoveHighGear(Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorMoveHighGear(Constants.kHatchLow));
+    mElevatorHigh.whenPressed(new ElevatorMoveLowGear(Constants.kHatchHigh));
+    mElevatorMid.whenPressed(new ElevatorMoveLowGear(Constants.kHatchMid));
+    mElevatorLow.whenPressed(new ElevatorMoveLowGear(Constants.kHatchLow));
   }
 
   /**

@@ -40,14 +40,14 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void In() {
-    mIntakeMotor.set(Constants.kMaxSpeed);
+    mIntakeMotor.set(-Constants.kMaxSpeed);
   }
   /**
    * Will shoot the ball out
    * @author CRahne
    */
   public void Out(){
-    mIntakeMotor.set(-Constants.kMaxSpeed);
+    mIntakeMotor.set(Constants.kMaxSpeed);
   }
 
   /**
@@ -64,7 +64,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristUp() {
-    mWristMotor.set(ControlMode.PercentOutput, 0.5);
+    mWristMotor.set(ControlMode.PercentOutput, 0.35);
   }
   
   /**
@@ -72,7 +72,7 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristDown(){
-    mWristMotor.set(ControlMode.PercentOutput,-0.35);
+    mWristMotor.set(ControlMode.PercentOutput, -0.35);
   }
 
   public void WristMove(double targetAngle){

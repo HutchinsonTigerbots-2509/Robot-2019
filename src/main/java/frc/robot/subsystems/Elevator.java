@@ -52,7 +52,7 @@ public class Elevator extends Subsystem {
     addChild(SpoolMaster);
     addChild(mShifter);
     addChild(mTopLimit);
-    addChild(mBottomLimit);
+    //addChild(mBottomLimit);
   }
 
   /* Elevator Move Functions*/
@@ -178,4 +178,13 @@ public class Elevator extends Subsystem {
   public void StopMotors() {
     SpoolMaster.stopMotor();
   }
+
+  public void ElevatorUp(){
+    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedUp);
+  }
+
+  public void ElevatorDown(){
+    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
+  }
+  public WPI_TalonSRX getMotor(){return SpoolMaster;}
 }

@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.elevator.POVManual;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +27,15 @@ public class Robot extends TimedRobot {
   public static Elevator sElevator;
   public static Intake sIntake;
   public static Vision sVision;
+  public static POVManual povManual = new POVManual();
   /* OI DECLARATION */
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
 
   public static boolean trigger = false;
+
+  private int POV;
 
 
   /**
@@ -73,6 +77,8 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
     SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
+    SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     Shuffleboard.update();
   }
 
@@ -138,15 +144,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
     SmartDashboard.putBoolean("Top",RobotMap.ElevatorTopLimit.get());
 
-    if(RobotMap.ElevatorBottomLimit.get() == true){
-      RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(0);
-      // SmartDashboard.putString("Running", "BottomSafetyStop");
-      // trigger = false;
-   }
-
+    SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
+    SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }
