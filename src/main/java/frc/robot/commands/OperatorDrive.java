@@ -38,7 +38,7 @@ public class OperatorDrive extends Command {
     // }else if(mCoOpStick.getRawAxis(2) == 1){
     //   sIntake.Out();
     // }else{
-    //   sIntake.CargoMotorStop();
+    //   sIntake.IntakeMotorStop();
     // }
   }
 

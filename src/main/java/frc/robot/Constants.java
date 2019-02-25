@@ -31,8 +31,8 @@ public final class Constants {
 
     // OP Drive Constants
     public static double minMovePercent = 0.1; // min input from joystick
-    public static double PostiveInputMulti = 0.8; // multi of joystick input
-    public static double NegativeInputMulti = -0.8;
+    public static double kPostiveInputMulti = 0.8; // multi of joystick input
+    public static double kNegativeInputMulti = -0.8;
     // PID
     public static double kDrivetrainAimToTargetP = 1;
     public static double kDrivetrainAimToTargetI = 0;
@@ -59,15 +59,15 @@ public final class Constants {
 
     public static double kSpoolDiam = 2;
     public static double kPulsesPerRotation = 256;
-    public static double kElevatorHighGearTicksPerInch =    61.76330098;//215
-    public static double kElevatorLowGearTicksPerInch =     48.35555555;
-    public static double kElevatorMaxSpeed = 0.75;
+    public static double kElevatorHighGearTicksPerInch = 61.76330098;//215
+    public static double kElevatorLowGearTicksPerInch = 48.35555555;
+    public static double kElevatorMaxSpeed = 1;
     public static double kElevatorSensitivity = 0.5;
-    public static double kElevatorMinSpeedUp = 0.62;
+    public static double kElevatorMinSpeedUp = 0.8;
     public static double kElevatorMinSpeedDown = -0.5;
     public static int kEncoderErrorRange = 2; // 5?
 
-    public static double kMaxHeight = 78;//All of these are heights off the ground inches
+    public static double kMaxHeight = 78;//All of these are heights off the ground in inches
     public static double kMinHeight = 7;
     public static int kElevatorStartingHeight = 19;
     public static double kHomePositionInches = 6.75;
@@ -75,7 +75,7 @@ public final class Constants {
     public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
-    public static double kHatchLow = 20.0; //0
+    public static double kHatchLow = 20.0;
     public static double kHatchMid = 47.5;
     public static double kHatchHigh = 68.0;
     public static double kBallLow = 20.0;
@@ -114,7 +114,7 @@ public final class Constants {
     //#endregion
     
     /* Intake */
-    public static double kWristTicksPerDegree  = 22.755555555;
+    public static double kWristTicksPerDegree  = 24.655555555; //22.755555555
     public static int kWristStartingAngle = 20;
     public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;

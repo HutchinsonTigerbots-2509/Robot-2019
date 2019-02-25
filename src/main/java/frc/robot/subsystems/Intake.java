@@ -22,14 +22,14 @@ import frc.robot.RobotMap;
  * @author CRahne, Tony, and Cole G
  */
 public class Intake extends Subsystem {
-  private final VictorSP mCargoMotor = RobotMap.IntakeMotor;
+  private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
   private final WPI_TalonSRX mWrist = RobotMap.WristMotor;
   private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
   private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
 
   public Intake() {
     setSubsystem("Intake");
-    addChild(mCargoMotor);
+    addChild(mIntakeMotor);
     addChild(mWrist);
   }
 
@@ -55,10 +55,10 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void StopWrist(){
-    mWrist.set(ControlMode.PercentOutput,0);
+    mWrist.set(ControlMode.PercentOutput, 0);
   }
   public void WristMove(double targetAngle){
-    double rawTargetTicks = targetAngle* kWristTicksPerDegree;
+    double rawTargetTicks = targetAngle * kWristTicksPerDegree;
     SmartDashboard.putNumber("Target Angle", rawTargetTicks/kWristTicksPerDegree);
     SmartDashboard.putNumber("Target RAW", rawTargetTicks);
     mWrist.set(ControlMode.Position, rawTargetTicks);
@@ -68,22 +68,22 @@ public class Intake extends Subsystem {
    * @author CRahne
    */
   public void In() {
-    mCargoMotor.set(Constants.kMaxSpeed);
+    mIntakeMotor.set(-Constants.kMaxSpeed);
   }
   /**
    * Will shoot the ball out
    * @author CRahne
    */
   public void Out(){
-    mCargoMotor.set(-Constants.kMaxSpeed);
+    mIntakeMotor.set(Constants.kMaxSpeed);
   }
   /**
    * Stops the intake motors
    * @author Tony
    */
-  public void CargoMotorStop() {
-    mCargoMotor.set(0);
-    mCargoMotor.stopMotor();
+  public void IntakeMotorStop() {
+    mIntakeMotor.set(0);
+    mIntakeMotor.stopMotor();
   }
 
   public void WristMotorStop() {
@@ -95,9 +95,9 @@ public class Intake extends Subsystem {
    * Will update data on the shuffleboard tab for this class
    */
   public void UpdateTelemetry() {
-    mIntakeTab.add("Motor Speed", mCargoMotor.get());
+    mIntakeTab.add("Motor Speed", mIntakeMotor.get());
     mIntakeTab.add("Wrist Position", mWrist.getSelectedSensorPosition());
-    mIntakeTab.add(mCargoMotor);
+    mIntakeTab.add(mIntakeMotor);
     mIntakeTab.add(mWrist);
     Shuffleboard.update();
   }

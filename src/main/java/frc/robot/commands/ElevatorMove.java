@@ -11,34 +11,46 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
-public class ElevatorUp extends Command {
+public class ElevatorMove extends Command {
   private Elevator sElevator = Robot.sElevator;
-  public ElevatorUp() {
+  private boolean ElevatorGear;
+  public double mTargetHeight;
+  public ElevatorMove(double TargetHeight) {
     requires(sElevator);
+    mTargetHeight = TargetHeight;
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.Up();
+    ElevatorGear = sElevator.isHighGear();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sElevator.Up();
+    if(ElevatorGear == true){
+    sElevator.setPositionHighGear(mTargetHeight);
+  } else {
+    sElevator.setPositionLowGear(mTargetHeight);
+  }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if(sElevator.CurrentHeight() == mTargetHeight){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    sElevator.StopMotors();
   }
 
   // Called when another command which requires one or more of the same

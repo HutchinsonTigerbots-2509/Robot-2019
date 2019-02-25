@@ -2,8 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.ElevatorDown;
-import frc.robot.commands.ElevatorUp;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.WristDown;
@@ -11,6 +10,7 @@ import frc.robot.commands.WristUp;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.ClimbEnd;
 import frc.robot.commands.ClimbHab2;
+import frc.robot.commands.POVManual;
 
 
 /**
@@ -19,6 +19,7 @@ import frc.robot.commands.ClimbHab2;
  */
 public class OI {
   public static Intake sIntake;
+  public static POVManual povManual;
 
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -29,9 +30,9 @@ public class OI {
   private JoystickButton IntakeOut;
   private JoystickButton WristDown;
   private JoystickButton WristUp;
-  private JoystickButton ElevatorUp;
-  private JoystickButton ElevatorDown;
-
+  private JoystickButton ClimbExtend;
+  private JoystickButton ClimbRetract;
+  private JoystickButton ManualWrist;
   // #region Joystic Button Creation
   // CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -71,24 +72,36 @@ public class OI {
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
     sIntake = new Intake();
+    // povManual = new POVManual();
 
-    WristUp = new JoystickButton(mCoOpStick, 1);
-    WristUp.whileHeld(new WristUp());
+    // POV = mCoOpStick.getPOV();
+    // SmartDashboard.putNumber("CoOp POV Value", mCoOpStick.getPOV());
+    // if(POV != -1){
+    //   povManual.start();
+    // } else {
+    //   povManual.cancel();
+    // }
 
-    WristDown = new JoystickButton(mCoOpStick, 2);
-    WristDown.whileHeld(new WristDown());
+    ManualWrist = new JoystickButton(mCoOpStick, 9);
+    ManualWrist.whenPressed(new POVManual());
+    
+    ClimbExtend = new JoystickButton(mOpStick, 5);
+    ClimbExtend.whenPressed(new ClimbHab2());
+
+    ClimbRetract = new JoystickButton(mOpStick, 6);
+    ClimbRetract.whenPressed(new ClimbEnd());
 
     IntakeIn = new JoystickButton(mCoOpStick, 3);
     IntakeIn.whileHeld(new IntakeIn());
-
+    
     IntakeOut = new JoystickButton(mCoOpStick, 4);
     IntakeOut.whileHeld(new IntakeOut());
 
-    ElevatorUp = new JoystickButton(mOpStick, 5);
-    ElevatorUp.whenPressed(new ClimbHab2());
+    //WristUp = new JoystickButton(mCoOpStick, 1);
+    // WristUp.whileHeld(new WristUp());
 
-    ElevatorDown = new JoystickButton(mOpStick, 6);
-    ElevatorDown.whenPressed(new ClimbEnd());
+    //WristDown = new JoystickButton(mCoOpStick, 2);
+    // WristDown.whileHeld(new WristDown());
   }
 
   /**

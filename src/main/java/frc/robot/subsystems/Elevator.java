@@ -44,7 +44,6 @@ public class Elevator extends Subsystem {
   public Elevator() {
     setSubsystem("Elevator");
     addChild(SpoolMaster);
-    // addChild(SpoolSlave);
     addChild(mShifter);
     addChild(mTopLimit);
     addChild(mBottomLimit);
@@ -60,13 +59,36 @@ public class Elevator extends Subsystem {
     // SpoolSlave.stopMotor();
   }
 
-  public void Up() {
-    // SpoolMaster.set(ControlMode.PercentOutput, 0.5);
-    SpoolMaster.set(0.5);
+  public boolean isHighGear(){
+    if(mShifter.get() == Value.kForward){
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public void Down() {
-    SpoolMaster.set(ControlMode.PercentOutput, 0.5);
+  public double CurrentHeight(){
+    return SpoolMaster.getSelectedSensorPosition();
+  }
+
+  public void setPositionHighGear(double TargetInchesOffGround){
+    double targetDistance = TargetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 274.38312189; //215.811165286 //274.38312189
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  }
+
+  public void setPositionLowGear(double TargetInchesOffGround){
+    double targetDistance = TargetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 831.170774803;
+    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  }
+
+  public void ElevatorUp(){
+    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedUp);
+  }
+
+  public void ElevatorDown(){
+    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
   }
 
   @Override

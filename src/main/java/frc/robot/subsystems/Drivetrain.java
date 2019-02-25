@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Intake;
 
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code through
@@ -32,7 +31,6 @@ import frc.robot.subsystems.Intake;
  * @author CRahne, Wayne, Tony, Cole, and Nate
  */
 public class Drivetrain extends Subsystem {
-  private final Intake sIntake = Robot.sIntake;
   // Motors
   private final WPI_TalonSRX mLeftMaster = RobotMap.DrivetrainLeftMaster;
   private final VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
@@ -69,7 +67,7 @@ public class Drivetrain extends Subsystem {
   public void OperatorDrive(Joystick stick) {
     SmartDashboard.putNumber("Stick Y", stick.getY());
     if(stick.getY() > Constants.minMovePercent || stick.getZ() > Constants.minMovePercent) {
-        mDrive.arcadeDrive(stick.getY() * 0.8, stick.getZ() * 0.8);        
+        mDrive.arcadeDrive(stick.getY() * Constants.kPostiveInputMulti, stick.getZ() * Constants.kPostiveInputMulti);        
     } else {
       mDrive.arcadeDrive(0, 0);
     }
@@ -78,16 +76,16 @@ public class Drivetrain extends Subsystem {
   public void MarioDrive(Joystick stick) {
     double Speed = 0.0;
     if(stick.getRawAxis(3) > 0) {
-      Speed = stick.getRawAxis(3) * -0.8;
+      Speed = stick.getRawAxis(3) * Constants.kNegativeInputMulti;
     } else if(stick.getRawAxis(2) > 0) {
-      Speed = stick.getRawAxis(2) * 0.8;
+      Speed = stick.getRawAxis(2) * Constants.kPostiveInputMulti;
     }
 
     if(Speed > 0) {
-      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -0.8);
+      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * Constants.kNegativeInputMulti);
     }
     else {
-      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -0.8);
+      mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * Constants.kNegativeInputMulti);
     }
   }
   /**
