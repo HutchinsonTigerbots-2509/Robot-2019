@@ -117,6 +117,7 @@ public class OI {
     /* Joysticks & Misc */
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
+    sElevator = Robot.sElevator;
     mCommandTab = Shuffleboard.getTab("Commands");
 
     /* Joystick Buttons */
@@ -127,7 +128,7 @@ public class OI {
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 2);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    setElevatorButtonsHatch();
+    setElevatorButtonsCargo();
 
     ManualElevatorWrist = new JoystickButton(mCoOpStick,9);
     ManualElevatorWrist.toggleWhenPressed(new Manual());
@@ -219,11 +220,11 @@ public class OI {
    */ 
   public void setElevatorButtonsCargo(){
     sElevator.state = "Cargo";
-    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
-    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
-    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
-    mElevatorHigh.whenPressed(new ElevatorMoveHighGear(Constants.kBallHigh));
-    mElevatorMid.whenPressed(new ElevatorMoveHighGear(Constants.kBallMid));
-    mElevatorLow.whenPressed(new ElevatorMoveHighGear(Constants.kBallLow));
+    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
+    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
+    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
+    // mElevatorHigh.whenPressed(new ElevatorMoveHighGear(Constants.kBallHigh));
+    // mElevatorMid.whenPressed(new ElevatorMoveHighGear(Constants.kBallMid));
+    // mElevatorLow.whenPressed(new ElevatorMoveHighGear(Constants.kBallLow));
   }
 }

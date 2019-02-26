@@ -70,8 +70,8 @@ public class Elevator extends Subsystem {
   }
 
   public void setPositionLowGear(double targetInchesOffGround) {
-    double targetDistance = targetInchesOffGround - Constants.kHomePositionInches;
-    double TargetTicks = targetDistance * 831.170774803; // 215.811165286 //274.38312189
+    double targetDisplacement = targetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDisplacement * 860; //831.170774803
     mEncoderTargetTicks = TargetTicks;
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
     SmartDashboard.putNumber("power", mSpoolMotor.get());
