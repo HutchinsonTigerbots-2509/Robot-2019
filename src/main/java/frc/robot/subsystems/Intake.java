@@ -92,6 +92,18 @@ public class Intake extends Subsystem {
       mWristMotor.set(ControlMode.PercentOutput, 0);
     }
   }
+
+  public void IntakeInManual(Joystick stick){
+    if(stick.getRawAxis(2) > 0.2){
+      In();
+    }else if(stick.getRawAxis(3) > 0.2){
+      Out();
+    }else{
+      mIntakeMotor.set(0);
+    }
+
+  }
+
   /**
    * stops the movement of the intake wrist
    * @author Tony
