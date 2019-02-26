@@ -121,6 +121,7 @@ public final class Constants {
     public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
     public static int kWristCargoAngle = -65;
+    public static int kWristHatchBrushAngle = -45;//Check
 
 
     //#region RobotMap Constants

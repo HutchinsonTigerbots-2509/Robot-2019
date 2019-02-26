@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OperatorDrive;
+import frc.robot.commands.intake.IntakeManual;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+  public static IntakeManual cIntakeManual;
 
   public static boolean trigger = false;
 
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
+    cIntakeManual = new IntakeManual();
     // Put data on Shuffleboard
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
@@ -129,6 +132,7 @@ public class Robot extends TimedRobot {
     // cAutoCommand.cancel();
     // }
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
+    cIntakeManual.start();
   }
 
   /**
