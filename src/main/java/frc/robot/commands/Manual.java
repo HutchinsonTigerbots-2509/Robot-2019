@@ -20,20 +20,22 @@ public class Manual extends Command {
   private final Intake sIntake = Robot.sIntake; //The Intake
 
   public Manual() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(sElevator);
+    requires(sIntake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.StickManual(mCoOpStick);
+    sElevator.ManualMove(mCoOpStick);
+    sIntake.ManualMove(mCoOpStick);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sElevator.StickManual(mCoOpStick);
+    sElevator.ManualMove(mCoOpStick);
+    sIntake.ManualMove(mCoOpStick);
   }
 
   // Make this return true when this Command no longer needs to run execute()

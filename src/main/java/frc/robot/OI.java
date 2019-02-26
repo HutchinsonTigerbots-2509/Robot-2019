@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.DriveShift;
+import frc.robot.commands.Manual;
 import frc.robot.commands.climb.ClimbExtend;
 import frc.robot.commands.climb.ClimbRetract;
 import frc.robot.commands.elevator.ElevatorMoveHighGear;
@@ -30,8 +31,6 @@ import frc.robot.subsystems.Vision;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  public static Intake sIntake;
-
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
   private Joystick mCoOpStick; // Everything else is used here
@@ -40,18 +39,14 @@ public class OI {
   // Intake Buttons
   private JoystickButton mIntakein;
   private JoystickButton mIntakeout;
-
   // Elevator Buttons
   public JoystickButton mElevatorHigh;
   public JoystickButton mElevatorMid;
   public JoystickButton mElevatorLow;
   public JoystickButton mElevatorHAB;
   private JoystickButton mHeightToggle;
-  private JoystickButton mElevatorShift;
-
   // Drive Train
   private JoystickButton DriveShifter;
-
   // Vision Alignment Buttons
   private JoystickButton AlignButton;
   private JoystickButton AlignButtonPID;
@@ -71,24 +66,7 @@ public class OI {
   private JoystickButton mClimb;
 
   //Intake
-private JoystickButton mIntakeStartingPosition;
-private JoystickButton mIntakeGroundPosition;
-private JoystickButton mIntakeBall;
-private JoystickButton mIntakeHatch;
-
-private JoystickButton mButtonNine;
-
-  /* Misc */
-  private ShuffleboardTab mCommandTab;
-  private Elevator sElevator;
-  private Vision sVision;
-
-  private JoystickButton mWristTest;
-
-  private JoystickButton mElevatorManualUp;
-  private JoystickButton mElevatorManualDown;
-  private JoystickButton mWristManualUp;
-  private JoystickButton mWristManualDown;
+  private JoystickButton ManualElevatorWrist;
   private JoystickButton IntakeIn;
   private JoystickButton IntakeOut;
   private JoystickButton WristDown;
@@ -96,7 +74,10 @@ private JoystickButton mButtonNine;
   private JoystickButton ElevatorUp;
   private JoystickButton ElevatorDown;
 
-  private int POV;
+  /* Misc */
+  private ShuffleboardTab mCommandTab;
+  private Elevator sElevator;
+  private Vision sVision;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -133,102 +114,31 @@ private JoystickButton mButtonNine;
    * buttons and joysticks
    */
   public OI() {
-    /* Joysticks & Buttons */
+    /* Joysticks & Misc */
     mOpStick = new Joystick(0);
     mCoOpStick = new Joystick(1);
-    sIntake = new Intake();
-    //povManual = new POVManual();
     mCommandTab = Shuffleboard.getTab("Commands");
 
-    // POV = mCoOpStick.getPOV();
-    // SmartDashboard.putNumber("CoOp POV Value", mCoOpStick.getPOV());
-    // if(POV != -1){
-    //   povManual.start();
-    // } else {
-    //   povManual.cancel();
-    // }
-    // Climb 
-    // RetractClimbPistons = new JoystickButton(mOpStick, 2);
-    // RetractClimbPistons.whenPressed(new ClimbRetract());
-
-    // mClimb = new JoystickButton(mOpStick, 8);
-    // mClimb.whileHeld(new ClimbAlt(mOpStick));
-
-    //NEED POV
-    // mElevatorManualUp = new JoystickButton(mCoOpStick, 6);
-    // mElevatorManualUp.whileHeld(new ElevatorUp());
-
-    // mElevatorManualDown = new JoystickButton(mCoOpStick, 5);
-    // mElevatorManualDown.whileHeld(new ElevatorDown());
-
-    // mWristManualUp = new JoystickButton(mCoOpStick, 10);
-    // mWristManualUp.whileHeld(new WristManualUp());
-
-    // mWristManualDown = new JoystickButton(mCoOpStick, 9);
-    // mWristManualDown.whileHeld(new WristManualDown());    
-
-    //Intake
-    //IN OP DRIVE
-    // mIntakein = new JoystickButton(mOpStick, 1); //mCoOpStick, 6
-    // mIntakein.whileHeld(new IntakeIn());
-
-    // mIntakeout = new JoystickButton(mOpStick, 2);//mCoOpStick, 5
-    // mIntakeout.whileHeld(new IntakeOut());
-    //IN OP DRIVE
-
-    // mIntakeStartingPosition = new JoystickButton(mCoOpStick, 7);
-    // mIntakeStartingPosition.whenPressed(new WristMove(Constants.kWristStartingAngle));//kWristStartingAngle
-
-    // mIntakeGroundPosition = new JoystickButton(mCoOpStick, 3);
-    // mIntakeGroundPosition.whenPressed(new WristMove(Constants.kWristGroundAngle));
-
-    // mIntakeBall = new JoystickButton(mCoOpStick, 6);
-    // mIntakeBall.whileHeld(new IntakeBall());
-    // mIntakeBall.whenReleased(new WristMove(Constants.kWristCargoAngle));
-
-    // mIntakeHatch = new JoystickButton(mCoOpStick, 5);
-    // mIntakeHatch.whileHeld(new IntakeHatch());
-    // mIntakeBall.whenReleased(new WristMove(Constants.kWristHatchAngle));
-
-    // DriveShifter = new JoystickButton(mOpStick, 9);
-    // DriveShifter.whenPressed(new DriveShift());
-    
-    // mPrepareToClimb = new JoystickButton(mCoOpStick, 8);
-    // mPrepareToClimb.whileHeld(new PrepareToClimb());
-
-    // mHeightToggle = new JoystickButton(mCoOpStick, 2);
-    // mHeightToggle.whenPressed(new HeightToggle());
-
+    /* Joystick Buttons */
+    // Main Driver Joystick
+    DriveShifter = new JoystickButton(mOpStick,10);
+    DriveShifter.whenPressed(new DriveShift());
+    // Co-Driver Joystick
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 2);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     setElevatorButtonsHatch();
 
-    // mElevatorShift = new JoystickButton(mOpStick, 7);
-    // mElevatorShift.whenPressed(new ElevatorShift());
+    ManualElevatorWrist = new JoystickButton(mCoOpStick,9);
+    ManualElevatorWrist.toggleWhenPressed(new Manual());
 
-    UpdateCommands();
-    //WRONG
-    WristUp = new JoystickButton(mCoOpStick, 8);
-    WristUp.whileHeld(new WristUp());
-
-    WristDown = new JoystickButton(mCoOpStick, 7);
-    WristDown.whileHeld(new WristDown());
-
-    IntakeIn = new JoystickButton(mCoOpStick, 5);
+    IntakeIn = new JoystickButton(mCoOpStick, 6);
     IntakeIn.whileHeld(new IntakeIn());
 
-    IntakeOut = new JoystickButton(mCoOpStick, 6);
+    IntakeOut = new JoystickButton(mCoOpStick, 5);
     IntakeOut.whileHeld(new IntakeOut());
-    //WRONG
 
-    //AT CLIMB RIGHT NOW FOR TESTING
-    // ElevatorUp = new JoystickButton(mOpStick, 5);
-    // ElevatorUp.whenPressed(new ClimbHab2());
-
-    // ElevatorDown = new JoystickButton(mOpStick, 6);
-    // ElevatorDown.whenPressed(new ClimbEnd());
-    //AT CLIMB RIGHT NOW FOR TESTING
+    UpdateCommands();
   }
 
   /**
@@ -250,7 +160,6 @@ private JoystickButton mButtonNine;
   }
    
   public void UpdateCommands(){
-
     //Drivetrain
     mCommandTab.add("Drivetrain Shift", new DriveShift());
     mCommandTab.add("Gyro Reset", new ResetGyro());
@@ -276,6 +185,7 @@ private JoystickButton mButtonNine;
     mCommandTab.add("Intake In", new IntakeIn());
     mCommandTab.add("Intake Out", new IntakeOut());
 
+    //Wrist
     mCommandTab.add("Wrist -30", new WristMove(-30));
     mCommandTab.add("Wrist -90", new WristMove(-90));
     mCommandTab.add("Wrist 0", new WristMove(0));
@@ -287,9 +197,6 @@ private JoystickButton mButtonNine;
     mCommandTab.add("Follow Ball", new FollowTarget(2, -.03 , -0.02));
     mCommandTab.add("Follow Hatch", new FollowTarget(4, -0.02, -0.02));
     mCommandTab.add("Follow Tape", new FollowTarget(1, -0.05, -.02));
-    // mCommandTab.add("Follow Low Targets",);
-    // mCommandTab.add("Follow High Targets", );
-    
   }
 
   /**

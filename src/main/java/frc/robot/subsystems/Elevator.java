@@ -1,6 +1,4 @@
-package frc.robot.subsystems; // package declaration
-
-// imports
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -35,8 +33,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author DJ, Tony, Cole G, and Nate
  */
 public class Elevator extends Subsystem {
-  private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_TalonSRX WristMotor = RobotMap.WristMotor;
+  private final WPI_TalonSRX mSpoolMotor = RobotMap.ElevatorMotorMaster;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
@@ -51,10 +48,13 @@ public class Elevator extends Subsystem {
    */
   public Elevator() {
     setSubsystem("Elevator");
-    addChild(SpoolMaster);
+    addChild(mSpoolMotor);
     addChild(mShifter);
     addChild(mTopLimit);
-    //addChild(mBottomLimit);
+  }
+  
+  @Override
+  public void initDefaultCommand() {
   }
 
   /* Elevator Move Functions*/
@@ -64,8 +64,9 @@ public class Elevator extends Subsystem {
     double TargetTicks = targetDistance * 274.38312189; // 215.811165286 //274.38312189
     mEncoderTargetTicks = TargetTicks;
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", SpoolMaster.get());
-    SpoolMaster.set(ControlMode.Position, TargetTicks);
+    SmartDashboard.putNumber("power", mSpoolMotor.get());
+    mSpoolMotor.set(ControlMode.Position, TargetTicks);
+    CheckBottomSwitch();
   }
 
   public void setPositionLowGear(double targetInchesOffGround) {
@@ -73,8 +74,9 @@ public class Elevator extends Subsystem {
     double TargetTicks = targetDistance * 831.170774803; // 215.811165286 //274.38312189
     mEncoderTargetTicks = TargetTicks;
     SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", SpoolMaster.get());
-    SpoolMaster.set(ControlMode.Position, TargetTicks);
+    SmartDashboard.putNumber("power", mSpoolMotor.get());
+    mSpoolMotor.set(ControlMode.Position, TargetTicks);
+    CheckBottomSwitch();
   }
   
   /* Elevator Shifter Functions */
@@ -90,6 +92,10 @@ public class Elevator extends Subsystem {
     }
   }
 
+  /**
+   * Sets the gear of the elevator
+   * @author Cole & Tony
+   */
   public void setHighGear(boolean mHighGear) {
     if (mHighGear) {
       mShifter.set(kHighGear);
@@ -104,7 +110,7 @@ public class Elevator extends Subsystem {
    */
   public void UpdateTelemetry() {
     // Subsystem Status
-    mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
+    mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
     mElevatorTab.add("Height (In)", CurrentTicks());
     mElevatorTab.add("Top Limit", mTopLimit.get());
     mElevatorTab.add("Bottom Limit", mBottomLimit.get());
@@ -114,7 +120,7 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Integral", Constants.kElevatorDGain);
     mElevatorTab.add("State", state);
     // Subsystem Objects
-    mElevatorTab.add(SpoolMaster);
+    mElevatorTab.add(mSpoolMotor);
     mElevatorTab.add(mTopLimit);
     mElevatorTab.add(mBottomLimit);
     mElevatorTab.add(mShifter);
@@ -134,14 +140,10 @@ public class Elevator extends Subsystem {
     Shuffleboard.update();
   }
 
-  @Override
-  public void initDefaultCommand() {
-  }
-
   /* Current Status */
 
   public double CurrentTicks() {
-    return SpoolMaster.getSelectedSensorPosition();
+    return mSpoolMotor.getSelectedSensorPosition();
   }
   public double getTargetTicks() {
     return mEncoderTargetTicks;
@@ -170,40 +172,53 @@ public class Elevator extends Subsystem {
    * Sets the SpoolMasters's enocder position to zero
    */
   public void ZeroSensor() {
-    SpoolMaster.setSelectedSensorPosition(0);
+    mSpoolMotor.setSelectedSensorPosition(0);
+  }
+
+  /**
+   * Resets the SpoolMaster Encoder position if the Reverse
+   * limit switch is triggered
+   */
+  public void CheckBottomSwitch(){
+    if(mSpoolMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      ZeroSensor();
+    }
   }
   
   /* Motor */
   /**
-   * Stops both the Master and Slave motors
+   * Stops both the motors
    */
   public void StopMotors() {
-    SpoolMaster.stopMotor();
+    mSpoolMotor.stopMotor();
   }
 
   public void ElevatorUp(){
-    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedUp);
+    mSpoolMotor.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedUp);
+    CheckBottomSwitch();
   }
 
   public void ElevatorDown(){
-    SpoolMaster.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
+    mSpoolMotor.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
+    CheckBottomSwitch();
   }
-  public void StickManual(Joystick CoOpStick){
-    if(CoOpStick.getRawAxis(1) < -0.2){
-      SpoolMaster.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(1));
-    }else if(CoOpStick.getRawAxis(1) > 0.2){
-      SpoolMaster.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(1));
+
+  /**
+   * Requires Button 10 of the Joystick to be pressed to activate the movements
+   * @param stick
+   */
+  public void ManualMove(Joystick stick){
+    if(stick.getRawAxis(1) < -0.2 && stick.getRawButton(10)){
+      mSpoolMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(1));
+    }else if(stick.getRawAxis(1) > 0.2 && stick.getRawButton(10)){
+      mSpoolMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(1));
     }else{
-      SpoolMaster.set(ControlMode.PercentOutput, 0);
+      mSpoolMotor.set(ControlMode.PercentOutput, 0);
     }
-    SmartDashboard.putNumber("R", CoOpStick.getRawAxis(5));
-    if(CoOpStick.getRawAxis(5) < -0.2){
-      WristMotor.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(5));
-    }else if(CoOpStick.getRawAxis(5) > 0.2){
-      WristMotor.set(ControlMode.PercentOutput, -CoOpStick.getRawAxis(5));
-    }else{
-      WristMotor.set(ControlMode.PercentOutput, 0);
-    }
+    CheckBottomSwitch();
   }
-  public WPI_TalonSRX getMotor(){return SpoolMaster;}
+
+  public WPI_TalonSRX getMotor(){
+    return mSpoolMotor;
+  }
 }

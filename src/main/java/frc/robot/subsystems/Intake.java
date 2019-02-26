@@ -3,6 +3,7 @@ package frc.robot.subsystems; // package declaration
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -80,6 +81,16 @@ public class Intake extends Subsystem {
     SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
     SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
     mWristMotor.set(ControlMode.Position, mWristTargetTicks);
+  }
+  
+  public void ManualMove(Joystick stick){
+    if(stick.getRawAxis(5) < -0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else if(stick.getRawAxis(5) > 0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else{
+      mWristMotor.set(ControlMode.PercentOutput, 0);
+    }
   }
   /**
    * stops the movement of the intake wrist

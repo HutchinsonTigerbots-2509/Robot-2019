@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Manual;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -31,12 +30,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
-  public static Manual cManual;
 
   public static boolean trigger = false;
-
-  private int POV;
-
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -57,8 +52,6 @@ public class Robot extends TimedRobot {
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
-    cManual = new Manual();
-    
     // Put data on Shuffleboard
     sDrivetrain.UpdateTelemetry();
     sVision.UpdateTelemetry();
@@ -128,16 +121,13 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {
-
-   
+  public void teleopInit() {   
     Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove this line or comment it out.
     // if (cAutoCommand != null) {
     // cAutoCommand.cancel();
     // }
-    if(!cManual.isRunning())cManual.start();
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
   }
 

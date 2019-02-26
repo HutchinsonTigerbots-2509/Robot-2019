@@ -32,11 +32,9 @@ public class DriveShift extends InstantCommand {
   protected void initialize() {
     if(sDriveTrain.getCurrentShifter() == Value.kReverse) {
       sDriveTrain.shiftToHigh();
-      SmartDashboard.putString("Shifted to", "High");
     }
     else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
       sDriveTrain.shiftToLow();
-      SmartDashboard.putString("Shifted to", "Low");
     }
   }
 
