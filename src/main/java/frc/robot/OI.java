@@ -15,7 +15,8 @@ import frc.robot.commands.climb.PrepareToClimb;
 import frc.robot.commands.elevator.ElevatorMoveHighGear;
 import frc.robot.commands.elevator.ElevatorMoveLowGear;
 import frc.robot.commands.elevator.ElevatorShift;
-import frc.robot.commands.elevator.ElevatorWristMove;
+import frc.robot.commands.ElevatorWristMove;
+import frc.robot.commands.ElevatorWristMoveAlt;
 import frc.robot.commands.elevator.HeightToggle;
 import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.commands.intake.IntakeBall;
@@ -137,13 +138,14 @@ public class OI {
 
     // Co-Driver Joystick
     mHeightToggle = new JoystickButton(mCoOpStick, 3);
-    // mHeightToggle.whenPressed(new HeightToggle());
-    mHeightToggle.toggleWhenPressed(new HieghtToggle2());
+    mHeightToggle.whenPressed(new HeightToggle());
+    // mHeightToggle.toggleWhenPressed(new HieghtToggle2());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 2);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
-    setElevatorButtonsHatch();
+    // setElevatorButtonsHatch();
+    setElevatorButtonsTEST();
 
     ManualElevatorWrist = new JoystickButton(mCoOpStick,9);
     ManualElevatorWrist.toggleWhenPressed(new Manual());
@@ -251,9 +253,9 @@ public class OI {
     SmartDashboard.putString("Buttons", "Cargo");
   }
   public void setElevatorButtonsTEST(){
-    mElevatorHigh.whenPressed(new ElevatorWristMove(3));
-    mElevatorMid.whenPressed(new ElevatorWristMove(2));
-    mElevatorLow.whenPressed(new ElevatorWristMove(1));
+    mElevatorHigh.whenPressed(new ElevatorWristMoveAlt(3));
+    mElevatorMid.whenPressed(new ElevatorWristMoveAlt(2));
+    mElevatorLow.whenPressed(new ElevatorWristMoveAlt(1));
     SmartDashboard.putString("Buttons", "Cargo");
   }
 }

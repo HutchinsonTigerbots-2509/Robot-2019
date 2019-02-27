@@ -9,7 +9,7 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.elevator.ElevatorWristMove;
+import frc.robot.commands.ElevatorWristMove;
 
 public class IntakeHatchBrush extends CommandGroup {
   /**
