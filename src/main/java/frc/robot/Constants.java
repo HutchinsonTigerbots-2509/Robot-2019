@@ -84,6 +84,7 @@ public final class Constants {
     public static double kBallMid = 48.0;
     public static double kBallHigh = 75;
     public static double kHABHeight = 28;
+    public static double kCargoShipBall = 40.0;
 
     /* Vision */
     // Physical

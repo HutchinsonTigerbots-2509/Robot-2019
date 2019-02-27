@@ -46,6 +46,7 @@ public class OI {
   public JoystickButton mElevatorLow;
   public JoystickButton mElevatorHAB;
   private JoystickButton mHeightToggle;
+  private JoystickButton mCargoShipBall; // If needed
   // Drive Train
   private JoystickButton DriveShifter;
   // Vision Alignment Buttons
@@ -146,6 +147,9 @@ public class OI {
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     // setElevatorButtonsHatch();
     setElevatorButtonsTEST();
+
+    // mCargoShipBall = new JoystickButton(mCoOpStick, 8); // Doubled with another button remap
+    // mCargoShipBall.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kCargoShipBall));
 
     ManualElevatorWrist = new JoystickButton(mCoOpStick,9);
     ManualElevatorWrist.toggleWhenPressed(new Manual());
