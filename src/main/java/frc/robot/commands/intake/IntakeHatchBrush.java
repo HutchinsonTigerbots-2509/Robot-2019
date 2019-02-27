@@ -16,6 +16,6 @@ public class IntakeHatchBrush extends CommandGroup {
    * Add your docs here.
    */
   public IntakeHatchBrush() {
-    addSequential(new ElevatorWristMove(Constants.kWristHatchBrushAngle, Constants.kHatchLow));
+    addSequential(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
   }
 }

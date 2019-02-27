@@ -77,12 +77,12 @@ public final class Constants {
     public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
-    public static double kHatchLow = 20.0; //0
-    public static double kHatchMid = 47.5;
+    public static double kHatchLow = 14.0; //0
+    public static double kHatchMid = 42.0;
     public static double kHatchHigh = 68.0;
-    public static double kBallLow = 20.0;
+    public static double kBallLow = 22.0;
     public static double kBallMid = 48.0;
-    public static double kBallHigh = 74;
+    public static double kBallHigh = 75;
     public static double kHABHeight = 28;
 
     /* Vision */
@@ -120,8 +120,7 @@ public final class Constants {
     public static int kWristStartingAngle = 20;
     public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
-    public static int kWristCargoAngle = -65;
-    public static int kWristHatchBrushAngle = -45;//Check
+    public static int kWristCargoAngle = -75;
 
 
     //#region RobotMap Constants

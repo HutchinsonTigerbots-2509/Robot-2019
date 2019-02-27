@@ -15,11 +15,13 @@ import frc.robot.subsystems.Intake;
 
 public class Manual extends Command {
 
-  private final Joystick mCoOpStick = Robot.oi.getCoOperatorStick(); // 
-  private final Elevator sElevator = Robot.sElevator; // The Elevator
-  private final Intake sIntake = Robot.sIntake; //The Intake
+  private Joystick stick;
+  private Elevator sElevator; // The Elevator
+  private Intake sIntake; //The Intake
 
   public Manual() {
+    sElevator = Robot.sElevator;
+    sIntake = Robot.sIntake;
     requires(sElevator);
     requires(sIntake);
   }
@@ -27,15 +29,16 @@ public class Manual extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.ManualMove(mCoOpStick);
-    sIntake.ManualMove(mCoOpStick);
+    stick = Robot.oi.getCoOperatorStick();
+    sElevator.ManualMove(stick);
+    sIntake.ManualMove(stick);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sElevator.ManualMove(mCoOpStick);
-    sIntake.ManualMove(mCoOpStick);
+    sElevator.ManualMove(stick);
+    sIntake.ManualMove(stick);
   }
 
   // Make this return true when this Command no longer needs to run execute()
