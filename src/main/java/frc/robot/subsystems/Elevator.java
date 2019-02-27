@@ -38,10 +38,10 @@ public class Elevator extends Subsystem {
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
   private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
-  public String state;
   private Value kHighGear = Value.kReverse;
   private Value kLowGear = Value.kForward;
   private double mEncoderTargetTicks;
+  public String state = "Hatch";
 
   /**
    * Adds children to the object so we can play with components in test mode
@@ -103,7 +103,6 @@ public class Elevator extends Subsystem {
       mShifter.set(kLowGear);
     }
   }
-
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
    * for the smartdashboard has been removed.
@@ -118,7 +117,7 @@ public class Elevator extends Subsystem {
     mElevatorTab.add("Perpotional", Constants.kElevatorPGain);
     mElevatorTab.add("Derivative", Constants.kElevatorIGain);
     mElevatorTab.add("Integral", Constants.kElevatorDGain);
-    mElevatorTab.add("State", state);
+    // mElevatorTab.add("State", state);
     // Subsystem Objects
     mElevatorTab.add(mSpoolMotor);
     mElevatorTab.add(mTopLimit);

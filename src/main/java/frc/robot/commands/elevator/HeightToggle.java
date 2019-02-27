@@ -9,28 +9,24 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
 public class HeightToggle extends InstantCommand {
-  private Elevator sElevator;
-  private OI oi;
 
   public HeightToggle() {
-    oi = Robot.oi;
-    sElevator = Robot.sElevator;
   }
 
   @Override
   protected void initialize() {
-    if(sElevator.state=="Hatch"){
-      oi.setElevatorButtonsCargo();
-      SmartDashboard.putString("Height Toggle", sElevator.state);
-      // new WristMove(-90).start();
-    }else{
-      oi.setElevatorButtonsHatch();
-      SmartDashboard.putString("Height Toggle", sElevator.state);
+    if(Robot.sElevator.state=="Hatch"){
+      Robot.sElevator.state="Cargo";
+      Robot.oi.setElevatorButtonsCargo();
+      SmartDashboard.putString("state",Robot.sElevator.state);
+    }else if(Robot.sElevator.state=="Cargo"){
+      Robot.sElevator.state="Hatch";
+      Robot.oi.setElevatorButtonsHatch();
+      SmartDashboard.putString("state",Robot.sElevator.state);
     }
   }
 
