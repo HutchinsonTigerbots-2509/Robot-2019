@@ -79,10 +79,11 @@ public final class Constants {
 
     public static double kHatchLow = 14.0; //0
     public static double kHatchMid = 42.0;
+    
     public static double kHatchHigh = 68.0;
-    public static double kBallLow = 22.0;
-    public static double kBallMid = 48.0;
-    public static double kBallHigh = 75;
+    public static double kBallLow = 25.0;
+    public static double kBallMid = 51.0;
+    public static double kBallHigh = 78;
     public static double kHABHeight = 28;
     public static double kCargoShipBall = 40.0;
 

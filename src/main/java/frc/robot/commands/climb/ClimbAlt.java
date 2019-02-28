@@ -37,17 +37,17 @@ public class ClimbAlt extends Command {
   protected void initialize() {
     sClimber.StageOneStart();
     sClimber.StageTwoStart();
-    sIntake.WristMove(mWristAngle);
-    sElevator.setHighGear(false);
-    sElevator.setPositionLowGear(mElevatorHieght);
+    //sIntake.WristMove(mWristAngle);
+    //sElevator.setHighGear(false);
+    //sElevator.setPositionLowGear(mElevatorHieght);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     sClimber.setMotorSpeed(-stick.getY()*2);
-    sIntake.WristMove(mWristAngle);
-    sElevator.setPositionLowGear(mElevatorHieght);
+    //sIntake.WristMove(mWristAngle);
+    //sElevator.setPositionLowGear(mElevatorHieght);
     SmartDashboard.putNumber("Wrist Volts", RobotMap.WristMotor.getMotorOutputVoltage());
   }
 

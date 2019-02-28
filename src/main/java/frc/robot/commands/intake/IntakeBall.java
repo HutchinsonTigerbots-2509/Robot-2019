@@ -16,7 +16,8 @@ public class IntakeBall extends CommandGroup {
    * Add your docs here.
    */
   public IntakeBall() {
-    addSequential(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));
-    addParallel(new IntakeIn());
+    addParallel(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));
+    //addSequential(new ElevatorMoveLowGear(Constants.kHomePositionInches));
+    addSequential(new IntakeIn());
   }
 }

@@ -25,7 +25,7 @@ public class FollowTarget extends Command {
   public double left_speed;
   public double kPdistance;
   public double kpAim;
-  private Drivetrain sdrivetrain = Robot.sDrivetrain;
+  private Drivetrain sDrivetrain = Robot.sDrivetrain;
   private boolean is_done = false;
   private int pipeline_id;
   private int isChanged = 0;

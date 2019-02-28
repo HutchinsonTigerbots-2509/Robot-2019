@@ -132,7 +132,8 @@ public class Robot extends TimedRobot {
     // cAutoCommand.cancel();
     // }
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
-    cIntakeManual.start();
+    //if(!cIntakeManual.isRunning())cIntakeManual.start();
+    //cIntakeManual.start();
   }
 
   /**
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
     SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
     SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    //cIntakeManual.start();
     SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff

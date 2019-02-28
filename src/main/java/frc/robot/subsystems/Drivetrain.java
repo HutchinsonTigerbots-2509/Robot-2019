@@ -1,22 +1,23 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Intake;
 
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code through
@@ -40,6 +41,7 @@ public class Drivetrain extends Subsystem {
   private final WPI_VictorSPX mLeftSlave = RobotMap.DrivetrainLeftSlave;
   private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
   private final WPI_VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
+  private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
   
   // The Differential Drive Object object (for mDrive.tankDrive)
   private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
@@ -176,22 +178,32 @@ public class Drivetrain extends Subsystem {
     }
   }
   
-  public void MarioDrive(Joystick stick) {
+  public void MarioDrive(Joystick stick, Joystick stick_2) {
     double SpeedMulti = 0.7;
     double TurnSpeedMulti = 0.8;
     double Speed = 0.0;
+    
     if(stick.getRawAxis(3) > 0) {
       Speed = stick.getRawAxis(3) * -SpeedMulti;
     } else if(stick.getRawAxis(2) > 0) {
       Speed = stick.getRawAxis(2) * SpeedMulti;
     }
-
+    
     if(Speed > 0) {
       mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
     }
     else {
       mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
     }
+
+    if(stick_2.getRawAxis(2) > 0.2){
+      mIntakeMotor.set(-Constants.kMaxSpeed);
+    }else if(stick_2.getRawAxis(3) > 0.2){
+      mIntakeMotor.set(Constants.kMaxSpeed);
+    }else{
+      mIntakeMotor.set(0);
+    }
+    
   }
   /**
    * Will update all values that are sent to the Shuffleboard

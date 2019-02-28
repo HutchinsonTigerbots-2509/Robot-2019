@@ -216,6 +216,16 @@ public class Elevator extends Subsystem {
     }
     CheckBottomSwitch();
   }
+  public void ManualMoveMark2(Joystick stick){
+    if(stick.getRawAxis(1) < -0.2){
+      mSpoolMotor.set(ControlMode.PercentOutput, 1);
+    }else if(stick.getRawAxis(1) > 0.2){
+      mSpoolMotor.set(ControlMode.PercentOutput, -1);
+    }else{
+      mSpoolMotor.set(ControlMode.PercentOutput, 0);
+    }
+    CheckBottomSwitch();
+  }
 
   public WPI_TalonSRX getMotor(){
     return mSpoolMotor;

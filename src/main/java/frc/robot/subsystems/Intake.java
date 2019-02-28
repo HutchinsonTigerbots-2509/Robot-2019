@@ -93,6 +93,16 @@ public class Intake extends Subsystem {
     }
   }
 
+  public void ManualMoveMark2(Joystick stick){
+    if(stick.getRawAxis(5) < -0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else if(stick.getRawAxis(5) > 0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else{
+      mWristMotor.set(ControlMode.PercentOutput, 0);
+    }
+  }
+
   public void IntakeInManual(Joystick stick){
     if(stick.getRawAxis(2) > 0.2){
       In();
