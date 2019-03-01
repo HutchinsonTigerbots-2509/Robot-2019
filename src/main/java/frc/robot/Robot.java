@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Shuffleboard.startRecording();//Starts the Shuffleboard recording
+    // Shuffleboard.startRecording();//Starts the Shuffleboard recording
     // RobotMap must be initialized first
     RobotMap.init();
     // Subsystems must be initialized after RobotMap
