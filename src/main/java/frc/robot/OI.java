@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveShift;
-import frc.robot.commands.ElevatorWristMove;
-import frc.robot.commands.ElevatorWristMoveAlt;
-import frc.robot.commands.HieghtToggle2;
+// import frc.robot.commands.ElevatorWristMove;
+// import frc.robot.commands.ElevatorWristMoveAlt;
+// import frc.robot.commands.HieghtToggle2;
 import frc.robot.commands.climb.ClimbAlt;
 import frc.robot.commands.climb.ClimbExtend;
 import frc.robot.commands.climb.ClimbRetract;
@@ -26,7 +26,7 @@ import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.sensors.ResetGyro;
 import frc.robot.commands.vision.DistanceCheck;
 import frc.robot.commands.vision.FollowTarget;
-import frc.robot.commands.wrist.ManualWristMove;
+// import frc.robot.commands.wrist.ManualWristMove;
 import frc.robot.commands.wrist.WristMove;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -166,8 +166,8 @@ public class OI {
     mElevatorManual = new JoystickButton(mCoOpStick, 9);
     mElevatorManual.whileHeld(new ManualElevatorMove());
 
-    mWristManual = new JoystickButton(mCoOpStick, 10);
-    mWristManual.whileHeld(new ManualWristMove());
+    // mWristManual = new JoystickButton(mCoOpStick, 10);
+    // mWristManual.whileHeld(new ManualWristMove());
     //NEW VERSON WITH BETTER CONTROLS UNTESTED
 
     mWristStart = new JoystickButton(mCoOpStick, 8);
@@ -230,7 +230,7 @@ public class OI {
     mCommandTab.add("Elevator 12", new ElevatorMoveHighGear(12));
     mCommandTab.add("Elevator Shift", new ElevatorShift());
     mCommandTab.add("Elevator Hieght", new HeightToggle());
-    mCommandTab.add("Elevator Hieght 2", new HieghtToggle2());
+    // mCommandTab.add("Elevator Hieght 2", new HieghtToggle2());
     mCommandTab.add("Elevator Zero", new ZeroElevator());
 
     //Intake/
@@ -256,9 +256,9 @@ public class OI {
    *  to be the Hatch Heights
    */ 
   public void setElevatorButtonsHatch(){
-    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
-    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
-    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
+    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
+    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
+    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
     SmartDashboard.putString("Buttons", "Hatch");
   }
 
@@ -267,15 +267,15 @@ public class OI {
    *  to be the Cargo Heights
    */ 
   public void setElevatorButtonsCargo(){
-    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
-    mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
-    mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
+    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
+    // mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
+    // mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
     SmartDashboard.putString("Buttons", "Cargo");
   }
   public void setElevatorButtonsTEST(){
-    mElevatorHigh.whenPressed(new ElevatorWristMoveAlt(3));
-    mElevatorMid.whenPressed(new ElevatorWristMoveAlt(2));
-    mElevatorLow.whenPressed(new ElevatorWristMoveAlt(1));
+    // mElevatorHigh.whenPressed(new ElevatorWristMoveAlt(3));
+    // mElevatorMid.whenPressed(new ElevatorWristMoveAlt(2));
+    // mElevatorLow.whenPressed(new ElevatorWristMoveAlt(1));
     SmartDashboard.putString("Buttons", "Cargo");
   }
 }

@@ -9,13 +9,13 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ElevatorWristMove;
+// import frc.robot.commands.ElevatorWristMove;
 
 public class IntakeHatchBrush extends CommandGroup {
   /**
    * Add your docs here.
    */
   public IntakeHatchBrush() {
-    addSequential(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
+    // addSequential(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
   }
 }
