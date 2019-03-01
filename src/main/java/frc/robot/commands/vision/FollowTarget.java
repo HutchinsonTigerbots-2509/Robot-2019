@@ -74,14 +74,14 @@ public class FollowTarget extends Command {
       TargetX = 1;
       ErrorX = -sVision.getTargetX();
       ErrorY = sVision.getTargetY();
-      SmartDashboard.putNumber("pipline_id", (pipeline_id));
+      // SmartDashboard.putNumber("pipline_id", (pipeline_id));
       min_distance = Constants.distance_command;
 
       // if (Y > -1.5){
       // TargetX = 1;
       // }
       // SmartDashboard.putNumber("Target_x", TargetX);
-      SmartDashboard.putNumber("Target_x", TargetX);
+      // SmartDashboard.putNumber("Target_x", TargetX);
       // X = sVision.getTargetX();
       // Y = sVision.getTargetY();
       // if (pipeline_id == 0){
@@ -134,11 +134,11 @@ public class FollowTarget extends Command {
           right_speed = steering_adjust;
           // + distance_adjust;
 
-          SmartDashboard.putNumber("right_2", right_speed);
-          SmartDashboard.putNumber("left_2", left_speed);
+          // SmartDashboard.putNumber("right_2", right_speed);
+          // SmartDashboard.putNumber("left_2", left_speed);
 
           sDriveTrain.track_taget(distance_adjust, steering_adjust, pipeline_id);
-          SmartDashboard.putNumber("distance_adjust", distance_adjust);
+          // SmartDashboard.putNumber("distance_adjust", distance_adjust);
           // TargetDistanceCheck = false;
         } else if (X < TargetX) {
           // SmartDashboard.putNumber("right", right_speed
@@ -151,10 +151,10 @@ public class FollowTarget extends Command {
           // + distance_adjust;
           right_speed = steering_adjust;
           // + distance_adjust;
-          SmartDashboard.putNumber("right", right_speed);
-          SmartDashboard.putNumber("left", left_speed);
-          // sDriveTrain.track_taget(left_speed , -right_speed);
-          SmartDashboard.putNumber("distance_adjust", distance_adjust);
+          // SmartDashboard.putNumber("right", right_speed);
+          // SmartDashboard.putNumber("left", left_speed);
+          // // sDriveTrain.track_taget(left_speed , -right_speed);
+          // SmartDashboard.putNumber("distance_adjust", distance_adjust);
 
           sDriveTrain.track_taget(distance_adjust, steering_adjust, pipeline_id);
 

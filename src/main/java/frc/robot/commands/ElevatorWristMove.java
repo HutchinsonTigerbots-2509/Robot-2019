@@ -25,7 +25,7 @@ public class ElevatorWristMove extends CommandGroup {
   public ElevatorWristMove(int heightID){
     // String state = Robot.sElevator.state;
     if(Robot.sElevator.state=="Hatch"){
-      SmartDashboard.putString("Buttons", Robot.sElevator.state);
+      // SmartDashboard.putString("Buttons", Robot.sElevator.state);
       if(heightID==1){
         addParallel(new ElevatorMoveLowGear(Constants.kHatchLow));
         addSequential(new WristMove(Constants.kWristHatchAngle));
@@ -38,7 +38,7 @@ public class ElevatorWristMove extends CommandGroup {
 
       }
     }else if(Robot.sElevator.state=="Cargo"){
-      SmartDashboard.putString("Buttons", Robot.sElevator.state);
+      // SmartDashboard.putString("Buttons", Robot.sElevator.state);
       if(heightID==1){
         addParallel(new ElevatorMoveLowGear(Constants.kBallLow));
         addSequential(new WristMove(Constants.kWristCargoAngle));

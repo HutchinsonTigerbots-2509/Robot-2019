@@ -27,8 +27,8 @@ public class ElevatorMoveHighGear extends Command {
   @Override
   protected void execute() {
     sElevator.setPositionHighGear(mTargetHieght);
-    SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentTicks());
-    SmartDashboard.putNumber("Target Height", sElevator.getTargetTicks());
+    // SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentTicks());
+    // SmartDashboard.putNumber("Target Height", sElevator.getTargetTicks());
   }
 
   // Make this return true when this Command no longer needs to run execute()

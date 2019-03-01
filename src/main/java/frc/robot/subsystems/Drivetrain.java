@@ -42,6 +42,8 @@ public class Drivetrain extends Subsystem {
 	private final WPI_TalonSRX mRightMaster = RobotMap.DrivetrainRightMaster;
 	private final WPI_VictorSPX mRightSlave = RobotMap.DrivetrainRightSlave;
 	private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
+	private final WPI_TalonSRX mElevatorMotor = RobotMap.ElevatorMotorMaster;
+	private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
 	
 	// The Differential Drive Object object (for mDrive.tankDrive)
 	private final DifferentialDrive mDrive = RobotMap.DrivetrainDifferential;
@@ -54,7 +56,7 @@ public class Drivetrain extends Subsystem {
 	private final AHRS mGyro = RobotMap.DrivetrainGyro;
 
 	// Shuffleboard
-	private final ShuffleboardTab mDriveTrainTab = Shuffleboard.getTab("Drivetrain");
+	// private final ShuffleboardTab mDriveTrainTab = Shuffleboard.getTab("Drivetrain");
 	
 	// Vision
 	public boolean TargetAligned;
@@ -170,7 +172,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void OperatorDrive(Joystick stick) {
-		SmartDashboard.putNumber("Stick Y", stick.getY());
+		// SmartDashboard.putNumber("Stick Y", stick.getY());
 		if(stick.getY() > Constants.minMovePercent || stick.getZ() > Constants.minMovePercent) {
 				mDrive.arcadeDrive(stick.getY() * 0.8, stick.getZ() * 0.8);        
 		} else {
@@ -179,8 +181,8 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void MarioDrive(Joystick stick, Joystick stick_2) {
-		double SpeedMulti = 1;
-		double TurnSpeedMulti = 1;
+		double SpeedMulti = 0.85;
+		double TurnSpeedMulti = 0.95;
 		double Speed = 0.0;
 		
 		if(stick.getRawAxis(3) > 0) {
@@ -196,6 +198,25 @@ public class Drivetrain extends Subsystem {
 			mDrive.arcadeDrive(Speed, stick.getRawAxis(0) * -TurnSpeedMulti);
 		}
 
+		//Elevator Manual
+		if(stick_2.getRawAxis(1) < -0.2){
+			mElevatorMotor.set(Constants.kMaxSpeed);
+		}else if(stick_2.getRawAxis(1) > 0.2){
+			mElevatorMotor.set(-Constants.kMaxSpeed);
+		}else{
+			mElevatorMotor.set(0);
+		}
+
+		//Wrist Manual
+		// if(Math.abs(stick_2.getRawAxis(5)) > 0.1 /*|| stick_2.getRawAxis(5) < -0.2*/ ){
+		// 	mWristMotor.set(ControlMode.PercentOutput, -stick_2.getRawAxis(5));
+		// }else{
+		// 	mWristMotor.set(ControlMode.PercentOutput, 0);
+		// }
+
+		mWristMotor.set(ControlMode.PercentOutput, -stick_2.getRawAxis(5));
+
+		//Intake
 		if(stick_2.getRawAxis(2) > 0.2){
 			mIntakeMotor.set(-Constants.kMaxSpeed);
 		}else if(stick_2.getRawAxis(3) > 0.2){
@@ -216,18 +237,18 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void UpdateTelemetry() {
 		// Subsystem Status
-		mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
-		mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
-		mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
-		mDriveTrainTab.add("Gyro Angle", mGyro.getAngle());
-		mDriveTrainTab.add("Shifter", getShifter());
-		// Subsystem Objects
-		mDriveTrainTab.add(mLeftMaster);
-		mDriveTrainTab.add(mLeftSlave);
-		mDriveTrainTab.add(mRightMaster);
-		mDriveTrainTab.add(mRightSlave);
-		mDriveTrainTab.add(mDrive);
-		mDriveTrainTab.add(mShifter);
+		// mDriveTrainTab.add("Left Encoder", mLeftMaster.getSelectedSensorPosition());
+		// mDriveTrainTab.add("Right Encoder", mRightMaster.getSelectedSensorPosition());
+		// mDriveTrainTab.add("Encoder Avg", getEncoderAverageValue());
+		// mDriveTrainTab.add("Gyro Angle", mGyro.getAngle());
+		// mDriveTrainTab.add("Shifter", getShifter());
+		// // Subsystem Objects
+		// mDriveTrainTab.add(mLeftMaster);
+		// mDriveTrainTab.add(mLeftSlave);
+		// mDriveTrainTab.add(mRightMaster);
+		// mDriveTrainTab.add(mRightSlave);
+		// mDriveTrainTab.add(mDrive);
+		// mDriveTrainTab.add(mShifter);
 		// Subsytem Commands
 
 		Shuffleboard.update();

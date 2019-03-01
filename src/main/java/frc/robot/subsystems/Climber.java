@@ -103,17 +103,17 @@ public class Climber extends Subsystem {
    * Updates the data for shuffleboard
    */
   public void UpdateTelemetry(){
-    // Subsystem Status'
-    mClimbTab.add("Higher Pistons", getHigherPistonsStatus());
-    mClimbTab.add("Lower Pistons", getLowerPistonsStatus());
-    mClimbTab.add("Motor Speed", Motor.get());
-    // Subsystem Objects
-    mClimbTab.add(Motor);
-    mClimbTab.add(LowPistonSystem);
-    mClimbTab.add(HighPistonSystem);
-    //Subsystem Commands
-    mClimbTab.add("Climb Extend", new ClimbExtend());
-    mClimbTab.add("Climb Retract", new ClimbRetract());
+    // // Subsystem Status'
+    // mClimbTab.add("Higher Pistons", getHigherPistonsStatus());
+    // mClimbTab.add("Lower Pistons", getLowerPistonsStatus());
+    // mClimbTab.add("Motor Speed", Motor.get());
+    // // Subsystem Objects
+    // mClimbTab.add(Motor);
+    // mClimbTab.add(LowPistonSystem);
+    // mClimbTab.add(HighPistonSystem);
+    // //Subsystem Commands
+    // mClimbTab.add("Climb Extend", new ClimbExtend());
+    // mClimbTab.add("Climb Retract", new ClimbRetract());
   }
 
   // #endregion General

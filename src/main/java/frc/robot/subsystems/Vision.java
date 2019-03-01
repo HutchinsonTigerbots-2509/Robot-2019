@@ -45,7 +45,7 @@ public class Vision extends Subsystem {
   
  
 
-  private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
+  // private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
 
   /**
    * Returns the NetworkTable for the Limelight Camera

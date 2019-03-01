@@ -22,11 +22,11 @@ public class HeightToggle extends InstantCommand {
     if(Robot.sElevator.state=="Hatch"){
       Robot.sElevator.state="Cargo";
       Robot.oi.setElevatorButtonsCargo();
-      SmartDashboard.putString("state",Robot.sElevator.state);
+      // SmartDashboard.putString("state",Robot.sElevator.state);
     }else if(Robot.sElevator.state=="Cargo"){
       Robot.sElevator.state="Hatch";
       Robot.oi.setElevatorButtonsHatch();
-      SmartDashboard.putString("state",Robot.sElevator.state);
+      // SmartDashboard.putString("state",Robot.sElevator.state);
     }
   }
 

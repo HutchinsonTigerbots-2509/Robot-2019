@@ -20,7 +20,7 @@ public class HieghtToggle2 extends Command {
   protected void initialize() {
     Robot.sElevator.state="Cargo";
     Robot.oi.setElevatorButtonsCargo();
-    SmartDashboard.putString("state",Robot.sElevator.state);
+    // SmartDashboard.putString("state",Robot.sElevator.state);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,7 +39,7 @@ public class HieghtToggle2 extends Command {
   protected void end() {
     Robot.sElevator.state="Hatch";
     Robot.oi.setElevatorButtonsHatch();
-    SmartDashboard.putString("state",Robot.sElevator.state);
+    // SmartDashboard.putString("state",Robot.sElevator.state);
   }
 
   // Called when another command which requires one or more of the same
