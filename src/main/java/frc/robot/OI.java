@@ -136,7 +136,7 @@ public class OI {
 
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
-    DriveShifter = new JoystickButton(mOpStick,10);
+    DriveShifter = new JoystickButton(mOpStick,9);
     DriveShifter.whenPressed(new DriveShift());
 
     // mClimb = new JoystickButton(mOpStick, 8);
@@ -178,10 +178,10 @@ public class OI {
 
     IntakeBall = new JoystickButton(mCoOpStick, 6);
     IntakeBall.whileHeld(new IntakeBall());
-
+    IntakeBall.whenReleased(new WristMove(-30));
     IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
-    IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
-    IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
+    IntakeHatchBrush.whileHeld(new FollowTarget(0, -0.01, -0.01));
+    //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
 
     // IntakeIn = new JoystickButton(mCoOpStick, 8); // Trigger
     // IntakeIn.whileHeld(new IntakeIn());

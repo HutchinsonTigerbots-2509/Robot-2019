@@ -58,8 +58,8 @@ public class FollowTarget extends Command {
     steering_adjust = 0;
     distance_adjust = 0;
     sDriveTrain.TargetDistanceCheck = false;
-    sVision.change_vision_pipeline(pipeline_id);
-    Timer.delay(0.5);
+    //sVision.change_vision_pipeline(pipeline_id);
+    //Timer.delay(0.5);
     isChanged = 1;
   }
 
@@ -74,14 +74,14 @@ public class FollowTarget extends Command {
       TargetX = 1;
       ErrorX = -sVision.getTargetX();
       ErrorY = sVision.getTargetY();
-      SmartDashboard.putNumber("pipline_id", (pipeline_id));
+      //SmartDashboard.putNumber("pipline_id", (pipeline_id));
       min_distance = Constants.distance_command;
 
       // if (Y > -1.5){
       // TargetX = 1;
       // }
       // SmartDashboard.putNumber("Target_x", TargetX);
-      SmartDashboard.putNumber("Target_x", TargetX);
+      //SmartDashboard.putNumber("Target_x", TargetX);
       // X = sVision.getTargetX();
       // Y = sVision.getTargetY();
       // if (pipeline_id == 0){

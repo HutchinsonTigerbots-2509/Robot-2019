@@ -14,7 +14,7 @@ import frc.robot.Robot;
 public class IntakeIn extends Command {
   private Intake sIntake = Robot.sIntake;
   public IntakeIn() {
-    requires(sIntake);
+    //requires(sIntake);
   }
 
   // Called just before this Command runs the first time
