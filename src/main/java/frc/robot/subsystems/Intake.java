@@ -92,6 +92,7 @@ public class Intake extends Subsystem {
       mWristMotor.set(ControlMode.PercentOutput, 0);
     }
   }
+  
 
   public void ManualMoveMark2(Joystick stick){
     if(stick.getRawAxis(5) < -0.2){

@@ -146,7 +146,7 @@ public class OI {
     IntakeBall = new JoystickButton(mOpStick, 6);
     IntakeBall.whileHeld(new IntakeBall());
     IntakeBall.whenReleased(new WristMove(-30));
-    IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
+    IntakeHatchBrush = new JoystickButton(mOpStick, 5);
     IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
     mTrackTarget = new JoystickButton(mOpStick, 5);
     //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
