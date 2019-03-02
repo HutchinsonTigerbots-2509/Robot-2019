@@ -10,10 +10,12 @@ import frc.robot.commands.elevator.CargoToggle;
 import frc.robot.commands.elevator.HatchToggle;
 import frc.robot.commands.wrist.ManualWristMove;
 import frc.robot.commands.wrist.WristMove;
+import frc.robot.commands.intake.IntakeHatchBrush;
+import frc.robot.commands.intake.IntakeBall;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-
+import frc.robot.commands.vision.FollowTarget;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -40,7 +42,8 @@ public class OI {
   public JoystickButton mFollow_hatch_Button;
   public JoystickButton mFollow_ball_Button;
   public JoystickButton mFollow_alingment_tape_Button;
-  
+  public JoystickButton IntakeBall;
+  public JoystickButton IntakeHatchBrush;
   public JoystickButton mReset_gyro; // Test Button
 
   // Climb Button - Still in testing
@@ -103,6 +106,7 @@ public class OI {
 
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
+  
     mDriveShifter = new JoystickButton(mOpStick,10);
     mDriveShifter.whenPressed(new DriveShift());
 
@@ -134,6 +138,24 @@ public class OI {
 
     mWristStart = new JoystickButton(mCoOpStick, 8);
     mWristStart.whenPressed(new WristMove(Constants.kWristStartingAngle));
+
+    // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
+    // mPrepareToClimb.whenPressed(new PrepareToClimb());
+
+    IntakeBall = new JoystickButton(mCoOpStick, 6);
+    IntakeBall.whileHeld(new IntakeBall());
+    IntakeBall.whenReleased(new WristMove(-30));
+    IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
+    IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
+    //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
+
+    // IntakeIn = new JoystickButton(mCoOpStick, 8); // Trigger
+    // IntakeIn.whileHeld(new IntakeIn());
+
+    // IntakeOut = new JoystickButton(mCoOpStick, 7); // Trigger
+    // IntakeOut.whileHeld(new IntakeOut());
+
+    
   }
 
   /**

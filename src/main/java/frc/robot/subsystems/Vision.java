@@ -30,6 +30,7 @@ public class Vision extends Subsystem {
   private NetworkTableEntry mTablevert = mTable.getEntry(Constants.kLimelightTargetvert);
   private NetworkTableEntry mTablehor;
   private NetworkTableEntry mTableCorners = mTable.getEntry("tcornx");
+  private NetworkTableEntry mTableTargetFound = mTable.getEntry(Constants.kLimelightTargetID);
   private double mTargetX = 0;
   private double mTargetY = 0;
   private double mTargetArea = 0;
@@ -42,7 +43,7 @@ public class Vision extends Subsystem {
   public double DistanceToDrive;
   public double AngleOne;
   public double Turn_angle = 0;
-  
+  public double mTargetfound = 0;
  
 
   // private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
@@ -76,6 +77,11 @@ public class Vision extends Subsystem {
     mTablehor = mTable.getEntry(Constants.kLimelightTargethorID);
     mTargetHor = mTablehor.getDouble(0.0);
     return mTargetHor;
+  }
+  public double isTargetfound(){
+    mTableTargetFound = mTable.getEntry(Constants.kLimelightTargetID);
+    mTargetfound = mTableTargetFound.getDouble(0.0);
+    return mTargetfound;
   }
  
 
