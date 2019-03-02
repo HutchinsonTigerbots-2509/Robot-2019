@@ -71,8 +71,8 @@ public class DistanceCheck extends Command {
       Angle_To_Turn = Angle_To_Turn * -1;
     }
     
-    SmartDashboard.putNumber("Angle_To_Turn", Angle_To_Turn);
-    SmartDashboard.putNumber("Distance_To_drive", Distance_To_Drive);
+    // SmartDashboard.putNumber("Angle_To_Turn", Angle_To_Turn);
+    // SmartDashboard.putNumber("Distance_To_drive", Distance_To_Drive);
   
     
   }

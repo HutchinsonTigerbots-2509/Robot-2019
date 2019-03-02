@@ -42,7 +42,7 @@ public class WristTest extends Command {
   @Override
   protected void execute() {
     sIntake.WristMove(mWristAngle);
-    SmartDashboard.putNumber("WristVolts", motor.getMotorOutputVoltage());
+    // SmartDashboard.putNumber("WristVolts", motor.getMotorOutputVoltage());
   }
 
   // Make this return true when this Command no longer needs to run execute()

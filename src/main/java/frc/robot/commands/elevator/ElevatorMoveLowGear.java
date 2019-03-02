@@ -32,9 +32,9 @@ public class ElevatorMoveLowGear extends Command {
   @Override
   protected void execute() {
     sElevator.setPositionLowGear(mTargetHieght);
-    SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentTicks());
-    SmartDashboard.putNumber("Target Height In Ticks", sElevator.getTargetTicks());
-    SmartDashboard.putNumber("Target Height Inches", mTargetHieght);
+    // SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentTicks());
+    // SmartDashboard.putNumber("Target Height In Ticks", sElevator.getTargetTicks());
+    // SmartDashboard.putNumber("Target Height Inches", mTargetHieght);
     Elevator_ticks = sElevator.CurrentTicks();
     Elevator_ticks_is_finsihed = sElevator.getTargetTicks();
   }
@@ -47,14 +47,14 @@ public class ElevatorMoveLowGear extends Command {
     // }
     //SmartDashboard.putNumber('Elevator_ticks', Elevator_ticks);
     //Elevator_ticks = sElevator.CurrentTicks();
-    SmartDashboard.putNumber("Elevator_ticks_isfinsished", Elevator_ticks);
-    SmartDashboard.putNumber("Elevator_ticks_Targetisfinished", mTargetHeightTicks);
+    // SmartDashboard.putNumber("Elevator_ticks_isfinsished", Elevator_ticks);
+    // SmartDashboard.putNumber("Elevator_ticks_Targetisfinished", mTargetHeightTicks);
     if(Elevator_ticks <= (Elevator_ticks_is_finsihed + 10) && Elevator_ticks >= (Elevator_ticks_is_finsihed - 10)){
-      SmartDashboard.putString("Is returning true", "yes");
+      // SmartDashboard.putString("Is returning true", "yes");
     
       return true;
     }else{
-      SmartDashboard.putString("Is returning true", "no");
+      // SmartDashboard.putString("Is returning true", "no");
      return false;
     }
     // if(sElevator.CurrentTicks() == mTargetHieght){

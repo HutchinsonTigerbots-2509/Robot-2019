@@ -48,7 +48,7 @@ public class ClimbAlt extends Command {
     sClimber.setMotorSpeed(-stick.getY()*2);
     //sIntake.WristMove(mWristAngle);
     //sElevator.setPositionLowGear(mElevatorHieght);
-    SmartDashboard.putNumber("Wrist Volts", RobotMap.WristMotor.getMotorOutputVoltage());
+    // SmartDashboard.putNumber("Wrist Volts", RobotMap.WristMotor.getMotorOutputVoltage());
   }
 
   // Make this return true when this Command no longer needs to run execute()

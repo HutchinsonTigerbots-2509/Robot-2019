@@ -26,7 +26,7 @@ import frc.robot.commands.wrist.WristManualUp;
 public class Intake extends Subsystem {
   private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
   private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
-  private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
+  // private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
   private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
   private double mWristTargetTicks;
 
@@ -78,8 +78,8 @@ public class Intake extends Subsystem {
 
   public void WristMove(double targetAngle){
     mWristTargetTicks = targetAngle* kWristTicksPerDegree;
-    SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
-    SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
+    // SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
+    // SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
     mWristMotor.set(ControlMode.Position, mWristTargetTicks);
   }
   
@@ -126,20 +126,20 @@ public class Intake extends Subsystem {
    * Will update data on the shuffleboard tab for this class
    */
   public void UpdateTelemetry() {
-    // Subsystems Status
-    mIntakeMotorTab.add("Wrist Motor Speed", mWristMotor.get());
-    mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
-    // Subsystems Object
-    mIntakeMotorTab.add(mIntakeMotor);
-    mIntakeMotorTab.add("Motor Speed", mIntakeMotor.get());
-    mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
-    mIntakeMotorTab.add(mIntakeMotor);
-    mIntakeMotorTab.add(mWristMotor);
-    // Subsystem Intake
-    mIntakeMotorTab.add("Intake In", new IntakeIn());
-    mIntakeMotorTab.add("Intake Out", new IntakeOut());
-    mIntakeMotorTab.add("Wrist Up", new WristManualUp());
-    mIntakeMotorTab.add("Wrist Down", new WristManualDown());
+    // // Subsystems Status
+    // mIntakeMotorTab.add("Wrist Motor Speed", mWristMotor.get());
+    // mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
+    // // Subsystems Object
+    // mIntakeMotorTab.add(mIntakeMotor);
+    // mIntakeMotorTab.add("Motor Speed", mIntakeMotor.get());
+    // mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
+    // mIntakeMotorTab.add(mIntakeMotor);
+    // mIntakeMotorTab.add(mWristMotor);
+    // // Subsystem Intake
+    // mIntakeMotorTab.add("Intake In", new IntakeIn());
+    // mIntakeMotorTab.add("Intake Out", new IntakeOut());
+    // mIntakeMotorTab.add("Wrist Up", new WristManualUp());
+    // mIntakeMotorTab.add("Wrist Down", new WristManualDown());
 
     Shuffleboard.update();
   }

@@ -61,8 +61,8 @@ public final class Constants {
 
     public static double kSpoolDiam = 2;
     public static double kPulsesPerRotation = 256;
-    public static double kElevatorHighGearTicksPerInch =    61.76330098;//215
-    public static double kElevatorLowGearTicksPerInch =     48.35555555;
+    public static double kElevatorHighGearTicksPerInch =    274.38312189;//215
+    public static double kElevatorLowGearTicksPerInch =     860;//48.355
     public static double kElevatorMaxSpeed = 1;
     public static double kElevatorSensitivity = 0.5;
     public static double kElevatorMinSpeedUp = 1;
@@ -71,10 +71,10 @@ public final class Constants {
 
     public static double kMaxHeight = 78;//All of these are heights off the ground inches
     public static double kMinHeight = 7;
-    public static int kElevatorStartingHeight = 19;
+    public static double kElevatorStartingHeight = 18.5;
     public static double kHomePositionInches = 7.5;
     public static double kHomePostionFromLowestPostion = 2.5;
-    public static long kElevatorStartingHeightConversion = Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static int kElevatorStartingHeightConversion = (int)Math.round(kElevatorLowGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
     public static double kHatchLow = 14.0; //0
@@ -84,8 +84,9 @@ public final class Constants {
     public static double kBallLow = 25.0;
     public static double kBallMid = 51.0;
     public static double kBallHigh = 78;
+    public static double kBallFeederHeight = 49;
     public static double kHABHeight = 28;
-    public static double kCargoShipBall = 40.0;
+    public static double kCargoShipBall = 29.0;
 
     /* Vision */
     // Physical
@@ -119,8 +120,11 @@ public final class Constants {
     
     /* Intake */
     public static double kWristTicksPerDegree  = 22.755555555;
-    public static int kWristStartingAngle = 20;
+    //public static int kWristStartingAngle = 20;
     public static int kWristGroundAngle = -87;//-90
+    public static int kWristStartingAngle = 24;
+    //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
+    //public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
     public static int kWristCargoAngle = -75;
 

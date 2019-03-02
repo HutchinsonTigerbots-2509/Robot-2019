@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
@@ -32,6 +34,7 @@ public class Robot extends TimedRobot {
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
   public static IntakeManual cIntakeManual;
+  private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
 
   public static boolean trigger = false;
 
@@ -41,7 +44,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Shuffleboard.startRecording();//Starts the Shuffleboard recording
+    // Shuffleboard.startRecording();//Starts the Shuffleboard recording
     // RobotMap must be initialized first
     RobotMap.init();
     // Subsystems must be initialized after RobotMap
@@ -56,8 +59,8 @@ public class Robot extends TimedRobot {
     cOpDrive = new OperatorDrive();
     cIntakeManual = new IntakeManual();
     // Put data on Shuffleboard
-    sDrivetrain.UpdateTelemetry();
-    sVision.UpdateTelemetry();
+    // sDrivetrain.UpdateTelemetry();
+    // sVision.UpdateTelemetry();
     Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
   }
 
@@ -72,10 +75,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
-    SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
-    SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
-    SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Wrist Current Angle", sIntake.getCurrentAngle());
+    // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     Shuffleboard.update();
   }
 
@@ -141,13 +144,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putBoolean("Top",RobotMap.ElevatorTopLimit.get());
-
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentTicks());
-    SmartDashboard.putNumber("Current Angle", sIntake.getCurrentAngle());
-    SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
-    //cIntakeManual.start();
-    SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Wrist Current Angle", sIntake.getCurrentAngle());
+    SmartDashboard.putBoolean("State", (sElevator.state == "Hatch") ? true : false);
+    // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    // //cIntakeManual.start();
+    // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
   }

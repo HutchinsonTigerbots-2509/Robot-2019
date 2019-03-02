@@ -1,9 +1,11 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -71,14 +74,16 @@ public class RobotMap {
         DrivetrainLeftMaster.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainLeftMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
         DrivetrainLeftMaster.setSubsystem("Drivetrain");
+        DrivetrainLeftMaster.setNeutralMode(NeutralMode.Brake);
 
         DrivetrainLeftSlave = new WPI_VictorSPX(Constants.kDrivetrainLeftSlaveID); // Rear Left Motor
-        DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
+        // DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.setInverted(InvertType.FollowMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0);
         DrivetrainLeftSlave.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainLeftSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
         DrivetrainLeftSlave.setSubsystem("Drivetrain");
+        DrivetrainLeftSlave.setNeutralMode(NeutralMode.Brake);
 
         DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
         DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
@@ -86,17 +91,22 @@ public class RobotMap {
         DrivetrainRightMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
         DrivetrainRightMaster.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainRightMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightMaster.setNeutralMode(NeutralMode.Brake);
         DrivetrainRightMaster.setSubsystem("Drivetrain");
 
         DrivetrainRightSlave = new WPI_VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
-        DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
+        // DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
         DrivetrainRightSlave.setInverted(InvertType.FollowMaster); // Follow Your Master
         DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
         DrivetrainRightSlave.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainRightSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightSlave.setNeutralMode(NeutralMode.Brake);
         DrivetrainRightSlave.setSubsystem("Drivetrain");
 
-        DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
+        SpeedControllerGroup leftDrive = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave);
+        SpeedControllerGroup rightDrive = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave);
+
+        DrivetrainDifferential = new DifferentialDrive(leftDrive, rightDrive); // Drive Varible
         DrivetrainDifferential.setDeadband(Constants.kNeutralDeadband);
         DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
         DrivetrainDifferential.setSubsystem("Drivetrain");
@@ -119,6 +129,7 @@ public class RobotMap {
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
         ElevatorMotorMaster.setSensorPhase(true);
         ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightConversion);
 
         ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
@@ -128,12 +139,6 @@ public class RobotMap {
 
         // ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
         // ElevatorBottomLimit.setSubsystem("Elevator");
-
-        ElevatorSonic = new Ultrasonic(8, 9);
-        ElevatorSonic.setAutomaticMode(true);
-        ElevatorSonic.setDistanceUnits(Unit.kInches);
-        ElevatorSonic.setEnabled(true);
-        ElevatorSonic.setSubsystem("Elevator");
         // #endregion
 
         // #region Intake

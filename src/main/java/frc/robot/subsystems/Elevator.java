@@ -37,7 +37,7 @@ public class Elevator extends Subsystem {
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
-  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  // private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
   private Value kHighGear = Value.kReverse;
   private Value kLowGear = Value.kForward;
   private double mEncoderTargetTicks;
@@ -63,8 +63,8 @@ public class Elevator extends Subsystem {
     double targetDistance = targetInchesOffGround - Constants.kHomePositionInches;
     double TargetTicks = targetDistance * 274.38312189; // 215.811165286 //274.38312189
     mEncoderTargetTicks = TargetTicks;
-    SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", mSpoolMotor.get());
+    // SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    // SmartDashboard.putNumber("power", mSpoolMotor.get());
     mSpoolMotor.set(ControlMode.Position, TargetTicks);
     CheckBottomSwitch();
   }
@@ -73,8 +73,8 @@ public class Elevator extends Subsystem {
     double targetDisplacement = targetInchesOffGround - Constants.kHomePositionInches;
     double TargetTicks = targetDisplacement * 860; //831.170774803
     mEncoderTargetTicks = TargetTicks;
-    SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", mSpoolMotor.get());
+    // SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    // SmartDashboard.putNumber("power", mSpoolMotor.get());
     mSpoolMotor.set(ControlMode.Position, TargetTicks);
     CheckBottomSwitch();
   }
@@ -108,33 +108,33 @@ public class Elevator extends Subsystem {
    * for the smartdashboard has been removed.
    */
   public void UpdateTelemetry() {
-    // Subsystem Status
-    mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
-    mElevatorTab.add("Height (In)", CurrentTicks());
-    mElevatorTab.add("Top Limit", mTopLimit.get());
-    mElevatorTab.add("Bottom Limit", mBottomLimit.get());
-    mElevatorTab.add("Shifter", getGear());
-    mElevatorTab.add("Perpotional", Constants.kElevatorPGain);
-    mElevatorTab.add("Derivative", Constants.kElevatorIGain);
-    mElevatorTab.add("Integral", Constants.kElevatorDGain);
-    // mElevatorTab.add("State", state);
-    // Subsystem Objects
-    mElevatorTab.add(mSpoolMotor);
-    mElevatorTab.add(mTopLimit);
-    mElevatorTab.add(mBottomLimit);
-    mElevatorTab.add(mShifter);
-    // Subsystem Commands
-    mElevatorTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
-    mElevatorTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
-    mElevatorTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
-    mElevatorTab.add("Elevator Ball High", new ElevatorMoveHighGear(Constants.kBallHigh));
-    mElevatorTab.add("Elevator Ball Mid", new ElevatorMoveHighGear(Constants.kBallMid));
-    mElevatorTab.add("Elevator Ball Low", new ElevatorMoveHighGear(Constants.kBallLow));
-    mElevatorTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
-    mElevatorTab.add("Elevator 12", new ElevatorMoveHighGear(12));
-    mElevatorTab.add("Elevator Shift", new ElevatorShift());
-    mElevatorTab.add("Elevator Hieght", new HeightToggle());
-    mElevatorTab.add("Elevator Zero", new ZeroElevator());
+    // // Subsystem Status
+    // mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
+    // mElevatorTab.add("Height (In)", CurrentTicks());
+    // mElevatorTab.add("Top Limit", mTopLimit.get());
+    // mElevatorTab.add("Bottom Limit", mBottomLimit.get());
+    // mElevatorTab.add("Shifter", getGear());
+    // mElevatorTab.add("Perpotional", Constants.kElevatorPGain);
+    // mElevatorTab.add("Derivative", Constants.kElevatorIGain);
+    // mElevatorTab.add("Integral", Constants.kElevatorDGain);
+    // // mElevatorTab.add("State", state);
+    // // Subsystem Objects
+    // mElevatorTab.add(mSpoolMotor);
+    // mElevatorTab.add(mTopLimit);
+    // mElevatorTab.add(mBottomLimit);
+    // mElevatorTab.add(mShifter);
+    // // Subsystem Commands
+    // mElevatorTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
+    // mElevatorTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
+    // mElevatorTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
+    // mElevatorTab.add("Elevator Ball High", new ElevatorMoveHighGear(Constants.kBallHigh));
+    // mElevatorTab.add("Elevator Ball Mid", new ElevatorMoveHighGear(Constants.kBallMid));
+    // mElevatorTab.add("Elevator Ball Low", new ElevatorMoveHighGear(Constants.kBallLow));
+    // mElevatorTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
+    // mElevatorTab.add("Elevator 12", new ElevatorMoveHighGear(12));
+    // mElevatorTab.add("Elevator Shift", new ElevatorShift());
+    // mElevatorTab.add("Elevator Hieght", new HeightToggle());
+    // mElevatorTab.add("Elevator Zero", new ZeroElevator());
     //
     Shuffleboard.update();
   }

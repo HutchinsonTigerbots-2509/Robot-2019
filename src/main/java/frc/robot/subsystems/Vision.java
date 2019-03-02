@@ -46,7 +46,7 @@ public class Vision extends Subsystem {
   public double mTargetfound = 0;
  
 
-  private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
+  // private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
 
   /**
    * Returns the NetworkTable for the Limelight Camera
