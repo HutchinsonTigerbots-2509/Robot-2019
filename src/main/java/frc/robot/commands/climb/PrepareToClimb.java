@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.elevator.ElevatorMoveHighGear;
 import frc.robot.commands.wrist.WristMove;
-
+import frc.robot.subsystems.Climber;
+import frc.robot.Robot;
 public class PrepareToClimb extends CommandGroup {
+  private Climber sClimber = Robot.sClimb;
   /**
    * Add your docs here.
    */
@@ -35,5 +37,6 @@ public class PrepareToClimb extends CommandGroup {
     // arm.
     addParallel(new WristMove(Constants.kWristGroundAngle));
     addSequential(new ElevatorMoveHighGear(Constants.kHABHeight));
+    sClimber.PreparedToClimb = true;
   }
 }

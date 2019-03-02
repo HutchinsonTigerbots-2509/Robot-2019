@@ -24,6 +24,7 @@ public class ClimbAlt extends Command {
   private Joystick stick;
   private int mWristAngle = -90;
   private int mElevatorHieght = 12;
+  // private boolean EverythingIsReady = (sIntake.getCurrentAngle() == Constants.kWristGroundAngle && sElevator.)
 
   public ClimbAlt(Joystick joystick) {
     requires(sClimber);
@@ -35,8 +36,12 @@ public class ClimbAlt extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if(sClimber.PreparedToClimb == true){
     sClimber.StageOneStart();
     sClimber.StageTwoStart();
+    } else {
+      end();
+    }
     //sIntake.WristMove(mWristAngle);
     //sElevator.setHighGear(false);
     //sElevator.setPositionLowGear(mElevatorHieght);
@@ -45,7 +50,7 @@ public class ClimbAlt extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    sClimber.setMotorSpeed(-stick.getY()*2);
+    sClimber.setMotorSpeed(-stick.getRawAxis(1));
     //sIntake.WristMove(mWristAngle);
     //sElevator.setPositionLowGear(mElevatorHieght);
     // SmartDashboard.putNumber("Wrist Volts", RobotMap.WristMotor.getMotorOutputVoltage());

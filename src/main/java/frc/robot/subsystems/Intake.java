@@ -27,7 +27,7 @@ public class Intake extends Subsystem {
   private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
   private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
   // private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
-  private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
+  private final double kWristTicksPerDegree = Constants.kTicksPerDegree;
   private double mWristTargetTicks;
 
   public Intake() {
@@ -149,7 +149,7 @@ public class Intake extends Subsystem {
   }
 
   public double getCurrentAngle(){
-    return (mWristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
+    return (mWristMotor.getSelectedSensorPosition()/Constants.kTicksPerDegree);
   }
   public double getCurrentWristTicks(){
     return mWristMotor.getSelectedSensorPosition();

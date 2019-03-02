@@ -33,8 +33,7 @@ public class ClimbHab2 extends InstantCommand {
     sClimber.StageOneStart();
     sClimber.StageTwoStart();
     Timer.delay(1);
-    sClimber.setMotorSpeed(-0.5);
-
+    //sClimber.setMotorSpeed(-0.5);
   }
 
 }

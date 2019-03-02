@@ -17,6 +17,13 @@ import frc.robot.commands.elevator.*;
 public class ElevatorWristMoveAlt extends InstantCommand {
   private String mState;
   private int targetID;
+  /**
+   * Target ID
+   * <p>1 - Low
+   * <p>2 - Mid
+   * <p>3 - High
+   * <p>4 - Ground/CargoFeeder
+   */
   public ElevatorWristMoveAlt(int heightID) {
     super();
     mState = Robot.sElevator.state;
@@ -31,21 +38,31 @@ public class ElevatorWristMoveAlt extends InstantCommand {
     if(mState=="Cargo"){
       if(targetID == 1){
         new ElevatorMoveLowGear(Constants.kBallLow).start();
+        new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 2){
         new ElevatorMoveLowGear(Constants.kBallMid).start();
+        new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 3){
         new ElevatorMoveLowGear(Constants.kBallHigh).start();
+        new WristMove(Constants.kWristCargoAngle).start();
+      }else if(targetID == 4){
+        new ElevatorMoveLowGear(Constants.kBallFeederHeight).start();
+        new WristMove(Constants.kWristFeederCargoAngle).start();
       }
-      new WristMove(Constants.kWristCargoAngle).start();
     }else{
       if(targetID == 1){
         new ElevatorMoveLowGear(Constants.kHatchLow).start();
+        new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 2){
         new ElevatorMoveLowGear(Constants.kHatchMid).start();
+        new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 3){
         new ElevatorMoveLowGear(Constants.kHatchHigh).start();
+        new WristMove(Constants.kWristHatchAngle).start();
+      }else if(targetID == 4){
+        new ElevatorMoveLowGear(Constants.kHomePositionInches).start();
+        new WristMove(Constants.kWristGroundAngle).start();
       }
-      new WristMove(Constants.kWristHatchAngle).start();
     }
   }
 }

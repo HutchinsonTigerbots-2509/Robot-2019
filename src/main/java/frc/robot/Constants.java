@@ -84,7 +84,7 @@ public final class Constants {
     public static double kBallLow = 25.0;
     public static double kBallMid = 51.0;
     public static double kBallHigh = 78;
-    public static double kBallFeederHeight = 49;
+    public static double kBallFeederHeight = 36;
     public static double kHABHeight = 28;
     public static double kCargoShipBall = 29.0;
 
@@ -119,12 +119,13 @@ public final class Constants {
     //#endregion
     
     /* Intake */
-    public static double kWristTicksPerDegree  = 22.755555555;
+    public static double kTicksPerDegree  = 22.755555555;
     public static int kWristStartingAngle = 24;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
-    public static int kWristGroundAngle = -30;//-90
+    public static int kWristGroundAngle = -90;
     public static int kWristHatchAngle = -45;
-    public static int kWristCargoAngle = -75;
+    public static int kWristCargoAngle = -80;
+    public static int kWristFeederCargoAngle = -75;
 
 
     //#region RobotMap Constants

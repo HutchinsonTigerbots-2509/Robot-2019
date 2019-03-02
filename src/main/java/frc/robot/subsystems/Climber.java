@@ -31,6 +31,7 @@ public class Climber extends Subsystem {
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
   private final Value Extend = Value.kForward;
   private final Value Retract = Value.kReverse;
+  public boolean PreparedToClimb = false;
   
   /**
    * Constructor that adds children to the object so

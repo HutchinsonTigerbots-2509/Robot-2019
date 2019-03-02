@@ -103,6 +103,10 @@ public class Elevator extends Subsystem {
       mShifter.set(kLowGear);
     }
   }
+
+  public double getElevatorInches(){
+    return mSpoolMotor.getSelectedSensorPosition() / Constants.kElevatorLowGearTicksPerInch;
+  }
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
    * for the smartdashboard has been removed.
