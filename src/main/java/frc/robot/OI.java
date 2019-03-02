@@ -8,9 +8,10 @@ import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.ElevatorWristMoveAlt;
 import frc.robot.commands.elevator.CargoToggle;
 import frc.robot.commands.elevator.HatchToggle;
-import frc.robot.commands.intake.IntakeBall;
-import frc.robot.commands.intake.IntakeHatchBrush;
+import frc.robot.commands.wrist.ManualWristMove;
 import frc.robot.commands.wrist.WristMove;
+import frc.robot.commands.intake.IntakeHatchBrush;
+import frc.robot.commands.intake.IntakeBall;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
@@ -55,6 +56,7 @@ public class OI {
 
   // Wrist
   public JoystickButton mWristStart;
+  public JoystickButton mWristManual;
 
   /* SUBSYSTEMS */
   private Elevator sElevator;
@@ -125,7 +127,10 @@ public class OI {
     mHatchToggle = new JoystickButton(mCoOpStick, 6);
     mHatchToggle.whenPressed(new HatchToggle());
 
-    // mElevatorHigh = new JoystickButton(mCoOpStick, 4);
+    mWristManual = new JoystickButton(mCoOpStick, 10);
+    mWristManual.whileHeld(new ManualWristMove());
+
+    mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 2);
     mElevatorLow = new JoystickButton(mCoOpStick, 1);
     mIntakeHeight = new JoystickButton(mCoOpStick, 3);
@@ -179,7 +184,7 @@ public class OI {
    *  to be the Hatch Heights
    */ 
   public void setElevatorButtonsHatch(){
-    // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
+    mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchHigh));
     mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
     mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
     mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristGroundAngle,Constants.kHomePositionInches));
@@ -197,12 +202,14 @@ public class OI {
     mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
     mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle,Constants.kBallFeederHeight));
     mTrackTarget.whileHeld(new FollowTarget(3, -0.1, -0.009));
+    mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristFeederCargoAngle,Constants.kBallFeederHeight));
     //SmartDashboard.putString("Buttons", "Cargo");
   }
   public void setElevatorButtonsTEST(){
-    // mElevatorHigh.whenPressed(new ElevatorWristMoveAlt(3));
+    mElevatorHigh.whenPressed(new ElevatorWristMoveAlt(3));
     mElevatorMid.whenPressed(new ElevatorWristMoveAlt(2));
     mElevatorLow.whenPressed(new ElevatorWristMoveAlt(1));
+    mIntakeHeight.whenPressed(new ElevatorWristMoveAlt(4));
     SmartDashboard.putString("Buttons", "Cargo");
   }
 }

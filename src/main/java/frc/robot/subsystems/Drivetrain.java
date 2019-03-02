@@ -214,7 +214,7 @@ public class Drivetrain extends Subsystem {
 		// 	mWristMotor.set(ControlMode.PercentOutput, 0);
 		// }
 
-		mWristMotor.set(ControlMode.PercentOutput, -stick_2.getRawAxis(5));
+		//mWristMotor.set(-stick_2.getRawAxis(5));
 
 		//Intake
 		if(stick_2.getRawAxis(2) > 0.2){

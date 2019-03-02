@@ -24,6 +24,7 @@ public class ClimbRetract extends InstantCommand {
   protected void initialize() {
     sClimb.RetractStageTwo();//High
     sClimb.RetractStageOne();//low
+    sClimb.PreparedToClimb = false;
   }
 
 }

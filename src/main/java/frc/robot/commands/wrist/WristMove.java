@@ -51,7 +51,6 @@ public class WristMove extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    sIntake.StopWrist();
     end();
   }
 }
