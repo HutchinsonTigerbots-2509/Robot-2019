@@ -23,13 +23,13 @@ public class IntakeBall extends CommandGroup {
    */
   public IntakeBall() {
     addParallel(new IntakeIn());
-    addParallel(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));
+    addParallel(new ElevatorWristMove(Constants.kWristGroundAngle, -88));
     //addParallel(new ElevatorMoveLowGear(Constants.kHomePositionInches));
     //addParallel(new IntakeIn());
-    addParallel(new ChangePipeline(2));
-    if (sVision.isTargetfound() == 1){
-      addParallel(new FollowTarget(2, -0.03, -0.1));
-    }
+    //addParallel(new ChangePipeline(2));
+    
+    addParallel(new FollowTarget(2, -0.08, -0.1));
+    
     
     // addParallel(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));
     //addSequential(new ElevatorMoveLowGear(Constants.kHomePositionInches));

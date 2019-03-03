@@ -25,6 +25,7 @@ public class FollowTarget extends Command {
   public double left_speed;
   public double kPdistance;
   public double kpAim;
+  public double Targetfound = 0;
   private Drivetrain sDrivetrain = Robot.sDrivetrain;
   private boolean is_done = false;
   private int pipeline_id;
@@ -58,14 +59,17 @@ public class FollowTarget extends Command {
     steering_adjust = 0;
     distance_adjust = 0;
     sDriveTrain.TargetDistanceCheck = false;
-    //sVision.change_vision_pipeline(pipeline_id);
-    //Timer.delay(0.5);
+    sVision.change_vision_pipeline(pipeline_id);
+    Timer.delay(0.5);
     isChanged = 1;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Targetfound = sVision.isTargetfound();
+
+   if(Targetfound == 1){
     if (isChanged == 1) {
       // sVision.change_vision_pipeline(pipeline_id);
 
@@ -173,7 +177,7 @@ public class FollowTarget extends Command {
       }
     }
   }
-
+}
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

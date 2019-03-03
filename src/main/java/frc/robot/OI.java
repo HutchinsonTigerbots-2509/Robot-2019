@@ -46,6 +46,7 @@ public class OI {
   public JoystickButton IntakeBall;
   public JoystickButton IntakeHatchBrush;
   public JoystickButton mReset_gyro; // Test Button
+  public JoystickButton mTrackTarget;
 
   // Climb Button - Still in testing
   public JoystickButton mCreep;
@@ -143,12 +144,22 @@ public class OI {
     // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
     // mPrepareToClimb.whenPressed(new PrepareToClimb());
 
+<<<<<<< HEAD
     // IntakeBall = new JoystickButton(mCoOpStick, 6);
     // IntakeBall.whileHeld(new IntakeBall());
     // IntakeBall.whenReleased(new WristMove(-30));
     // IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
     // IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
+=======
+    IntakeBall = new JoystickButton(mOpStick, 6);
+    IntakeBall.whileHeld(new IntakeBall());
+    IntakeBall.whenReleased(new WristMove(-30));
+    IntakeHatchBrush = new JoystickButton(mOpStick, 5);
+    IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
+    mTrackTarget = new JoystickButton(mOpStick, 5);
+>>>>>>> 819eae97c6bd73cbf24d81d4e86dc7f0482639b3
     //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
+
 
     // IntakeIn = new JoystickButton(mCoOpStick, 8); // Trigger
     // IntakeIn.whileHeld(new IntakeIn());
@@ -186,6 +197,7 @@ public class OI {
     mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchMid));
     mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristHatchAngle, Constants.kHatchLow));
     mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristGroundAngle,Constants.kHomePositionInches));
+    mTrackTarget.whileHeld(new FollowTarget(0, -0.1, -0.009));
     //SmartDashboard.putString("Buttons", "Hatch");
   }
 
@@ -197,6 +209,8 @@ public class OI {
     // mElevatorHigh.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallHigh));
     mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
     mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
+    mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle,Constants.kBallFeederHeight));
+    mTrackTarget.whileHeld(new FollowTarget(3, -0.1, -0.009));
     mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristFeederCargoAngle,Constants.kBallFeederHeight));
     //SmartDashboard.putString("Buttons", "Cargo");
   }
