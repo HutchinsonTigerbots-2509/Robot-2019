@@ -158,8 +158,9 @@ public class RobotMap {
         WristMotor.config_kD(0, Constants.kWristDGain);
         WristMotor.config_kP(0, Constants.kWristPGain);
         WristMotor.config_kI(0, Constants.kWristIGain);
-        WristMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        WristMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        WristMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        WristMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        WristMotor.setNeutralMode(NeutralMode.Brake);
         // #endregion
 
         // #region Climb

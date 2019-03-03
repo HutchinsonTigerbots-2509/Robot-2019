@@ -16,6 +16,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.vision.FollowTarget;
+import frc.robot.commands.elevator.StartPosition;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -137,16 +138,16 @@ public class OI {
     setElevatorButtonsTEST();
 
     mWristStart = new JoystickButton(mCoOpStick, 8);
-    mWristStart.whenPressed(new WristMove(Constants.kWristStartingAngle));
+    mWristStart.whenPressed(new StartPosition());
 
     // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
     // mPrepareToClimb.whenPressed(new PrepareToClimb());
 
-    IntakeBall = new JoystickButton(mCoOpStick, 6);
-    IntakeBall.whileHeld(new IntakeBall());
-    IntakeBall.whenReleased(new WristMove(-30));
-    IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
-    IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
+    // IntakeBall = new JoystickButton(mCoOpStick, 6);
+    // IntakeBall.whileHeld(new IntakeBall());
+    // IntakeBall.whenReleased(new WristMove(-30));
+    // IntakeHatchBrush = new JoystickButton(mCoOpStick, 5);
+    // IntakeHatchBrush.whileHeld(new IntakeHatchBrush());
     //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
 
     // IntakeIn = new JoystickButton(mCoOpStick, 8); // Trigger

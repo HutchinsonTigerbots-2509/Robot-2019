@@ -122,13 +122,13 @@ public final class Constants {
     public static double kTicksPerDegree  = 22.755555555;
     public static int kWristStartingAngle = 24;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
-    public static int kWristGroundAngle = -90; // -87
+    public static int kWristGroundAngle = -87; // -90
     public static double kWristTicksPerDegree  = 22.755555555;
     //public static int kWristStartingAngle = 20;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
     //public static int kWristGroundAngle = -30;//-90
     public static int kWristHatchAngle = -45;
-    public static int kWristCargoAngle = -80;
+    public static int kWristCargoAngle = -70;
     public static int kWristFeederCargoAngle = -75;
 
 

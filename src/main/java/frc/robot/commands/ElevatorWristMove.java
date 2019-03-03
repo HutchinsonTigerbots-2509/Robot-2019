@@ -48,7 +48,6 @@ public class ElevatorWristMove extends CommandGroup {
       }else if(heightID==3){
         addParallel(new ElevatorMoveLowGear(Constants.kBallHigh));
         addSequential(new WristMove(Constants.kWristCargoAngle));
-
       }
     }
   }
