@@ -11,6 +11,8 @@ import frc.robot.subsystems.Elevator;
 public class ElevatorMoveHighGear extends Command {
   private final Elevator sElevator = Robot.sElevator;
   private double mTargetHieght = 0;
+  private double Elevator_ticks;
+  private double Elevator_ticks_is_finsihed;
   public ElevatorMoveHighGear(double targetHieghtInches) {
     requires(sElevator);
     this.mTargetHieght = targetHieghtInches;
@@ -27,6 +29,9 @@ public class ElevatorMoveHighGear extends Command {
   @Override
   protected void execute() {
     sElevator.setPositionHighGear(mTargetHieght);
+    Elevator_ticks = sElevator.CurrentTicks();
+    Elevator_ticks_is_finsihed = sElevator.getTargetTicks();
+
     // SmartDashboard.putNumber("Current Height Ticks",sElevator.CurrentTicks());
     // SmartDashboard.putNumber("Target Height", sElevator.getTargetTicks());
   }
@@ -37,7 +42,7 @@ public class ElevatorMoveHighGear extends Command {
     // if(sElevator.getLimitsValue()){
     //   return true;
     // }
-    if(sElevator.CurrentTicks()==mTargetHieght){
+    if(Elevator_ticks <= (Elevator_ticks_is_finsihed + 50) && Elevator_ticks >= (Elevator_ticks_is_finsihed - 50)){
       return true;
     }else{
      return false;

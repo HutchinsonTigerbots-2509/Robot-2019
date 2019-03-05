@@ -69,7 +69,7 @@ public class FollowTarget extends Command {
   protected void execute() {
     Targetfound = sVision.isTargetfound();
 
-   if(Targetfound == 1){
+   
     if (isChanged == 1) {
       // sVision.change_vision_pipeline(pipeline_id);
 
@@ -97,7 +97,7 @@ public class FollowTarget extends Command {
       X = (sVision.getTargetX());
       Y = (sVision.getTargetY());
       min_distance = Constants.distance_command;
-      distance_adjust = kPdistance * ErrorY + min_distance;
+      distance_adjust = kPdistance * ErrorY;
       // }
       // Y = sVision.getTargetY();Y = sVision.getTargetY();
       is_done = false;
@@ -120,7 +120,7 @@ public class FollowTarget extends Command {
       // SmartDashboard.putNumber("ball", 1);
 
       // }
-      if (pipeline_id == 2 || pipeline_id == 0 || pipeline_id == 1 || pipeline_id == 4) {
+      if (pipeline_id == 2 || pipeline_id == 1 || pipeline_id == 4) {
         Y = -Y;
         min_distance = -min_distance;
         // distance_adjust = Constants.KpDistance * ErrorY + min_distance;
@@ -154,6 +154,7 @@ public class FollowTarget extends Command {
           left_speed = steering_adjust;
           // + distance_adjust;
           right_speed = steering_adjust;
+
           // + distance_adjust;
           // SmartDashboard.putNumber("right", right_speed);
           // SmartDashboard.putNumber("left", left_speed);
@@ -164,20 +165,21 @@ public class FollowTarget extends Command {
 
         }
         // distance_adjust = Constants.KpDistance * ErrorY;
-        // sDriveTrain.track_taget(0.5 , 0.5);
-        // SmartDashboard.putNumber("distance_adjust", distance_adjust);
+        // sDriveTr%ain.track_taget(0.5 , 0.5);
+         SmartDashboard.putNumber("distance_adjust", distance_adjust);
+         SmartDashboard.putNumber("steering", steering_adjust);
 
       } else {
         is_done = true;
         // SmartDashboard.putBoolean("stop", (is_done));
         // distance_adjust = Constants.KpDistance * ErrorY;
         // sDriveTrain.track_taget(0.5 , 0.5);
-        // SmartDashboard.putNumber("distance_adjust", distance_adjust);
+         SmartDashboard.putString("distance_adjust", "done");
 
       }
     }
   }
-}
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

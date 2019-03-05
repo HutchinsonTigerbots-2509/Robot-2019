@@ -28,7 +28,7 @@ public class IntakeBall extends CommandGroup {
     //addParallel(new IntakeIn());
     //addParallel(new ChangePipeline(2));
     
-    addParallel(new FollowTarget(2, -0.08, -0.1));
+    addParallel(new FollowTarget(2, -0.1, -0.1));
     
     
     // addParallel(new ElevatorWristMove(Constants.kWristGroundAngle, Constants.kHomePositionInches));

@@ -37,30 +37,38 @@ public class ElevatorWristMoveAlt extends InstantCommand {
     mState = Robot.sElevator.state;
     if(mState=="Cargo"){
       if(targetID == 1){
-        new ElevatorMoveLowGear(Constants.kBallLow).start();
+        // new ElevatorMoveLowGear(Constants.kBallLow).start();
+        new ElevatorMoveHighGear(Constants.kBallLow).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 2){
-        new ElevatorMoveLowGear(Constants.kBallMid).start();
+        // new ElevatorMoveLowGear(Constants.kBallMid).start();
+        new ElevatorMoveHighGear(Constants.kBallMid).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 3){
-        new ElevatorMoveLowGear(Constants.kBallHigh).start();
+        // new ElevatorMoveLowGear(Constants.kBallHigh).start();
+        new ElevatorMoveHighGear(Constants.kBallHigh).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 4){
-        new ElevatorMoveLowGear(Constants.kBallFeederHeight).start();
+        // new ElevatorMoveLowGear(Constants.kBallFeederHeight).start();
+        new ElevatorMoveHighGear(Constants.kBallFeederHeight).start();
         new WristMove(Constants.kWristFeederCargoAngle).start();
       }
     }else{
       if(targetID == 1){
-        new ElevatorMoveLowGear(Constants.kHatchLow).start();
+        // new ElevatorMoveLowGear(Constants.kHatchLow).start();
+        new ElevatorMoveHighGear(Constants.kHatchLow).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 2){
-        new ElevatorMoveLowGear(Constants.kHatchMid).start();
+        // new ElevatorMoveLowGear(Constants.kHatchMid).start();
+        new ElevatorMoveHighGear(Constants.kHatchMid).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 3){
-        new ElevatorMoveLowGear(Constants.kHatchHigh).start();
+        // new ElevatorMoveLowGear(Constants.kHatchHigh).start();
+        new ElevatorMoveHighGear(Constants.kHatchHigh).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 4){
-        new ElevatorMoveLowGear(Constants.kHomePositionInches).start();
+        // new ElevatorMoveLowGear(Constants.kHomePositionInches).start();
+        new ElevatorMoveHighGear(Constants.kHomePositionInches).start();
         new WristMove(Constants.kWristGroundAngle).start();
       }
     }

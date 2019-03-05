@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Shuffleboard.startRecording();//Starts the Shuffleboard recording
     // RobotMap must be initialized first
+    
     RobotMap.init();
     // Subsystems must be initialized after RobotMap
     sDrivetrain = new Drivetrain();
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();
+    sVision.UpdateLimelightSettings();
     // OI must be inialized after Subsystems
     oi = new OI();
     // Commands must be defined after OI

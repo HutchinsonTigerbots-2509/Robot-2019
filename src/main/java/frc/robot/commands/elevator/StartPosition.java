@@ -17,7 +17,7 @@ public class StartPosition extends CommandGroup {
    * Add your docs here.
    */
   public StartPosition(){
-    addSequential(new ElevatorMoveLowGear(Constants.kElevatorStartingHeight));
+    addSequential(new ElevatorMoveHighGear(Constants.kElevatorStartingHeight));
     addSequential(new WristMove(Constants.kWristStartingAngle));
     // Add Commands here:
     // e.g. addSequential(new Command1());

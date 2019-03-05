@@ -31,7 +31,7 @@ public class ChangePipeline extends Command {
   @Override
   protected void execute() {
     sVision.change_vision_pipeline(Pipeline_id);
-    Timer.delay(0.5);
+    //Timer.delay(0.5);
     done = 1;
     
   }
