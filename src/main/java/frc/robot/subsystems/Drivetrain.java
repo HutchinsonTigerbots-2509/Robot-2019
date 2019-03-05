@@ -106,13 +106,14 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void track_taget(double left, double right, double pipeline) {
-		// mDrive.tankDrive(-left, -right);
-		if (pipeline == 0 || pipeline == 2 || pipeline == 1 || pipeline == 4) {
-			mDrive.arcadeDrive(left, -right);
-		} // else if(pipeline == 9){
-			// mDrive.arcadeDrive(-left, -right);
-
-		// mDrive.arcadeDrive(-0.5, -right);
+		
+		if (pipeline == 2 || pipeline == 1 || pipeline == 4) {
+			mDrive.arcadeDrive(-left, -right);
+			//SmartDashboard.putNumber("left", left);
+		} else{
+			mDrive.arcadeDrive(-left, -right);
+			//SmartDashboard.putNumber("left", left);
+		}
 	}
 
 	/**

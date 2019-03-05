@@ -1,5 +1,6 @@
 package frc.robot.commands.vision;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +31,7 @@ public class FollowTarget extends Command {
   private boolean is_done = false;
   private int pipeline_id;
   private int isChanged = 0;
-
+  PIDController Steering;
   public FollowTarget(int pipeline, double kkPdistance, double kkPangle) {
 
     // ErrorX = -sVision.getTargetX();
@@ -97,8 +98,7 @@ public class FollowTarget extends Command {
       X = (sVision.getTargetX());
       Y = (sVision.getTargetY());
       min_distance = Constants.distance_command;
-      distance_adjust = kPdistance * ErrorY;
-      // }
+      
       // Y = sVision.getTargetY();Y = sVision.getTargetY();
       is_done = false;
 
@@ -122,13 +122,28 @@ public class FollowTarget extends Command {
       // }
       if (pipeline_id == 2 || pipeline_id == 1 || pipeline_id == 4) {
         Y = -Y;
+        ErrorY = -ErrorY;
         min_distance = -min_distance;
         // distance_adjust = Constants.KpDistance * ErrorY + min_distance;
         distance_adjust = distance_adjust;
-
+        
         // ErrorY = -ErrorY;
       }
-
+      min_distance = Constants.distance_command;
+      distance_adjust = kPdistance * ErrorY;
+      SmartDashboard.putNumber("distance_adjust", distance_adjust);
+      if(distance_adjust > 0.8){
+        distance_adjust = 0.8;
+        SmartDashboard.putNumber("distance_corrected", distance_adjust);
+      }else if(distance_adjust < 0.6){
+        distance_adjust = 0.6;
+      }else{
+        distance_adjust = distance_adjust;	
+      }
+      // }
+      // Y = sVision.getTargetY();Y = sVision.getTargetY();
+      is_done = false;
+      
       if (Y < 0) {
         if (X > TargetX) {
           steering_adjust = kpAim * ErrorX - Constants.min_aim_command;
@@ -140,7 +155,7 @@ public class FollowTarget extends Command {
 
           // SmartDashboard.putNumber("right_2", right_speed);
           // SmartDashboard.putNumber("left_2", left_speed);
-
+          
           sDriveTrain.track_taget(distance_adjust, steering_adjust, pipeline_id);
           // SmartDashboard.putNumber("distance_adjust", distance_adjust);
           // TargetDistanceCheck = false;
@@ -166,7 +181,7 @@ public class FollowTarget extends Command {
         }
         // distance_adjust = Constants.KpDistance * ErrorY;
         // sDriveTr%ain.track_taget(0.5 , 0.5);
-         SmartDashboard.putNumber("distance_adjust", distance_adjust);
+         //SmartDashboard.putNumber("distance_adjust", distance_adjust);
          SmartDashboard.putNumber("steering", steering_adjust);
 
       } else {
