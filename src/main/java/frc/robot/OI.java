@@ -149,11 +149,11 @@ public class OI {
     IntakeBall.whileHeld(new IntakeBall());
     //IntakeBall.whenReleased(new WristMove(-30));
     IntakeBall.whenReleased(new ChangePipeline(8));
-    Placeball = new JoystickButton(mOpStick, 2);
+    Placeball = new JoystickButton(mOpStick, 3);
     //IntakeHatchBrush.whileHeld(new FollowTarget(3, -0.1, -0.05));
     Placeball.whileHeld(new FollowTarget(3, -0.175, -0.03));
     Placehatch.whenReleased(new ChangePipeline(8));
-    Placehatch = new JoystickButton(mOpStick, 4);
+    Placehatch = new JoystickButton(mOpStick, 5);//4
     Placehatch.whileHeld(new FollowTarget(0, -0.3, -0.01));
     Placehatch.whenReleased(new ChangePipeline(8));
     //mTrackTarget = new JoystickButton(mOpStick, 5);
