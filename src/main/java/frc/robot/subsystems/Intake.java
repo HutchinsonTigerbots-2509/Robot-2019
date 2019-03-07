@@ -29,6 +29,8 @@ public class Intake extends Subsystem {
   // private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
   private final double kWristTicksPerDegree = Constants.kTicksPerDegree;
   private double mWristTargetTicks;
+  private final int kWristMinDegree = Constants.kWristMinDegree;
+  private final int kWristMaxDegree = Constants.kWristMaxDegree;
 
   public Intake() {
     setSubsystem("Intake");
@@ -66,6 +68,7 @@ public class Intake extends Subsystem {
    */
   public void WristUp() {
     mWristMotor.set(ControlMode.PercentOutput, 0.35);
+    CheckLimitSwitches();
   }
   
   /**
@@ -74,6 +77,7 @@ public class Intake extends Subsystem {
    */
   public void WristDown(){
     mWristMotor.set(ControlMode.PercentOutput, -0.35);
+    CheckLimitSwitches();
   }
 
   public void WristMove(double targetAngle){
@@ -81,6 +85,7 @@ public class Intake extends Subsystem {
     // SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
     // SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
     mWristMotor.set(ControlMode.Position, mWristTargetTicks);
+    CheckLimitSwitches();
   }
   
   public void ManualMove(Joystick stick){
@@ -91,6 +96,7 @@ public class Intake extends Subsystem {
     }else{
       mWristMotor.set(ControlMode.PercentOutput, 0);
     }
+    CheckLimitSwitches();
   }
   
 
@@ -102,6 +108,7 @@ public class Intake extends Subsystem {
     }else{
       mWristMotor.set(ControlMode.PercentOutput, 0);
     }
+    CheckLimitSwitches();
   }
 
   public void IntakeInManual(Joystick stick){
@@ -112,7 +119,6 @@ public class Intake extends Subsystem {
     }else{
       mIntakeMotor.set(0);
     }
-
   }
 
   /**
@@ -121,6 +127,20 @@ public class Intake extends Subsystem {
    */
   public void StopWrist(){
     mWristMotor.stopMotor();
+    CheckLimitSwitches();
+  }
+
+  /**
+   * Resets the SpoolMaster Encoder position if the Reverse
+   * limit switch is triggered
+   */
+  public void CheckLimitSwitches(){
+    if(mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+    }
+    if(mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
+     mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+    }
   }
   
   /** 

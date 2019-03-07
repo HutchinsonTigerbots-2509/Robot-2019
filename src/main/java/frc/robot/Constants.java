@@ -124,6 +124,8 @@ public final class Constants {
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
     public static int kWristGroundAngle = -88;/// -87
     public static double kWristTicksPerDegree  = 22.755555555;
+    public static int kWristMinDegree = -90;
+    public static int kWristMaxDegree = 24;
     //public static int kWristStartingAngle = 20;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
     //public static int kWristGroundAngle = -30;//-90
