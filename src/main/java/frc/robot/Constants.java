@@ -59,7 +59,7 @@ public final class Constants {
     public static double kBottomLimitDistanceFromGround;
     public static double kTopLimitDistanceFromGround;
 
-    public static double kSpoolDiam = 2;
+    public static double kSpoolDiam = 2;//NEED to change
     public static double kPulsesPerRotation = 256;
     public static double kElevatorHighGearTicksPerInch =    274.38312189;//215
     public static double kElevatorLowGearTicksPerInch =     860;//48.355
@@ -172,4 +172,9 @@ public final class Constants {
     public static int kClimbUpperReverseID = 5;
     public static int kClimbLowerForwardID = 7;
     public static int kClimbLowerReverseID = 6;
+    public static int kClimbFrontForwardID = 0; //FIX TO WIRING
+    public static int kClimbFrontReverseID = 1; //FIX TO WIRING
+    public static int kWristLockPistonForwardID = 2; //FIX TO WIRING
+    public static int kWristLockPistonReverseID = 3; //FIX TO WIRING
+
 }

@@ -63,6 +63,8 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
+    public static DoubleSolenoid ClimbFrontPistons;
+    public static DoubleSolenoid WristLockPistons;
 
 
     public static void init() {
@@ -122,7 +124,7 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        ElevatorMotorMaster.setInverted(false);//True //Possibly Differnt between comp and practice
+        ElevatorMotorMaster.setInverted(true);//True //Possibly Differnt between comp and practice
         ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
@@ -174,6 +176,12 @@ public class RobotMap {
         // Stage 2 - Should fire Second Constants.kClimbUpperForwardID 
         ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
+        
+        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID);
+        ClimbFrontPistons.setSubsystem("Climb");
+
+        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID);
+        WristLockPistons.setSubsystem("Intake");
         // #endregion Climb
     }
 }

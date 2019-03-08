@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
     // if (cAutoCommand != null) {
     // cAutoCommand.start();
     // }
+    if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
   }
 
   /**

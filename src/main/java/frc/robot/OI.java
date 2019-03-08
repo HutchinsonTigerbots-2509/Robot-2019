@@ -2,26 +2,31 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.ElevatorWristMoveAlt;
+import frc.robot.commands.climb.ClimbRetract;
+import frc.robot.commands.climb.RetractFrontPistons;
+import frc.robot.commands.climb.SixInchClimb;
+import frc.robot.commands.climb.UnlockWrist;
 import frc.robot.commands.elevator.CargoToggle;
+import frc.robot.commands.elevator.ElevatorShift;
 import frc.robot.commands.elevator.HatchToggle;
-import frc.robot.commands.wrist.ManualWristMove;
-import frc.robot.commands.wrist.WristMove;
-import frc.robot.commands.intake.IntakeHatchBrush;
-import frc.robot.commands.intake.IntakeBall;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Vision;
-import frc.robot.commands.vision.FollowTarget;
 import frc.robot.commands.elevator.StartPosition;
+import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.vision.ChangePipeline;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+import frc.robot.commands.vision.FollowTarget;
+import frc.robot.commands.wrist.ManualWristMove;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Vision;
 public class OI {
   /* JOYSTICK DECLARATIONS */
   private Joystick mOpStick; // The main joystick. Used for driving and driving related commands
@@ -65,6 +70,8 @@ public class OI {
   private Vision sVision;
   private Intake sIntake;
 
+  private ShuffleboardTab mDriveTab;
+
   // #region Joystic Button Creation
   // CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
@@ -107,6 +114,8 @@ public class OI {
     sElevator = Robot.sElevator;
     sIntake = Robot.sIntake;
 
+    mDriveTab = Shuffleboard.getTab("SmartDashboard");
+
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
   
@@ -145,19 +154,19 @@ public class OI {
     // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
     // mPrepareToClimb.whenPressed(new PrepareToClimb());
 
-    IntakeBall = new JoystickButton(mOpStick, 6);
-    IntakeBall.whileHeld(new IntakeBall());
-    //IntakeBall.whenReleased(new WristMove(-30));
-    IntakeBall.whenReleased(new ChangePipeline(8));
-    Placeball = new JoystickButton(mOpStick, 3);
-    //IntakeHatchBrush.whileHeld(new FollowTarget(3, -0.1, -0.05));
-    Placeball.whileHeld(new FollowTarget(3, -0.175, -0.03));
-    Placehatch.whenReleased(new ChangePipeline(8));
-    Placehatch = new JoystickButton(mOpStick, 5);//4
-    Placehatch.whileHeld(new FollowTarget(0, -0.3, -0.01));
-    Placehatch.whenReleased(new ChangePipeline(8));
-    //mTrackTarget = new JoystickButton(mOpStick, 5);
-    //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
+    // IntakeBall = new JoystickButton(mOpStick, 6);
+    // IntakeBall.whileHeld(new IntakeBall());
+    // //IntakeBall.whenReleased(new WristMove(-30));
+    // IntakeBall.whenReleased(new ChangePipeline(8));
+    // Placeball = new JoystickButton(mOpStick, 3);
+    // //IntakeHatchBrush.whileHeld(new FollowTarget(3, -0.1, -0.05));
+    // Placeball.whileHeld(new FollowTarget(3, -0.175, -0.03));
+    // Placehatch.whenReleased(new ChangePipeline(8));
+    // Placehatch = new JoystickButton(mOpStick, 5);//4
+    // Placehatch.whileHeld(new FollowTarget(0, -0.3, -0.01));
+    // Placehatch.whenReleased(new ChangePipeline(8));
+    // //mTrackTarget = new JoystickButton(mOpStick, 5);
+    // //IntakeHatchBrush.whenReleased(new WristMove(-50));//FIX
 
 
     // IntakeIn = new JoystickButton(mCoOpStick, 8); // Trigger
@@ -166,7 +175,7 @@ public class OI {
     // IntakeOut = new JoystickButton(mCoOpStick, 7); // Trigger
     // IntakeOut.whileHeld(new IntakeOut());
 
-    
+    UpdateCommands();
   }
 
   /**
@@ -185,6 +194,14 @@ public class OI {
    */
   public Joystick getCoOperatorStick() {
     return mCoOpStick;
+  }
+
+  public void UpdateCommands(){
+    mDriveTab.add("Elevator Shift", new ElevatorShift());
+    mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
+    mDriveTab.add("Retract Front Piston", new RetractFrontPistons());
+    mDriveTab.add("Retract Back Piston", new ClimbRetract());
+    mDriveTab.add("Unlock", new UnlockWrist());
   }
 
   /**

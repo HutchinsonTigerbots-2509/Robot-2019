@@ -37,6 +37,7 @@ public class PrepareToClimb extends CommandGroup {
     // arm.
     addParallel(new WristMove(Constants.kWristGroundAngle));
     addSequential(new ElevatorMoveHighGear(Constants.kHABHeight));
+    addSequential(new LockWrist());
     sClimber.PreparedToClimb = true;
   }
 }
