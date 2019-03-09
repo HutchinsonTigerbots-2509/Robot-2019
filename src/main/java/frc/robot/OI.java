@@ -9,6 +9,8 @@ import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.ElevatorWristMoveAlt;
 import frc.robot.commands.climb.ClimbRetract;
+import frc.robot.commands.climb.ExtendBackPistons;
+import frc.robot.commands.climb.ExtendFrontPistons;
 import frc.robot.commands.climb.RetractFrontPistons;
 import frc.robot.commands.climb.SixInchClimb;
 import frc.robot.commands.climb.UnlockWrist;
@@ -16,8 +18,6 @@ import frc.robot.commands.elevator.CargoToggle;
 import frc.robot.commands.elevator.ElevatorShift;
 import frc.robot.commands.elevator.HatchToggle;
 import frc.robot.commands.elevator.StartPosition;
-import frc.robot.commands.intake.IntakeBall;
-import frc.robot.commands.vision.ChangePipeline;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -114,13 +114,13 @@ public class OI {
     sElevator = Robot.sElevator;
     sIntake = Robot.sIntake;
 
-    mDriveTab = Shuffleboard.getTab("SmartDashboard");
+    mDriveTab = Shuffleboard.getTab("Climb");
 
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
   
-    mDriveShifter = new JoystickButton(mOpStick,10);
-    mDriveShifter.whenPressed(new DriveShift());
+    // mDriveShifter = new JoystickButton(mOpStick,10);
+    // mDriveShifter.whenPressed(new DriveShift());
 
     // mClimb = new JoystickButton(mOpStick, 8);
     // mClimb.whenPressed(new ClimbAlt(mOpStick)); //COMMAND IS BAD WRIST PART
@@ -199,9 +199,11 @@ public class OI {
   public void UpdateCommands(){
     mDriveTab.add("Elevator Shift", new ElevatorShift());
     mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
-    mDriveTab.add("Retract Front Piston", new RetractFrontPistons());
-    mDriveTab.add("Retract Back Piston", new ClimbRetract());
-    mDriveTab.add("Unlock", new UnlockWrist());
+    mDriveTab.add("3 (Retract Front Piston)", new RetractFrontPistons());
+    mDriveTab.add("4 (Retract Back Piston)", new ClimbRetract());
+    // mDriveTab.add("Unlock", new UnlockWrist());
+    mDriveTab.add("1 (Extend Front Pistons)", new ExtendFrontPistons());
+    mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
   }
 
   /**
@@ -226,7 +228,7 @@ public class OI {
     mElevatorMid.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallMid));
     mElevatorLow.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle, Constants.kBallLow));
     mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristCargoAngle,Constants.kBallFeederHeight));
-    // mTrackTarget.whileHeld(new FollowTarget(3, -0.1, -0.009));
+    // mTrackTarget.whileHeld(new FollowTarget(3, -0.1, -0.009));`                  
     // mIntakeHeight.whenPressed(new ElevatorWristMove(Constants.kWristFeederCargoAngle,Constants.kBallFeederHeight));
     //SmartDashboard.putString("Buttons", "Cargo");
   }

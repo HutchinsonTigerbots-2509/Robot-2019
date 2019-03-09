@@ -132,11 +132,13 @@ public class Intake extends Subsystem {
    * limit switch is triggered
    */
   public void CheckLimitSwitches(){
-    if(mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
-      mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+    if(!mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      // mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+      mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
     }
-    if(mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
-     mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+    if(!mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
+     //mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+     mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
     }
   }
   

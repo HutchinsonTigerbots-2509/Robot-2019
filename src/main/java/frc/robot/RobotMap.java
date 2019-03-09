@@ -129,10 +129,14 @@ public class RobotMap {
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
-        ElevatorMotorMaster.setSensorPhase(true);
+        ElevatorMotorMaster.setSensorPhase(false);
         ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightConversion);
-
+        ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
+        ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
+        ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
+        ElevatorMotorMaster.setSelectedSensorPosition(0);
+        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+       
         ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
