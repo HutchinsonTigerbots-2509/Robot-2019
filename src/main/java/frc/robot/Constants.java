@@ -19,7 +19,7 @@ public final class Constants {
     public static double kSlowSpeed = 0.45; // IDK but sure
     public static double kReverseFastSpeed = -kMaxSpeed;
     public static double kReverseSlowSpeed = -kSlowSpeed;
-    public static double minMoveSpeed = 0.1; // For OperatorDrive void in Drivetrain.java
+    public static double kMinMoveSpeed = 0.1; // For OperatorDrive void in Drivetrain.java
     public static double kTurnSpeed = 0.20;
     public static double kTargetFollowSpeed = 0.2;
     public static double kNeutralDeadband = 0.04;

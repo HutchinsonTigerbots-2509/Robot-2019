@@ -81,6 +81,9 @@ public class Drivetrain extends Subsystem {
 		private double mSetpoint = 0;
 		private double mError = 0;
 		private double mPreviousError = 0;
+		// Mario Accel
+		private double x = 0;
+		private double InitTime = 0;
 	// #endregion
 	
 	/**
@@ -134,7 +137,7 @@ public class Drivetrain extends Subsystem {
 	public void OperatorDriveAlt(Joystick stick) {
 		// If the absolute value of the joystick is not greater than 10 %,
 		// then don't do anything.
-		if (Math.abs(stick.getY()) > Constants.minMoveSpeed || Math.abs(stick.getZ()) > Constants.minMoveSpeed) {
+		if (Math.abs(stick.getY()) > Constants.kMinMoveSpeed || Math.abs(stick.getZ()) > Constants.kMinMoveSpeed) {
 			mDrive.arcadeDrive(-stick.getY(), -stick.getZ());
 			// mDrive.arcadeDrive(-stick.getY(), 0);
 		} else {
@@ -227,6 +230,58 @@ public class Drivetrain extends Subsystem {
 		}
 		
 	}
+
+	public void AccelMario(Joystick stick, Joystick stick_2) { //No intake or elevator but can be added in later
+		double SpeedGoal = 0.0;
+		double Speed = 0.0;
+		double SpeedGain = 1;
+		double TurnSpeedGoal = 0.0;
+		double TurnSpeed = 0.0;
+		double TurnSpeedGain = 1;	
+		double StartTime;
+		double TurnStartTime;
+
+		//Difining SpeedGoal and Starting 
+		if(stick.getRawAxis(3) > 0) { 
+			SpeedGoal = stick.getRawAxis(3);
+			StartTime = Timer.getFPGATimestamp();
+		} else if(stick.getRawAxis(2) > 0) {
+			SpeedGoal = stick.getRawAxis(2);
+			StartTime = Timer.getFPGATimestamp();
+		} else{
+			StartTime = 0.0;
+		}
+		
+		//Difining TurnSpeedGoal
+		if(stick.getRawAxis(0) != 0){
+			TurnSpeedGoal = stick.getRawAxis(0);
+			TurnStartTime = Timer.getFPGATimestamp();
+		}else{
+			TurnSpeedGoal = 0;
+			TurnStartTime = Timer.getFPGATimestamp();
+		}
+
+		//Calculating Speed
+		Speed = Math.min((SpeedGoal*(Timer.getFPGATimestamp() - StartTime)*SpeedGain), .95);
+
+		//Calculating TurnSpeed
+		TurnSpeed = Math.min((TurnSpeedGoal*(Timer.getFPGATimestamp() - TurnStartTime)*TurnSpeedGain), .85);
+
+		//Giving the motors voltage
+		if(Speed > 0) {
+			mDrive.arcadeDrive(Math.max(Speed, Constants.kMinMoveSpeed), TurnSpeed);
+		}
+		else if(Speed < 0) {
+			mDrive.arcadeDrive(Math.min(Speed, -Constants.kMinMoveSpeed), TurnSpeed);
+		}else{
+			mDrive.arcadeDrive(0, 0);
+		}
+
+		SmartDashboard.putNumber("Speed", Speed);
+
+	}
+
+
 	/**
 	 * Will update all values that are sent to the Shuffleboard
 	 * 
