@@ -24,7 +24,6 @@ public class DriveShift extends InstantCommand {
    */
   public DriveShift() {
     super();
-    requires(sDriveTrain);
   }
 
   // Called once when the command executes
@@ -33,7 +32,8 @@ public class DriveShift extends InstantCommand {
     if(sDriveTrain.getCurrentShifter() == Value.kReverse) {
       sDriveTrain.shiftToHigh();
     }
-    else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
+    // else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
+    else{
       sDriveTrain.shiftToLow();
     }
   }

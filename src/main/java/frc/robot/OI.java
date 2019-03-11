@@ -119,8 +119,8 @@ public class OI {
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
   
-    // mDriveShifter = new JoystickButton(mOpStick,10);
-    // mDriveShifter.whenPressed(new DriveShift());
+    mDriveShifter = new JoystickButton(mOpStick,7);
+    mDriveShifter.whenPressed(new DriveShift());
 
     // mClimb = new JoystickButton(mOpStick, 8);
     // mClimb.whenPressed(new ClimbAlt(mOpStick)); //COMMAND IS BAD WRIST PART
@@ -197,7 +197,7 @@ public class OI {
   }
 
   public void UpdateCommands(){
-    mDriveTab.add("Elevator Shift", new ElevatorShift());
+    // mDriveTab.add("Elevator Shift", new ElevatorShift());
     mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
     mDriveTab.add("3 (Retract Front Piston)", new RetractFrontPistons());
     mDriveTab.add("4 (Retract Back Piston)", new ClimbRetract());
