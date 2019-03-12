@@ -44,7 +44,6 @@ public class Vision extends Subsystem {
   public double AngleOne;
   public double Turn_angle = 0;
   public double mTargetfound = 0;
- 
 
   // private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
 
@@ -109,7 +108,7 @@ public class Vision extends Subsystem {
     return mTargetArea;
   }
   public double getTargetSkew() {
-    mTableS = mTable.getEntry(Constants.kLimelightTargetAreaID);
+    mTableS = mTable.getEntry(Constants.kLimelightTargetSkewID);
     mTargetSkew = mTableS.getDouble(0.0);
     return mTargetSkew;
   }
@@ -137,7 +136,6 @@ public class Vision extends Subsystem {
     mTable.getEntry("camMode").setNumber(0);
     mTable.getEntry("stream").setNumber(0);
     mTable.getEntry("pipeline").setNumber(6);
-    
   }
 
   private void PullFromTable() {

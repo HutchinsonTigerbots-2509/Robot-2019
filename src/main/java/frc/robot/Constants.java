@@ -74,8 +74,10 @@ public final class Constants {
     public static double kElevatorStartingHeight = 18.5;
     public static double kHomePositionInches = 8;
     public static double kHomePostionFromLowestPostion = 2.5;
-    public static int kElevatorStartingHeightConversion = (int)Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
-    public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
+    public static int kElevatorHighGearStartingHeightConversion = (int)Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static int kElevatorHighGearStartingHeightTicks = (int)kElevatorHighGearStartingHeightConversion;
+    public static int kElevatorLowGearStartingHeightConversion = (int)Math.round(kElevatorLowGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static int kElevatorLowGearStartingHeightTicks = (int)kElevatorLowGearStartingHeightConversion;
 
     public static double kHatchLow = 14.0; //0
     public static double kHatchMid = 42.0;

@@ -38,37 +38,45 @@ public class ElevatorWristMoveAlt extends InstantCommand {
     if(mState=="Cargo"){
       if(targetID == 1){
         // new ElevatorMoveLowGear(Constants.kBallLow).start();
-        new ElevatorMoveHighGear(Constants.kBallLow).start();
+        // new ElevatorMoveHighGear(Constants.kBallLow).start();
+        new ElevatorMove(Constants.kBallLow).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 2){
         // new ElevatorMoveLowGear(Constants.kBallMid).start();
-        new ElevatorMoveHighGear(Constants.kBallMid).start();
+        // new ElevatorMoveHighGear(Constants.kBallMid).start();
+        new ElevatorMove(Constants.kBallMid).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 3){
         // new ElevatorMoveLowGear(Constants.kBallHigh).start();
-        new ElevatorMoveHighGear(Constants.kBallHigh).start();
+        // new ElevatorMoveHighGear(Constants.kBallHigh).start();
+        new ElevatorMove(Constants.kBallHigh).start();
         new WristMove(Constants.kWristCargoAngle).start();
       }else if(targetID == 4){
         // new ElevatorMoveLowGear(Constants.kBallFeederHeight).start();
-        new ElevatorMoveHighGear(Constants.kBallFeederHeight).start();
+        // new ElevatorMoveHighGear(Constants.kBallFeederHeight).start();
+        new ElevatorMove(Constants.kBallFeederHeight).start();
         new WristMove(Constants.kWristFeederCargoAngle).start();
       }
     }else{
       if(targetID == 1){
         // new ElevatorMoveLowGear(Constants.kHatchLow).start();
-        new ElevatorMoveHighGear(Constants.kHatchLow).start();
+        //new ElevatorMoveHighGear(Constants.kHatchLow).start();
+        new ElevatorMove(Constants.kHatchLow).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 2){
         // new ElevatorMoveLowGear(Constants.kHatchMid).start();
-        new ElevatorMoveHighGear(Constants.kHatchMid).start();
+        //new ElevatorMoveHighGear(Constants.kHatchMid).start();
+        new ElevatorMove(Constants.kHatchMid).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 3){
         // new ElevatorMoveLowGear(Constants.kHatchHigh).start();
-        new ElevatorMoveHighGear(Constants.kHatchHigh).start();
+        //new ElevatorMoveHighGear(Constants.kHatchHigh).start();
+        new ElevatorMove(Constants.kHatchHigh).start();
         new WristMove(Constants.kWristHatchAngle).start();
       }else if(targetID == 4){
         // new ElevatorMoveLowGear(Constants.kHomePositionInches).start();
-        new ElevatorMoveHighGear(Constants.kHomePositionInches).start();
+        //new ElevatorMoveHighGear(Constants.kHomePositionInches).start();
+        new ElevatorMove(Constants.kHomePositionInches).start();
         new WristMove(Constants.kWristGroundAngle).start();
       }
     }

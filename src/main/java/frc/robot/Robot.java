@@ -121,7 +121,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
-    RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+    if(sElevator.isHighGear() == true){
+      RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorHighGearStartingHeightTicks);
+    } else {
+      RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorLowGearStartingHeightTicks);
+    }
     RobotMap.WristMotor.setSelectedSensorPosition(Constants.kWristStartingTicks);
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start  
     comp.stop();

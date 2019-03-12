@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-
+import frc.robot.commands.vision.SquareWithLine;
 /**
  * The DriveTrain Subsystem is where the drivetrain is bound to the code through
  * the motors created in RobotMap, which are stored in a Differential Drive
@@ -97,8 +97,16 @@ public class Drivetrain extends Subsystem {
 	/**
 	 * Will drive forward at 95%.
 	 */
-	public void driveForward() {
-		mDrive.tankDrive(kMaxSpeed, kMaxSpeed);
+	public void driveForwardWhileCalled(double MoveSpeed) {
+		mDrive.tankDrive(MoveSpeed, MoveSpeed);
+	}
+
+	public void turnLeft(double TurnSpeed) {
+		mDrive.tankDrive(-TurnSpeed, TurnSpeed);
+	}
+
+	public void turnRight(double TurnSpeed) {
+		mDrive.tankDrive(TurnSpeed, -TurnSpeed);
 	}
 
 	public void ResetGyro() {
