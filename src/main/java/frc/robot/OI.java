@@ -9,13 +9,14 @@ import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.ElevatorWristMoveAlt;
 import frc.robot.commands.climb.ClimbRetract;
+import frc.robot.commands.climb.ExtendBack1;
+import frc.robot.commands.climb.ExtendBack2;
 import frc.robot.commands.climb.ExtendBackPistons;
 import frc.robot.commands.climb.ExtendFrontPistons;
+import frc.robot.commands.climb.LockWrist;
+import frc.robot.commands.climb.ManualCreep;
 import frc.robot.commands.climb.RetractFrontPistons;
-import frc.robot.commands.climb.SixInchClimb;
-import frc.robot.commands.climb.UnlockWrist;
 import frc.robot.commands.elevator.CargoToggle;
-import frc.robot.commands.elevator.ElevatorShift;
 import frc.robot.commands.elevator.HatchToggle;
 import frc.robot.commands.elevator.StartPosition;
 /**
@@ -198,12 +199,16 @@ public class OI {
 
   public void UpdateCommands(){
     // mDriveTab.add("Elevator Shift", new ElevatorShift());
-    mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
     mDriveTab.add("3 (Retract Front Piston)", new RetractFrontPistons());
     mDriveTab.add("4 (Retract Back Piston)", new ClimbRetract());
     // mDriveTab.add("Unlock", new UnlockWrist());
     mDriveTab.add("1 (Extend Front Pistons)", new ExtendFrontPistons());
     mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
+
+    mDriveTab.add("Extend 1st Back Piston", new ExtendBack1());
+    mDriveTab.add("Extend 2nd Back Piston", new ExtendBack2());
+    mDriveTab.add("Lock Wrist", new LockWrist());
+    mDriveTab.add("Manual Creep Toggle", new ManualCreep());
   }
 
   /**

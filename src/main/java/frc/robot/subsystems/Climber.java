@@ -12,7 +12,6 @@ import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.commands.climb.ClimbRetract;
 import frc.robot.commands.climb.RetractFrontPistons;
-import frc.robot.commands.climb.SixInchClimb;
 
 /**
  * The climbing subsystem is the subsystem where we climb up
@@ -47,7 +46,7 @@ public class Climber extends Subsystem {
     setSubsystem("Climb");
     addChild(HighPistonSystem);
     addChild(LowPistonSystem);
-    addChild(FrontPistonSystem);
+   addChild(FrontPistonSystem);
     addChild(Motor);
   }
   
@@ -131,7 +130,7 @@ public class Climber extends Subsystem {
     // mClimbTab.add(HighPistonSystem);
     // //Subsystem Commands
     mDriveTab = Shuffleboard.getTab("Drive");
-    mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
+    // mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
     mDriveTab.add("Retract Front Piston", new RetractFrontPistons());
     mDriveTab.add("Retract Back Piston", new ClimbRetract());
     // mClimbTab.add("Climb Extend", new ClimbExtend());

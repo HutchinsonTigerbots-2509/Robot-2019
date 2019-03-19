@@ -174,6 +174,8 @@ public class RobotMap {
         ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
+
+        //CHANGE ALL DOUBLE SOLENOID PCM VALUES (if 1, change to 0. If 0, change to 1)
         ClimbLowerPiston = new DoubleSolenoid(0,Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
@@ -181,10 +183,10 @@ public class RobotMap {
         ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
         
-        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID);
+        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID); //PCM was 1
         ClimbFrontPistons.setSubsystem("Climb");
 
-        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID);
+        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID); //PCM was 1
         WristLockPistons.setSubsystem("Intake");
         // #endregion Climb
     }

@@ -12,33 +12,36 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
-public class ExtendBackPistons extends Command {
+public class BigClimbStep1 extends Command {
 
-private static Climber sClimb = Robot.sClimb;
-private Joystick stick;
-  public ExtendBackPistons() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  private Climber sClimb = Robot.sClimb;
+  private Joystick stick;
+
+  public BigClimbStep1(Joystick stick) {
+
+  requires(sClimb);
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
     stick = Robot.oi.getOperatorStick();
-    sClimb.StageTwoStart();
-    end();
+    // if(sClimb.PreparedToClimb == true){
+      sClimb.ExtendFront();
+      sClimb.StageTwoStart();
+      // sClimb.StageOneStart();
+      // } else {
+      //   end();
+      // }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    if(stick.getRawAxis(5)> -0.3 || stick.getRawAxis(5)< 0.3){
-      sClimb.setMotorSpeed(stick.getRawAxis(5));
-    } else {
-      sClimb.setMotorSpeed(0);
-    }
+
+    sClimb.setMotorSpeed(-stick.getRawAxis(5));
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -50,7 +53,6 @@ private Joystick stick;
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
     sClimb.setMotorSpeed(0);
   }
 
