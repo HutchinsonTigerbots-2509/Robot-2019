@@ -174,9 +174,9 @@ public final class Constants {
     public static int kClimbUpperReverseID = 5;
     public static int kClimbLowerForwardID = 7;
     public static int kClimbLowerReverseID = 6;
-    public static int kClimbFrontForwardID = 2; //FIX TO WIRING
-    public static int kClimbFrontReverseID = 3; //FIX TO WIRING
-    public static int kWristLockPistonForwardID = 0; //FIX TO WIRING
-    public static int kWristLockPistonReverseID = 1; //FIX TO WIRING
+    // public static int kClimbFrontForwardID = 2; Same One Delete this once you have read this DJ - Cole
+    // public static int kClimbFrontReverseID = 3; 
+    public static int kWristLockPistonForwardID = 0;
+    public static int kWristLockPistonReverseID = 1; 
 
 }

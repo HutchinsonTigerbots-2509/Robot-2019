@@ -1,18 +1,13 @@
 package frc.robot.commands.elevator;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.subsystems.Elevator;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.Elevator;
 
-public class ElevatorShift extends InstantCommand {
+public class ElevatorShiftLow extends InstantCommand {
   private final Elevator mElevator = new Elevator();
-  private WPI_TalonSRX SpoolMotor = RobotMap.ElevatorMotorMaster;
-  private int ElevatorPosition;
-  private boolean isShifted;
-  public ElevatorShift() {
+  public ElevatorShiftLow() {
     super();
     requires(mElevator);
   }
@@ -20,8 +15,13 @@ public class ElevatorShift extends InstantCommand {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    isShifted = mElevator.isHighGear();
-    ElevatorPosition = SpoolMotor.getSelectedSensorPosition();
+
+    //ONLY SHIFTS TO LOW DOESNT SHIFT BACK RIGHT NOW
+    RobotMap.ElevatorShifter.set(Value.kReverse);
+
+
+    // isShifted = mElevator.isHighGear();
+    // ElevatorPosition = SpoolMotor.getSelectedSensorPosition();
     // if(isShifted == true){
     //   ElevatorPosition = (ElevatorPosition/274)*860;
     //   SpoolMotor.setSelectedSensorPosition(ElevatorPosition);
@@ -29,7 +29,7 @@ public class ElevatorShift extends InstantCommand {
     //   ElevatorPosition = (ElevatorPosition/860)*274;
     //   SpoolMotor.setSelectedSensorPosition(ElevatorPosition);
     // }
-    mElevator.setHighGear(!isShifted);
+    // mElevator.setHighGear(!isShifted);
 
     //mElevator.isHighGear(); this will probably work if the other doesnt
   }

@@ -6,18 +6,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.elevator.ElevatorMoveHighGear;
-import frc.robot.commands.elevator.ElevatorMoveLowGear;
-import frc.robot.commands.elevator.ElevatorShift;
-import frc.robot.commands.elevator.HeightToggle;
-import frc.robot.commands.elevator.ZeroElevator;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.elevator.ElevatorShiftLow;
 
 /**
  * The Elevator Subsystem is where code that uses the lift mechanism is stored
@@ -115,7 +110,7 @@ public class Elevator extends Subsystem {
   public void UpdateTelemetry() {
     // // Subsystem Status
     mDriveTab = Shuffleboard.getTab("Drive");
-    mDriveTab.add("Elevator Shift", new ElevatorShift());
+    mDriveTab.add("Elevator Shift", new ElevatorShiftLow());
     // mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
     // mElevatorTab.add("Height (In)", CurrentTicks());
     // mElevatorTab.add("Top Limit", mTopLimit.get());

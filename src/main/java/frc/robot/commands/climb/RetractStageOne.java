@@ -8,12 +8,18 @@
 package frc.robot.commands.climb;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
+import frc.robot.Robot;
 
-public class LockWrist extends InstantCommand {
-  private Climber sClimber = Robot.sClimb;
-  public LockWrist() {
+/**
+ * Add your docs here.
+ */
+public class RetractStageOne extends InstantCommand {
+  private Climber sClimb = Robot.sClimb;
+  /**
+   * Add your docs here.
+   */
+  public RetractStageOne() {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,7 +28,7 @@ public class LockWrist extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    sClimber.LockWrist();
+    sClimb.RetractStageOne();
   }
 
 }

@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -167,7 +168,15 @@ public class Robot extends TimedRobot {
     sIntake.CheckLimitSwitches();
     if(oi.getOperatorStick().getRawButton(8)){
       comp.start();
+    
     }
+    if(RobotMap.WristLockPiston.get() == Value.kForward){
+      SmartDashboard.putBoolean("Forward", true);
+    }else{
+      SmartDashboard.putBoolean("Forward", false);
+    }
+    SmartDashboard.putNumber("Wrist Angle", RobotMap.WristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
+    //oi.mDriveTab.add("Gyro Roll", RobotMap.DrivetrainGyro.getRoll());
   }
 
   /**

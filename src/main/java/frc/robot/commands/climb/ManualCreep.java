@@ -26,7 +26,12 @@ private Joystick stick;
   @Override
   protected void execute() {
     
-    sClimb.setMotorSpeed(-stick.getRawAxis(5));
+    if(stick.getRawAxis(5) != 0){
+      sClimb.setMotorSpeed(stick.getRawAxis(5));
+    }else{
+      sClimb.setMotorSpeed(0);
+    }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -5,27 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.climb;
+package frc.robot.commands.wrist;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Climber;
 
-public class ExtendBack2 extends InstantCommand {
+/**
+ * Add your docs here.
+ */
+public class LockWristExtend extends InstantCommand {
 
   private Climber sClimb = Robot.sClimb;
 
-  public ExtendBack2() {
+  /**
+   * Add your docs here.
+   */
+  public LockWristExtend() {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
 
-  // Called just before this Command runs the first time
+  // Called once when the command executes
   @Override
   protected void initialize() {
-    sClimb.StageTwoStart();
+    sClimb.WristLocked = true;
+    RobotMap.WristLockPiston.set(Value.kForward);
+
   }
+
 }

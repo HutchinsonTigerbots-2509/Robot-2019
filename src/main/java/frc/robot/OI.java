@@ -8,15 +8,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveShift;
 import frc.robot.commands.ElevatorWristMove;
 import frc.robot.commands.ElevatorWristMoveAlt;
-import frc.robot.commands.climb.ClimbRetract;
 import frc.robot.commands.climb.ExtendBack1;
 import frc.robot.commands.climb.ExtendBack2;
-import frc.robot.commands.climb.ExtendBackPistons;
-import frc.robot.commands.climb.ExtendFrontPistons;
-import frc.robot.commands.climb.LockWrist;
+import frc.robot.commands.climb.GyroClimb;
 import frc.robot.commands.climb.ManualCreep;
-import frc.robot.commands.climb.RetractFrontPistons;
+import frc.robot.commands.climb.PrepareToClimb;
+import frc.robot.commands.climb.RetractStageOne;
+import frc.robot.commands.climb.RetractStageTwo;
 import frc.robot.commands.elevator.CargoToggle;
+import frc.robot.commands.elevator.ElevatorShiftHigh;
+import frc.robot.commands.elevator.ElevatorShiftLow;
+import frc.robot.commands.elevator.ElevatorShiftLowAuto;
 import frc.robot.commands.elevator.HatchToggle;
 import frc.robot.commands.elevator.StartPosition;
 /**
@@ -24,6 +26,8 @@ import frc.robot.commands.elevator.StartPosition;
  * interface to the commands and command groups that allow control of the robot.
  */
 import frc.robot.commands.vision.FollowTarget;
+import frc.robot.commands.wrist.LockWristExtend;
+import frc.robot.commands.wrist.LockWristRetract;
 import frc.robot.commands.wrist.ManualWristMove;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -61,6 +65,7 @@ public class OI {
   public JoystickButton mRetractClimbPistons; // Should retract the climb pistons in sequence
   public JoystickButton mPrepareToClimb;
   public JoystickButton mClimb;
+  public JoystickButton mFrontAndWristLock;
 
   // Wrist
   public JoystickButton mWristStart;
@@ -71,7 +76,7 @@ public class OI {
   private Vision sVision;
   private Intake sIntake;
 
-  private ShuffleboardTab mDriveTab;
+  public ShuffleboardTab mDriveTab;
 
   // #region Joystic Button Creation
   // CREATING BUTTONS
@@ -130,8 +135,8 @@ public class OI {
     // mRetractClimbPistons.whenPressed(new ClimbRetract());
 
     // Co-Driver Joystick
-    // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
-    // mPrepareToClimb.whenPressed(new PrepareToClimb());
+    mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
+    mPrepareToClimb.whenPressed(new PrepareToClimb());
 
     mCargoToggle = new JoystickButton(mCoOpStick, 5);
     mCargoToggle.whenPressed(new CargoToggle());
@@ -151,6 +156,8 @@ public class OI {
 
     mWristStart = new JoystickButton(mCoOpStick, 8);
     mWristStart.whenPressed(new StartPosition());
+
+    // mFrontAndWristLockRestract = new JoystickButton()
 
     // mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
     // mPrepareToClimb.whenPressed(new PrepareToClimb());
@@ -198,17 +205,23 @@ public class OI {
   }
 
   public void UpdateCommands(){
-    // mDriveTab.add("Elevator Shift", new ElevatorShift());
-    mDriveTab.add("3 (Retract Front Piston)", new RetractFrontPistons());
-    mDriveTab.add("4 (Retract Back Piston)", new ClimbRetract());
+    mDriveTab.add("Elevator Shift Low", new ElevatorShiftLow());
+    mDriveTab.add("Elevator Shift High", new ElevatorShiftHigh());
+    mDriveTab.add("Elevator Auto Shift Low", new ElevatorShiftLowAuto());
+    mDriveTab.add("Wrist Lock Extend", new LockWristExtend());
+    mDriveTab.add("Wrist Lock Retract", new LockWristRetract());
     // mDriveTab.add("Unlock", new UnlockWrist());
-    mDriveTab.add("1 (Extend Front Pistons)", new ExtendFrontPistons());
-    mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
+    // mDriveTab.add("Lock Wrist", new LockWrist());
+    // mDriveTab.add("Retract All Back Pistons)", new ClimbRetract());
+    // mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
 
-    mDriveTab.add("Extend 1st Back Piston", new ExtendBack1());
-    mDriveTab.add("Extend 2nd Back Piston", new ExtendBack2());
-    mDriveTab.add("Lock Wrist", new LockWrist());
+    mDriveTab.add("Prepare to Climb", new PrepareToClimb());
+    mDriveTab.add("Gyro Climb", new GyroClimb());
     mDriveTab.add("Manual Creep Toggle", new ManualCreep());
+    mDriveTab.add("USE Extend Top Back Piston USE", new ExtendBack1());
+    mDriveTab.add("USE Extend Bottom Back Piston USE", new ExtendBack2());
+    mDriveTab.add("USE Retract Top Back Piston USE", new RetractStageOne());
+    mDriveTab.add("USE Retract Bottom Back Piston USE", new RetractStageTwo());
   }
 
   /**

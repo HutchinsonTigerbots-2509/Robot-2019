@@ -8,36 +8,23 @@
 package frc.robot.commands.climb;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Constants;
-import frc.robot.commands.elevator.ElevatorMoveHighGear;
-import frc.robot.commands.wrist.WristMove;
-import frc.robot.subsystems.Climber;
 import frc.robot.Robot;
+import frc.robot.commands.elevator.ElevatorShiftLowAuto;
+import frc.robot.commands.wrist.LockWristAuto;
+import frc.robot.subsystems.Climber;
 public class PrepareToClimb extends CommandGroup {
   private Climber sClimber = Robot.sClimb;
   /**
    * Add your docs here.
    */
   public PrepareToClimb() {
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
+    
+    addSequential(new LockWristAuto());
+    addSequential(new ElevatorShiftLowAuto());
 
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
-    addParallel(new WristMove(Constants.kWristGroundAngle));
-    addSequential(new ElevatorMoveHighGear(Constants.kHABHeight));
-    addSequential(new LockWrist());
-    sClimber.PreparedToClimb = true;
+    // addParallel(new WristMove(Constants.kWristGroundAngle));
+    // addSequential(new ElevatorMoveHighGear(Constants.kHABHeight));
+    // // addSequential(new LockWrist());
+    // sClimber.PreparedToClimb = true;
   }
 }

@@ -63,8 +63,7 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
-    public static DoubleSolenoid ClimbFrontPistons;
-    public static DoubleSolenoid WristLockPistons;
+    public static DoubleSolenoid WristLockPiston;
 
 
     public static void init() {
@@ -135,6 +134,8 @@ public class RobotMap {
         ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
         ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
         ElevatorMotorMaster.setSelectedSensorPosition(0);
+        ElevatorMotorMaster.setNeutralMode(NeutralMode.Brake);
+
         // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
        
         ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
@@ -174,8 +175,6 @@ public class RobotMap {
         ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
-
-        //CHANGE ALL DOUBLE SOLENOID PCM VALUES (if 1, change to 0. If 0, change to 1)
         ClimbLowerPiston = new DoubleSolenoid(0,Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
@@ -183,11 +182,8 @@ public class RobotMap {
         ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
         
-        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID); //PCM was 1
-        ClimbFrontPistons.setSubsystem("Climb");
-
-        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID); //PCM was 1
-        WristLockPistons.setSubsystem("Intake");
+        WristLockPiston = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID);
+        WristLockPiston.setSubsystem("Climb");
         // #endregion Climb
     }
 }

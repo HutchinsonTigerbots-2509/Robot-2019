@@ -28,7 +28,7 @@ public class BigClimbStep1 extends Command {
   protected void initialize() {
     stick = Robot.oi.getOperatorStick();
     // if(sClimb.PreparedToClimb == true){
-      sClimb.ExtendFront();
+      // sClimb.ExtendFront();
       sClimb.StageTwoStart();
       // sClimb.StageOneStart();
       // } else {
