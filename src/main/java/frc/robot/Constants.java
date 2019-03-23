@@ -84,7 +84,7 @@ public final class Constants {
     public static double kBallLow = 25.0;
     public static double kBallMid = 51.0;
     public static double kBallHigh = 78;
-    public static double kBallFeederHeight = 36;
+    public static double kBallFeederHeight = 40;
     public static double kHABHeight = 28;
     public static double kCargoShipBall = 29.0;
 
@@ -124,8 +124,8 @@ public final class Constants {
     
     public static int kWristStartingTicks = 489;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
-    public static int kWristGroundAngle = -90;/// -87
-    public static double kWristTicksPerDegree  = 8.8555555555555556;//22.755555555 for old magnet/small mag           other thing 6.3111111111
+    public static int kWristGroundAngle = -92;/// -87
+    public static double kWristTicksPerDegree  = 5.625;//22.755555555 for old magnet/small mag           other thing 6.3111111111
     public static int kWristMinDegree = -90;
     public static int kWristMaxDegree = 24;
     //public static int kWristStartingAngle = 20;
@@ -164,8 +164,8 @@ public final class Constants {
 
     /* Pneumatics ID */
     // Drivetrain
-    public static int kDrivetrainShifterForwardID = 0;
-    public static int kDrivetrainShifterReverseID = 1;
+    public static int kDrivetrainShifterForwardID = 2;
+    public static int kDrivetrainShifterReverseID = 3;
     // Elevator
     public static int kElevatorShifterForwardID = 2;
     public static int kElevatorShifterReverseID = 3;

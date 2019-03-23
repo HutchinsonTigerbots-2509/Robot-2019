@@ -12,6 +12,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Climber;
@@ -39,7 +40,8 @@ public class GyroClimb extends Command {
   @Override
   protected void execute() {
 
-    ElevatorSpeed = gyro.getRoll() *SpeedGain;
+    // SmartDashboard.sen(gyro, gyro.getRoll());
+    ElevatorSpeed = (gyro.getRoll()) * SpeedGain;
     
     if(gyro.getRoll() < 30){
       if(ElevatorSpeed > 0.4 || ElevatorSpeed < -0.4){
@@ -49,11 +51,29 @@ public class GyroClimb extends Command {
       }    
     }
 
-    if(stick.getRawAxis(5)> -0.3 || stick.getRawAxis(5)< 0.3){
+    if(stick.getRawAxis(5)>= 0.5 || stick.getRawAxis(5)<= -.5){
       sClimb.setMotorSpeed(stick.getRawAxis(5));
     } else {
       sClimb.setMotorSpeed(0);
     }
+
+    // if(gyro.getRoll() > 3){
+    //   if(ElevatorSpeed > .4){
+    //     RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, .4);
+    //   }else{
+    //     RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, ElevatorSpeed);
+    //   }
+    // }else if(gyro.getRoll() < -5){
+    //   if(ElevatorSpeed < -.4){
+    //     RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, -.4);
+    //   }else{
+    //     RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, ElevatorSpeed);
+    //   }
+    // }else{
+    //   RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, 0.0);
+    // }
+
+
 
     // if(gyro.getRoll() < -7){
     //   RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, 0.75);

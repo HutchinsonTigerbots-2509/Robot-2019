@@ -209,6 +209,14 @@ public class Drivetrain extends Subsystem {
 		}
 
 		//Wrist Manual
+		//if(stick_2.getRawAxis(1) < -0.2){
+		// 	mWristMotor.set(Constants.kMaxSpeed);
+		// }else if(stick_2.getRawAxis(1) > 0.2){
+		// 	mWristMotor.set(-Constants.kMaxSpeed);
+		// }else{
+		// 	mWristMotor.set(0);
+		// }
+
 		// if(Math.abs(stick_2.getRawAxis(5)) > 0.1 /*|| stick_2.getRawAxis(5) < -0.2*/ ){
 		// 	mWristMotor.set(ControlMode.PercentOutput, -stick_2.getRawAxis(5));
 		// }else{

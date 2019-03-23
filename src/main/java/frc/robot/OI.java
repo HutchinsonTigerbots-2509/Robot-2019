@@ -27,6 +27,7 @@ import frc.robot.commands.elevator.StartPosition;
  * interface to the commands and command groups that allow control of the robot.
  */
 import frc.robot.commands.vision.FollowTarget;
+import frc.robot.commands.wrist.LockWrist;
 import frc.robot.commands.wrist.LockWristAuto;
 import frc.robot.commands.wrist.LockWristExtend;
 import frc.robot.commands.wrist.LockWristRetract;
@@ -130,7 +131,7 @@ public class OI {
     // Main Driver Joystick
   
     mDriveShifter = new JoystickButton(mOpStick,7);
-    mDriveShifter.whenPressed(new DriveShift());
+    mDriveShifter.whenPressed(new ManualCreep());
 
     // mClimb = new JoystickButton(mOpStick, 8);
     // mClimb.whenPressed(new ClimbAlt(mOpStick)); //COMMAND IS BAD WRIST PART
@@ -140,7 +141,7 @@ public class OI {
 
     // Co-Driver Joystick
     mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
-    mPrepareToClimb.whenPressed(new PrepareToClimb());
+    mPrepareToClimb.whenPressed(new LockWrist());
 
     mCargoToggle = new JoystickButton(mCoOpStick, 5);
     mCargoToggle.whenPressed(new CargoToggle());
@@ -214,7 +215,7 @@ public class OI {
     mManualTab.add("Wrist Lock Extend", new LockWristExtend());
     mManualTab.add("Wrist Lock Retract", new LockWristRetract());
     mManualTab.add("Manual Creep Toggle", new ManualCreep());
-    mManualTab.add("Retract All Pistons)", new ClimbRetract());
+    mManualTab.add("Retract All Pistons", new ClimbRetract());
     mManualTab.add("Extend Top Back Piston", new ExtendBack1());
     mManualTab.add("Extend Bottom Back Piston", new ExtendBack2());
     mManualTab.add("Retract Top Back Piston", new RetractStageOne());
@@ -223,13 +224,16 @@ public class OI {
     // mDriveTab.add("Unlock", new UnlockWrist());
     // mDriveTab.add("Lock Wrist", new LockWrist());
     // mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
-    mDriveTab.add("Prepare to Climb", new PrepareToClimb());
-    mDriveTab.add("Gyro Climb", new GyroClimb());
-    mDriveTab.add("Extend Top Back Piston", new ExtendBack1());
-    mDriveTab.add("Retract Top Back Piston", new RetractStageOne());
-    mDriveTab.add("Retract Bottom Back Piston", new RetractStageTwo());
+    mDriveTab.add("Prepare to Climb (1)", new PrepareToClimb());
+    mDriveTab.add("Gyro Climb (2)", new GyroClimb());
+    mDriveTab.add("Extend Top Back Piston (2)", new ExtendBack1());
+    mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
+    // mDriveTab.add("Retract Top Back Piston (3 or 4)", new RetractStageOne());
+    // mDriveTab.add("Retract Bottom Back Piston (3 or 4)", new RetractStageTwo());
+    mDriveTab.add("Retract Pistons", new ClimbRetract());
     mDriveTab.add("Auto Lock Wrist", new LockWristAuto());
     mDriveTab.add("Elevator Auto Shift Low", new ElevatorShiftLowAuto());
+    mDriveTab.add("DriveTrain Shifter", new DriveShift());
   }
 
   /**

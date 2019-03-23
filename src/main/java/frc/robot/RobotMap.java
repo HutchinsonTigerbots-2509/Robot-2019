@@ -112,7 +112,7 @@ public class RobotMap {
         DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
         DrivetrainDifferential.setSubsystem("Drivetrain");
 
-        DrivetrainShifter = new DoubleSolenoid(0,Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
+        DrivetrainShifter = new DoubleSolenoid(1,Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
         DrivetrainShifter.setSubsystem("Drivetrain");
 
         DrivetrainGyro = new AHRS(SPI.Port.kMXP);
@@ -153,7 +153,7 @@ public class RobotMap {
         IntakeMotor.setSubsystem("Intake");
         
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
-        WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        WristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); //CTRE_MagEncoder_Relative
         WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
         WristMotor.setSensorPhase(true);
         WristMotor.configPeakOutputForward(0.95);

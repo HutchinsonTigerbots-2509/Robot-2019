@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
 import frc.robot.commands.climb.ClimbRetract;
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The climbing subsystem is the subsystem where we climb up
@@ -52,6 +54,15 @@ public class Climber extends Subsystem {
   /**
    * Extends the Front and Wrist Lock
    */
+  // public void CompStart(){
+  //   Timer.delay(60);
+  //   Robot.comp.start();
+  // }
+  public void CompStart(){
+    if(Timer.getMatchTime() == 60){
+      Robot.comp.start();
+    }
+  }
   public void WristExtend() {
     WristLockPiston.set(Retract);
   }

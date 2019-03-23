@@ -23,7 +23,7 @@ public class Intake extends Subsystem {
   private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
   private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
   // private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
-  private final double kWristTicksPerDegree = Constants.kTicksPerDegree;
+  private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
   private double mWristTargetTicks;
   private final int kWristMinDegree = Constants.kWristMinDegree;
   private final int kWristMaxDegree = Constants.kWristMaxDegree;
@@ -134,11 +134,11 @@ public class Intake extends Subsystem {
   public void CheckLimitSwitches(){
     if(!mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
       // mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
-      mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+      mWristMotor.setSelectedSensorPosition((int)Math.round((kWristTicksPerDegree)*kWristMinDegree));
     }
     if(!mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
      //mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
-     mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+     mWristMotor.setSelectedSensorPosition((int)Math.round((kWristTicksPerDegree)*kWristMaxDegree));
     }
   }
   

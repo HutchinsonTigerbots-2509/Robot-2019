@@ -2,12 +2,14 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.CompressorStart;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.commands.intake.IntakeManual;
 import frc.robot.subsystems.Climber;
@@ -15,7 +17,6 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
   public static IntakeManual cIntakeManual;
   private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
   private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
-  private static  Compressor comp;
+  public static  Compressor comp;
 
   public static boolean trigger = false;
 
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
     // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     Shuffleboard.update();
+    sClimb.CompStart();
   }
 
   /**
@@ -149,6 +151,7 @@ public class Robot extends TimedRobot {
     //if(!cIntakeManual.isRunning())cIntakeManual.start();
     //cIntakeManual.start();
     comp.stop();
+    // sClimb.CompStart();
   }
 
   /**
@@ -159,7 +162,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Elevator Current Height",sElevator.CurrentTicks());
     SmartDashboard.putNumber("Wrist Current Angle", sIntake.getCurrentAngle());
     SmartDashboard.putBoolean("State", (sElevator.state == "Hatch") ? true : false);
-    // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    SmartDashboard.putNumber("Gyro Roll", RobotMap.DrivetrainGyro.getRoll());
+      // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
     // //cIntakeManual.start();
     // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());

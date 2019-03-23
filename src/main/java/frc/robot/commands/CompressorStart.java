@@ -5,26 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.wrist;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.Climber;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * Add your docs here.
  */
-public class LockWristExtend extends InstantCommand {
-
-  private Climber sClimb = Robot.sClimb;
-
+public class CompressorStart extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public LockWristExtend() {
+  public CompressorStart() {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -33,10 +28,8 @@ public class LockWristExtend extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    sClimb.WristLocked = true;
-    RobotMap.WristLockPiston.set(Value.kForward);
-    Timer.delay(0.5);
-
+    Timer.delay(60);
+    Robot.comp.start();
   }
 
 }
