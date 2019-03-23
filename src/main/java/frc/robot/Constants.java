@@ -125,7 +125,7 @@ public final class Constants {
     public static int kWristStartingTicks = 489;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
     public static int kWristGroundAngle = -90;/// -87
-    public static double kWristTicksPerDegree  = 22.755555555;
+    public static double kWristTicksPerDegree  = 8.8555555555555556;//22.755555555 for old magnet/small mag           other thing 6.3111111111
     public static int kWristMinDegree = -90;
     public static int kWristMaxDegree = 24;
     //public static int kWristStartingAngle = 20;
