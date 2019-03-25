@@ -63,6 +63,8 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
+    public static DoubleSolenoid ClimbFrontPistons;
+    public static DoubleSolenoid WristLockPistons;
 
 
     public static void init() {
@@ -122,15 +124,19 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        ElevatorMotorMaster.setInverted(false);//True //Possibly Differnt between comp and practice
+        ElevatorMotorMaster.setInverted(true);//True //Possibly Differnt between comp and practice
         ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
-        ElevatorMotorMaster.setSensorPhase(true);
+        ElevatorMotorMaster.setSensorPhase(false);
         ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightConversion);
-
+        ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
+        ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
+        ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
+        ElevatorMotorMaster.setSelectedSensorPosition(0);
+        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+       
         ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
@@ -174,6 +180,12 @@ public class RobotMap {
         // Stage 2 - Should fire Second Constants.kClimbUpperForwardID 
         ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
+        
+        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID);
+        ClimbFrontPistons.setSubsystem("Climb");
+
+        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID);
+        WristLockPistons.setSubsystem("Intake");
         // #endregion Climb
     }
 }

@@ -42,6 +42,7 @@ public class Elevator extends Subsystem {
   private Value kLowGear = Value.kForward;
   private double mEncoderTargetTicks;
   public String state = "Hatch";
+  private ShuffleboardTab mDriveTab;
 
   /**
    * Adds children to the object so we can play with components in test mode
@@ -113,6 +114,8 @@ public class Elevator extends Subsystem {
    */
   public void UpdateTelemetry() {
     // // Subsystem Status
+    mDriveTab = Shuffleboard.getTab("Drive");
+    mDriveTab.add("Elevator Shift", new ElevatorShift());
     // mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
     // mElevatorTab.add("Height (In)", CurrentTicks());
     // mElevatorTab.add("Top Limit", mTopLimit.get());

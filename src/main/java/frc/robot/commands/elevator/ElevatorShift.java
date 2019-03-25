@@ -17,5 +17,7 @@ public class ElevatorShift extends InstantCommand {
   protected void initialize() {
     isShifted = mElevator.isHighGear();
     mElevator.setHighGear(!isShifted);
+
+    //mElevator.isHighGear(); this will probably work if the other doesnt
   }
 }

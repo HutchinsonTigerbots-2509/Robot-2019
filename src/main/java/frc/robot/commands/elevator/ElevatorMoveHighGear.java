@@ -21,7 +21,7 @@ public class ElevatorMoveHighGear extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.setHighGear(true);
+    // sElevator.setHighGear(true);
     sElevator.setPositionHighGear(mTargetHieght);
   }
 

@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +35,9 @@ public class Robot extends TimedRobot {
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
   public static IntakeManual cIntakeManual;
+  private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
   private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
+  private static  Compressor comp;
 
   public static boolean trigger = false;
 
@@ -55,11 +58,14 @@ public class Robot extends TimedRobot {
     sIntake = new Intake();
     sVision = new Vision();
     sVision.UpdateLimelightSettings();
+    comp = new Compressor();
     // OI must be inialized after Subsystems
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
     cIntakeManual = new IntakeManual();
+    // private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
+    // private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
     // Put data on Shuffleboard
     // sDrivetrain.UpdateTelemetry();
     // sVision.UpdateTelemetry();
@@ -115,17 +121,19 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
-    // if (cAutoCommand != null) {
-    // cAutoCommand.start();
-    // }
+    RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+    RobotMap.WristMotor.setSelectedSensorPosition(Constants.kWristStartingTicks);
+    if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start  
+    comp.stop();
   }
-
   /**
    * This function is called periodically during autonomous.
    */
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.CheckBottomSwitch();
+    sIntake.CheckLimitSwitches();
   }
 
   @Override
@@ -139,6 +147,7 @@ public class Robot extends TimedRobot {
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
     //if(!cIntakeManual.isRunning())cIntakeManual.start();
     //cIntakeManual.start();
+    comp.stop();
   }
 
   /**
@@ -154,6 +163,11 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.CheckBottomSwitch();
+    sIntake.CheckLimitSwitches();
+    if(oi.getOperatorStick().getRawButton(8)){
+      comp.start();
+    }
   }
 
   /**

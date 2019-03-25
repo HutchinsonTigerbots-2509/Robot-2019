@@ -185,8 +185,8 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void MarioDrive(Joystick stick, Joystick stick_2) {
-		double SpeedMulti = 0.85;
-		double TurnSpeedMulti = 0.95;
+		double SpeedMulti = 1;
+		double TurnSpeedMulti = 1;
 		double Speed = 0.0;
 		
 		if(stick.getRawAxis(3) > 0) {

@@ -59,7 +59,7 @@ public final class Constants {
     public static double kBottomLimitDistanceFromGround;
     public static double kTopLimitDistanceFromGround;
 
-    public static double kSpoolDiam = 2;
+    public static double kSpoolDiam = 2;//NEED to change
     public static double kPulsesPerRotation = 256;
     public static double kElevatorHighGearTicksPerInch =    274.38312189;//215
     public static double kElevatorLowGearTicksPerInch =     860;//48.355
@@ -72,9 +72,9 @@ public final class Constants {
     public static double kMaxHeight = 78;//All of these are heights off the ground inches
     public static double kMinHeight = 7;
     public static double kElevatorStartingHeight = 18.5;
-    public static double kHomePositionInches = 7.5;
+    public static double kHomePositionInches = 8;
     public static double kHomePostionFromLowestPostion = 2.5;
-    public static int kElevatorStartingHeightConversion = (int)Math.round(kElevatorLowGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
+    public static int kElevatorStartingHeightConversion = (int)Math.round(kElevatorHighGearTicksPerInch*(kElevatorStartingHeight-kHomePositionInches));
     public static int kElevatorStartingHeightTicks = (int)kElevatorStartingHeightConversion;
 
     public static double kHatchLow = 14.0; //0
@@ -120,9 +120,11 @@ public final class Constants {
     
     /* Intake */
     public static double kTicksPerDegree  = 22.755555555;
-    public static int kWristStartingAngle = 24;
+    public static int kWristStartingAngle = 22;
+    
+    public static int kWristStartingTicks = 489;
     //public static int kWristStartingAngleConversion = (int)Math.Round(kWristStartingAngle*kWristTicksPerDegree);
-    public static int kWristGroundAngle = -88;/// -87
+    public static int kWristGroundAngle = -90;/// -87
     public static double kWristTicksPerDegree  = 22.755555555;
     public static int kWristMinDegree = -90;
     public static int kWristMaxDegree = 24;
@@ -172,4 +174,9 @@ public final class Constants {
     public static int kClimbUpperReverseID = 5;
     public static int kClimbLowerForwardID = 7;
     public static int kClimbLowerReverseID = 6;
+    public static int kClimbFrontForwardID = 2; //FIX TO WIRING
+    public static int kClimbFrontReverseID = 3; //FIX TO WIRING
+    public static int kWristLockPistonForwardID = 0; //FIX TO WIRING
+    public static int kWristLockPistonReverseID = 1; //FIX TO WIRING
+
 }

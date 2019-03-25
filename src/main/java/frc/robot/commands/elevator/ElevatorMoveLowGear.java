@@ -23,7 +23,7 @@ public class ElevatorMoveLowGear extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    sElevator.setHighGear(false);
+    // sElevator.setHighGear(false);
     sElevator.setPositionLowGear(mTargetHieght);
     mTargetHeightTicks = mTargetHieght*Constants.kElevatorLowGearTicksPerInch;
   }

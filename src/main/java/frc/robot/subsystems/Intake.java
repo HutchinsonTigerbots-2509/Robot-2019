@@ -3,18 +3,14 @@ package frc.robot.subsystems; // package declaration
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.intake.IntakeIn;
-import frc.robot.commands.intake.IntakeOut;
-import frc.robot.commands.wrist.WristManualDown;
-import frc.robot.commands.wrist.WristManualUp;
 
 /**
  * The intake subsystem is the main scoring subsystem of the robot. It can pick
@@ -111,6 +107,7 @@ public class Intake extends Subsystem {
     CheckLimitSwitches();
   }
 
+
   public void IntakeInManual(Joystick stick){
     if(stick.getRawAxis(2) > 0.2){
       In();
@@ -135,11 +132,13 @@ public class Intake extends Subsystem {
    * limit switch is triggered
    */
   public void CheckLimitSwitches(){
-    if(mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
-      mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+    if(!mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      // mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+      mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
     }
-    if(mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
-     mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+    if(!mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
+     //mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+     mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
     }
   }
   

@@ -3,13 +3,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.commands.climb.ClimbExtend;
 import frc.robot.commands.climb.ClimbRetract;
+import frc.robot.commands.climb.RetractFrontPistons;
+import frc.robot.commands.climb.SixInchClimb;
 
 /**
  * The climbing subsystem is the subsystem where we climb up
@@ -28,11 +31,14 @@ public class Climber extends Subsystem {
   private final VictorSP Motor = RobotMap.ClimbMotor;
   private final DoubleSolenoid HighPistonSystem = RobotMap.ClimbUpperPiston; // 2 Pistons, one on each side
   private final DoubleSolenoid LowPistonSystem = RobotMap.ClimbLowerPiston;   // Same for the low ones
+  private final DoubleSolenoid FrontPistonSystem = RobotMap.ClimbFrontPistons;
   private final ShuffleboardTab mClimbTab = Shuffleboard.getTab("Climb");
   private final Value Extend = Value.kForward;
   private final Value Retract = Value.kReverse;
   public boolean PreparedToClimb = false;
-  
+  private ShuffleboardTab mDriveTab;
+  private Joystick mOpStick;
+  public final DoubleSolenoid mWristLockPistons = RobotMap.WristLockPistons;
   /**
    * Constructor that adds children to the object so
    * we can play with components in test mode
@@ -41,6 +47,7 @@ public class Climber extends Subsystem {
     setSubsystem("Climb");
     addChild(HighPistonSystem);
     addChild(LowPistonSystem);
+    addChild(FrontPistonSystem);
     addChild(Motor);
   }
   
@@ -80,6 +87,14 @@ public class Climber extends Subsystem {
     LowPistonSystem.set(Retract);
   }
 
+  public void ExtendFront(){
+    FrontPistonSystem.set(Extend);
+  }
+
+  public void RetractFront(){
+    FrontPistonSystem.set(Retract);
+  }
+
   public void setMotorSpeed(double speed){
     if(Math.abs(speed)>1){
       speed /= Math.abs(speed);
@@ -95,6 +110,8 @@ public class Climber extends Subsystem {
     // Will set both sides' pistons to off
     HighPistonSystem.set(Value.kOff);
     LowPistonSystem.set(Value.kOff);
+    //Also Front pistons
+    FrontPistonSystem.set(Value.kOff);
   }
 
   //#endregion Climbing Voids
@@ -113,6 +130,10 @@ public class Climber extends Subsystem {
     // mClimbTab.add(LowPistonSystem);
     // mClimbTab.add(HighPistonSystem);
     // //Subsystem Commands
+    mDriveTab = Shuffleboard.getTab("Drive");
+    mDriveTab.add("Climb 6", new SixInchClimb(mOpStick));
+    mDriveTab.add("Retract Front Piston", new RetractFrontPistons());
+    mDriveTab.add("Retract Back Piston", new ClimbRetract());
     // mClimbTab.add("Climb Extend", new ClimbExtend());
     // mClimbTab.add("Climb Retract", new ClimbRetract());
   }
@@ -138,6 +159,10 @@ public class Climber extends Subsystem {
    */
   public DoubleSolenoid getLowPistons() {
     return LowPistonSystem;
+  }
+
+  public DoubleSolenoid getFrontPistons() {
+    return FrontPistonSystem;
   }
 
   /**
@@ -172,13 +197,23 @@ public class Climber extends Subsystem {
     }
   }
 
+  public String getFrontPistonStatus() {
+    if(FrontPistonSystem.get() == Value.kForward){
+      return "Extended";
+    }else if (FrontPistonSystem.get() == Value.kReverse){
+      return "Retracted";
+    }else {
+      return "Null";
+    }
+  }
+
   /**
    * Will say if the high pistons are extended or not
    * 
    * @return if pistons are extened or not
    * @author CRahne
    */
-  public Boolean areHighPistonsExtended() {
+  public Boolean areHighPistonsExtended() {//THIS IS DONE WRONG ACCORDING TO DJ
     String state = getHigherPistonsStatus();
     if(state == "Extended") {
       return true;
@@ -192,12 +227,21 @@ public class Climber extends Subsystem {
    * @return if pistons are extened or not
    * @author CRahne
    */
-  public Boolean areLowPistonsExtended() {
+  public Boolean areLowPistonsExtended() {//THIS IS DONE WRONG ACCORDING TO DJ
     String state = getLowerPistonsStatus();
     if(state == "Extended") {
       return true;
     }
     return false;
+  }
+
+  public Boolean areFrontPistonsExtended() { 
+    String state = getFrontPistonStatus();
+    if(state == "Extended"){
+      return true;
+    } else{
+      return false;
+    }
   }
 
   // #endregion Climb Getters
@@ -206,5 +250,13 @@ public class Climber extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public void LockWrist(){
+    mWristLockPistons.set(Value.kForward);
+  }
+  
+  public void UnlockWrist(){
+    mWristLockPistons.set(Value.kReverse);
   }
 }
