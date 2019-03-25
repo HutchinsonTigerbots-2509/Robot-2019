@@ -1,20 +1,20 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.BottomLimitSafety;
 import frc.robot.commands.OperatorDrive;
+import frc.robot.commands.intake.IntakeManual;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,10 +34,12 @@ public class Robot extends TimedRobot {
   public static OI oi;
   /* COMMAND DECLARATIONS */
   public static OperatorDrive cOpDrive;
+  public static IntakeManual cIntakeManual;
+  private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
+  private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
+  private static  Compressor comp;
 
-  private final WPI_TalonSRX WristMotor = RobotMap.WristMotor;
   public static boolean trigger = false;
-
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -45,8 +47,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Shuffleboard.startRecording();//Starts the Shuffleboard recording
+    // Shuffleboard.startRecording();//Starts the Shuffleboard recording
     // RobotMap must be initialized first
+    
     RobotMap.init();
     // Subsystems must be initialized after RobotMap
     sDrivetrain = new Drivetrain();
@@ -54,15 +57,18 @@ public class Robot extends TimedRobot {
     sElevator = new Elevator();
     sIntake = new Intake();
     sVision = new Vision();
+    sVision.UpdateLimelightSettings();
+    comp = new Compressor();
     // OI must be inialized after Subsystems
     oi = new OI();
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
-    
+    cIntakeManual = new IntakeManual();
+    // private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
+    // private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
     // Put data on Shuffleboard
-    sElevator.UpdateTelemetry();
-    sDrivetrain.UpdateTelemetry();
-    sVision.UpdateTelemetry();
+    // sDrivetrain.UpdateTelemetry();
+    // sVision.UpdateTelemetry();
     Shuffleboard.addEventMarker("Robot Initialized", EventImportance.kHigh);
   }
 
@@ -77,11 +83,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-    System.out.print(SpoolMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    SmartDashboard.putNumber("Target Height", sElevator.TargetHeight());
-    SmartDashboard.putNumber("Current Angle", sIntake.CurrentAngle());
+    SmartDashboard.putNumber("Elevator Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Wrist Current Angle", sIntake.getCurrentAngle());
+    // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     Shuffleboard.update();
   }
 
@@ -116,23 +121,23 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Shuffleboard.addEventMarker("Autonomous Initialized", EventImportance.kNormal);
-    // if (cAutoCommand != null) {
-    // cAutoCommand.start();
-    // }
+    RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+    RobotMap.WristMotor.setSelectedSensorPosition(Constants.kWristStartingTicks);
+    if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start  
+    comp.stop();
   }
-
   /**
    * This function is called periodically during autonomous.
    */
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.CheckBottomSwitch();
+    sIntake.CheckLimitSwitches();
   }
 
   @Override
-  public void teleopInit() {
-
-   
+  public void teleopInit() {   
     Shuffleboard.addEventMarker("Tele-Op Initialized", EventImportance.kNormal);
     // This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove this line or comment it out.
@@ -140,6 +145,9 @@ public class Robot extends TimedRobot {
     // cAutoCommand.cancel();
     // }
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
+    //if(!cIntakeManual.isRunning())cIntakeManual.start();
+    //cIntakeManual.start();
+    comp.stop();
   }
 
   /**
@@ -147,21 +155,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
-    SmartDashboard.putBoolean("Top",RobotMap.ElevatorTopLimit.get());
-
-    if(RobotMap.ElevatorBottomLimit.get() == true){
-      RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(0);
-      sElevator.BottomSafetyStop();
-      // SmartDashboard.putString("Running", "BottomSafetyStop");
-      // trigger = false;
-   }
-   // SmartDashboard.putNumber("Encoder", WristMotor.getSelectedSensorPosition());
-
+    SmartDashboard.putNumber("Elevator Current Height",sElevator.CurrentTicks());
+    SmartDashboard.putNumber("Wrist Current Angle", sIntake.getCurrentAngle());
+    SmartDashboard.putBoolean("State", (sElevator.state == "Hatch") ? true : false);
+    // SmartDashboard.putNumber("Elevator Power", sElevator.getMotor().get());
+    // //cIntakeManual.start();
+    // SmartDashboard.putNumber("Elevator AMPs", sElevator.getMotor().getOutputCurrent());
     // SmartDashboard.putNumber("power", RobotMap.ElevatorMotorMaster.get());
-    SmartDashboard.putNumber("Current Height",sElevator.CurrentHeight());
-    SmartDashboard.putNumber("Target Height", sElevator.getTargetHeight());
     Scheduler.getInstance().run(); // Will run the run() void, which does a bunch of behind the scenes stuff
+    sElevator.CheckBottomSwitch();
+    sIntake.CheckLimitSwitches();
+    if(oi.getOperatorStick().getRawButton(8)){
+      comp.start();
+    }
   }
 
   /**

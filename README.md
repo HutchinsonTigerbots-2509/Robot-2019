@@ -182,9 +182,13 @@ PID | .6*`Ku` | 1.2*`Ku`/`Tu` |	3*`Ku`*`Tu`/40 |
 
 ## Programmers
 * [GoldenGollem](https://github.com/GoldenGollem) :space_invader:
+<<<<<<< HEAD
 * [CRahne](https://github.com/CRahne) :golf:
-* [DScheele1](https://github.com/DScheele1) :tea:
-* [ceciliaschmitz1](https://github.com/ceciliaschmitz1)
+=======
+* [CRahne](https://github.com/CRahne) :squirrel:
+>>>>>>> c7630bacc09ad36ca37ed3cb1608ca7cdbf61018
+* [DScheele1](https://github.com/DScheele1) :lipstick: :horse_racing: :cinema:
+* [ceciliaschmitz1](https://github.com/ceciliaschmitz1) :dragon:
 * [FerisJumbo](https://github.com/FerisJumbo) :ferris_wheel:
 * [danevenson13](https://github.com/danevenson13) :muscle:
 * [Tjwiseguy](https://github.com/Tjwiseguy) :tiger:

@@ -30,34 +30,24 @@ public class PID_Turn extends Command {
     targ_angle =  p_targ_angle;
   }
 
-  // Called just before this Command runs the first time
   protected void initialize() {
     error = targ_angle - mGyro.getAngle();
     mDrive.arcadeDrive(0.0, sDT.getPIDTurnValue(error, pre_error, targ_angle));
     pre_error = error;
   }
 
-  // Called repeatedly when this Command is scheduled to run
   protected void execute() {
     error = targ_angle - mGyro.getAngle();
     mDrive.arcadeDrive(0.0, sDT.getPIDTurnValue(error, pre_error, targ_angle));
     pre_error = error;
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   protected boolean isFinished() {
     if(mGyro.getAngle() == targ_angle) {
       return true;
     }
     return false;
   }
-
-  // Called once after isFinished returns true
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  protected void interrupted() {
-  }
+  protected void end() { sDT.StopMotors(); }
+  protected void interrupted() {}
 }

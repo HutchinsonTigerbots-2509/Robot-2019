@@ -1,24 +1,24 @@
 package frc.robot;
 
-import java.text.BreakIterator;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -45,7 +45,6 @@ public class RobotMap {
     /* ELEVATOR */
     // Motors
     public static WPI_TalonSRX ElevatorMotorMaster;
-    // public static WPI_VictorSPX ElevatorMotorSlave;
     // Pneumatics
     public static DoubleSolenoid ElevatorShifter;
     // Digital Input
@@ -57,9 +56,6 @@ public class RobotMap {
     // Motors
     public static VictorSP IntakeMotor;
     public static WPI_TalonSRX WristMotor;
-    // Pneumatics
-    // public static DoubleSolenoid IntakeWristPiston;
-    // public static DoubleSolenoid IntakeHatchPiston;
 
     /* CLIMB */
     // Motors
@@ -67,8 +63,12 @@ public class RobotMap {
     // Pneumatics
     public static DoubleSolenoid ClimbUpperPiston;
     public static DoubleSolenoid ClimbLowerPiston;
+    public static DoubleSolenoid ClimbFrontPistons;
+    public static DoubleSolenoid WristLockPistons;
+
 
     public static void init() {
+
         DrivetrainLeftMaster = new WPI_TalonSRX(Constants.kDrivetrainLeftMasterID); // Front Left Motor
         DrivetrainLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The DT Encoder
         DrivetrainLeftMaster.setInverted(false); // Tell the motor that it isn't inverted (backwards)
@@ -76,14 +76,16 @@ public class RobotMap {
         DrivetrainLeftMaster.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainLeftMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
         DrivetrainLeftMaster.setSubsystem("Drivetrain");
+        DrivetrainLeftMaster.setNeutralMode(NeutralMode.Brake);
 
         DrivetrainLeftSlave = new WPI_VictorSPX(Constants.kDrivetrainLeftSlaveID); // Rear Left Motor
-        DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
+        // DrivetrainLeftSlave.follow(DrivetrainLeftMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.setInverted(InvertType.FollowMaster); // Follow Your Master (Above)
         DrivetrainLeftSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0);
         DrivetrainLeftSlave.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainLeftSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
         DrivetrainLeftSlave.setSubsystem("Drivetrain");
+        DrivetrainLeftSlave.setNeutralMode(NeutralMode.Brake);
 
         DrivetrainRightMaster = new WPI_TalonSRX(Constants.kDrivetrainRightMasterID); // Front Right Motor
         DrivetrainRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder); // The Encoder
@@ -91,22 +93,27 @@ public class RobotMap {
         DrivetrainRightMaster.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
         DrivetrainRightMaster.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainRightMaster.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightMaster.setNeutralMode(NeutralMode.Brake);
         DrivetrainRightMaster.setSubsystem("Drivetrain");
 
         DrivetrainRightSlave = new WPI_VictorSPX(Constants.kDrivetrainRightSlaveID); // Rear Right Motor
-        DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
+        // DrivetrainRightSlave.follow(DrivetrainRightMaster); // Follow Your Master (Above)
         DrivetrainRightSlave.setInverted(InvertType.FollowMaster); // Follow Your Master
         DrivetrainRightSlave.configNeutralDeadband(Constants.kNeutralDeadband, 0); // Sets the motor's deadband (above)
         DrivetrainRightSlave.configPeakOutputForward(Constants.kMaxSpeed);
         DrivetrainRightSlave.configPeakOutputReverse(-Constants.kMaxSpeed);
+        DrivetrainRightSlave.setNeutralMode(NeutralMode.Brake);
         DrivetrainRightSlave.setSubsystem("Drivetrain");
 
-        DrivetrainDifferential = new DifferentialDrive(DrivetrainLeftMaster, DrivetrainRightMaster); // Drive Varible
+        SpeedControllerGroup leftDrive = new SpeedControllerGroup(DrivetrainLeftMaster, DrivetrainLeftSlave);
+        SpeedControllerGroup rightDrive = new SpeedControllerGroup(DrivetrainRightMaster, DrivetrainRightSlave);
+
+        DrivetrainDifferential = new DifferentialDrive(leftDrive, rightDrive); // Drive Varible
         DrivetrainDifferential.setDeadband(Constants.kNeutralDeadband);
         DrivetrainDifferential.setMaxOutput(Constants.kMaxSpeed);
         DrivetrainDifferential.setSubsystem("Drivetrain");
 
-        DrivetrainShifter = new DoubleSolenoid(Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
+        DrivetrainShifter = new DoubleSolenoid(0,Constants.kDrivetrainShifterForwardID,Constants.kDrivetrainShifterReverseID);
         DrivetrainShifter.setSubsystem("Drivetrain");
 
         DrivetrainGyro = new AHRS(SPI.Port.kMXP);
@@ -117,49 +124,37 @@ public class RobotMap {
         ElevatorMotorMaster = new WPI_TalonSRX(Constants.kElevatorMasterID);
         ElevatorMotorMaster.setSubsystem("Elevator");
         ElevatorMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        ElevatorMotorMaster.setInverted(true);
+        ElevatorMotorMaster.setInverted(true);//True //Possibly Differnt between comp and practice
         ElevatorMotorMaster.configPeakOutputForward(Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configPeakOutputReverse(-Constants.kElevatorMaxSpeed);
         ElevatorMotorMaster.configNominalOutputForward(Constants.kElevatorMinSpeedUp);
         ElevatorMotorMaster.configNominalOutputReverse(Constants.kElevatorMinSpeedDown);
-        ElevatorMotorMaster.setSensorPhase(true);
-        //ElevatorMotorMaster.setSelectedSensorPosition(0); //Constants.kElevatorStartingHeightTicks
-        // ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
-        // ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
-        // ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
-
-        // ElevatorMotorSlave = new WPI_VictorSPX(Constants.kElevatorSlaveID);
-        // ElevatorMotorSlave.setSubsystem("Elevator");
-        // ElevatorMotorSlave.follow(ElevatorMotorMaster);
-        // ElevatorMotorSlave.setInverted(InvertType.FollowMaster);
-        // ElevatorMotorSlave.configPeakOutputForward(Constants.kMaxElevatorSpeed);
-        // ElevatorMotorSlave.configPeakOutputReverse(-Constants.kMaxElevatorSpeed);
-
-        ElevatorShifter = new DoubleSolenoid(1, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
+        ElevatorMotorMaster.setSensorPhase(false);
+        ElevatorMotorMaster.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        ElevatorMotorMaster.config_kD(0, Constants.kElevatorDGain);
+        ElevatorMotorMaster.config_kP(0, Constants.kElevatorPGain);
+        ElevatorMotorMaster.config_kI(0, Constants.kElevatorIGain);
+        ElevatorMotorMaster.setSelectedSensorPosition(0);
+        // ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
+       
+        ElevatorShifter = new DoubleSolenoid(0, Constants.kElevatorShifterForwardID, Constants.kElevatorShifterReverseID);
         ElevatorShifter.setSubsystem("Elevator");
 
         ElevatorTopLimit = new DigitalInput(Constants.kElevatorTopLimitID);
         ElevatorTopLimit.setSubsystem("Elevator");
 
-        ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
-        ElevatorBottomLimit.setSubsystem("Elevator");
-
-        ElevatorSonic = new Ultrasonic(8, 9);
-        ElevatorSonic.setAutomaticMode(true);
-        ElevatorSonic.setDistanceUnits(Unit.kInches);
-        ElevatorSonic.setEnabled(true);
-        ElevatorSonic.setSubsystem("Elevator");
+        // ElevatorBottomLimit = new DigitalInput(Constants.kElevatorBottomLimitID);
+        // ElevatorBottomLimit.setSubsystem("Elevator");
         // #endregion
 
         // #region Intake
         IntakeMotor = new VictorSP(Constants.kIntakeMotorID);
         IntakeMotor.setSubsystem("Intake");
+        
         WristMotor = new WPI_TalonSRX(Constants.kWristMotorID);
         WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
-        // WristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         WristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
-        WristMotor.setSensorPhase(false);
+        WristMotor.setSensorPhase(true);
         WristMotor.configPeakOutputForward(0.95);
         WristMotor.configPeakOutputReverse(-0.95);
         WristMotor.configNominalOutputForward(0.05);
@@ -169,28 +164,28 @@ public class RobotMap {
         WristMotor.config_kD(0, Constants.kWristDGain);
         WristMotor.config_kP(0, Constants.kWristPGain);
         WristMotor.config_kI(0, Constants.kWristIGain);
-
-        // IntakeWristPiston = new DoubleSolenoid(Constants.kIntakeWristForwardID, Constants.kIntakeWristReverseID);
-        // IntakeWristPiston.setSubsystem("Intake");
-
-        // IntakeHatchPiston = new DoubleSolenoid(Constants.kIntakeHatchPistonForwardID, Constants.kIntakeHatchPistonReverseID);
-        // IntakeHatchPiston.setSubsystem("Intake");
+        WristMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        WristMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        WristMotor.setNeutralMode(NeutralMode.Brake);
         // #endregion
 
         // #region Climb
-        
         ClimbMotor = new VictorSP(Constants.kClimbMotorID);
         ClimbMotor.setInverted(true);
         ClimbMotor.setSubsystem("Climb");
 
-        // Stage 1 - Should fire first
-        ClimbLowerPiston = new DoubleSolenoid(Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
+        ClimbLowerPiston = new DoubleSolenoid(0,Constants.kClimbLowerForwardID, Constants.kClimbLowerReverseID);
         ClimbLowerPiston.setSubsystem("Climb");
 
-        // Stage 2 - Should fire Second
-        ClimbUpperPiston = new DoubleSolenoid(Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
+        // Stage 2 - Should fire Second Constants.kClimbUpperForwardID 
+        ClimbUpperPiston = new DoubleSolenoid(0,Constants.kClimbUpperForwardID, Constants.kClimbUpperReverseID);
         ClimbUpperPiston.setSubsystem("Climb");
         
+        ClimbFrontPistons = new DoubleSolenoid(1, Constants.kClimbFrontForwardID,Constants.kClimbFrontReverseID);
+        ClimbFrontPistons.setSubsystem("Climb");
+
+        WristLockPistons = new DoubleSolenoid(1, Constants.kWristLockPistonForwardID,Constants.kWristLockPistonReverseID);
+        WristLockPistons.setSubsystem("Intake");
         // #endregion Climb
     }
 }

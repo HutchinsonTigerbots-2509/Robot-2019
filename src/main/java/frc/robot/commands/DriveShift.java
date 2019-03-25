@@ -7,28 +7,35 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
 /**
  * Add your docs here.
  */
 public class DriveShift extends InstantCommand {
-  private Drivetrain mDriveTrain = new Drivetrain();
+  private Drivetrain sDriveTrain = Robot.sDrivetrain;
   private boolean isShifted;
   /**
    * Add your docs here.
    */
   public DriveShift() {
     super();
-    requires(mDriveTrain);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    isShifted = mDriveTrain.isShifted();
-    mDriveTrain.setHighGear(!isShifted);
+    if(sDriveTrain.getCurrentShifter() == Value.kReverse) {
+      sDriveTrain.shiftToHigh();
+    }
+    // else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
+    else{
+      sDriveTrain.shiftToLow();
+    }
   }
 
 }

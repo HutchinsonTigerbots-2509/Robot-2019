@@ -1,10 +1,7 @@
-package frc.robot.subsystems; // package declaration
-
-// imports
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -15,276 +12,229 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.ElevatorMoveHighGear;
-import frc.robot.commands.ElevatorMoveLowGear;
-import frc.robot.Robot;
-import frc.robot.commands.ManualElevatorMove;
-
+import frc.robot.commands.elevator.ElevatorMoveHighGear;
+import frc.robot.commands.elevator.ElevatorMoveLowGear;
+import frc.robot.commands.elevator.ElevatorShift;
+import frc.robot.commands.elevator.HeightToggle;
+import frc.robot.commands.elevator.ZeroElevator;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * The Elevator Subsystem is where code that uses the lift mechanism
- * is stored and can be accessed and used throughout the project
+ * The Elevator Subsystem is where code that uses the lift mechanism is stored
+ * and can be accessed and used throughout the project
  * 
- * <h3> JavaDoc Categories for Functions: </h3>
- * <li> + Lift Methods - Will use the lift mechanism
- * <li> + Shifter - Will have something to do with the shifter for the spool masters
- * <li> + Update Voids - Updates something, like data or sensors
- * <li> + Elevator Getters - Will return a value or an object
+ * <h3>JavaDoc Categories for Functions:</h3>
+ * <li>+ Lift Methods - Will use the lift mechanism
+ * <li>+ Shifter - Will have something to do with the shifter for the spool
+ * masters
+ * <li>+ Update Voids - Updates something, like data or sensors
+ * <li>+ Elevator Getters - Will return a value or an object
  * 
  * @author DJ, Tony, Cole G, and Nate
  */
 public class Elevator extends Subsystem {
-  // RobotMap Objects
-  private final WPI_TalonSRX SpoolMaster = RobotMap.ElevatorMotorMaster;
-  private final WPI_TalonSRX Wrist = RobotMap.WristMotor;
-  // private final WPI_VictorSPX SpoolSlave = RobotMap.ElevatorMotorSlave;
+  private final WPI_TalonSRX mSpoolMotor = RobotMap.ElevatorMotorMaster;
   private final DoubleSolenoid mShifter = RobotMap.ElevatorShifter;
   private final DigitalInput mTopLimit = RobotMap.ElevatorTopLimit;
   private final DigitalInput mBottomLimit = RobotMap.ElevatorBottomLimit;
-  // ShuffleBoard Tab
-  private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
-  // Constants
-  private final double kPulseNumber = Constants.kPulsesPerRotation;
-  private final double kMaxHeight = Constants.kMaxHeight;
-  private final double kMinHeight = Constants.kMinHeight;
-  private final double kHomePositionInches = Constants.kHomePositionInches;
-  private final double kSpoolDiam = Constants.kSpoolDiam;
-  private final double PGain = Constants.kElevatorPGain;
-  private final double IGain = Constants.kElevatorPGain;
-  private final double DGain = Constants.kElevatorPGain;
-  private final double kMaxSpeed = Constants.kElevatorMaxSpeed;
-  private final double ElevatorSensitivity = Constants.kElevatorSensitivity;
-  private final double kTicksPerInch = Constants.kElevatorHighGearTicksPerInch;
-  // Pneumatics Values
-  private final Value kReverse = Value.kReverse;
-  private final Value kForward = Value.kForward;
-  private final Value kHighGear = Value.kReverse;
-  private final Value kLowGear = Value.kForward;
-  // Private PID Varibles
-  private double mError;
-  private double mPerpotional;
-  private double mDerivative;
-  private double mIntegral = 0;
-  private double mPerviousError;
-  private double mEncoderTargetHieght;
-  public String state;
+  // private final ShuffleboardTab mElevatorTab = Shuffleboard.getTab("Elevator");
+  private Value kHighGear = Value.kReverse;
+  private Value kLowGear = Value.kForward;
+  private double mEncoderTargetTicks;
+  public String state = "Hatch";
+  private ShuffleboardTab mDriveTab;
 
   /**
-   * Adds children to the object so we can play with components
-   * in test mode
+   * Adds children to the object so we can play with components in test mode
    */
   public Elevator() {
     setSubsystem("Elevator");
-    addChild(SpoolMaster);
-    // addChild(SpoolSlave);
+    addChild(mSpoolMotor);
     addChild(mShifter);
     addChild(mTopLimit);
-    addChild(mBottomLimit);
+  }
+  
+  @Override
+  public void initDefaultCommand() {
   }
 
-  /**
-   * Stops both the Master and Slave motors
-   */
-  public void StopMotors() {
-    SpoolMaster.stopMotor();
-    // SpoolSlave.stopMotor();
+  /* Elevator Move Functions*/
+  
+  public void setPositionHighGear(double targetInchesOffGround) {
+    double targetDistance = targetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDistance * 274.38312189; // 215.811165286 //274.38312189
+    mEncoderTargetTicks = TargetTicks;
+    // SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    // SmartDashboard.putNumber("power", mSpoolMotor.get());
+    mSpoolMotor.set(ControlMode.Position, TargetTicks);
+    CheckBottomSwitch();
   }
 
-  /**
-   * Gets height we want the arm to move to in encoder counts
-   */
-  public double TargetHeight() {
-    // if (CoOpStick.getRawAxis(1) != 0) {
-      //mEncoderTargetHieght = mEncoderTargetHieght + ((ElevatorSensitivity) * (0.5 * -1));
-
-    // } else if (CoOpStick.getRawButton(4)) {
-    //   mEncoderTargetHieght = (kMaxHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Max
-    // } else if (CoOpStick.getRawButton(2)) {
-    //   mEncoderTargetHieght = (kMidHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Mid
-    // } else if (CoOpStick.getRawButton(1)) {
-    //   mEncoderTargetHieght = (kMinHeight * ((kSpoolDiam * Math.PI) / kPulseNumber));// Min
-    // }
-    return mEncoderTargetHieght;
+  public void setPositionLowGear(double targetInchesOffGround) {
+    double targetDisplacement = targetInchesOffGround - Constants.kHomePositionInches;
+    double TargetTicks = targetDisplacement * 860; //831.170774803
+    mEncoderTargetTicks = TargetTicks;
+    // SmartDashboard.putNumber("TargetTicks", TargetTicks);
+    // SmartDashboard.putNumber("power", mSpoolMotor.get());
+    mSpoolMotor.set(ControlMode.Position, TargetTicks);
+    CheckBottomSwitch();
   }
-
+  
+  /* Elevator Shifter Functions */
   /**
-   * Calculates PID Speed to send to the master
+   * Toggles the Gear Shift
+   * @author Cole & Tony
    */
-  public double PIDFinal() {
-    mError = TargetHeight() - CurrentHeight();
-    mPerpotional = mError * PGain;
-    mDerivative = (mError - mPerviousError) * DGain;
-    mIntegral += (mError * .02);
-    mPerviousError = mError;
-    UpdateTelemetry();
-    return (mPerpotional + mDerivative + (mIntegral * IGain));
-  }
-
-  /**
-   * Trys to follow goal height, by sending PID speeds to motors
-   */
-  public void ChaseTarget() {
-    SpoolMaster.set(ControlMode.PercentOutput, (Math.min(1 * PIDFinal(), Constants.kElevatorMaxSpeed)));
-  }
-
-  /**
-   * Changes gear when arm is going down Smith wanted but not currently used
-   */
-  public void ChaseTargetGearChanger() {
-    if (PIDFinal() > 0) {
-      mShifter.set(kForward);
-      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+  public void setHighGear() {
+    if (isHighGear()) {
+      mShifter.set(kLowGear);
     } else {
-      mShifter.set(kReverse);
-      SpoolMaster.set(ControlMode.PercentOutput, (1 * PIDFinal()));
+      mShifter.set(kHighGear);
     }
   }
 
   /**
-   * Shifts the Gear to Low
-   * 
-   * @author Cole
-   * @author Tony
+   * Sets the gear of the elevator
+   * @author Cole & Tony
    */
   public void setHighGear(boolean mHighGear) {
     if (mHighGear) {
-      mShifter.set(Value.kForward);
+      mShifter.set(kHighGear);
     } else {
-      mShifter.set(Value.kReverse);
+      mShifter.set(kLowGear);
     }
   }
 
-  /**
-   * Returns a boolean and if True means that it is shifted
-   * @author Cole
-   * @author Tony
-   */
-  public boolean isHighGear() {
-    if (mShifter.get() == kHighGear) {
-      // mElevatorTab.add("Elevator Shifter", getGear());
-      // SmartDashboard.putString("Elevator Shifter", "High Gear");
-      return true;
-    } else {
-      // mElevatorTab.add("Elevator Shifter", getGear());
-      // SmartDashboard.putString("Elevator Shifter", "Low Gear");
-      return false;
-    }
+  public double getElevatorInches(){
+    return mSpoolMotor.getSelectedSensorPosition() / Constants.kElevatorLowGearTicksPerInch;
   }
-
-  /**
-   * Returns a string of which gear the Elevator is in
-   * @return "High Gear" || "Low Gear"
-   */
-  public String getGear() {
-    if (mShifter.get() == kHighGear) {
-      return "High Gear";
-    } else {
-      return "Low Gear";
-    }
-  }
-
-  /**
-   * Sets the SpoolMasters's enocder position to zero
-   */
-  public void ZeroSensor() {
-    SpoolMaster.setSelectedSensorPosition(0);
-  }
-
   /**
    * Updates the telemetry in the Elevator Subsystems to the Shuffleboard. Option
    * for the smartdashboard has been removed.
    */
   public void UpdateTelemetry() {
-    //mElevatorTab.add("Manual Move", ManualElevatorMove());
-    mElevatorTab.add("Encoder", SpoolMaster.getSelectedSensorPosition());
-    mElevatorTab.add("Top Limit", mTopLimit.get());
-    mElevatorTab.add("Bottom Limit", mBottomLimit.get());
-    mElevatorTab.add("Shifter", getGear());
-    mElevatorTab.add("Perpotional", mPerpotional);
-    mElevatorTab.add("Derivative", mDerivative);
-    mElevatorTab.add("Integral", mIntegral);
-    mElevatorTab.add("State", state);
+    // // Subsystem Status
+    mDriveTab = Shuffleboard.getTab("Drive");
+    mDriveTab.add("Elevator Shift", new ElevatorShift());
+    // mElevatorTab.add("Encoder", mSpoolMotor.getSelectedSensorPosition());
+    // mElevatorTab.add("Height (In)", CurrentTicks());
+    // mElevatorTab.add("Top Limit", mTopLimit.get());
+    // mElevatorTab.add("Bottom Limit", mBottomLimit.get());
+    // mElevatorTab.add("Shifter", getGear());
+    // mElevatorTab.add("Perpotional", Constants.kElevatorPGain);
+    // mElevatorTab.add("Derivative", Constants.kElevatorIGain);
+    // mElevatorTab.add("Integral", Constants.kElevatorDGain);
+    // // mElevatorTab.add("State", state);
+    // // Subsystem Objects
+    // mElevatorTab.add(mSpoolMotor);
+    // mElevatorTab.add(mTopLimit);
+    // mElevatorTab.add(mBottomLimit);
+    // mElevatorTab.add(mShifter);
+    // // Subsystem Commands
+    // mElevatorTab.add("Elevator Hatch High", new ElevatorMoveHighGear(Constants.kHatchHigh));
+    // mElevatorTab.add("Elevator Hatch Mid", new ElevatorMoveHighGear(Constants.kHatchMid));
+    // mElevatorTab.add("Elevator Hatch Low", new ElevatorMoveHighGear(Constants.kHatchLow));
+    // mElevatorTab.add("Elevator Ball High", new ElevatorMoveHighGear(Constants.kBallHigh));
+    // mElevatorTab.add("Elevator Ball Mid", new ElevatorMoveHighGear(Constants.kBallMid));
+    // mElevatorTab.add("Elevator Ball Low", new ElevatorMoveHighGear(Constants.kBallLow));
+    // mElevatorTab.add("Elevator HAB", new ElevatorMoveLowGear(Constants.kHABHeight));
+    // mElevatorTab.add("Elevator 12", new ElevatorMoveHighGear(12));
+    // mElevatorTab.add("Elevator Shift", new ElevatorShift());
+    // mElevatorTab.add("Elevator Hieght", new HeightToggle());
+    // mElevatorTab.add("Elevator Zero", new ZeroElevator());
+    //
     Shuffleboard.update();
   }
 
-  public double getTargetHeight(){
-    return mEncoderTargetHieght;
-  }
+  /* Current Status */
 
-  public void setTargetHeight(double height){
-    mEncoderTargetHieght = height;
+  public double CurrentTicks() {
+    return mSpoolMotor.getSelectedSensorPosition();
   }
-
-  /**
-   * Gets Current Height in encoder counts
-   */
-  public double CurrentHeight() {
-    return SpoolMaster.getSelectedSensorPosition();
-    // * ((kSpoolDiam * Math.PI) / kPulseNumber);
-    // return ElevatorEncoder.get()*((kSpoolDiam*Math.PI)/kPulseNumber);
-  }
-
-  /**
-   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
-   * control loop.
-   * @author Nate
-   */
-  public void setPositionHighGear(double targetInchesOffGround) {
-    double targetDistance =targetInchesOffGround-kHomePositionInches;
-    double TargetTicks = targetDistance * 274.38312189; //215.811165286  //274.38312189
-    SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", SpoolMaster.get());
-    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  public double getTargetTicks() {
+    return mEncoderTargetTicks;
   }
   /**
-   * This is similar to `ChaseTarget()` but instead uses the TalonSRX built in PID
-   * control loop.
-   * @author Nate
+   * Returns a string of which gear the Elevator is in
+   * 
+   * @return "High Gear" or "Low Gear"
    */
-  public void setPositionLowGear(double targetInchesOffGround) {
-    double targetDistance =targetInchesOffGround-kHomePositionInches;
-    double TargetTicks = targetDistance *831.170774803; //215.811165286  //274.38312189
-    SmartDashboard.putNumber("TargetTicks", TargetTicks);
-    SmartDashboard.putNumber("power", SpoolMaster.get());
-    SpoolMaster.set(ControlMode.Position, TargetTicks);
+  public String getGear() {
+    if (mShifter.get() == kHighGear) return "High Gear";
+    else return "Low Gear";
+  }
+  /**
+   * Returns a boolean and if True means that it is shifted
+   * 
+   * @author Cole & Tony
+   */
+  public boolean isHighGear() {
+    if (mShifter.get() == kHighGear) return true;
+    else return false;
+  }
+
+  /* Sensors */
+  /**
+   * Sets the SpoolMasters's enocder position to zero
+   */
+  public void ZeroSensor() {
+    mSpoolMotor.setSelectedSensorPosition(0);
   }
 
   /**
-   * This will return `true` if either the left or right limit switches return
-   * true. Or simply are triggered.
-   * @return Left Limit Or Right Limit
+   * Resets the SpoolMaster Encoder position if the Reverse
+   * limit switch is triggered
    */
-  public boolean getLimitsValue() {
-    return (mTopLimit.get() || mBottomLimit.get());
+  public void CheckBottomSwitch(){
+    if(mSpoolMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      ZeroSensor();
+    }
   }
-  public void Reset_Elevator(){
-    SpoolMaster.setSelectedSensorPosition(0);
-  }
+  
+  /* Motor */
   /**
-   * * Will return the inches off the ground that the elevator is
-   * @author Nate
-   * @return Current Height in Inches
+   * Stops both the motors
    */
-  public double getInchesOffGround() {
-    double currentRawPosition = SpoolMaster.getSelectedSensorPosition();
-    return (currentRawPosition / kTicksPerInch) + kHomePositionInches;
+  public void StopMotors() {
+    mSpoolMotor.stopMotor();
   }
 
-  @Override
-  public void initDefaultCommand() {
+  public void ElevatorUp(){
+    mSpoolMotor.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedUp);
+    CheckBottomSwitch();
   }
-  public void BottomSafetyStop(){
-    // if(isHighGear()){
-    // SpoolMaster.set(ControlMode.Position, (Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorHighGearTicksPerInch);
-    // }else{
-    new ElevatorMoveLowGear(8);
-    // SpoolMaster.set(ControlMode.Position, 4*(Constants.kHomePositionInches+Constants.kHomePostionFromLowestPostion)*Constants.kElevatorLowGearTicksPerInch);
-    // }
-    // if(RobotMap.ElevatorTopLimit.get() == true){
-    //   Robot.trigger = true;
-    //   SpoolMaster.stopMotor();
-    // }else if(RobotMap.ElevatorTopLimit.get() == false && Robot.trigger == false){
-    //   SpoolMaster.set(ControlMode.Position, 5000);
-    // }
+
+  public void ElevatorDown(){
+    mSpoolMotor.set(ControlMode.PercentOutput, Constants.kElevatorMinSpeedDown);
+    CheckBottomSwitch();
+  }
+
+  /**
+   * Requires Button 10 of the Joystick to be pressed to activate the movements
+   * @param stick
+   */
+  public void ManualMove(Joystick stick){
+    if(stick.getRawAxis(1) < -0.2 && stick.getRawButton(10)){
+      mSpoolMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(1));
+    }else if(stick.getRawAxis(1) > 0.2 && stick.getRawButton(10)){
+      mSpoolMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(1));
+    }else{
+      mSpoolMotor.set(ControlMode.PercentOutput, 0);
+    }
+    CheckBottomSwitch();
+  }
+  public void ManualMoveMark2(Joystick stick){
+    if(stick.getRawAxis(1) < -0.2){
+      mSpoolMotor.set(ControlMode.PercentOutput, 1);
+    }else if(stick.getRawAxis(1) > 0.2){
+      mSpoolMotor.set(ControlMode.PercentOutput, -1);
+    }else{
+      mSpoolMotor.set(ControlMode.PercentOutput, 0);
+    }
+    CheckBottomSwitch();
+  }
+
+  public WPI_TalonSRX getMotor(){
+    return mSpoolMotor;
   }
 }

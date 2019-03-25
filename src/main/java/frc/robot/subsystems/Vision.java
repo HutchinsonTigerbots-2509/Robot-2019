@@ -30,6 +30,7 @@ public class Vision extends Subsystem {
   private NetworkTableEntry mTablevert = mTable.getEntry(Constants.kLimelightTargetvert);
   private NetworkTableEntry mTablehor;
   private NetworkTableEntry mTableCorners = mTable.getEntry("tcornx");
+  private NetworkTableEntry mTableTargetFound = mTable.getEntry(Constants.kLimelightTargetID);
   private double mTargetX = 0;
   private double mTargetY = 0;
   private double mTargetArea = 0;
@@ -42,10 +43,10 @@ public class Vision extends Subsystem {
   public double DistanceToDrive;
   public double AngleOne;
   public double Turn_angle = 0;
-  
+  public double mTargetfound = 0;
  
 
-  private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
+  // private ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
 
   /**
    * Returns the NetworkTable for the Limelight Camera
@@ -77,6 +78,11 @@ public class Vision extends Subsystem {
     mTargetHor = mTablehor.getDouble(0.0);
     return mTargetHor;
   }
+  public double isTargetfound(){
+    mTableTargetFound = mTable.getEntry(Constants.kLimelightTargetID);
+    mTargetfound = mTableTargetFound.getDouble(0.0);
+    return mTargetfound;
+  }
  
 
   /**
@@ -101,9 +107,6 @@ public class Vision extends Subsystem {
     mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID);
     mTargetArea = mTableArea.getDouble(0.0);
     return mTargetArea;
-    //mTableArea = mTable.getEntry(Constants.kLimelightTargetAreaID); 
-    //mTargetArea = mTableX.getDouble(0.0); 
-  //return mTargetArea; 
   }
   public double getTargetSkew() {
     mTableS = mTable.getEntry(Constants.kLimelightTargetAreaID);
@@ -124,24 +127,17 @@ public class Vision extends Subsystem {
     DistanceToDrive = Math.sqrt(Math.pow((DistanceOne - Constants.kTargetDistanceFromTarget), 2) + Math.pow(DistanceTwo, 2));
     AngleOne = Math.atan((DistanceOne - Constants.kTargetDistanceFromTarget)/(DistanceTwo));
     Turn_angle = (90 - thetaAngle + AngleOne);
-
     return Math.toDegrees(Turn_angle);
-
-
-
   }
   /**
    * Updateds the Limelight camera settings via the NetworkTable.
    */
   public void UpdateLimelightSettings() {
     mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
-    mTable.getEntry("camMode").setNumber(Constants.kLimelightMode);
-    mTable.getEntry("stream").setNumber(Constants.kLimelightStream);
-    //mTable.getEntry("pipeline").setNumber(0);
-  }
-
-  @Override
-  public void initDefaultCommand() {
+    mTable.getEntry("camMode").setNumber(0);
+    mTable.getEntry("stream").setNumber(0);
+    mTable.getEntry("pipeline").setNumber(6);
+    
   }
 
   private void PullFromTable() {
@@ -165,5 +161,9 @@ public class Vision extends Subsystem {
   //   mVisionTab.add("Target X", mTableX.getDouble(0));
   //   mVisionTab.add("Target Y", mTableY.getDouble(0));
   //   mVisionTab.add("Target Area", mTableArea.getDouble(0));
+  }
+
+  @Override
+  public void initDefaultCommand() {
   }
 }

@@ -1,19 +1,14 @@
 package frc.robot.subsystems; // package declaration
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
-
-// imports
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -25,17 +20,41 @@ import frc.robot.RobotMap;
  * @author CRahne, Tony, and Cole G
  */
 public class Intake extends Subsystem {
-  private final VictorSP mMotor = RobotMap.IntakeMotor;
-  private final WPI_TalonSRX mWrist = RobotMap.WristMotor;
-  private final ShuffleboardTab mIntakeTab = Shuffleboard.getTab("Intake Tab");
-  private final double kWristTicksPerDegree = Constants.kWristTicksPerDegree;
+  private final VictorSP mIntakeMotor = RobotMap.IntakeMotor;
+  private final WPI_TalonSRX mWristMotor = RobotMap.WristMotor;
+  // private final ShuffleboardTab mIntakeMotorTab = Shuffleboard.getTab("Intake Tab");
+  private final double kWristTicksPerDegree = Constants.kTicksPerDegree;
+  private double mWristTargetTicks;
+  private final int kWristMinDegree = Constants.kWristMinDegree;
+  private final int kWristMaxDegree = Constants.kWristMaxDegree;
 
   public Intake() {
     setSubsystem("Intake");
-    addChild(mMotor);
-    addChild(mWrist);
-    // addChild(mWristPiston);
-    // addChild(mHatchOutPiston);
+    addChild(mIntakeMotor);
+    addChild(mWristMotor);
+  }
+
+  /**
+   * Will take a ball in
+   * @author CRahne
+   */
+  public void In() {
+    mIntakeMotor.set(-Constants.kMaxSpeed);
+  }
+  /**
+   * Will shoot the ball out
+   * @author CRahne
+   */
+  public void Out(){
+    mIntakeMotor.set(Constants.kMaxSpeed);
+  }
+
+  /**
+   * Stops the intake motors
+   * @author Tony
+   */
+  public void IntakeMotorStop() {
+    mIntakeMotor.stopMotor();
   }
 
   /**
@@ -44,14 +63,59 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void WristUp() {
-    mWrist.set(ControlMode.PercentOutput,0.9);
+    mWristMotor.set(ControlMode.PercentOutput, 0.35);
+    CheckLimitSwitches();
   }
+  
   /**
    * moves the intake wrist down
    * @author Tony
    */
   public void WristDown(){
-    mWrist.set(ControlMode.PercentOutput,-0.5);//-0.9
+    mWristMotor.set(ControlMode.PercentOutput, -0.35);
+    CheckLimitSwitches();
+  }
+
+  public void WristMove(double targetAngle){
+    mWristTargetTicks = targetAngle* kWristTicksPerDegree;
+    // SmartDashboard.putNumber("Target Angle", mWristTargetTicks/kWristTicksPerDegree);
+    // SmartDashboard.putNumber("Target RAW", mWristTargetTicks);
+    mWristMotor.set(ControlMode.Position, mWristTargetTicks);
+    CheckLimitSwitches();
+  }
+  
+  public void ManualMove(Joystick stick){
+    if(stick.getRawAxis(5) < -0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else if(stick.getRawAxis(5) > 0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else{
+      mWristMotor.set(ControlMode.PercentOutput, 0);
+    }
+    CheckLimitSwitches();
+  }
+  
+
+  public void ManualMoveMark2(Joystick stick){
+    if(stick.getRawAxis(5) < -0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else if(stick.getRawAxis(5) > 0.2){
+      mWristMotor.set(ControlMode.PercentOutput, -stick.getRawAxis(5));
+    }else{
+      mWristMotor.set(ControlMode.PercentOutput, 0);
+    }
+    CheckLimitSwitches();
+  }
+
+
+  public void IntakeInManual(Joystick stick){
+    if(stick.getRawAxis(2) > 0.2){
+      In();
+    }else if(stick.getRawAxis(3) > 0.2){
+      Out();
+    }else{
+      mIntakeMotor.set(0);
+    }
   }
 
   /**
@@ -59,77 +123,62 @@ public class Intake extends Subsystem {
    * @author Tony
    */
   public void StopWrist(){
-    mWrist.set(ControlMode.PercentOutput,0);
+    mWristMotor.stopMotor();
+    CheckLimitSwitches();
   }
-  public void WristMove(double targetAngle){
-    double rawTargetTicks = targetAngle* kWristTicksPerDegree;
-    SmartDashboard.putNumber("Target Angle", rawTargetTicks/kWristTicksPerDegree);
-    SmartDashboard.putNumber("Target RAW", rawTargetTicks);
-    SmartDashboard.putNumber("Current Angle", CurrentAngle());
-    mWrist.set(ControlMode.Position, rawTargetTicks);
-  }
+
   /**
-   * Will take a ball in
-   * @author CRahne
+   * Resets the SpoolMaster Encoder position if the Reverse
+   * limit switch is triggered
    */
-  public void In() {
-    mMotor.set(Constants.kMaxSpeed);
-  }
-  /**
-   * Will shoot the ball out
-   * @author CRahne
-   */
-  public void Out(){
-    mMotor.set(Constants.kMaxSpeed);
-  }
-  /**
-   * Stops the intake motors
-   * @author Tony
-   */
-  public void MotorStop() {
-    mMotor.stopMotor();
+  public void CheckLimitSwitches(){
+    if(!mWristMotor.getSensorCollection().isRevLimitSwitchClosed()){
+      // mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+      mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMinDegree);
+    }
+    if(!mWristMotor.getSensorCollection().isFwdLimitSwitchClosed()){
+     //mWristMotor.getSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+     mWristMotor.setSelectedSensorPosition((int)Math.round(kWristTicksPerDegree)*kWristMaxDegree);
+    }
   }
   
   /** 
    * Will update data on the shuffleboard tab for this class
    */
   public void UpdateTelemetry() {
-    mIntakeTab.add("Motor Speed", mMotor.get());
-    mIntakeTab.add("Wrist Position", mWrist.getSelectedSensorPosition());
-    mIntakeTab.add(mMotor);
-    mIntakeTab.add(mWrist);
+    // // Subsystems Status
+    // mIntakeMotorTab.add("Wrist Motor Speed", mWristMotor.get());
+    // mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
+    // // Subsystems Object
+    // mIntakeMotorTab.add(mIntakeMotor);
+    // mIntakeMotorTab.add("Motor Speed", mIntakeMotor.get());
+    // mIntakeMotorTab.add("Wrist Position", mWristMotor.getSelectedSensorPosition());
+    // mIntakeMotorTab.add(mIntakeMotor);
+    // mIntakeMotorTab.add(mWristMotor);
+    // // Subsystem Intake
+    // mIntakeMotorTab.add("Intake In", new IntakeIn());
+    // mIntakeMotorTab.add("Intake Out", new IntakeOut());
+    // mIntakeMotorTab.add("Wrist Up", new WristManualUp());
+    // mIntakeMotorTab.add("Wrist Down", new WristManualDown());
+
     Shuffleboard.update();
   }
   
-  /**
-   * Will return the intake motor
-   * @return Intake Motor
-   */
-  public VictorSP getIntakeMotor() {
-    return mMotor;
-  }
-  
-  /**
-   * Retruns the wrist motor;
-   * @return Wrist MotorS
-   */
-  public WPI_TalonSRX getWristMotor(){
-    return mWrist;
-  }
-
-  public double CurrentAngle(){
-    return (mWrist.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
-  }
-
-  public double getWristPower(){
-    return mWrist.get();
-  }
-  public double getWristVoltage(){
-    return mWrist.getBusVoltage();
-  }
-  
-  
   @Override
   public void initDefaultCommand() {
+  }
+
+  public double getCurrentAngle(){
+    return (mWristMotor.getSelectedSensorPosition()/Constants.kTicksPerDegree);
+  }
+  public double getCurrentWristTicks(){
+    return mWristMotor.getSelectedSensorPosition();
+  }
+
+  public WPI_TalonSRX getWrist(){
+    return mWristMotor;
+  }
+  public VictorSP getIntake(){
+    return mIntakeMotor;
   }
 }
