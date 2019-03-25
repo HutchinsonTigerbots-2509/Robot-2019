@@ -73,6 +73,7 @@ public class OI {
   // Wrist
   public JoystickButton mWristStart;
   public JoystickButton mWristManual;
+  public JoystickButton mCreepManual;
 
   /* SUBSYSTEMS */
   private Elevator sElevator;
@@ -130,8 +131,13 @@ public class OI {
     /* JOYSTICK BUTTONS */
     // Main Driver Joystick
   
-    mDriveShifter = new JoystickButton(mOpStick,7);
-    mDriveShifter.whenPressed(new ManualCreep());
+    mCreepManual = new JoystickButton(mOpStick,7);
+    mCreepManual.whenPressed(new ManualCreep());
+
+    mDriveShifter = new JoystickButton(mOpStick,1);
+    mDriveShifter.whenPressed(new DriveShift());
+
+
 
     // mClimb = new JoystickButton(mOpStick, 8);
     // mClimb.whenPressed(new ClimbAlt(mOpStick)); //COMMAND IS BAD WRIST PART

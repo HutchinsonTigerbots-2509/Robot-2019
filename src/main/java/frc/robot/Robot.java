@@ -181,6 +181,7 @@ public class Robot extends TimedRobot {
     }
     SmartDashboard.putNumber("Wrist Angle", RobotMap.WristMotor.getSelectedSensorPosition()/Constants.kWristTicksPerDegree);
     //oi.mDriveTab.add("Gyro Roll", RobotMap.DrivetrainGyro.getRoll());
+    SmartDashboard.putBoolean("Shifted?", sDrivetrain.getShiftBool());
   }
 
   /**

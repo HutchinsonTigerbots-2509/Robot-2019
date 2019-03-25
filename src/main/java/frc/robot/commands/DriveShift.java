@@ -9,8 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -29,12 +29,12 @@ public class DriveShift extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    if(sDriveTrain.getCurrentShifter() == Value.kReverse) {
-      sDriveTrain.shiftToHigh();
+    if(sDriveTrain.getShiftBool()){
+      RobotMap.DrivetrainShifter.set(Value.kReverse);
     }
     // else if(sDriveTrain.getCurrentShifter() == Value.kForward) {
     else{
-      sDriveTrain.shiftToLow();
+      RobotMap.DrivetrainShifter.set(Value.kForward);
     }
   }
 

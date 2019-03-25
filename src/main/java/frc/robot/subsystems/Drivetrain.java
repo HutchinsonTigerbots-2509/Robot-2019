@@ -293,6 +293,13 @@ public class Drivetrain extends Subsystem {
 	public Value getCurrentShifter() {
 		return mShifter.get();
 	}
+	public boolean getShiftBool(){
+		if(getCurrentShifter() == Value.kForward){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	/**
 	 * Returns the Shifter Object
