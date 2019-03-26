@@ -21,11 +21,11 @@ public class LockWristAuto extends CommandGroup {
     //addParallel(new WristMove(-95));
     addSequential(new ZeroWrist());
     addSequential(new ElevatorMoveHighGear(Constants.kHomePositionInches));
-    Timer.delay(1);
+    Timer.delay(2);
     addSequential(new LockWristExtend());
-    Timer.delay(0.5);
+    Timer.delay(1.5);
     addSequential(new LockWristRetract());
-    Timer.delay(0.5);
+    Timer.delay(2);
 
 
   }

@@ -15,17 +15,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.Climber;
 
-public class GyroClimb extends Command {
+public class GyroClimbHigh extends Command {
 
   private AHRS gyro = RobotMap.DrivetrainGyro;
   private Climber sClimb = Robot.sClimb;
-  double SpeedGain = 0.07;
+  double SpeedGain = 0.0;
   double ElevatorSpeed;
   private Joystick stick;
 
-  public GyroClimb() {
+  public GyroClimbHigh() {
 
   }
   @Override
@@ -36,14 +37,20 @@ public class GyroClimb extends Command {
     sClimb.StageTwoStart();
     stick = Robot.oi.getOperatorStick();
 
+    if(RobotMap.ElevatorShifter.get() == Value.kForward){ //Allows us to change the gain depending on the elevator gear
+      SpeedGain = 0.07;
+    } else {
+       SpeedGain = 0.067;
+    }
   }
   @Override
   protected void execute() {
 
     // SmartDashboard.sen(gyro, gyro.getRoll());
+    
     ElevatorSpeed = (gyro.getRoll()) * SpeedGain;
     
-    if(gyro.getRoll() < 30){
+    if(gyro.getRoll() < 30 && RobotMap.ElevatorMotorMaster.getSelectedSensorPosition() < 20500){
       if(ElevatorSpeed > 0.4 || ElevatorSpeed < -0.4){
         RobotMap.ElevatorMotorMaster.set(ControlMode.PercentOutput, ElevatorSpeed);
       }else{

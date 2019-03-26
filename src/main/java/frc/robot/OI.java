@@ -11,7 +11,8 @@ import frc.robot.commands.ElevatorWristMoveAlt;
 import frc.robot.commands.climb.ClimbRetract;
 import frc.robot.commands.climb.ExtendBack1;
 import frc.robot.commands.climb.ExtendBack2;
-import frc.robot.commands.climb.GyroClimb;
+import frc.robot.commands.climb.GyroClimbHigh;
+import frc.robot.commands.climb.GyroClimbLow;
 import frc.robot.commands.climb.ManualCreep;
 import frc.robot.commands.climb.PrepareToClimb;
 import frc.robot.commands.climb.RetractStageOne;
@@ -27,7 +28,6 @@ import frc.robot.commands.elevator.StartPosition;
  * interface to the commands and command groups that allow control of the robot.
  */
 import frc.robot.commands.vision.FollowTarget;
-import frc.robot.commands.wrist.LockWrist;
 import frc.robot.commands.wrist.LockWristAuto;
 import frc.robot.commands.wrist.LockWristExtend;
 import frc.robot.commands.wrist.LockWristRetract;
@@ -231,9 +231,10 @@ public class OI {
     // mDriveTab.add("Lock Wrist", new LockWrist());
     // mDriveTab.add("2 (Extend Back Pistons)", new ExtendBackPistons());
     mDriveTab.add("Prepare to Climb (1)", new PrepareToClimb());
-    mDriveTab.add("Gyro Climb (2)", new GyroClimb());
-    mDriveTab.add("Extend Top Back Piston (2)", new ExtendBack1());
-    mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
+    mDriveTab.add("Gyro Climb High (2)", new GyroClimbHigh());
+    mDriveTab.add("Gyro Climb Low (2)", new GyroClimbLow());
+    // mDriveTab.add("Extend Top Back Piston (2)", new ExtendBack1());
+    // mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
     // mDriveTab.add("Retract Top Back Piston (3 or 4)", new RetractStageOne());
     // mDriveTab.add("Retract Bottom Back Piston (3 or 4)", new RetractStageTwo());
     mDriveTab.add("Retract Pistons", new ClimbRetract());

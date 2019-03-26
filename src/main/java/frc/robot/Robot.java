@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.CompressorStart;
 import frc.robot.commands.OperatorDrive;
 import frc.robot.commands.intake.IntakeManual;
+import frc.robot.commands.vision.ChangePipeline;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
   private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
   public static  Compressor comp;
+  private static ChangePipeline cChangePipeline;
 
   public static boolean trigger = false;
 
@@ -66,6 +68,7 @@ public class Robot extends TimedRobot {
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
     cIntakeManual = new IntakeManual();
+    cChangePipeline = new ChangePipeline(9);
     // private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
     // private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
     // Put data on Shuffleboard
@@ -128,6 +131,7 @@ public class Robot extends TimedRobot {
     RobotMap.WristMotor.setSelectedSensorPosition(Constants.kWristStartingTicks);
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start  
     comp.stop();
+    cChangePipeline.start();
   }
   /**
    * This function is called periodically during autonomous.

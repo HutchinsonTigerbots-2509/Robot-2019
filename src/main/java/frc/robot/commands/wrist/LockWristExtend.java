@@ -34,6 +34,7 @@ public class LockWristExtend extends InstantCommand {
   @Override
   protected void initialize() {
     sClimb.WristLocked = true;
+    Timer.delay(1.5);
     RobotMap.WristLockPiston.set(Value.kForward);
     Timer.delay(0.5);
 

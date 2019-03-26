@@ -7,6 +7,7 @@
 
 package frc.robot.commands.wrist;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
@@ -34,7 +35,7 @@ public class LockWristRetract extends InstantCommand {
   protected void initialize() {
 
     RobotMap.WristLockPiston.set(Value.kReverse);
-
+    Timer.delay(1);
   }
 
 }
