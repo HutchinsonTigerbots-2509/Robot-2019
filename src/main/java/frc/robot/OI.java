@@ -147,7 +147,7 @@ public class OI {
 
     // Co-Driver Joystick
     mPrepareToClimb = new JoystickButton(mCoOpStick, 7);
-    mPrepareToClimb.whenPressed(new LockWrist());
+    mPrepareToClimb.whenPressed(new PrepareToClimb());
 
     mCargoToggle = new JoystickButton(mCoOpStick, 5);
     mCargoToggle.whenPressed(new CargoToggle());
