@@ -234,7 +234,7 @@ public class OI {
     mDriveTab.add("Gyro Climb High (2)", new GyroClimbHigh());
     mDriveTab.add("Gyro Climb Low (2)", new GyroClimbLow());
     // mDriveTab.add("Extend Top Back Piston (2)", new ExtendBack1());
-    // mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
+    mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
     // mDriveTab.add("Retract Top Back Piston (3 or 4)", new RetractStageOne());
     // mDriveTab.add("Retract Bottom Back Piston (3 or 4)", new RetractStageTwo());
     mDriveTab.add("Retract Pistons", new ClimbRetract());

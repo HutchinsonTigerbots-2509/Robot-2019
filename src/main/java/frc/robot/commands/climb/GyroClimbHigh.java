@@ -17,10 +17,12 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.Climber;
+import frc.robot.commands.climb.ManualCreep;
 
 public class GyroClimbHigh extends Command {
 
   private AHRS gyro = RobotMap.DrivetrainGyro;
+  private ManualCreep cManualCreep = new ManualCreep();
   private Climber sClimb = Robot.sClimb;
   double SpeedGain = 0.0;
   double ElevatorSpeed;
@@ -36,6 +38,7 @@ public class GyroClimbHigh extends Command {
     sClimb.StageOneStart();
     sClimb.StageTwoStart();
     stick = Robot.oi.getOperatorStick();
+    cManualCreep.start();
 
     if(RobotMap.ElevatorShifter.get() == Value.kForward){ //Allows us to change the gain depending on the elevator gear
       SpeedGain = 0.07;

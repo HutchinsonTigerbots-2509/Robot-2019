@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
     // Commands must be defined after OI
     cOpDrive = new OperatorDrive();
     cIntakeManual = new IntakeManual();
-    cChangePipeline = new ChangePipeline(9);
+    cChangePipeline = new ChangePipeline(6);
     // private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
     // private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
     // Put data on Shuffleboard
@@ -155,6 +155,7 @@ public class Robot extends TimedRobot {
     //if(!cIntakeManual.isRunning())cIntakeManual.start();
     //cIntakeManual.start();
     comp.stop();
+    cChangePipeline.start();
     // sClimb.CompStart();
   }
 

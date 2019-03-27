@@ -104,7 +104,7 @@ public final class Constants {
     public static String kLimelightIP = "10.25.9.11";
     public static String kLimelightNetworkID = "limelight";
     // Settings
-    public static int kLimelightLED = 0;
+    public static int kLimelightLED = 1;
     public static int kLimelightMode = 0;
     public static int kLimelightStream = 0;
     // Table IDs

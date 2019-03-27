@@ -22,6 +22,7 @@ public class GyroClimbLow extends Command {
 
   private AHRS gyro = RobotMap.DrivetrainGyro;
   private Climber sClimb = Robot.sClimb;
+  private ManualCreep cManualCreep = new ManualCreep();
   double SpeedGain = 0.0;
   double ElevatorSpeed;
   private Joystick stick;
@@ -42,6 +43,7 @@ public class GyroClimbLow extends Command {
     } else {
        SpeedGain = 0.067;
     }
+    cManualCreep.start();
   }
   @Override
   protected void execute() {

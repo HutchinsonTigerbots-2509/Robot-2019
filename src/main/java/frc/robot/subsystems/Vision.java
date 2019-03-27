@@ -136,7 +136,7 @@ public class Vision extends Subsystem {
     mTable.getEntry("ledMode").setNumber(Constants.kLimelightLED);
     mTable.getEntry("camMode").setNumber(0);
     mTable.getEntry("stream").setNumber(0);
-    mTable.getEntry("pipeline").setNumber(6);
+    mTable.getEntry("pipeline").setNumber(6);//changed from 0 by Tyler, Calvin and Wayne lol XD A Desinger, Machinist and Electrician
     
   }
 
