@@ -21,13 +21,12 @@ private Joystick stick;
     stick = Robot.oi.getOperatorStick();
 
   }
-
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
     if(stick.getRawAxis(5)<= -0.5|| stick.getRawAxis(5)>= 0.5){
-      sClimb.setMotorSpeed(stick.getRawAxis(5));
+      sClimb.setMotorSpeed(-stick.getRawAxis(5));
     }else{
       sClimb.setMotorSpeed(0);
     }

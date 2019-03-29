@@ -226,9 +226,9 @@ public class Drivetrain extends Subsystem {
 		//mWristMotor.set(-stick_2.getRawAxis(5));
 
 		//Intake
-		if(stick_2.getRawAxis(3) > 0.2){
+		if(stick_2.getRawAxis(2) > 0.2){
 			mIntakeMotor.set(-Constants.kMaxSpeed);
-		}else if(stick_2.getRawAxis(2) > 0.2){
+		}else if(stick_2.getRawAxis(3) > 0.2){
 			mIntakeMotor.set(Constants.kMaxSpeed);
 		}else{
 			mIntakeMotor.set(0);

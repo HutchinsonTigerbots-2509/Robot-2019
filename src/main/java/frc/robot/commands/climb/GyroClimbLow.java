@@ -61,7 +61,7 @@ public class GyroClimbLow extends Command {
     }
 
     if(stick.getRawAxis(5)>= 0.5 || stick.getRawAxis(5)<= -.5){
-      sClimb.setMotorSpeed(stick.getRawAxis(5));
+      sClimb.setMotorSpeed(-stick.getRawAxis(5));
     } else {
       sClimb.setMotorSpeed(0);
     }

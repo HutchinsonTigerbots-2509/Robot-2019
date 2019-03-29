@@ -164,11 +164,11 @@ public final class Constants {
 
     /* Pneumatics ID */
     // Drivetrain
-    public static int kDrivetrainShifterForwardID = 2;
-    public static int kDrivetrainShifterReverseID = 3;
+    public static int kDrivetrainShifterForwardID = 0;
+    public static int kDrivetrainShifterReverseID = 1;
     // Elevator
-    public static int kElevatorShifterForwardID = 2;
-    public static int kElevatorShifterReverseID = 3;
+    public static int kElevatorShifterForwardID = 3; //2 on practice robot
+    public static int kElevatorShifterReverseID = 2; //3 on practice robot
     // Climb
     public static int kClimbUpperForwardID = 4;
     public static int kClimbUpperReverseID = 5;
@@ -176,7 +176,7 @@ public final class Constants {
     public static int kClimbLowerReverseID = 6;
     // public static int kClimbFrontForwardID = 2; Same One Delete this once you have read this DJ - Cole
     // public static int kClimbFrontReverseID = 3; 
-    public static int kWristLockPistonForwardID = 0;
-    public static int kWristLockPistonReverseID = 1; 
+    public static int kWristLockPistonForwardID = 3; //0 on practice robot
+    public static int kWristLockPistonReverseID = 2; //1 on practice robot
 
 }
