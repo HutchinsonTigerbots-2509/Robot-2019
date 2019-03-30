@@ -17,13 +17,15 @@ public class ClimbRetract extends InstantCommand {
   /**
    * The constructor to make a new instance of this command
    */
+
   public ClimbRetract() {
     requires(sClimb);
   }
 
   protected void initialize() {
-    sClimb.RetractStageTwo();//High
-    sClimb.RetractStageOne();//low
+    sClimb.RetractStageTwo();//Bottom
+    Timer.delay(2.5);
+    sClimb.RetractStageOne();//Top
     sClimb.PreparedToClimb = false;
   }
 

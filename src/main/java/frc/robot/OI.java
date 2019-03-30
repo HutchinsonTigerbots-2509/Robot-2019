@@ -23,7 +23,6 @@ import frc.robot.commands.elevator.ElevatorShiftLow;
 import frc.robot.commands.elevator.ElevatorShiftLowAuto;
 import frc.robot.commands.elevator.HatchToggle;
 import frc.robot.commands.elevator.StartPosition;
-import frc.robot.commands.vision.ChangePipeline;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -32,7 +31,6 @@ import frc.robot.commands.vision.FollowTarget;
 import frc.robot.commands.wrist.LockWristAuto;
 import frc.robot.commands.wrist.LockWristExtend;
 import frc.robot.commands.wrist.LockWristRetract;
-import frc.robot.commands.wrist.ManualWristMove;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
@@ -156,8 +154,8 @@ public class OI {
     mHatchToggle = new JoystickButton(mCoOpStick, 6);
     mHatchToggle.whenPressed(new HatchToggle());
 
-    mWristManual = new JoystickButton(mCoOpStick, 10);
-    mWristManual.whileHeld(new ManualWristMove());
+    // mWristManual = new JoystickButton(mCoOpStick, 10);
+    // mWristManual.whileHeld(new ManualWristMove());
 
     mElevatorHigh = new JoystickButton(mCoOpStick, 4);
     mElevatorMid = new JoystickButton(mCoOpStick, 2);
@@ -239,7 +237,7 @@ public class OI {
     mDriveTab.add("Retract Top Back Piston (3)", new RetractStageOne());
     // mDriveTab.add("Retract Top Back Piston (3 or 4)", new RetractStageOne());
     // mDriveTab.add("Retract Bottom Back Piston (3 or 4)", new RetractStageTwo());
-    mDriveTab.add("Retract Pistons", new ClimbRetract());
+    mDriveTab.add("Retract All Pistons", new ClimbRetract());
     mDriveTab.add("Auto Lock Wrist", new LockWristAuto());
     mDriveTab.add("Elevator Auto Shift Low", new ElevatorShiftLowAuto());
     mDriveTab.add("Manual Creep Toggle", new ManualCreep());

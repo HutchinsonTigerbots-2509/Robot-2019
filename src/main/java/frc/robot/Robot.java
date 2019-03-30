@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
     RobotMap.ElevatorMotorMaster.setSelectedSensorPosition(Constants.kElevatorStartingHeightTicks);
     RobotMap.WristMotor.setSelectedSensorPosition(Constants.kWristStartingTicks);
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start  
-    comp.stop();
+    comp.start();
     cChangePipeline.start();
   }
   /**
@@ -154,7 +154,7 @@ public class Robot extends TimedRobot {
     if(!cOpDrive.isRunning())cOpDrive.start(); // Tells the TeleOp Command to start
     //if(!cIntakeManual.isRunning())cIntakeManual.start();
     //cIntakeManual.start();
-    comp.stop();
+    comp.start();
     cChangePipeline.start();
     // sClimb.CompStart();
   }
@@ -176,7 +176,7 @@ public class Robot extends TimedRobot {
     sElevator.CheckBottomSwitch();
     sIntake.CheckLimitSwitches();
     if(oi.getOperatorStick().getRawButton(8)){
-      comp.start();
+      comp.stop();
     
     }
     if(RobotMap.WristLockPiston.get() == Value.kForward){

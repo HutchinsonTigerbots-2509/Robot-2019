@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.elevator.ElevatorMoveHighGear;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.commands.elevator.ZeroElevator;
 
 public class LockWristAuto extends CommandGroup {
   /**
@@ -19,8 +20,9 @@ public class LockWristAuto extends CommandGroup {
   public LockWristAuto() {
     
     //addParallel(new WristMove(-95));
+    // addSequential(new ElevatorMoveHighGear(Constants.kHomePositionInches));
+    addSequential(new ZeroElevator());
     addSequential(new ZeroWrist());
-    addSequential(new ElevatorMoveHighGear(Constants.kHomePositionInches));
     Timer.delay(2);
     addSequential(new LockWristExtend());
     Timer.delay(1.5);
