@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   public static IntakeManual cIntakeManual;
   private static WPI_TalonSRX ElevatorMotor = RobotMap.ElevatorMotorMaster;
   private static WPI_TalonSRX WristMotor = RobotMap.WristMotor;
-  private static  Compressor comp;
+  public static  Compressor comp;
 
   public static boolean trigger = false;
 

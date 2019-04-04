@@ -36,6 +36,7 @@ public class Climber extends Subsystem {
   private final Value Extend = Value.kForward;
   private final Value Retract = Value.kReverse;
   public boolean PreparedToClimb = false;
+  public boolean WristLocked;
   private ShuffleboardTab mDriveTab;
   private Joystick mOpStick;
   public final DoubleSolenoid mWristLockPistons = RobotMap.WristLockPistons;

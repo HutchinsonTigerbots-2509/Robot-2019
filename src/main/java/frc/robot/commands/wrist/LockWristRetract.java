@@ -34,7 +34,7 @@ public class LockWristRetract extends InstantCommand {
   @Override
   protected void initialize() {
 
-    RobotMap.WristLockPiston.set(Value.kReverse);
+    RobotMap.WristLockPistons.set(Value.kReverse);
     Timer.delay(1);
   }
 
